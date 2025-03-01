@@ -1,0 +1,6 @@
+gumroad_data
+combined_source.txt
+gumroad_scraper.py
+huggingface_cache
+recommendation/api/__pycache__
+recommendation/core/__pycache__

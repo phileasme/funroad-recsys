@@ -1,0 +1,11 @@
+elasticsearch>=8.0.0
+transformers
+torch --index-url https://download.pytorch.org/whl/cpu  # Specify CPU version
+elastic-enterprise-search>=8.0
+Pillow
+requests
+tqdm
+numpy
+uvicorn
+fastapi
+python-multipart

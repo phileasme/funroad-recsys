@@ -1,0 +1,41 @@
+# Dockerfile.api
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install additional libraries for model downloading
+RUN pip install --no-cache-dir \
+    huggingface_hub \
+    transformers \
+    torch \
+    pillow
+
+# Copy application code
+COPY . .
+
+# Set environment variables for model caching
+ENV TRANSFORMERS_CACHE=/app/.cache/huggingface
+ENV HF_HOME=/app/.cache/huggingface
+ENV PYTHONUNBUFFERED=1
+
+# Create necessary directories for model downloads
+RUN mkdir -p /app/.cache/huggingface \
+    && mkdir -p /app/recommendation/models/clip \
+    && mkdir -p /app/recommendation/models/colbert \
+    && chmod -R 777 /app/recommendation/models \
+    && chmod -R 777 /app/.cache/huggingface
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+RUN pip install --no-cache-dir "elasticsearch[async]"
+
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

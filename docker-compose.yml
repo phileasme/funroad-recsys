@@ -1,0 +1,80 @@
+
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.2
+    environment:
+      - node.name=es01
+      - cluster.name=docker-cluster
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=${ES_PASSWORD:-changeme}
+      - xpack.security.enabled=true
+      - "ES_JAVA_OPTS=-Xms3g -Xmx3g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - elastic-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -v -s -u elastic:${ES_PASSWORD:-changeme} http://es01:9200/_cluster/health"]
+      interval: 10s
+      timeout: 60s
+      retries: 10
+      start_period: 90s
+
+
+
+  # Data Ingestion Service
+  ingest-service:
+    build:
+      context: ./recommendation
+      dockerfile: Dockerfile.ingest
+    image: recommendation-ingest:latest
+    depends_on:
+      es01:
+        condition: service_healthy
+    environment:
+      - ELASTICSEARCH_URL=http://es01:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=${ES_PASSWORD:-changeme}
+      - TRANSFORMERS_CACHE=/root/.cache/huggingface
+      - HF_HOME=/root/.cache/huggingface
+    volumes:
+      - ./gumroad_data:/app/gumroad_data
+      - ./huggingface_cache:/root/.cache/huggingface
+    networks:
+      - elastic-net
+    command: ["python", "-m", "ingest.ingest"]
+
+  api-service:
+    build:
+      context: ./recommendation
+      dockerfile: Dockerfile.api
+    
+    image: recommendation-api:latest
+    environment:
+      - ELASTICSEARCH_URL=http://es01:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=${ES_PASSWORD:-changeme}
+      - TRANSFORMERS_CACHE=/root/.cache/huggingface
+      - HF_HOME=/root/.cache/huggingface
+    ports:
+      - "8000:8000"
+    networks:
+      - elastic-net
+    volumes:
+      - ./recommendation:/app/recommendation
+      - ./huggingface_cache:/root/.cache/huggingface
+    command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    restart: unless-stopped
+
+networks:
+  elastic-net:
+    driver: bridge
+
+volumes:
+  elasticsearch-data:
