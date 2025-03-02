@@ -1,0 +1,15 @@
+{
+  "query": "tennis course",
+  "metrics": {
+    "precision": {
+      "precision@5": 0.2
+    },
+    "recall": {
+      "recall@5": 0.2
+    },
+    "ndcg": {
+      "ndcg@5": 0.36714347892208127
+    },
+    "mrr": 0.14285714285714285
+  }
+}

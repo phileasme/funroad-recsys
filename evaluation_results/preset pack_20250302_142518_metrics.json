@@ -1,0 +1,15 @@
+{
+  "query": "preset pack",
+  "metrics": {
+    "precision": {
+      "precision@5": 0.6
+    },
+    "recall": {
+      "recall@5": 0.6
+    },
+    "ndcg": {
+      "ndcg@5": 0.6418744386689629
+    },
+    "mrr": 0.3333333333333333
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "query": "python for beginners",
+  "metrics": {
+    "precision": {
+      "precision@5": 0.4
+    },
+    "recall": {
+      "recall@5": 0.4
+    },
+    "ndcg": {
+      "ndcg@5": 0.48460040371115637
+    },
+    "mrr": 0.1111111111111111
+  }
+}

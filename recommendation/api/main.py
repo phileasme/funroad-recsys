@@ -11,6 +11,7 @@ import torch
 import time
 import pathlib
 import sys
+import math
 
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
@@ -322,7 +323,8 @@ async def similar_vision(
     clip: CLIPEmbedding = Depends(get_clip)
 ):
     """
-    Perform semantic search using CLIP embeddings, with option to exclude a specific ID
+    Perform semantic search using CLIP embeddings, with option to exclude a specific ID.
+    Now includes ratings boost for more relevant results.
     """
     start_time = time.time()
     try:
@@ -389,13 +391,14 @@ async def similar_vision(
         }
         
         # Add bool query to exclude the specified ID if provided
-        search_body["query"] = {
-            "bool": {
-                "must_not": [
-                    {"term": {"_id": query.id}}
-                ]
+        if query.id:
+            search_body["query"] = {
+                "bool": {
+                    "must_not": [
+                        {"term": {"_id": query.id}}
+                    ]
+                }
             }
-        }
         
         # Perform search
         response = await es_client.search(
@@ -407,17 +410,30 @@ async def similar_vision(
         results = []
         if response and 'hits' in response and 'hits' in response['hits']:
             for hit in response['hits']['hits']:
+                # Get ratings data
+                ratings_count = hit['_source'].get("ratings", {}).get("count", 0)
+                ratings_score = hit['_source'].get("ratings", {}).get("average", -1.0)
+                
+                # Get base score from elasticsearch
+                base_score = hit.get('_score', 0)
+                
+                # Apply ratings boost for vision results (using "clip" config)
+                final_score = apply_ratings_boost(base_score, ratings_count, ratings_score, "clip")
+                
                 results.append(SearchResult(
-                    score=hit['_score'],
+                    score=final_score,
                     name=hit['_source'].get('name', ''),
                     description=hit['_source'].get('description', ''),
                     thumbnail_url=hit['_source'].get('thumbnail_url', ''),
-                    ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
-                    ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                    ratings_count=ratings_count,
+                    ratings_score=ratings_score,
                     price_cents=hit['_source'].get("price_cents", 0),
                     url=hit['_source'].get("url", ""),
-                    id=hit.get('_id', '')  # Include the document ID in results
+                    id=hit.get('_id', '')
                 ))
+        
+        # Sort by the new boosted score
+        results.sort(key=lambda x: x.score, reverse=True)
         
         query_time = (time.time() - start_time) * 1000  # Convert to milliseconds
         return SearchResponse(results=results, query_time_ms=query_time)
@@ -425,7 +441,7 @@ async def similar_vision(
     except Exception as e:
         logger.error(f"Search error: {e}", exc_info=True)  # Include full traceback
         raise HTTPException(status_code=500, detail=str(e))
-
+    
 # Search endpoints
 @app.post("/search_vision", response_model=SearchResponse)
 async def search_vision(
@@ -846,8 +862,8 @@ async def search_combined_optimized(
     results.sort(key=lambda x: x.score, reverse=True)
     return SearchResponse(results=results[:query.k], query_time_ms=(time.time() - start_time) * 1000)
 
-@app.post("/search_combined_simplified_but_slow", response_model=SearchResponse)
-async def search_combined_optimal(
+@app.post("/search_combined_v0_7", response_model=SearchResponse)
+async def search_combined_v0_7(
     query: SearchQuery,
     es_client: Elasticsearch = Depends(get_es_client),
     clip: CLIPEmbedding = Depends(get_clip),
@@ -948,24 +964,24 @@ async def search_combined_optimal(
     query_time = (time.time() - start_time) * 1000
     return SearchResponse(results=results[:query.k], query_time_ms=query_time)
 
-@app.post("/search_combined_optimal", response_model=SearchResponse)
+
+
+# @TODO Need to setup a regression task or optuna) to obtain optimal relevance_threshold, and boost..
+# Centralized configuration for ratings boost parameters
+@app.post("/search_combined_v0_8", response_model=SearchResponse)
 async def search_combined_optimal(
     query: SearchQuery,
     es_client: Elasticsearch = Depends(get_es_client),
     clip: CLIPEmbedding = Depends(get_clip),
     colbert: ColBERTEmbedding = Depends(get_colbert)
 ):
-    """
-    Simplified search approach with two phases:
-    1. Phase 1: Text search + fuzzy match (distance 1) + ColBERT
-    2. Phase 2: CLIP (only if needed)
-    """
     start_time = time.time()
-    min_acceptable_score = 0.4  # Threshold for considering results good enough
+    min_acceptable_score = 0.4  # Same threshold as v0.7
     results = []
-    
-    # Start CLIP embedding computation in background immediately
-    # (We'll only use it if needed, but start computing now)
+    seen_ids = set()
+
+    # Start CLIP embedding computation asynchronously right away
+    # (will only be used if BM25 and ColBERT don't produce good results)
     executor = ThreadPoolExecutor(max_workers=2)
     loop = asyncio.get_event_loop()
     clip_future = loop.run_in_executor(
@@ -973,243 +989,225 @@ async def search_combined_optimal(
         lambda: clip.get_text_embedding(query.query).embedding.tolist()[0]
     )
     
-    try:
-        # Phase 1: Text search + fuzzy match + ColBERT
-        seen_ids = set()
-        
-        # 1.1: Text search with combined fields
-        combined_response = await es_client.search(
-            index='products',
-            body={
-                "_source": ["description", "name", "thumbnail_url", "id"],
-                "query": {
-                    "combined_fields": {
-                        "query": query.query,
-                        "fields": ["name^3", "description"],
-                        "operator": "OR",
-                        "auto_generate_synonyms_phrase_query": True
-                    }
-                },
-                "size": query.k,
-                "track_scores": True
+    # Get ColBERT embedding - this is fast and needed for the query
+    colbert_vector = colbert.get_colbert_sentence_embedding(query.query).embedding.tolist()[0]
+    
+    # Prepare BM25 query
+    bm25_query = {
+        "_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"],
+        "query": {
+            "bool": {
+                "should": [
+                    {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "OR"}},
+                    {"fuzzy": {"name": {"value": query.query, "fuzziness": get_fuzziness(query.query), "prefix_length": 1, "boost": 2.0}}}
+                ]
             }
-        )
+        },
+        "size": query.k
+    }
+    
+    # Execute BM25 search
+    bm25_response = await es_client.search(index='products', body=bm25_query)
+    
+    # Process BM25 results
+    bm25_hits = bm25_response['hits']['hits']
+    max_score_bm25 = max([hit.get('_score', 0) for hit in bm25_hits]) if bm25_hits else 1.0
+    
+    for hit in bm25_hits:
+        doc_id = hit.get('_id')
+        seen_ids.add(doc_id)
         
-        # Track text search hits
-        text_hits = combined_response['hits']['hits']
-        text_max_score = max([hit.get('_score', 0) for hit in text_hits]) if text_hits else 1.0
+        # Get ratings data
+        ratings_count = hit['_source'].get("ratings", {}).get("count", 0)
+        ratings_score = hit['_source'].get("ratings", {}).get("average", -1.0)
         
-        # Process text search results
-        for hit in text_hits:
-            doc_id = hit.get('_id')
-            if doc_id:
-                seen_ids.add(doc_id)
-                
-                # Calculate score - direct text matches get high scores
-                raw_score = hit.get('_score', 0)
-                normalized_score = min(1.0, raw_score / (text_max_score * 1.2))
-                
-                # Boost exact matches
-                if query.query.lower() in hit['_source'].get('name', '').lower():
-                    normalized_score = min(1.0, normalized_score * 1.5)
-                
-                results.append(SearchResult(
-                    score=normalized_score,
-                    name=hit['_source'].get('name', ''),
-                    description=hit['_source'].get('description', ''),
-                    thumbnail_url=hit['_source'].get('thumbnail_url', '')
-                ))
+        # Calculate base score (same as v0.7)
+        base_score = normalize_score(hit.get('_score', 0), max_score_bm25)
         
-        # 1.2: Fuzzy search with distance 1
-        fuzzy_response = await es_client.search(
-            index='products',
-            body={
-                "_source": ["description", "name", "thumbnail_url", "id"],
-                "query": {
-                    "bool": {
-                        "should": [
-                            {
-                                "fuzzy": {
-                                    "name": {
-                                        "value": query.query,
-                                        "fuzziness": 1,  # Exactly distance 1
-                                        "prefix_length": 1,
-                                        "boost": 2.0
-                                    }
-                                }
-                            },
-                            {
-                                "fuzzy": {
-                                    "description": {
-                                        "value": query.query,
-                                        "fuzziness": 1,  # Exactly distance 1
-                                        "prefix_length": 1
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                },
-                "size": query.k
-            }
-        )
+        # Apply ratings boost for BM25 results
+        final_score = apply_ratings_boost(base_score, ratings_count, ratings_score, "bm25")
         
-        # Track fuzzy hits
-        fuzzy_hits = fuzzy_response['hits']['hits']
-        fuzzy_max_score = max([hit.get('_score', 0) for hit in fuzzy_hits]) if fuzzy_hits else 1.0
-        
-        # Process fuzzy search results
-        for hit in fuzzy_hits:
-            doc_id = hit.get('_id')
-            if doc_id and doc_id not in seen_ids:
-                seen_ids.add(doc_id)
-                
-                # Calculate score - fuzzy matches get good but slightly lower scores
-                raw_score = hit.get('_score', 0)
-                normalized_score = min(0.85, raw_score / (fuzzy_max_score * 1.5))
-                
-                results.append(SearchResult(
-                    score=normalized_score,
-                    name=hit['_source'].get('name', ''),
-                    description=hit['_source'].get('description', ''),
-                    thumbnail_url=hit['_source'].get('thumbnail_url', '')
-                ))
-        
-        # 1.3: ColBERT semantic search
-        colbert_embedding = colbert.get_colbert_sentence_embedding(query.query)
-        colbert_vector = colbert_embedding.embedding.tolist()[0]
-        
-        colbert_response = await es_client.search(
-            index='products',
-            body={
-                "_source": ["description", "name", "thumbnail_url", "id"],
+        results.append(SearchResult(
+            score=final_score,
+            name=hit['_source'].get('name', ''),
+            description=hit['_source'].get('description', ''),
+            thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+            ratings_count=ratings_count,
+            ratings_score=ratings_score,
+            price_cents=hit['_source'].get("price_cents", 0),
+            url=hit['_source'].get("url", ""),
+            id=doc_id
+        ))
+    
+    # Execute ColBERT search - only if needed (mimicking v0.7 behavior)
+    # But prepare it early to avoid wasting time
+    colbert_query = {
+        "_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"], 
+        "knn": {
+            "field": "description_embedding", 
+            "query_vector": colbert_vector, 
+            "k": query.k, 
+            "num_candidates": query.num_candidates
+        }
+    }
+    
+    # ColBERT Semantic Search
+    colbert_response = await es_client.search(index='products', body=colbert_query)
+    colbert_hits = colbert_response['hits']['hits']
+    
+    for hit in colbert_hits:
+        doc_id = hit.get('_id')
+        if doc_id not in seen_ids:
+            seen_ids.add(doc_id)
+            
+            # Get ratings data
+            ratings_count = hit['_source'].get("ratings", {}).get("count", 0)
+            ratings_score = hit['_source'].get("ratings", {}).get("average", -1.0)
+            
+            # Calculate base score (same as v0.7)
+            base_score = normalize_score(hit.get('_score', 0), 1.0)
+            
+            # Apply ratings boost for ColBERT results
+            final_score = apply_ratings_boost(base_score, ratings_count, ratings_score, "colbert")
+            
+            results.append(SearchResult(
+                score=final_score,
+                name=hit['_source'].get('name', ''),
+                description=hit['_source'].get('description', ''),
+                thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                ratings_count=ratings_count,
+                ratings_score=ratings_score,
+                price_cents=hit['_source'].get("price_cents", 0),
+                url=hit['_source'].get("url", ""),
+                id=doc_id
+            ))
+    
+    # Check if we need CLIP results
+    best_score_so_far = max([r.score for r in results]) if results else 0
+    
+    if not results or best_score_so_far < min_acceptable_score:
+        try:
+            # Await the CLIP embedding that was started earlier
+            clip_vector = await asyncio.wait_for(clip_future, timeout=0.5)
+            
+            # Execute CLIP search
+            clip_query = {
+                "_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"], 
                 "knn": {
-                    "field": "description_embedding",
-                    "query_vector": colbert_vector,
-                    "k": query.k,
+                    "field": "image_embedding", 
+                    "query_vector": clip_vector, 
+                    "k": query.k, 
                     "num_candidates": query.num_candidates
                 }
             }
-        )
-        
-        # Track colbert hits
-        colbert_hits = colbert_response['hits']['hits']
-        
-        # Process ColBERT search results
-        for hit in colbert_hits:
-            doc_id = hit.get('_id')
-            if doc_id and doc_id not in seen_ids:
-                seen_ids.add(doc_id)
-                
-                # Calculate score - semantic matches get moderate scores
-                raw_score = hit.get('_score', 0)
-                normalized_score = min(0.7, max(0.3, raw_score))
-                
-                # Boost if it contains query terms despite being semantic search
-                if query.query.lower() in hit['_source'].get('name', '').lower() or \
-                   query.query.lower() in hit['_source'].get('description', '').lower():
-                    normalized_score = min(0.8, normalized_score * 1.3)
-                
-                results.append(SearchResult(
-                    score=normalized_score,
-                    name=hit['_source'].get('name', ''),
-                    description=hit['_source'].get('description', ''),
-                    thumbnail_url=hit['_source'].get('thumbnail_url', '')
-                ))
-        
-        # Sort results and check if we have good enough scores
-        results.sort(key=lambda x: x.score, reverse=True)
-        
-        # Phase 2: Only use CLIP if we don't have good enough results
-        if not results or results[0].score < min_acceptable_score:
-            logger.info("Phase 1 results insufficient, trying CLIP")
             
-            # Get CLIP vector from background task
-            try:
-                clip_vector = await asyncio.wait_for(clip_future, timeout=0.5)
-            except (asyncio.TimeoutError, Exception) as e:
-                logger.warning(f"Background CLIP computation failed: {e}, computing now")
-                clip_text_embedding = clip.get_text_embedding(query.query)
-                clip_vector = clip_text_embedding.embedding.tolist()[0]
-            
-            clip_response = await es_client.search(
-                index='products',
-                body={
-                    "_source": ["description", "name", "thumbnail_url", "id"],
-                    "knn": {
-                        "field": "image_embedding",
-                        "query_vector": clip_vector,
-                        "k": query.k,
-                        "num_candidates": query.num_candidates
-                    }
-                }
-            )
+            clip_response = await es_client.search(index='products', body=clip_query)
             
             # Process CLIP results
             for hit in clip_response['hits']['hits']:
                 doc_id = hit.get('_id')
-                if doc_id and doc_id not in seen_ids:
+                if doc_id not in seen_ids:
                     seen_ids.add(doc_id)
                     
-                    # Calculate score - visual matches get lower base scores
-                    raw_score = hit.get('_score', 0)
-                    normalized_score = min(0.6, max(0.2, raw_score))
+                    # Get ratings data
+                    ratings_count = hit['_source'].get("ratings", {}).get("count", 0)
+                    ratings_score = hit['_source'].get("ratings", {}).get("average", -1.0)
                     
-                    # Boost if it contains query terms despite being visual search
-                    if query.query.lower() in hit['_source'].get('name', '').lower() or \
-                       query.query.lower() in hit['_source'].get('description', '').lower():
-                        normalized_score = min(0.75, normalized_score * 1.5)
+                    # Calculate base score (same as v0.7)
+                    base_score = normalize_score(hit.get('_score', 0), 0.6)
+                    
+                    # Apply ratings boost for CLIP results
+                    final_score = apply_ratings_boost(base_score, ratings_count, ratings_score, "clip")
                     
                     results.append(SearchResult(
-                        score=normalized_score,
+                        score=final_score,
                         name=hit['_source'].get('name', ''),
                         description=hit['_source'].get('description', ''),
-                        thumbnail_url=hit['_source'].get('thumbnail_url', '')
+                        thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                        ratings_count=ratings_count,
+                        ratings_score=ratings_score,
+                        price_cents=hit['_source'].get("price_cents", 0),
+                        url=hit['_source'].get("url", ""),
+                        id=doc_id
                     ))
-            
-            # Final sort after adding CLIP results
-            results.sort(key=lambda x: x.score, reverse=True)
-        
-        # Limit to requested size
-        results = results[:query.k]
-        
-        query_time = (time.time() - start_time) * 1000
-        return SearchResponse(results=results, query_time_ms=query_time)
-        
-    except Exception as e:
-        logger.error(f"Search error: {e}")
-        
-        # Simple fallback search
-        try:
-            quick_response = await es_client.search(
-                index='products',
-                body={
-                    "_source": ["description", "name", "thumbnail_url", "id","ratings", "price_cents", "url"],
-                    "query": {
-                        "match": {
-                            "name": query.query
-                        }
-                    },
-                    "size": query.k
-                }
-            )
-            
-            quick_results = []
-            for hit in quick_response['hits']['hits']:
-                quick_results.append(SearchResult(
-                    score=0.5,  # Default score for fallback results
-                    name=hit['_source'].get('name', ''),
-                    description=hit['_source'].get('description', ''),
-                    thumbnail_url=hit['_source'].get('thumbnail_url', '')
-                ))
-            
-            query_time = (time.time() - start_time) * 1000
-            return SearchResponse(results=quick_results, query_time_ms=query_time)
-            
-        except Exception as fallback_error:
-            logger.error(f"Fallback search also failed: {fallback_error}")
-            return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
-        
+        except asyncio.TimeoutError:
+            # CLIP embedding took too long, proceed without it
+            pass
+    
+    # Sort and limit final results
+    results.sort(key=lambda x: x.score, reverse=True)
+    query_time = (time.time() - start_time) * 1000
+    return SearchResponse(results=results[:query.k], query_time_ms=query_time)
+
+# Updated ratings boost configuration with more reasonable values
+RATINGS_BOOST_CONFIG = {
+    "default": {
+        "relevance_threshold": 0.6,  # Lower threshold to apply to more results
+        "boost_multiplier": 0.02     # Stronger effect
+    },
+    "bm25": {
+        "relevance_threshold": 0.6,
+        "boost_multiplier": 0.025    # Slightly stronger for BM25
+    },
+    "colbert": {
+        "relevance_threshold": 0.6,
+        "boost_multiplier": 0.02
+    },
+    "clip": {
+        "relevance_threshold": 0.7,  # Slightly higher for CLIP
+        "boost_multiplier": 0.015    # More conservative for CLIP
+    }
+}
+
+def calculate_ratings_boost(ratings_count, ratings_score, max_ratings=500):
+    """Calculate a logarithmically damped ratings boost"""
+    if ratings_count <= 0 or ratings_score < 0:
+        return 0.0
+    
+    # Use log scale with damping
+    log_factor = math.log(1 + ratings_count) / math.log(1 + max_ratings)
+    
+    # Scale the rating score - weight higher ratings more
+    rating_factor = (ratings_score / 5.0) ** 1.5
+    
+    # Combine factors with balanced weights
+    return (0.6 * log_factor + 0.4 * rating_factor)
+
+def apply_ratings_boost(base_score, ratings_count, ratings_score, search_method="default"):
+    """
+    Apply a ratings boost to a base score based on configured parameters for each search method.
+    
+    Parameters:
+    base_score (float): The base relevance score
+    ratings_count (int): Number of ratings
+    ratings_score (float): Average rating score
+    search_method (str): Which search method is being used ("bm25", "colbert", "clip" or "default")
+    
+    Returns:
+    float: The final score with ratings boost applied
+    """
+    # Get configuration for this search method, falling back to default if not specified
+    config = RATINGS_BOOST_CONFIG.get(search_method, RATINGS_BOOST_CONFIG["default"])
+    relevance_threshold = config["relevance_threshold"]
+    boost_multiplier = config["boost_multiplier"]
+    
+    # Only apply boost if base score meets threshold and ratings exist
+    if base_score < relevance_threshold or ratings_count <= 0 or ratings_score < 0:
+        return base_score
+    
+    # Calculate ratings boost
+    ratings_boost = calculate_ratings_boost(ratings_count, ratings_score)
+    
+    # Apply configured multiplier and add to base score
+    return base_score + (boost_multiplier * ratings_boost)
+
+# This function remains unchanged from v0.7
+def normalize_score(score, max_score):
+    """Normalize score to a 0-1 range and apply sigmoid to bias towards higher scores"""
+    normalized = score / max_score if max_score > 0 else 0
+    return 1 / (1 + math.exp(-10 * (normalized - 0.5)))
+
+
 @app.post("/search_fallback", response_model=SearchResponse)
 async def search_fallback(
     query: SearchQuery,
