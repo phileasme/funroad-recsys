@@ -1139,39 +1139,103 @@ async def search_combined_optimal(
     query_time = (time.time() - start_time) * 1000
     return SearchResponse(results=results[:query.k], query_time_ms=query_time)
 
-# Updated ratings boost configuration with more reasonable values
+
+def wilson_lower_bound(pos, n, confidence=0.95):
+    """
+    Calculate Wilson Lower Bound Score with robust error handling
+    
+    Args:
+    pos (int): Number of positive ratings
+    n (int): Total number of ratings
+    confidence (float): Confidence level (default 0.95)
+    
+    Returns:
+    float: Wilson Lower Bound score, or 0 if calculation is impossible
+    """
+    # Handle edge cases
+    if n == 0 or pos < 0 or pos > n:
+        return 0.0
+    
+    # Confidence level z-scores
+    z_scores = {
+        0.90: 1.645,
+        0.95: 1.96,
+        0.99: 2.576
+    }
+    z = z_scores.get(confidence, 1.96)
+    
+    # Prevent division by zero and handle small sample sizes
+    if n < 1:
+        return 0.0
+    
+    try:
+        pos_rate = pos / n
+        
+        # Prevent negative values inside sqrt
+        inner_sqrt = max(0, pos_rate * (1 - pos_rate) + z*z / (4 * n))
+        
+        # Wilson score interval calculation with additional safeguards
+        numerator = pos_rate + z*z / (2 * n) - z * math.sqrt(inner_sqrt / n)
+        denominator = 1 + z*z / n
+        
+        # Ensure result is between 0 and 1
+        return max(0, min(1, numerator / denominator))
+    
+    except (ValueError, ZeroDivisionError):
+        # Fallback to 0 if any calculation fails
+        return 0.0
+
+def calculate_wilson_ratings_boost(ratings_count, ratings_score, max_ratings=500):
+    """
+    Calculate ratings boost using Wilson Lower Bound method with robust handling
+    
+    Args:
+    ratings_count (int): Total number of ratings
+    ratings_score (float): Average rating score
+    max_ratings (int): Maximum ratings for normalization
+    
+    Returns:
+    float: Normalized ratings boost
+    """
+    # Validate inputs
+    if ratings_count <= 0 or ratings_score < 0 or ratings_score > 5:
+        return 0.0
+    
+    # Convert rating score to number of positive ratings
+    # Round to handle potential floating-point imprecision
+    pos_ratings = round(ratings_score * ratings_count)
+    
+    # Ensure pos_ratings doesn't exceed total ratings
+    pos_ratings = min(pos_ratings, ratings_count)
+    
+    # Calculate Wilson Lower Bound
+    wilson_score = wilson_lower_bound(pos_ratings, ratings_count)
+    
+    # Logarithmic scaling of ratings count
+    log_factor = math.log(1 + ratings_count) / math.log(1 + max_ratings)
+    
+    # Combine Wilson score with log scaling
+    return 0.7 * wilson_score + 0.3 * log_factor
+
+# Updated RATINGS_BOOST_CONFIG to work with Wilson Score
 RATINGS_BOOST_CONFIG = {
     "default": {
-        "relevance_threshold": 0.6,  # Lower threshold to apply to more results
-        "boost_multiplier": 0.02     # Stronger effect
+        "relevance_threshold": 0.7,  # Lower threshold to apply to more results
+        "boost_multiplier": 0.03     # Slightly stronger effect
     },
     "bm25": {
-        "relevance_threshold": 0.6,
-        "boost_multiplier": 0.025    # Slightly stronger for BM25
+        "relevance_threshold": 0.7,
+        "boost_multiplier": 0.5 # Slightly stronger for BM25
     },
     "colbert": {
-        "relevance_threshold": 0.6,
-        "boost_multiplier": 0.02
+        "relevance_threshold": 0.7,
+        "boost_multiplier": 0.01
     },
     "clip": {
         "relevance_threshold": 0.7,  # Slightly higher for CLIP
-        "boost_multiplier": 0.015    # More conservative for CLIP
+        "boost_multiplier": 0.001    # More conservative for CLIP
     }
 }
-
-def calculate_ratings_boost(ratings_count, ratings_score, max_ratings=500):
-    """Calculate a logarithmically damped ratings boost"""
-    if ratings_count <= 0 or ratings_score < 0:
-        return 0.0
-    
-    # Use log scale with damping
-    log_factor = math.log(1 + ratings_count) / math.log(1 + max_ratings)
-    
-    # Scale the rating score - weight higher ratings more
-    rating_factor = (ratings_score / 5.0) ** 1.5
-    
-    # Combine factors with balanced weights
-    return (0.6 * log_factor + 0.4 * rating_factor)
 
 def apply_ratings_boost(base_score, ratings_count, ratings_score, search_method="default"):
     """
@@ -1195,8 +1259,8 @@ def apply_ratings_boost(base_score, ratings_count, ratings_score, search_method=
     if base_score < relevance_threshold or ratings_count <= 0 or ratings_score < 0:
         return base_score
     
-    # Calculate ratings boost
-    ratings_boost = calculate_ratings_boost(ratings_count, ratings_score)
+    # Calculate ratings boost using Wilson Lower Bound method
+    ratings_boost = calculate_wilson_ratings_boost(ratings_count, ratings_score)
     
     # Apply configured multiplier and add to base score
     return base_score + (boost_multiplier * ratings_boost)

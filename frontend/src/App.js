@@ -270,7 +270,8 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
         ref={cardRef}
         className={`${darkMode ? 'bg-gray-700 border-gray-600 hover:border-[#FE90EA]' : 'bg-white border-gray-200 hover:border-[#FE90EA]'} border-2 rounded-lg overflow-hidden hover:shadow-lg transition-shadow`}
         style={{ 
-          height: cardHeight ? `${cardHeight}px` : 'auto', 
+          // height: cardHeight ? `${cardHeight}px` : 'auto', 
+          height: "390px",
           position: 'relative'
         }}
         onMouseEnter={handleMouseEnter}
@@ -1069,52 +1070,52 @@ useEffect(() => {
         <div className="w-full mx-auto mx-auto">
           {/* Search form - Common to both layouts */}
           <div className="flex justify-center w-full">
-{/* Search form - Common to both layouts */}
-<div className="flex justify-center w-full">
-  <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-6 rounded-lg shadow-sm mb-6 border-2 w-full max-w-7xl mx-auto`}>
-    <form onSubmit={handleSearch} className="flex items-center gap-4">
-      <div className="relative flex-grow">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#FE90EA]" />
-        <input
-          ref={searchInputRef}
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for products..."
-          className={`w-full pl-10 pr-4 py-3 rounded-md border-2 ${
-            darkMode 
-              ? 'border-gray-600 bg-gray-700 text-white focus:border-[#FE90EA]' 
-              : 'border-gray-300 bg-white text-black focus:border-[#FE90EA]'
-          } focus:outline-none focus:ring-1 focus:ring-[#FE90EA]`}
-          onClick={(e) => e.target.select()}
-        />
-      </div>
-      <select
-        value={searchProfile}
-        onChange={(e) => setSearchProfile(e.target.value)}
-        className={`px-3 py-3 rounded-md border-2 ${
-          darkMode 
-            ? 'border-gray-600 bg-gray-700 text-white' 
-            : 'border-gray-300 bg-white text-black'
-        } focus:outline-none focus:border-[#FE90EA] focus:ring-1 focus:ring-[#FE90EA] flex-shrink-0`}
-      >
-        {searchProfiles.map(profile => (
-          <option key={profile.id} value={profile.id}>
-            {profile.name} {profile.version && <span className="text-[#FE90EA]"> {profile.version}</span>}
-          </option>
-        ))}
-      </select>
-      <button
-        type="submit"
-        className="bg-[#FE90EA] text-black px-6 py-3 rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-2 focus:ring-[#FE90EA] focus:ring-offset-2 font-medium border-2 border-black flex-shrink-0"
-        disabled={isLoading}
-      >
-        {isLoading ? 'Searching...' : 'Search'}
-      </button>
-    </form>
-  </div>
-</div>
-</div>
+            {/* Search form - Common to both layouts */}
+            <div className="flex justify-center w-full">
+              <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-6 rounded-lg shadow-sm mb-6 border-2 w-full max-w-7xl mx-auto`}>
+                <form onSubmit={handleSearch} className="flex items-center gap-4">
+                  <div className="relative flex-grow">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#FE90EA]" />
+                    <input
+                      ref={searchInputRef}
+                      type="text"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder="Search for products..."
+                      className={`w-full pl-10 pr-4 py-3 rounded-md border-2 ${
+                        darkMode 
+                          ? 'border-gray-600 bg-gray-700 text-white focus:border-[#FE90EA]' 
+                          : 'border-gray-300 bg-white text-black focus:border-[#FE90EA]'
+                      } focus:outline-none focus:ring-1 focus:ring-[#FE90EA]`}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                  <select
+                    value={searchProfile}
+                    onChange={(e) => setSearchProfile(e.target.value)}
+                    className={`px-3 py-3 rounded-md border-2 ${
+                      darkMode 
+                        ? 'border-gray-600 bg-gray-700 text-white' 
+                        : 'border-gray-300 bg-white text-black'
+                    } focus:outline-none focus:border-[#FE90EA] focus:ring-1 focus:ring-[#FE90EA] flex-shrink-0`}
+                  >
+                    {searchProfiles.map(profile => (
+                      <option key={profile.id} value={profile.id}>
+                        {profile.name} {profile.version && <span className="text-[#FE90EA]"> {profile.version}</span>}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="submit"
+                    className="bg-[#FE90EA] text-black px-6 py-3 rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-2 focus:ring-[#FE90EA] focus:ring-offset-2 font-medium border-2 border-black flex-shrink-0"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Searching...' : 'Search'}
+                  </button>
+                </form>
+              </div>
+            </div>
+            </div>
           {/* Two-column layout for desktop, stacked for mobile */}
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Left column (wider) - Search results */}
