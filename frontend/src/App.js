@@ -164,8 +164,6 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   const [mouseOverImage, setMouseOverImage] = useState(false);
   // State to track image aspect ratio
   const [isWideImage, setIsWideImage] = useState(false);
-  // New state to track if image is portrait (taller than wide)
-  const [isPortraitImage, setIsPortraitImage] = useState(false);
   
   // Refs for height calculation and timeout management
   const cardRef = useRef(null);
@@ -194,36 +192,20 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     
   // Check if product contains design-related keywords
   const isDesignRelated = useMemo(() => {
-    const keywords = ['design', "paint", "wallpaper", 'image', 'logo', 'picture', 'stitch'];
+    const keywords = ['design', 'image', 'logo', 'picture', 'stitch'];
     const searchText = `${product.name} ${product.description}`.toLowerCase();
     return keywords.some(keyword => searchText.includes(keyword));
   }, [product.name, product.description]);
   
-  // UPDATED LOGIC: 
-  // If it's design related OR a portrait image, we want to show it in "hover mode" by default
-  // This flips the hover logic for portrait-oriented images as requested
-  const shouldShowAsHover = (
-    isHovered || 
-    (isDesignRelated && !isWideImage) || 
-    (isPortraitImage && !isWideImage)
-  );
+  // If it's design related and NOT a wide image, we want to show it in "hover mode" by default
+  const shouldShowAsHover = (isHovered || (isDesignRelated && !isWideImage));
   
-  // Effect to calculate and store minimum card height on mount
-  // We're using a timeout to ensure all content is properly rendered before measuring
+  // Effect to calculate and store card height on mount
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (cardRef.current) {
-        const height = cardRef.current.clientHeight;
-        // Only set height if it's a reasonable value (prevents setting tiny heights)
-        if (height > 200) {
-          setCardHeight(height);
-        } else {
-          setCardHeight(380); // Fallback minimum height
-        }
-      }
-    }, 100); // Small delay to ensure content is rendered
-    
-    return () => clearTimeout(timer);
+    if (cardRef.current) {
+      const height = cardRef.current.clientHeight;
+      setCardHeight(height);
+    }
   }, []);
   
   // Effect to handle image load and check aspect ratio
@@ -231,9 +213,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     const img = new Image();
     img.onload = () => {
       const isWide = img.width > img.height;
-      const isPortrait = img.height > img.width;
       setIsWideImage(isWide);
-      setIsPortraitImage(isPortrait);
     };
     img.src = product.thumbnail_url || `https://placehold.co/600x400?text=${encodeURIComponent(product.name)}`;
     
@@ -288,11 +268,9 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     <>
       <div
         ref={cardRef}
-        className={`${darkMode ? 'bg-gray-700 border-gray-600 hover:border-[#FE90EA]' : 'bg-white border-gray-200 hover:border-[#FE90EA]'} border-2 rounded-lg overflow-hidden hover:shadow-lg transition-shadow product-card`}
+        className={`${darkMode ? 'bg-gray-700 border-gray-600 hover:border-[#FE90EA]' : 'bg-white border-gray-200 hover:border-[#FE90EA]'} border-2 rounded-lg overflow-hidden hover:shadow-lg transition-shadow`}
         style={{ 
-          minHeight: cardHeight ? `${cardHeight}px` : '380px', 
-          // height: 'auto',
-          height:'380px',
+          height: cardHeight ? `${cardHeight}px` : 'auto', 
           position: 'relative'
         }}
         onMouseEnter={handleMouseEnter}
@@ -429,18 +407,6 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
             </div>
           )}
           
-          {/* Portrait image indicator label - useful for debugging */}
-          {isPortraitImage && !isHovered && !shouldShowAsHover && false && ( // Set to true for debugging
-            <div 
-              className={`absolute top-2 left-2 text-xs font-medium px-2 py-1 rounded-full ${
-                darkMode ? 'bg-purple-600 text-white' : 'bg-purple-100 text-purple-800'
-              }`}
-              style={{ zIndex: 25 }}
-            >
-              Portrait
-            </div>
-          )}
-          
           {/* Price tag - always visible when not in hover mode */}
           {product.price_cents !== undefined && !shouldShowAsHover && (
             <div className="absolute rounded-md top-4 right-5 flex items-center" style={{ zIndex: 30 }}>
@@ -452,8 +418,8 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
             </div>
           )}
           
-          {/* Design related label - only visible for design products when not hovered and not in hover mode */}
-          {isDesignRelated && !isHovered && !shouldShowAsHover && (
+          {/* Design related label - only visible for design products when not hovered */}
+          {isDesignRelated && !isHovered && (
             <div 
               className={`absolute top-2 left-2 text-xs font-medium px-2 py-1 rounded-full ${
                 darkMode ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800'
@@ -461,6 +427,18 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
               style={{ zIndex: 25 }}
             >
               Design
+            </div>
+          )}
+          
+          {/* Wide image label - useful for debugging (can be removed) */}
+          {isWideImage && !isHovered && false && ( // Set to true for debugging
+            <div 
+              className={`absolute top-2 left-2 text-xs font-medium px-2 py-1 rounded-full ${
+                darkMode ? 'bg-green-600 text-white' : 'bg-green-100 text-green-800'
+              }`}
+              style={{ zIndex: 25 }}
+            >
+              Wide
             </div>
           )}
           
@@ -530,7 +508,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
               </svg>
             </button>
             
-            <img 
+              <img 
               src={product.thumbnail_url || `https://placehold.co/1200x800?text=${encodeURIComponent(product.name)}`} 
               alt={product.name}
               className="max-w-full max-h-full object-contain cursor-pointer"

@@ -42,9 +42,9 @@ class ProductDataHandler:
             index_mapping = {
                 "settings": {
                     "index": {
-                        "refresh_interval": "5s",
-                        "number_of_shards": 1,    
-                        "number_of_replicas": 1 
+                        "refresh_interval": "5s",  # Increase refresh interval
+                        "number_of_shards": 1,     # If data size allows
+                        "number_of_replicas": 1    # Adjust based on needs
                     },
                     "number_of_shards": 1,
                     "number_of_replicas": 1,
