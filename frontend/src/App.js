@@ -960,7 +960,13 @@ useEffect(() => {
                 Search Profiles: {searchProfiles.length}
               </div>
               <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-black'}`}>
-                Indexed Products: 3,245
+                Indexed Products: 5,467
+              </div>
+              <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-black'}`}>
+                Indexed Products: 5,467
+              </div>
+              <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-black'}`}>
+                Total Shards: 1
               </div>
               {/* Dark mode toggle */}
               <button 
@@ -1258,6 +1264,7 @@ useEffect(() => {
           <div className="space-y-3">{/* Changed from max-h-72 to allow content to flow naturally */}
             {similarProducts.length > 0 ? (
               similarProducts.map((product, index) => (
+                <a href={product.url} target='#'>
                 <div 
                   key={product.id || index} 
                   className={`flex items-start py-3 ${darkMode ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-100 hover:bg-gray-50'} border-b last:border-0 transition-colors rounded-md px-2`}
@@ -1299,7 +1306,7 @@ useEffect(() => {
                       <div className="text-xs px-2 py-1 bg-[#FE90EA] text-black rounded-full inline-block">Similarity: {product.score}</div>
                     </div>
                   </div>
-                </div>
+                </div> </a>
               ))
             ) : (
               <div className="flex items-center justify-center py-6 text-sm text-gray-500">
@@ -1328,7 +1335,10 @@ useEffect(() => {
             <div className="mb-4 md:mb-0">
               <div className="flex items-center">
                 <span className="font-semibold text-sm mr-1">© {currentYear} Clusterise Inc.</span>
-                <span className="text-xs">All Rights Reserved (to their respective owners). Interface design and software © Clusterise Inc.</span>
+                <span className="text-xs">All Rights Reserved. </span>
+                <span className="text-xs ml-2">
+                Interface design and software © Clusterise Inc.
+              </span>
               </div>
             </div>
             
@@ -1341,7 +1351,7 @@ useEffect(() => {
           
           <div className={`text-xs mt-4 ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
             This application is for demonstration purposes only. Gumroad is a trademark of Gumroad, Inc.
-            Search data and interface are not affiliated with, endorsed by, or sponsored by Gumroad.
+            Search interface is not affiliated with, endorsed by, or sponsored by Gumroad.
           </div>
         </div>
       </footer>
@@ -1370,12 +1380,12 @@ function ScrollingQueryExamples({ setQuery, handleSearch, darkMode }) {
     }, 3000); // Change example every 3 seconds
   
     return () => clearInterval(interval);
-  }, [queryExamples.length]);
+  });
   
   // Handle click on a query example
   const handleQueryClick = (query) => {
     setQuery(query);
-    handleSearch(); // Use the passed-in handleSearch from props instead of a stale performSearch reference
+    performSearch(query);
   };
   
   return (
