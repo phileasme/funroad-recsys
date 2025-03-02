@@ -105,20 +105,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-
 @app.on_event("shutdown")
 async def shutdown_event():
     if app_state.es_client:
         await app_state.es_client.close()
 
-
-# Mount static files directory
-static_dir = pathlib.Path(__file__).parent.parent / "static"
-if not static_dir.exists():
-    logger.info(f"Creating static directory: {static_dir}")
-    static_dir.mkdir(parents=True, exist_ok=True)
-app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 # Dependencies
 async def get_es_client():
@@ -137,18 +128,6 @@ async def get_colbert():
         raise HTTPException(status_code=503, detail="Colbert model not initialized")
     return app_state.colbert_embed
 
-# Root endpoint - serve the search UI
-@app.get("/", response_class=HTMLResponse)
-async def read_root():
-    html_file = static_dir / "index.html"
-    logger.info(f"Looking for HTML file at: {html_file}")
-    if html_file.exists():
-        with open(html_file, "r") as f:
-            return f.read()
-    else:
-        logger.warning(f"HTML file not found at: {html_file}")
-        return RedirectResponse(url="/docs")
-
 @app.post("/search_fuzzy", response_model=SearchResponse)
 async def search_fuzzy(
     query: SearchQuery,
@@ -161,11 +140,12 @@ async def search_fuzzy(
         embedding_result = clip.get_text_embedding(query.query)
         query_embedding = embedding_result.embedding
         
+        
         # Fuzzy text search
         text_response = await es_client.search(
             index='products',
             body={
-                "_source": ["description", "name", "thumbnail_url"],
+                "_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"],
                 "query": {
                     "bool": {
                         "should": [
@@ -218,11 +198,16 @@ async def search_fuzzy(
         results = []
         if text_response and 'hits' in text_response and 'hits' in text_response['hits']:
             for hit in text_response['hits']['hits']:
+                print(hit)
                 results.append(SearchResult(
                     score=hit['_score'],
                     name=hit['_source'].get('name', ''),
                     description=hit['_source'].get('description', ''),
-                    thumbnail_url=hit['_source'].get('thumbnail_url', '')
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                    ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                    price_cents=hit['_source'].get("price_cents", 0),
+                    url=hit['_source'].get("url", "")
                 ))
         
         # Sort and limit results
@@ -250,7 +235,7 @@ async def search_text_based(
         response = await es_client.search(
             index='products',
             body={
-                "_source": ["description", "name", "thumbnail_url"],
+                "_source": ["description", "name", "thumbnail_url", "id","ratings", "price_cents", "url"],
                 "knn": {
                     "field": "description_clip_embedding",
                     "query_vector": query_embedding.tolist()[0],
@@ -301,7 +286,7 @@ async def search_colbert(
         response = await es_client.search(
             index='products',
             body={
-                "_source": ["description", "name", "thumbnail_url"],
+                "_source": ["description", "name", "thumbnail_url", "id","ratings", "price_cents", "url"],
                 "knn": {
                     "field": "description_embedding",
                     "query_vector": query_embedding.tolist()[0],
@@ -352,7 +337,7 @@ async def search_vision(
         response = await es_client.search(
             index='products',
             body={
-                "_source": ["description", "name", "thumbnail_url"],
+                "_source": ["description", "name", "thumbnail_url", "id","ratings", "price_cents", "url"],
                 "knn": {
                     "field": "image_embedding",
                     "query_vector": query_embedding.tolist()[0],
@@ -403,7 +388,7 @@ async def search_combined(
             response = await es_client.search(
                 index='products',
                 body={
-                    "_source": ["description", "name", "thumbnail_url"],
+                    "_source": ["description", "name", "thumbnail_url", "id","ratings", "price_cents", "url"],
                     "retriever": {
                         "rrf": {
                             "retrievers": [
@@ -478,7 +463,7 @@ async def search_lame_combined(
         text_response = await es_client.search(
             index='products',
             body={
-                "_source": ["description", "name", "thumbnail_url"],
+                "_source": ["description", "name", "thumbnail_url", "id","ratings", "price_cents", "url"],
                 "query": {
                     "bool": {
                         "should": [
@@ -515,7 +500,7 @@ async def search_lame_combined(
             knn_response = await es_client.search(
                 index='products',
                 body={
-                    "_source": ["description", "name", "thumbnail_url"],
+                    "_source": ["description", "name", "thumbnail_url", "id","ratings", "price_cents", "url"],
                     "knn": {
                         "field": field,  # Use description embedding
                         "query_vector": query_embedding.tolist()[0],
@@ -602,7 +587,6 @@ def normalize_score(score, max_score, min_val=0.3, max_val=1.0):
         return min_val
     return min(max_val, max(min_val, score / max_score))
     
-
 @app.post("/search_combined_optimized_simplified", response_model=SearchResponse)
 async def search_combined_optimized(
     query: SearchQuery,
@@ -623,10 +607,10 @@ async def search_combined_optimized(
     clip_future = loop.run_in_executor(
         executor, lambda: clip.get_text_embedding(query.query).embedding.tolist()[0]
     )
-    
+
     async def bm25_fuzzy_search():
         body = {
-            "_source": ["description", "name", "thumbnail_url", "id"],
+            "_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"],
             "query": {
                 "bool": {
                     "should": [
@@ -646,7 +630,7 @@ async def search_combined_optimized(
     async def colbert_search():
         colbert_vector = colbert.get_colbert_sentence_embedding(query.query).embedding.tolist()[0]
         body = {
-            "_source": ["description", "name", "thumbnail_url", "id"],
+            "_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"],
             "knn": {
                 "field": "description_embedding",
                 "query_vector": colbert_vector,
@@ -664,7 +648,7 @@ async def search_combined_optimized(
             clip_vector = clip.get_text_embedding(query.query).embedding.tolist()[0]
         
         body = {
-            "_source": ["description", "name", "thumbnail_url", "id"],
+            "_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"],
             "knn": {
                 "field": "image_embedding",
                 "query_vector": clip_vector,
@@ -685,7 +669,16 @@ async def search_combined_optimized(
         score = hit['_score'] / (max_bm25_fuzzy_score * 1.2)
         if query.query.lower() in hit['_source'].get('name', '').lower():
             score = min(1.0, score * 1.5)
-        results.append(SearchResult(score=score, **hit['_source']))
+        results.append(SearchResult(
+                    score=score,
+                    name=hit['_source'].get('name', ''),
+                    description=hit['_source'].get('description', ''),
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                    ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                    price_cents=hit['_source'].get("price_cents", 0),
+                    url=hit['_source'].get("url", "")
+                ))
     
     # Early exit if BM25/Fuzzy results are strong
     if max_bm25_fuzzy_score >= high_score_threshold:
@@ -698,7 +691,16 @@ async def search_combined_optimized(
         if doc_id not in seen_ids:
             seen_ids.add(doc_id)
             score = min(0.7, max(0.3, hit['_score']))
-            results.append(SearchResult(score=score, **hit['_source']))
+            results.append(SearchResult(
+                    score=score,
+                    name=hit['_source'].get('name', ''),
+                    description=hit['_source'].get('description', ''),
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                    ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                    price_cents=hit['_source'].get("price_cents", 0),
+                    url=hit['_source'].get("url", "")
+                ))
     
     # Phase 3: CLIP Search (only if needed)
     if not results or results[0].score < min_acceptable_score:
@@ -708,11 +710,19 @@ async def search_combined_optimized(
             if doc_id not in seen_ids:
                 seen_ids.add(doc_id)
                 score = min(0.6, max(0.2, hit['_score']))
-                results.append(SearchResult(score=score, **hit['_source']))
+                results.append(SearchResult(
+                    score=score,
+                    name=hit['_source'].get('name', ''),
+                    description=hit['_source'].get('description', ''),
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                    ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                    price_cents=hit['_source'].get("price_cents", 0),
+                    url=hit['_source'].get("url", "")
+                ))
     
     results.sort(key=lambda x: x.score, reverse=True)
     return SearchResponse(results=results[:query.k], query_time_ms=(time.time() - start_time) * 1000)
-
 
 @app.post("/search_combined_simplified_but_slow", response_model=SearchResponse)
 async def search_combined_optimal(
@@ -735,8 +745,9 @@ async def search_combined_optimal(
     )
 
     # BM25 + Fuzzy Matching
+    
     bm25_query = {
-        "_source": ["description", "name", "thumbnail_url", "id"],
+        "_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"],
         "query": {
             "bool": {
                 "should": [
@@ -756,14 +767,19 @@ async def search_combined_optimal(
         seen_ids.add(doc_id)
         results.append(SearchResult(
             score=normalize_score(hit.get('_score', 0), max_score_bm25),
-            name=hit['_source'].get('name', ''),
-            description=hit['_source'].get('description', ''),
-            thumbnail_url=hit['_source'].get('thumbnail_url', '')
-        ))
+                name=hit['_source'].get('name', ''),
+                description=hit['_source'].get('description', ''),
+                thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                price_cents=hit['_source'].get("price_cents", 0),
+                url=hit['_source'].get("url", "")
+            ))
+        
 
     # ColBERT Semantic Search
     colbert_vector = colbert.get_colbert_sentence_embedding(query.query).embedding.tolist()[0]
-    colbert_query = {"_source": ["description", "name", "thumbnail_url", "id"], "knn": {"field": "description_embedding", "query_vector": colbert_vector, "k": query.k, "num_candidates": query.num_candidates}}
+    colbert_query = {"_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"], "knn": {"field": "description_embedding", "query_vector": colbert_vector, "k": query.k, "num_candidates": query.num_candidates}}
     colbert_response = await es_client.search(index='products', body=colbert_query)
     colbert_hits = colbert_response['hits']['hits']
     
@@ -775,13 +791,17 @@ async def search_combined_optimal(
                 score=normalize_score(hit.get('_score', 0), 1.0),
                 name=hit['_source'].get('name', ''),
                 description=hit['_source'].get('description', ''),
-                thumbnail_url=hit['_source'].get('thumbnail_url', '')
+                thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                price_cents=hit['_source'].get("price_cents", 0),
+                url=hit['_source'].get("url", "")
             ))
     
     # CLIP Vision Search (If Needed)
     if not results or results[0].score < min_acceptable_score:
         clip_vector = await asyncio.wait_for(clip_future, timeout=0.5)
-        clip_query = {"_source": ["description", "name", "thumbnail_url", "id"], "knn": {"field": "image_embedding", "query_vector": clip_vector, "k": query.k, "num_candidates": query.num_candidates}}
+        clip_query = {"_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"], "knn": {"field": "image_embedding", "query_vector": clip_vector, "k": query.k, "num_candidates": query.num_candidates}}
         clip_response = await es_client.search(index='products', body=clip_query)
         
         for hit in clip_response['hits']['hits']:
@@ -792,7 +812,11 @@ async def search_combined_optimal(
                     score=normalize_score(hit.get('_score', 0), 0.6),
                     name=hit['_source'].get('name', ''),
                     description=hit['_source'].get('description', ''),
-                    thumbnail_url=hit['_source'].get('thumbnail_url', '')
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                    ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                    price_cents=hit['_source'].get("price_cents", 0),
+                    url=hit['_source'].get("url", "")
                 ))
     
     results.sort(key=lambda x: x.score, reverse=True)
@@ -1035,7 +1059,7 @@ async def search_combined_optimal(
             quick_response = await es_client.search(
                 index='products',
                 body={
-                    "_source": ["description", "name", "thumbnail_url"],
+                    "_source": ["description", "name", "thumbnail_url", "id","ratings", "price_cents", "url"],
                     "query": {
                         "match": {
                             "name": query.query
@@ -1077,7 +1101,7 @@ async def search_fallback(
         response = await es_client.search(
             index='products',
             body={
-                "_source": ["description", "name", "thumbnail_url"],
+                "_source": ["description", "name", "thumbnail_url", "id","ratings", "price_cents", "url"],
                 "query": {
                     "bool": {
                         "should": [

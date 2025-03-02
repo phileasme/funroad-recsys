@@ -11,6 +11,11 @@ class SearchResult(BaseModel):
     name: str
     description: Optional[str] = None
     thumbnail_url: Optional[str] = None
+    ratings_count: Optional[int] = None
+    ratings_score: Optional[float] = None
+    price_cents: Optional[int] = None
+    url: Optional[str] = None
+
 
 class SearchResponse(BaseModel):
     results: List[SearchResult]
@@ -19,5 +24,5 @@ class SearchResponse(BaseModel):
 class HealthStatus(BaseModel):
     status: str
     elasticsearch: bool
-    is_model_loaded: bool  # Renamed to avoid warning
+    is_model_loaded: bool
     device: str

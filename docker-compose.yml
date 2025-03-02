@@ -54,7 +54,6 @@ services:
     build:
       context: ./recommendation
       dockerfile: Dockerfile.api
-    
     image: recommendation-api:latest
     environment:
       - ELASTICSEARCH_URL=http://es01:9200
@@ -72,6 +71,26 @@ services:
     command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
     restart: unless-stopped
 
+  # Frontend React App
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # This volume prevents node_modules from being overwritten
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      # Hot reload support
+      - CHOKIDAR_USEPOLLING=true  
+      - WDS_SOCKET_PORT=3000
+    networks:
+      - elastic-net
+    depends_on:
+      - api-service
+      
 networks:
   elastic-net:
     driver: bridge
