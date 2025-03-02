@@ -80,7 +80,7 @@ async def lifespan(app: FastAPI):
     yield
 
     # Shutdown
-    if await app_state.es_client:
+    if app_state.es_client:
         await app_state.es_client.close()
         
     if app_state.clip_embed:
@@ -315,6 +315,116 @@ async def search_colbert(
         logger.error(f"Search error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/similar_vision", response_model=SearchResponse)
+async def similar_vision(
+    query: SearchQuery,
+    es_client: Elasticsearch = Depends(get_es_client),
+    clip: CLIPEmbedding = Depends(get_clip)
+):
+    """
+    Perform semantic search using CLIP embeddings, with option to exclude a specific ID
+    """
+    start_time = time.time()
+    try:
+        image_embedding = None
+        query_embedding = None
+        
+        # Debug info
+        logger.info(f"Received query: {query.dict()}")
+        logger.info(f"ID present: {query.id is not None}")
+        
+        # Get embedding from ID if provided
+        if query.id:
+            logger.info(f"Fetching embeddings for ID: {query.id}")
+            response = await es_client.search(
+                index='products',
+                body={
+                    "_source": ["image_embedding", "description_clip_embedding"],
+                    "query": {
+                        "term": {
+                            "_id": query.id
+                        }
+                    }
+                }
+            )
+            
+            # Debug the response
+            logger.info(f"ID lookup response hit count: {len(response['hits']['hits']) if 'hits' in response and 'hits' in response['hits'] else 0}")
+            
+            if response and 'hits' in response and 'hits' in response['hits'] and len(response['hits']['hits']) > 0:
+                source = response['hits']['hits'][0].get('_source', {})
+                
+                # Debug the source
+                logger.info(f"Source fields: {list(source.keys())}")
+                
+                # Check if embeddings exist in the source
+                image_embedding = source.get("image_embedding")
+                query_embedding = source.get("description_clip_embedding")
+                
+                # Debug embedding extraction
+                logger.info(f"Retrieved image_embedding: {'Yes' if image_embedding else 'No'}")
+                logger.info(f"Retrieved description_clip_embedding: {'Yes' if query_embedding else 'No'}")
+        
+        # Fall back to generating embedding from the query text
+        if not (query_embedding or image_embedding):
+            logger.info(f"No embeddings found for ID, generating from query: {query.query}")
+            embedding_result = clip.get_text_embedding(query.query)
+            query_embedding = embedding_result.embedding.tolist()[0]
+        
+        # Use the best available embedding
+        search_vector = image_embedding if image_embedding else query_embedding
+        
+        logger.info(f"Using search vector of type: {'image_embedding' if image_embedding else 'query_embedding'}")
+        logger.info(f"Vector length: {len(search_vector) if search_vector else 0}")
+        
+        # Prepare the search body with bool query to exclude the specified ID
+        search_body = {
+            "_source": ["description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"],
+            "knn": {
+                "field": "image_embedding",
+                "query_vector": search_vector,
+                "k": query.k,
+                "num_candidates": query.num_candidates
+            }
+        }
+        
+        # Add bool query to exclude the specified ID if provided
+        search_body["query"] = {
+            "bool": {
+                "must_not": [
+                    {"term": {"_id": query.id}}
+                ]
+            }
+        }
+        
+        # Perform search
+        response = await es_client.search(
+            index='products',
+            body=search_body
+        )
+        
+        # Process results
+        results = []
+        if response and 'hits' in response and 'hits' in response['hits']:
+            for hit in response['hits']['hits']:
+                results.append(SearchResult(
+                    score=hit['_score'],
+                    name=hit['_source'].get('name', ''),
+                    description=hit['_source'].get('description', ''),
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                    ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                    price_cents=hit['_source'].get("price_cents", 0),
+                    url=hit['_source'].get("url", ""),
+                    id=hit.get('_id', '')  # Include the document ID in results
+                ))
+        
+        query_time = (time.time() - start_time) * 1000  # Convert to milliseconds
+        return SearchResponse(results=results, query_time_ms=query_time)
+        
+    except Exception as e:
+        logger.error(f"Search error: {e}", exc_info=True)  # Include full traceback
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Search endpoints
 @app.post("/search_vision", response_model=SearchResponse)
@@ -356,7 +466,11 @@ async def search_vision(
                     score=hit['_score'],
                     name=hit['_source'].get('name', ''),
                     description=hit['_source'].get('description', ''),
-                    thumbnail_url=hit['_source'].get('thumbnail_url', '')
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                    ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                    price_cents=hit['_source'].get("price_cents", 0),
+                    url=hit['_source'].get("url", "")
                 ))
         
         query_time = (time.time() - start_time) * 1000  # Convert to milliseconds
@@ -435,7 +549,11 @@ async def search_combined(
                     score=hit['_score'],
                     name=hit['_source'].get('name', ''),
                     description=hit['_source'].get('description', ''),
-                    thumbnail_url=hit['_source'].get('thumbnail_url', '')
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                    ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                    price_cents=hit['_source'].get("price_cents", 0),
+                    url=hit['_source'].get("url", "")
                 ))
         
         query_time = (time.time() - start_time) * 1000  # Convert to milliseconds
@@ -544,11 +662,15 @@ async def search_lame_combined(
                     
                     source = hit.get('_source', {})
                     combined_results.append(SearchResult(
-                        score=score,
-                        name=source.get('name', ''),
-                        description=source.get('description', ''),
-                        thumbnail_url=source.get('thumbnail_url', '')
-                    ))
+                    score=score,
+                    name=hit['_source'].get('name', ''),
+                    description=hit['_source'].get('description', ''),
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
+                    ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
+                    price_cents=hit['_source'].get("price_cents", 0),
+                    url=hit['_source'].get("url", "")
+                ))
         
         # Process both result sets with different weights and strategies
         process_hits(text_response.get('hits'), 0.7, is_text_search=True)
@@ -766,14 +888,15 @@ async def search_combined_optimal(
         doc_id = hit.get('_id')
         seen_ids.add(doc_id)
         results.append(SearchResult(
-            score=normalize_score(hit.get('_score', 0), max_score_bm25),
+                score=normalize_score(hit.get('_score', 0), max_score_bm25),
                 name=hit['_source'].get('name', ''),
                 description=hit['_source'].get('description', ''),
                 thumbnail_url=hit['_source'].get('thumbnail_url', ''),
                 ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
                 ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
                 price_cents=hit['_source'].get("price_cents", 0),
-                url=hit['_source'].get("url", "")
+                url=hit['_source'].get("url", ""),
+                id=doc_id
             ))
         
 
@@ -795,7 +918,8 @@ async def search_combined_optimal(
                 ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
                 ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
                 price_cents=hit['_source'].get("price_cents", 0),
-                url=hit['_source'].get("url", "")
+                url=hit['_source'].get("url", ""),
+                id=doc_id
             ))
     
     # CLIP Vision Search (If Needed)
@@ -816,7 +940,8 @@ async def search_combined_optimal(
                     ratings_count=hit['_source'].get("ratings", {}).get("count", 0),
                     ratings_score=hit['_source'].get("ratings", {}).get("average", -1.0),
                     price_cents=hit['_source'].get("price_cents", 0),
-                    url=hit['_source'].get("url", "")
+                    url=hit['_source'].get("url", ""),
+                    id=doc_id
                 ))
     
     results.sort(key=lambda x: x.score, reverse=True)

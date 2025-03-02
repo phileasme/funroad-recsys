@@ -5,6 +5,7 @@ class SearchQuery(BaseModel):
     query: str = Field(..., min_length=1, max_length=1000)
     k: int = Field(default=10, ge=1, le=100)
     num_candidates: int = Field(default=100, ge=10, le=500)
+    id: Optional[str] = Field(default="", min_length=1, max_length=1000)
 
 class SearchResult(BaseModel):
     score: float
@@ -15,6 +16,7 @@ class SearchResult(BaseModel):
     ratings_score: Optional[float] = None
     price_cents: Optional[int] = None
     url: Optional[str] = None
+    id: Optional[str] = None
 
 
 class SearchResponse(BaseModel):
