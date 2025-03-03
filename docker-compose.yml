@@ -70,6 +70,8 @@ services:
       - ./huggingface_cache:/root/.cache/huggingface
     command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
     restart: unless-stopped
+    depends_on:
+        condition: service_healthy
 
   # Frontend React App
   frontend:

@@ -4,6 +4,7 @@ import { Search, BarChart as BarChartIcon, PieChart, Layers, Settings, TrendingU
 import { searchProducts, getSimilarProducts } from './services/api';
 
 
+// Import existing styles
 const darkModeStyles = `
   /* Dark mode styles */
   body.dark-mode {
@@ -45,18 +46,18 @@ const customScrollbarStyles = `
   }
   
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
   }
   
   .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
-    margin: 4px 0;
+    margin: 3px 0;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: rgba(254, 144, 234, 0.5);
     border-radius: 20px;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -86,8 +87,10 @@ const customScrollbarStyles = `
   }
 `;
 
-// Add this to your updatedDarkModeStyles
-const updatedDarkModeStyles = `
+
+
+// Combine all styles
+const allStyles = `
   ${darkModeStyles}
   ${customScrollbarStyles}
 `;
@@ -131,14 +134,12 @@ const defaultProfileData = {
 
 // Create default data for all profiles
 const searchProfiles = [
-  { id: 'search_text_based', name: 'Text-Based Search' },
   { id: 'search_fuzzy', name: 'Fuzzy Search' },
   { id: 'search_vision', name: 'Vision Search' },
-  { id: 'search_colbert', name: 'ColBERT Search' },
-  { id: 'search_combined', name: 'Combined Search' },
-  { id: 'search_lame_combined', name: 'Basic Combined' },
+  { id: 'search_colbert', name: 'Sentence Embedding Search' },
   { id: 'search_combined_v0_7', name: ' Combined No rating', version: "(v0.7)" },
-  {id: 'search_combined_v0_8', name: 'Combine Perf Optimized', version: "(v0.8)"}
+  {id: 'search_combined_v0_8', name: 'Combine with ratings', version: "(v0.8)" },
+  // 
 ];
 
 // Initialize all profiles that don't have specific data
@@ -174,21 +175,21 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   const [cardHeight, setCardHeight] = useState(null);
   
   const handleMouseEnter = (e) => {
-      // Call the parent's hover handler
-      if (onHover) onHover(product, e);
-      
-      // Set our local hover state
-      setIsHovered(true);
-    };
+    // Call the parent's hover handler
+    if (onHover) onHover(product, e);
+    
+    // Set our local hover state
+    setIsHovered(true);
+  };
     
   const handleMouseLeave = () => {
-      // Call the parent's leave handler
-      if (onLeave) onLeave();
-      
-      // Reset our local hover state
-      setIsHovered(false);
-      setMouseOverImage(false);
-    };
+    // Call the parent's leave handler
+    if (onLeave) onLeave();
+    
+    // Reset our local hover state
+    setIsHovered(false);
+    setMouseOverImage(false);
+  };
     
   // Check if product contains design-related keywords
   const isDesignRelated = useMemo(() => {
@@ -203,7 +204,8 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   // Effect to calculate and store card height on mount
   useEffect(() => {
     if (cardRef.current) {
-      const height = cardRef.current.clientHeight;
+      // Use a fixed height for cards that better matches the reference images
+      const height = 400; // Adjusted to match reference
       setCardHeight(height);
     }
   }, []);
@@ -268,11 +270,11 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     <>
       <div
         ref={cardRef}
-        className={`${darkMode ? 'bg-gray-700 border-gray-600 hover:border-[#FE90EA]' : 'bg-white border-gray-200 hover:border-[#FE90EA]'} border-2 rounded-lg overflow-hidden hover:shadow-lg transition-shadow`}
+        className={`${darkMode ? 'bg-gray-700 border-gray-600 hover:border-[#FE90EA]' : 'bg-white border-gray-200 hover:border-[#FE90EA]'} border-2 rounded-lg overflow-hidden hover:shadow-lg transition-shadow product-card`}
         style={{ 
-          // height: cardHeight ? `${cardHeight}px` : 'auto', 
-          height: "390px",
-          position: 'relative'
+          height: cardHeight ? `${cardHeight}px` : 'auto', 
+          position: 'relative',
+          maxHeight: '300px' // Adjusted to match reference
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -285,12 +287,12 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
               top: 0,
               left: 0,
               width: '100%',
-              height: shouldShowAsHover ? '100%' : '192px', // Fixed height normally, full height on hover
-              padding: shouldShowAsHover ? '12px' : '0',
+              height: shouldShowAsHover ? '100%' : '160px',
+              padding: shouldShowAsHover ? '8px' : '0',
               transition: 'padding 0.3s ease, height 0.3s ease',
               zIndex: 1,
               display: 'flex',
-              alignItems: shouldShowAsHover ? 'flex-start' : 'center', // Position image at top when hovered
+              alignItems: shouldShowAsHover ? 'flex-start' : 'center',
               justifyContent: 'center',
               cursor: shouldShowAsHover && mouseOverImage ? 'zoom-in' : 'pointer',
             }}
@@ -306,7 +308,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
                 width: '100%',
                 height: '100%',
                 objectFit: shouldShowAsHover ? 'contain' : 'cover',
-                objectPosition: shouldShowAsHover ? 'top' : 'center', // Align to top when hovered
+                objectPosition: shouldShowAsHover ? 'top' : 'center',
                 transition: 'object-fit 0.3s ease, object-position 0.3s ease',
               }}
               onError={(e) => {
@@ -319,12 +321,12 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
               <div 
                 style={{
                   position: 'absolute',
-                  top: '20px',
-                  right: '20px',
+                  top: '16px',
+                  right: '16px',
                   backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)',
                   borderRadius: '50%',
-                  width: '40px',
-                  height: '40px',
+                  width: '32px',
+                  height: '32px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -333,8 +335,8 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
                 }}
               >
                 <svg 
-                  width="24" 
-                  height="24" 
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke={darkMode ? "white" : "black"} 
@@ -356,18 +358,18 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
             <div
               style={{
                 position: 'absolute',
-                bottom: '12px',
-                left: '12px',
-                right: '12px',
+                bottom: '8px',
+                left: '8px',
+                right: '8px',
                 zIndex: 20,
                 backgroundColor: darkMode ? 'rgba(26, 32, 44, 0.85)' : 'rgba(255, 255, 255, 0.85)',
-                padding: '10px',
-                borderRadius: '8px',
+                padding: '8px',
+                borderRadius: '6px',
                 backdropFilter: 'blur(2px)',
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
               }}
             >
-              <h3 className={`font-medium text-lg ${darkMode ? 'text-white' : 'text-gray-800'} mb-1 line-clamp-1`}>
+              <h3 className={`font-medium text-sm ${darkMode ? 'text-white' : 'text-gray-800'} mb-1 line-clamp-1`}>
                 {product.name}
               </h3>
               <div className="flex items-center mb-1">
@@ -375,7 +377,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
                   <>
                     <div className="flex text-yellow-400">
                       {[...Array(5)].map((_, i) => (
-                        <span key={i} className="text-sm">
+                        <span key={i} className="text-xs">
                           {i < Math.floor(product.ratings_score) ? "★" : "☆"}
                         </span>
                       ))}
@@ -388,10 +390,10 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
               </div>
               <div className="flex items-center justify-between mt-1">
                 <div className="flex items-center">
-                  <span className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'} mr-2`}>
+                  <span className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'} mr-2`}>
                     ${(product.price_cents / 100).toFixed(2)}
                   </span>
-                  <span className={`inline-flex items-center px-1.5 py-0.5 rounded-md ${darkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-200 text-black'} text-xs font-medium`}>
+                  <span className={`inline-flex items-center px-1 py-0.5 rounded-md ${darkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-200 text-black'} text-xs font-medium`}>
                     Score: {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
                   </span>
                 </div>
@@ -399,7 +401,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
                 <a 
                   href={product.url || "#"} 
                   target="#"
-                  className="inline-flex items-center justify-center px-3 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
+                  className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
                   onClick={(e) => e.stopPropagation()}
                 >
                   View details
@@ -410,11 +412,11 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
           
           {/* Price tag - always visible when not in hover mode */}
           {product.price_cents !== undefined && !shouldShowAsHover && (
-            <div className="absolute rounded-md top-4 right-5 flex items-center" style={{ zIndex: 30 }}>
-              <div className="relative rounded-md bg-[#FE90EA] text-black font-medium py-0 px-1 text-lg border border-t-transparent border-l-black border-r-transparent border-b-black">
+            <div className="absolute rounded-md top-3 right-3 flex items-center" style={{ zIndex: 30 }}>
+              <div className="relative rounded-md bg-[#FE90EA] text-black font-medium py-0 px-1 text-base border border-t-transparent border-l-black border-r-transparent border-b-black">
                 ${(product.price_cents / 100).toFixed(2)}
-                <div className="absolute -right-[5px] -top-[1px] w-0 h-0 border-t-[10px] border-b-[9px] border-l-[7px] border-t-transparent border-b-transparent border-l-black"></div>
-                <div className="absolute -right-[5px] bottom-[1px] w-0 h-0 border-t-[9px] border-b-[9px] border-l-[7px] border-t-transparent border-b-transparent border-l-[#FE90EA]"></div>
+                <div className="absolute -right-[4px] -top-[1px] w-0 h-0 border-t-[8px] border-b-[7px] border-l-[5px] border-t-transparent border-b-transparent border-l-black"></div>
+                <div className="absolute -right-[4px] bottom-[1px] w-0 h-0 border-t-[7px] border-b-[7px] border-l-[5px] border-t-transparent border-b-transparent border-l-[#FE90EA]"></div>
               </div>
             </div>
           )}
@@ -422,7 +424,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
           {/* Design related label - only visible for design products when not hovered */}
           {isDesignRelated && !isHovered && (
             <div 
-              className={`absolute top-2 left-2 text-xs font-medium px-2 py-1 rounded-full ${
+              className={`absolute top-2 left-2 text-xs font-medium px-1.5 py-0.5 rounded-full ${
                 darkMode ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800'
               }`}
               style={{ zIndex: 25 }}
@@ -431,56 +433,45 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
             </div>
           )}
           
-          {/* Wide image label - useful for debugging (can be removed) */}
-          {isWideImage && !isHovered && false && ( // Set to true for debugging
-            <div 
-              className={`absolute top-2 left-2 text-xs font-medium px-2 py-1 rounded-full ${
-                darkMode ? 'bg-green-600 text-white' : 'bg-green-100 text-green-800'
-              }`}
-              style={{ zIndex: 25 }}
-            >
-              Wide
-            </div>
-          )}
-          
           {/* Standard details section - only rendered when not in hover mode */}
           {showDetails && !shouldShowAsHover && (
             <div 
               style={{ 
-                padding: '1rem',
+                padding: '0.75rem',
               }}
             >
-              <h3 className={`font-medium text-lg ${darkMode ? 'text-gray-100' : 'text-gray-800'} mb-2 line-clamp-1`}>{product.name}</h3>
+              <h3 className={`font-medium text-sm ${darkMode ? 'text-gray-100' : 'text-gray-800'} mb-1 line-clamp-1`}>{product.name}</h3>
               
+            
               {/* Rating display with stars */}
-              {product.ratings_score !== undefined && (
-                <div className="flex items-center mb-2">
+              { product.ratings_count > 0 && product.ratings_score !== undefined && (
+                <div className="flex items-center mb-1">
                   <div className="flex text-yellow-400">
                     {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-lg">
+                      <span key={i} className="text-xs">
                         {i < Math.floor(product.ratings_score) ? "★" : "☆"}
                       </span>
                     ))}
                   </div>
-                  <span className={`ml-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <span className={`ml-1 text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                     {product.ratings_score} {product.ratings_count > 0 ? `(${product.ratings_count})` : ''}
                   </span>
                 </div>
               )}
               
-              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} text-sm mb-4 line-clamp-2`}>
+              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} text-xs mb-2 line-clamp-2`}>
                 {product.description || "No description available."}
               </p>
               
-              <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-100">
-                <span className={`inline-flex items-center px-2.5 py-1 rounded-md ${darkMode ? 'bg-gray-600 text-gray-200' : 'bg-black/5 text-black'} text-xs font-medium`}>
+              <div className="flex items-center justify-between mt-auto pt-1 border-t border-gray-100">
+                <span className={`inline-flex items-center px-1.5 py-0.5 rounded-md ${darkMode ? 'bg-gray-600 text-gray-200' : 'bg-black/5 text-black'} text-xs font-medium`}>
                   Score: {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
                 </span>
                 
                 <a 
                   href={product.url || "#"} 
                   target="#"
-                  className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FE90EA] border-2 border-black"
+                  className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
                 >
                   View details
                 </a>
@@ -496,20 +487,20 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
           onClick={handleCloseFullImage}
         >
           <div 
-            className="relative max-w-5xl max-h-[90vh] w-full h-full flex items-center justify-center"
+            className="relative max-w-4xl max-h-[85vh] w-full h-full flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
             <button 
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black bg-opacity-50 flex items-center justify-center text-white hover:bg-opacity-70 transition-colors"
+              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-black bg-opacity-50 flex items-center justify-center text-white hover:bg-opacity-70 transition-colors"
               onClick={handleCloseFullImage}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
             </button>
             
-              <img 
+            <img 
               src={product.thumbnail_url || `https://placehold.co/1200x800?text=${encodeURIComponent(product.name)}`} 
               alt={product.name}
               className="max-w-full max-h-full object-contain cursor-pointer"
@@ -520,7 +511,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
             />
                   
             <div className="absolute bottom-4 left-0 right-0 text-center text-white bg-black bg-opacity-50 py-2 px-4">
-              <h3 className="font-bold text-lg">{product.name}</h3>
+              <h3 className="font-bold text-base">{product.name}</h3>
               <p className="text-sm opacity-90">${(product.price_cents / 100).toFixed(2)}</p>
             </div>
           </div>
@@ -555,10 +546,11 @@ function App() {
   const searchInputRef = useRef(null);
 
 // Make sure the useEffect for style injection is in place
+
 useEffect(() => {
   // Create style element
   const styleElement = document.createElement('style');
-  styleElement.innerHTML = updatedDarkModeStyles;
+  styleElement.innerHTML = allStyles;
   document.head.appendChild(styleElement);
   
   // Cleanup when component unmounts
@@ -566,6 +558,7 @@ useEffect(() => {
     document.head.removeChild(styleElement);
   };
 }, []);
+
 
 // Create handlers for mouse enter and leave
 const handleProductPreviewEnter = (productId) => {
@@ -872,7 +865,7 @@ const handleProductHover = useCallback(async (product, event) => {
     setSimilarProducts(fakeSimilarProducts);
   }
   
-  // Set timer to show the similar products after a short delay
+  // // Set timer to show the similar products after a short delay
   hoverTimerRef.current = setTimeout(() => {
     setSelectedProduct(product);
     setShowSimilarProducts(true);
@@ -881,7 +874,7 @@ const handleProductHover = useCallback(async (product, event) => {
     if (similarProductsScrollRef.current) {
       similarProductsScrollRef.current.scrollTop = 0;
     }
-  }, 300);
+  }, 5);
 }, []);
 
 const closeSimilarProducts = useCallback(() => {
@@ -1000,10 +993,9 @@ useEffect(() => {
             <div className="hidden md:flex items-center space-x-6">
               <div>
               <a 
-                href="https://www.notion.so/Search-Discovery-Case-Study-Blog-40e476a45ad94596ad323289eac62c2c#373edaed57f9454eae0970ecb4e387c1" 
+                href="https://www.notion.so/Search-Discovery-Case-Study-Blog-40e476a45ad94596ad323289eac62c2c" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                // className={`text-sm ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'} transition-colors`}
                 className="inline-flex items-center justify-center px-3 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
               >
                 Case Study
@@ -1027,7 +1019,7 @@ useEffect(() => {
                 Indexed Products: 5,467
               </div>
               <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-black'}`}>
-                Total Shards: 1
+                Total Shards: 1 (be gentle 🙏)
               </div>
               <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-black'}`}>
                 Search Profile: v0.8
@@ -1047,7 +1039,7 @@ useEffect(() => {
           {/* Mobile navigation - only shown on small screens */}
           <div className="md:hidden mt-2 pt-2 border-t border-gray-700 flex justify-center space-x-6">
             <a 
-              href="https://notion.so" 
+              href="https://www.notion.so/Search-Discovery-Case-Study-Blog-40e476a45ad94596ad323289eac62c2c" 
               target="_blank" 
               rel="noopener noreferrer"
               className={`text-xs ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'} transition-colors`}
@@ -1310,119 +1302,122 @@ useEffect(() => {
 
       </main>
 
-      {/* Similar products popup */}
-      // Replace the entire Similar Products popup section with this updated version
-
-      {/* Similar products popup */}
-      {showSimilarProducts && selectedProduct && (
-        <div 
-          ref={(el) => {
-            similarProductsRef.current = el;
-            similarProductsScrollRef.current = el;
-          }}
-          className={`fixed ${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-xl p-5 z-50 border-2 border-[#FE90EA] custom-scrollbar`}
-          style={{
-            top: `${Math.max(hoverPosition.y, 10)}px`,
-            left: `${hoverPosition.x}px`,
-            width: '320px',
-            maxHeight: '30vh',
-            overflowY: 'auto',
-          }}
-          onMouseEnter={handlePopupMouseEnter}
-          onMouseLeave={handlePopupMouseLeave}
-        >
-          <h4 className={`font-semibold text-base mb-3 pb-2 border-b-2 border-[#FE90EA] inline-block ${darkMode ? 'text-white' : 'text-black'} py-0 px-0`}>
-            Similarity (based on image) to: <br/>"{selectedProduct.name.substring(0, 25)}{selectedProduct.name.length > 25 ? '...' : ''}"
-          </h4>
-          {/* Close Button */}
-          <button 
-            className={`p-1 rounded-full ${darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-black hover:bg-gray-100'}`}
-            onClick={closeSimilarProducts}
-            aria-label="Close similar products"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-
           <div className="space-y-3">
-            {similarProducts.length > 0 ? (
-              similarProducts.map((product, index) => (
-                <a href={product.url || "#"} target="#" key={product.id || index}>
+            {/* Similar products popup */}
+            {showSimilarProducts && selectedProduct && (
                   <div 
-                    className={`flex items-start py-3 ${darkMode ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-100 hover:bg-gray-50'} border-b last:border-0 transition-colors rounded-md px-2`}
+                    ref={(el) => {
+                      similarProductsRef.current = el;
+                      similarProductsScrollRef.current = el;
+                    }}
+                    className={`fixed ${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-xl p-2 z-50 border-2 border-[#FE90EA] custom-scrollbar`}
+                    style={{
+                      top: `${90+Math.max(hoverPosition.y, 10)}px`,
+                      left: `${hoverPosition.x}px`,
+                      width: '300px', // Fixed width that matches reference
+                      maxHeight: '320px', // Taller to match reference
+                      overflowY: 'auto',
+                    }}
+                    onMouseEnter={handlePopupMouseEnter}
+                    onMouseLeave={handlePopupMouseLeave}
                   >
-                    {/* Product Image */}
-                    <div className="w-14 h-14 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
-                      <img 
-                        src={product.thumbnail_url || `https://placehold.co/100x100?text=Similar`} 
-                        alt={product.name} 
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.src = `https://placehold.co/100x100?text=Similar`;
-                        }}
-                      />
-                    </div>
-                    
-                    {/* Product Details */}
-                    <div className="ml-3 flex-grow min-w-0">
-                      {/* Title and Price Row */}
-                      <div className="flex justify-between items-start w-full">
-                        <h4 className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} truncate max-w-[65%]`}>
-                          {product.name}
-                        </h4>
-                        {product.price_cents !== undefined && (
-                          <div className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} ml-1 flex-shrink-0`}>
-                            ${(product.price_cents / 100).toFixed(2)}
+                <div className="flex justify-between items-start pb-2">
+                  <h4 className={`font-small text-sm flex-grow pr-2 border-b-2 border-[#FE90EA] ${darkMode ? 'text-white' : 'text-black'}`}>
+                    Similarity (based on image) to:
+                    <br/>
+                    "{selectedProduct.name.substring(0, 25)}{selectedProduct.name.length > 25 ? '...' : ''}"
+                  </h4>
+                  
+                  {/* Close Button */}
+                  <button 
+                    className={`p-1 rounded-full ${darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-black hover:bg-gray-100'}`}
+                    onClick={closeSimilarProducts}
+                    aria-label="Close similar products"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {similarProducts.length > 0 ? (
+                    similarProducts.map((product, index) => (
+                      <a href={product.url || "#"} target="#" key={product.id || index} className="block">
+                        <div 
+                          className={`flex items-start py-2 ${darkMode ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-100 hover:bg-gray-50'} border-b last:border-0 transition-colors rounded-md px-2`}
+                        >
+                          {/* Product Image */}
+                          <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
+                            <img 
+                              src={product.thumbnail_url || `https://placehold.co/100x100?text=Similar`} 
+                              alt={product.name} 
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.target.src = `https://placehold.co/100x100?text=Similar`;
+                              }}
+                            />
                           </div>
-                        )}
-                      </div>
-                      
-                      {/* Ratings - Only show if greater than 0 */}
-                      {product.ratings_score > 0 && (
-                        <div className="flex items-center text-xs text-yellow-500 mt-1">
-                          {[...Array(5)].map((_, i) => (
-                            <span key={i}>
-                              {i < Math.floor(product.ratings_score) ? "★" : "☆"}
-                            </span>
-                          ))}
-                          <span className={`ml-1 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                            {product.ratings_count > 0 ? `(${product.ratings_count})` : ''}
-                          </span>
+                          
+                          {/* Product Details */}
+                          <div className="ml-3 flex-grow min-w-0">
+                            {/* Title and Price Row */}
+                            <div className="flex justify-between items-start w-full">
+                              <h4 className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} truncate max-w-[65%]`}>
+                                {product.name}
+                              </h4>
+                              {product.price_cents !== undefined && (
+                                <div className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} ml-1 flex-shrink-0`}>
+                                  ${(product.price_cents / 100).toFixed(2)}
+                                </div>
+                              )}
+                            </div>
+                            
+                            {/* Ratings - Only show if greater than 0 */}
+                            {product.ratings_score > 0 && (
+                              <div className="flex items-center text-xs text-yellow-500 mt-1">
+                                {[...Array(5)].map((_, i) => (
+                                  <span key={i} className="text-xs">
+                                    {i < Math.floor(product.ratings_score) ? "★" : "☆"}
+                                  </span>
+                                ))}
+                                <span className={`ml-1 text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                                  {product.ratings_count > 0 ? `(${product.ratings_count})` : ''}
+                                </span>
+                              </div>
+                            )}
+                            {/* Description */}
+                            {product.description && (
+                              <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} mt-1 truncate`}>
+                                {product.description}
+                              </p>
+                            )}
+                            
+                            {/* Similarity Score */}
+                            <div className="mt-2">
+                              <div className="text-xs px-2 py-0.5 bg-[#FE90EA] text-black rounded-full inline-block">
+                                Similarity: {parseFloat(product.score).toFixed(2)}
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      )}
-                      
-                      {/* Description */}
-                      {product.description && (
-                        <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} mt-1 truncate`}>
-                          {product.description}
-                        </p>
-                      )}
-                      
-                      {/* Similarity Score */}
-                      <div className="mt-2">
-                        <div className="text-xs px-2 py-1 bg-[#FE90EA] text-black rounded-full inline-block">
-                          Similarity: {product.score}
-                        </div>
-                      </div>
+                      </a>
+                    ))
+                  ) : (
+                    <div className="flex items-center justify-center py-6 text-sm text-gray-500">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-[#FE90EA]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Loading similar products...
                     </div>
-                  </div>
-                </a>
-              ))
-            ) : (
-              <div className="flex items-center justify-center py-6 text-sm text-gray-500">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-[#FE90EA]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Loading similar products...
+                  )}
+                </div>
               </div>
             )}
           </div>
-        </div>
-      )}
-
+      
     <CopyrightFooter darkMode={darkMode} />
     </div>
   );
@@ -1465,7 +1460,7 @@ useEffect(() => {
 // Updated ScrollingQueryExamples Component
 function ScrollingQueryExamples({ setQuery, performSearch, darkMode }) {
   // Sample query examples
-  const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "tennis lessons", "poker online", "preset pack", "tennis course", "ai brushes", "lightroom bundle", "fishing logo", "instagram marketing", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "tennis training", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "digital marketing", "lightroom preset", "amazon kdp", "ableton templates", "jersey 3d", "business marketing", "soccer drills", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "trading strategies", "vrchat avatar", "iphone mockup", "kdp interior", "free download", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "mobile app", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "tennis player", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "poker ranges", "notion planner", "poker tool", "chatgpt resources", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern", "betting models"];
+  const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "tennis lessons", "poker online", "preset pack", "tennis course", "ai brushes", "lightroom bundle", "fishing logo", "instagram marketing", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "tennis training", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "digital marketing", "lightroom preset", "amazon kdp", "ableton templates", "jersey 3d", "business marketing", "soccer drills", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "trading strategies", "vrchat avatar", "iphone mockup", "kdp interior", "free download", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "mobile app", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "poker ranges", "notion planner", "poker tool", "chatgpt resources", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern", "betting models"];
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const intervalRef = useRef(null);
