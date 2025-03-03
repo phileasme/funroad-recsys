@@ -29,6 +29,12 @@ from core.colbert_embeddings import ColBERTEmbedding
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+'''
+    HI! I don't expect this to run in production, the code here meant to be quick and dirty. Hence the words "prototype".
+    Given the write amount of time i'll clean up, setup up tests, modularize and comportemtalize the hell out it.
+'''
+
 # Global state
 class AppState:
     def __init__(self):
@@ -419,7 +425,7 @@ async def similar_vision(
                 
                 # Apply ratings boost for vision results (using "clip" config)
                 final_score = apply_ratings_boost(base_score, ratings_count, ratings_score, "clip")
-                
+                # final_score = base_score
                 results.append(SearchResult(
                     score=final_score,
                     name=hit['_source'].get('name', ''),
@@ -1220,20 +1226,20 @@ def calculate_wilson_ratings_boost(ratings_count, ratings_score, max_ratings=500
 # Updated RATINGS_BOOST_CONFIG to work with Wilson Score
 RATINGS_BOOST_CONFIG = {
     "default": {
-        "relevance_threshold": 0.7,  # Lower threshold to apply to more results
-        "boost_multiplier": 0.03     # Slightly stronger effect
+        "relevance_threshold": 0.7,  
+        "boost_multiplier": 0.03     
     },
     "bm25": {
-        "relevance_threshold": 0.7,
-        "boost_multiplier": 0.5 # Slightly stronger for BM25
+        "relevance_threshold": 0.5,
+        "boost_multiplier": 1
     },
     "colbert": {
         "relevance_threshold": 0.7,
         "boost_multiplier": 0.01
     },
     "clip": {
-        "relevance_threshold": 0.7,  # Slightly higher for CLIP
-        "boost_multiplier": 0.001    # More conservative for CLIP
+        "relevance_threshold": 0.7,
+        "boost_multiplier": 0.001
     }
 }
 

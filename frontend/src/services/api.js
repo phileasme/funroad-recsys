@@ -19,7 +19,7 @@ const apiClient = axios.create({
  * @param {number} numCandidates - Number of candidates to consider
  * @returns {Promise<Object>} - The search results
  */
-export const searchProducts = async (profile, query, k = 10, numCandidates = 100) => {
+export const searchProducts = async (profile, query, k = 50, numCandidates = 100) => {
   console.log(`Calling ${profile} with query: ${query}`);
   
   try {
@@ -71,7 +71,7 @@ export const getSimilarProducts = async (description, name, id, k = 10) => {
     const payload = {
       query: query,
       k: k,
-      num_candidates: 50
+      num_candidates: 100
     };
     
     // Only add the ID if it exists

@@ -4,6 +4,47 @@ import { Search, BarChart as BarChartIcon, PieChart, Layers, Settings, TrendingU
 import { searchProducts, getSimilarProducts } from './services/api';
 
 
+
+const AppStyles = `
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+`
 // Import existing styles
 const darkModeStyles = `
   /* Dark mode styles */
@@ -91,6 +132,7 @@ const customScrollbarStyles = `
 
 // Combine all styles
 const allStyles = `
+  ${AppStyles}
   ${darkModeStyles}
   ${customScrollbarStyles}
 `;
@@ -805,185 +847,185 @@ function LoadingSpinner({ query, darkMode }) {
     };
   }, []);
 // Add these new refs
-const hoverTimerRef = useRef(null);
-const similarProductsScrollRef = useRef(null);
-const [isProductHovered, setIsProductHovered] = useState(false);
-const [isPopupHovered, setIsPopupHovered] = useState(false);
-const hoverIntentTimerRef = useRef(null);
-const blindSpotTimerRef = useRef(null);
+  const hoverTimerRef = useRef(null);
+  const similarProductsScrollRef = useRef(null);
+  const [isProductHovered, setIsProductHovered] = useState(false);
+  const [isPopupHovered, setIsPopupHovered] = useState(false);
+  const hoverIntentTimerRef = useRef(null);
+  const blindSpotTimerRef = useRef(null);
 
-const handleProductHover = useCallback(async (product, event) => {
-  // Clear any existing hover timers
-  if (hoverTimerRef.current) {
-    clearTimeout(hoverTimerRef.current);
-  }
-  if (blindSpotTimerRef.current) {
-    clearTimeout(blindSpotTimerRef.current);
-  }
-  
-  // Set product as being hovered
-  setIsProductHovered(true);
-  setHoveredProduct(product);
-  
-  // Get the dimensions and position of the product card
-  const productCard = event.currentTarget;
-  const rect = productCard.getBoundingClientRect();
-  
-  // Store hover position
-  setHoverPosition({ 
-    x: rect.right + 10,
-    y: rect.top 
-  });
-  
-  // Start fetching the data immediately
-  try {
-    const data = await getSimilarProducts(product.description, product.name, product.id);
-    // Filter out the current product from results
-    const similarProducts = data.results
-      .filter(item => item.name !== product.name)
-      .map(item => ({
-        ...item,
-        score: parseFloat(item.score).toFixed(2) // Format score
-      }));
-      
-    setSimilarProducts(similarProducts);
-  } catch (error) {
-    console.error('Error fetching similar products:', error);
-    // Fallback to mock data
-    const fakeSimilarProducts = Array(5).fill(0).map((_, i) => ({
-      id: `similar-${i}`,
-      name: `Similar (images) to ${product.name} - Item ${i + 1}`,
-      description: `A product similar to ${product.name}.`,
-      thumbnail_url: `https://placehold.co/50x50?text=Similar+${i+1}`,
-      score: (Math.random() * 0.3 + 0.7).toFixed(2),
-      ratings_count: Math.floor(Math.random() * 100) + 5,
-      ratings_score: (Math.random() * 1 + 4).toFixed(1),
-      price_cents: Math.floor(Math.random() * 5000) + 500,
-      url: '#'
-    }));
-    
-    setSimilarProducts(fakeSimilarProducts);
-  }
-  
-  // // Set timer to show the similar products after a short delay
-  hoverTimerRef.current = setTimeout(() => {
-    setSelectedProduct(product);
-    setShowSimilarProducts(true);
-    
-    // Reset scroll position when showing popup
-    if (similarProductsScrollRef.current) {
-      similarProductsScrollRef.current.scrollTop = 0;
-    }
-  }, 5);
-}, []);
-
-const closeSimilarProducts = useCallback(() => {
-  setShowSimilarProducts(false);
-  setHoveredProduct(null);
-  setSelectedProduct(null);
-  setSimilarProducts([]);
-  
-  // Clear any pending timers
-  if (hoverTimerRef.current) {
-    clearTimeout(hoverTimerRef.current);
-    hoverTimerRef.current = null;
-  }
-  if (blindSpotTimerRef.current) {
-    clearTimeout(blindSpotTimerRef.current);
-    blindSpotTimerRef.current = null;
-  }
-}, []);
-
-const handleProductMouseLeave = useCallback(() => {
-  setIsProductHovered(false);
-  
-  // Use a delay before closing to handle the blind spot
-  blindSpotTimerRef.current = setTimeout(() => {
-    // Only close if popup is not being hovered
-    if (!isPopupHovered) {
-      closeSimilarProducts();
-    }
-  }, 100); 
-}, [isPopupHovered, closeSimilarProducts]);
-
-const handlePopupMouseLeave = useCallback(() => {
-  setIsPopupHovered(false);
-  
-  // Close after a short delay if product is not hovered
-  blindSpotTimerRef.current = setTimeout(() => {
-    if (!isProductHovered) {
-      closeSimilarProducts();
-    }
-  }, 100);
-}, [isProductHovered, closeSimilarProducts]);
-
-// Handle similar products popup mouse enter
-const handlePopupMouseEnter = () => {
-  // Set popup as being hovered
-  setIsPopupHovered(true);
-  
-  // Clear any pending blind spot timer
-  if (blindSpotTimerRef.current) {
-    clearTimeout(blindSpotTimerRef.current);
-    blindSpotTimerRef.current = null;
-  }
-};
-
-
-// Clean up timers on unmount
-useEffect(() => {
-  return () => {
+  const handleProductHover = useCallback(async (product, event) => {
+    // Clear any existing hover timers
     if (hoverTimerRef.current) {
       clearTimeout(hoverTimerRef.current);
     }
     if (blindSpotTimerRef.current) {
       clearTimeout(blindSpotTimerRef.current);
     }
-    if (hoverIntentTimerRef.current) {
-      clearTimeout(hoverIntentTimerRef.current);
+    
+    // Set product as being hovered
+    setIsProductHovered(true);
+    setHoveredProduct(product);
+    
+    // Get the dimensions and position of the product card
+    const productCard = event.currentTarget;
+    const rect = productCard.getBoundingClientRect();
+    
+    // Store hover position
+    setHoverPosition({ 
+      x: rect.right + 10,
+      y: rect.top 
+    });
+    
+    // Start fetching the data immediately
+    try {
+      const data = await getSimilarProducts(product.description, product.name, product.id);
+      // Filter out the current product from results
+      const similarProducts = data.results
+        .filter(item => item.name !== product.name)
+        .map(item => ({
+          ...item,
+          score: parseFloat(item.score).toFixed(2) // Format score
+        }));
+        
+      setSimilarProducts(similarProducts);
+    } catch (error) {
+      console.error('Error fetching similar products:', error);
+      // Fallback to mock data
+      const fakeSimilarProducts = Array(5).fill(0).map((_, i) => ({
+        id: `similar-${i}`,
+        name: `Similar (images) to ${product.name} - Item ${i + 1}`,
+        description: `A product similar to ${product.name}.`,
+        thumbnail_url: `https://placehold.co/50x50?text=Similar+${i+1}`,
+        score: (Math.random() * 0.3 + 0.7).toFixed(2),
+        ratings_count: Math.floor(Math.random() * 100) + 5,
+        ratings_score: (Math.random() * 1 + 4).toFixed(1),
+        price_cents: Math.floor(Math.random() * 5000) + 500,
+        url: '#'
+      }));
+      
+      setSimilarProducts(fakeSimilarProducts);
+    }
+    
+    // // Set timer to show the similar products after a short delay
+    hoverTimerRef.current = setTimeout(() => {
+      setSelectedProduct(product);
+      setShowSimilarProducts(true);
+      
+      // Reset scroll position when showing popup
+      if (similarProductsScrollRef.current) {
+        similarProductsScrollRef.current.scrollTop = 0;
+      }
+    }, 5);
+  }, []);
+
+  const closeSimilarProducts = useCallback(() => {
+    setShowSimilarProducts(false);
+    setHoveredProduct(null);
+    setSelectedProduct(null);
+    setSimilarProducts([]);
+    
+    // Clear any pending timers
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+    if (blindSpotTimerRef.current) {
+      clearTimeout(blindSpotTimerRef.current);
+      blindSpotTimerRef.current = null;
+    }
+  }, []);
+
+  const handleProductMouseLeave = useCallback(() => {
+    setIsProductHovered(false);
+    
+    // Use a delay before closing to handle the blind spot
+    blindSpotTimerRef.current = setTimeout(() => {
+      // Only close if popup is not being hovered
+      if (!isPopupHovered) {
+        closeSimilarProducts();
+      }
+    }, 100); 
+  }, [isPopupHovered, closeSimilarProducts]);
+
+  const handlePopupMouseLeave = useCallback(() => {
+    setIsPopupHovered(false);
+    
+    // Close after a short delay if product is not hovered
+    blindSpotTimerRef.current = setTimeout(() => {
+      if (!isProductHovered) {
+        closeSimilarProducts();
+      }
+    }, 100);
+  }, [isProductHovered, closeSimilarProducts]);
+
+  // Handle similar products popup mouse enter
+  const handlePopupMouseEnter = () => {
+    // Set popup as being hovered
+    setIsPopupHovered(true);
+    
+    // Clear any pending blind spot timer
+    if (blindSpotTimerRef.current) {
+      clearTimeout(blindSpotTimerRef.current);
+      blindSpotTimerRef.current = null;
     }
   };
-}, []);
 
-useEffect(() => {
-  const handleDocumentClick = (e) => {
-    if (showSimilarProducts) {
-      const popupElement = similarProductsRef.current;
-      
-      if (popupElement && !popupElement.contains(e.target)) {
-        // Check if click was on a product card
-        const isProductCard = e.target.closest('.product-card');
-        if (!isProductCard) {
-          closeSimilarProducts();
+
+  // Clean up timers on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
+      }
+      if (blindSpotTimerRef.current) {
+        clearTimeout(blindSpotTimerRef.current);
+      }
+      if (hoverIntentTimerRef.current) {
+        clearTimeout(hoverIntentTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleDocumentClick = (e) => {
+      if (showSimilarProducts) {
+        const popupElement = similarProductsRef.current;
+        
+        if (popupElement && !popupElement.contains(e.target)) {
+          // Check if click was on a product card
+          const isProductCard = e.target.closest('.product-card');
+          if (!isProductCard) {
+            closeSimilarProducts();
+          }
         }
       }
-    }
-  };
-  
-  document.addEventListener('click', handleDocumentClick);
-  return () => document.removeEventListener('click', handleDocumentClick);
-}, [showSimilarProducts, closeSimilarProducts]);
+    };
+    
+    document.addEventListener('click', handleDocumentClick);
+    return () => document.removeEventListener('click', handleDocumentClick);
+  }, [showSimilarProducts, closeSimilarProducts]);
 
 
-  // Toggle dark mode
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+    // Toggle dark mode
+    const toggleDarkMode = () => {
+      setDarkMode(!darkMode);
+    };
 
-  // Apply dark mode class to body
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
-  }, [darkMode]);
+    // Apply dark mode class to body
+    useEffect(() => {
+      if (darkMode) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    }, [darkMode]);
 
   return (
-    <div className={`flex flex-col min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-black'}`}>
+    <div className={` flex flex-col min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-black'}`}>
       {/* Header */}
       <header className={`${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm py-4 px-6 border-b-2 border-[#FE90EA]`}>
-          <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="mx-auto flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <img src="/gumroad.png" alt="Gumroad Logo" className="h-8 w-auto" />
               <h1 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-black'}`}>Gumroad Search Prototype</h1>
@@ -1027,7 +1069,7 @@ useEffect(() => {
               {/* Dark mode toggle */}
               <button 
                 onClick={toggleDarkMode} 
-                className={`p-2 rounded-full ${darkMode ? 'bg-gray-700 text-yellow-400' : 'bg-gray-200 text-gray-700'}`}
+                className={`p-2 rounded-full  border-2  ${darkMode ? 'bg-gray-700 text-yellow-400 border-[#FE90EA]' : 'bg-gray-200 text-gray-700 border-black'} `}
                 aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -1312,7 +1354,7 @@ useEffect(() => {
                     }}
                     className={`fixed ${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-xl p-2 z-50 border-2 border-[#FE90EA] custom-scrollbar`}
                     style={{
-                      top: `${90+Math.max(hoverPosition.y, 10)}px`,
+                      top: `${70+Math.max(hoverPosition.y, 10)}px`,
                       left: `${hoverPosition.x}px`,
                       width: '300px', // Fixed width that matches reference
                       maxHeight: '320px', // Taller to match reference
@@ -1323,9 +1365,8 @@ useEffect(() => {
                   >
                 <div className="flex justify-between items-start pb-2">
                   <h4 className={`font-small text-sm flex-grow pr-2 border-b-2 border-[#FE90EA] ${darkMode ? 'text-white' : 'text-black'}`}>
-                    Similarity (based on image) to:
-                    <br/>
-                    "{selectedProduct.name.substring(0, 25)}{selectedProduct.name.length > 25 ? '...' : ''}"
+                    Similar items to
+                    "{selectedProduct.name.substring(0, 13)}<span className='text-xs'>{selectedProduct.name.length > 13? '..': ''}</span>"
                   </h4>
                   
                   {/* Close Button */}
@@ -1368,8 +1409,8 @@ useEffect(() => {
                                 {product.name}
                               </h4>
                               {product.price_cents !== undefined && (
-                                <div className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} ml-1 flex-shrink-0`}>
-                                  ${(product.price_cents / 100).toFixed(2)}
+                                  <div className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} ml-1 flex-shrink-0`}>
+                                  {product.price_cents > 0 ? `$${(product.price_cents / 100).toFixed(2)}` : "Free"}
                                 </div>
                               )}
                             </div>
@@ -1431,7 +1472,6 @@ useEffect(() => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <div className="flex items-center">
-                <span className="font-semibold text-sm mr-1">© {currentYear} Clusterise Inc.</span>
                 <span className="text-xs">All Rights Reserved. </span>
                 <span className="text-xs ml-2">
                 Interface design and software © Clusterise Inc.
@@ -1460,7 +1500,7 @@ useEffect(() => {
 // Updated ScrollingQueryExamples Component
 function ScrollingQueryExamples({ setQuery, performSearch, darkMode }) {
   // Sample query examples
-  const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "tennis lessons", "poker online", "preset pack", "tennis course", "ai brushes", "lightroom bundle", "fishing logo", "instagram marketing", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "tennis training", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "digital marketing", "lightroom preset", "amazon kdp", "ableton templates", "jersey 3d", "business marketing", "soccer drills", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "trading strategies", "vrchat avatar", "iphone mockup", "kdp interior", "free download", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "mobile app", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "poker ranges", "notion planner", "poker tool", "chatgpt resources", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern", "betting models"];
+  const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "tennis lessons", "poker online", "preset pack", "tennis course", "ai brushes", "lightroom bundle", "fishing logo", "instagram marketing", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "tennis training", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "digital marketing", "lightroom preset", "amazon kdp", "ableton templates", "jersey 3d", "business marketing", "soccer drills", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "vrchat avatar", "iphone mockup", "kdp interior", "free download", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "mobile app", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "poker ranges", "notion planner", "poker tool", "chatgpt resources", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern", "betting models"];
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const intervalRef = useRef(null);
