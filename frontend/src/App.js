@@ -3,8 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { Search, BarChart as BarChartIcon, PieChart, Layers, Settings, TrendingUp, Sun, Moon, TrendingUpDown } from 'lucide-react';
 import { searchProducts, getSimilarProducts } from './services/api';
 
-
-
+// Import existing styles - keeping this section as is
 const AppStyles = `
 .App {
   text-align: center;
@@ -44,8 +43,9 @@ const AppStyles = `
     transform: rotate(360deg);
   }
 }
-`
-// Import existing styles
+`;
+
+// Dark mode styles - keeping this section as is
 const darkModeStyles = `
   /* Dark mode styles */
   body.dark-mode {
@@ -79,6 +79,7 @@ const darkModeStyles = `
   }
 `;
 
+// Custom scrollbar styles - keeping this section as is
 const customScrollbarStyles = `
   /* Custom scrollbar styles */
   .custom-scrollbar {
@@ -128,16 +129,78 @@ const customScrollbarStyles = `
   }
 `;
 
-
+// Added responsive styles to improve mobile appearance
+const responsiveStyles = `
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .search-form {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .search-form input, 
+    .search-form select, 
+    .search-form button {
+      width: 100%;
+    }
+    
+    .metrics-card {
+      margin-bottom: 1rem;
+    }
+    
+    .table-responsive {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .history-table th,
+    .history-table td {
+      white-space: nowrap;
+      padding: 0.5rem 0.75rem;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .product-grid {
+      grid-template-columns: repeat(1, 1fr) !important;
+    }
+    
+    .metrics-section {
+      padding: 1rem;
+    }
+    
+    .chart-container {
+      height: 200px !important;
+    }
+  }
+  
+  /* Fix search field on smaller screens */
+  @media (max-width: 480px) {
+    .main-header {
+      padding: 0.75rem;
+    }
+    
+    .main-header h1 {
+      font-size: 1rem;
+    }
+    
+    .page-content {
+      padding: 0.75rem;
+    }
+  }
+`;
 
 // Combine all styles
 const allStyles = `
   ${AppStyles}
   ${darkModeStyles}
   ${customScrollbarStyles}
+  ${responsiveStyles}
 `;
 
-// Default profile data
+// Default profile data - keeping this section as is
 const defaultProfileData = {
   default: {
     accuracy: 75,
@@ -174,17 +237,16 @@ const defaultProfileData = {
   }
 };
 
-// Create default data for all profiles
+// Create default data for all profiles - keeping this section as is
 const searchProfiles = [
   { id: 'search_fuzzy', name: 'Fuzzy Search' },
   { id: 'search_vision', name: 'Vision Search' },
   { id: 'search_colbert', name: 'Sentence Embedding Search' },
   { id: 'search_combined_v0_7', name: ' Combined No rating', version: "(v0.7)" },
   {id: 'search_combined_v0_8', name: 'Combine with ratings', version: "(v0.8)" },
-  // 
 ];
 
-// Initialize all profiles that don't have specific data
+// Initialize all profiles that don't have specific data - keeping this section as is
 searchProfiles.forEach(profile => {
   if (!defaultProfileData[profile.id]) {
     defaultProfileData[profile.id] = {
@@ -196,6 +258,7 @@ searchProfiles.forEach(profile => {
   }
 });
 
+// Updated Product Card component with better mobile responsiveness
 function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   // State to track hover
   const [isHovered, setIsHovered] = useState(false);
@@ -207,16 +270,56 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   const [mouseOverImage, setMouseOverImage] = useState(false);
   // State to track image aspect ratio
   const [isWideImage, setIsWideImage] = useState(false);
+  // State to track window width for responsive behavior
+  const [isMobile, setIsMobile] = useState(false);
+  // State to control if standard description should be shown during hover
+  const [showStandardOnHover, setShowStandardOnHover] = useState(false);
   
   // Refs for height calculation and timeout management
   const cardRef = useRef(null);
   const timeoutRef = useRef(null);
   const imageRef = useRef(null);
+  const resizeHandlerRef = useRef(null);
   
   // Store the original height of the card
   const [cardHeight, setCardHeight] = useState(null);
+
+  // Check for mobile viewport size on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      if (mobile !== isMobile) {
+        setIsMobile(mobile);
+      }
+    };
+    
+    // Debounce resize handler to improve performance
+    const debouncedResize = () => {
+      if (resizeHandlerRef.current) {
+        clearTimeout(resizeHandlerRef.current);
+      }
+      resizeHandlerRef.current = setTimeout(checkMobile, 100);
+    };
+    
+    // Set initial value
+    checkMobile();
+    
+    // Add resize listener
+    window.addEventListener('resize', debouncedResize);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', debouncedResize);
+      if (resizeHandlerRef.current) {
+        clearTimeout(resizeHandlerRef.current);
+      }
+    };
+  }, [isMobile]);
   
   const handleMouseEnter = (e) => {
+    // Don't trigger hover behavior on mobile
+    if (isMobile) return;
+    
     // Call the parent's hover handler
     if (onHover) onHover(product, e);
     
@@ -225,6 +328,9 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   };
     
   const handleMouseLeave = () => {
+    // Don't trigger hover behavior on mobile
+    if (isMobile) return;
+    
     // Call the parent's leave handler
     if (onLeave) onLeave();
     
@@ -240,24 +346,38 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     return keywords.some(keyword => searchText.includes(keyword));
   }, [product.name, product.description]);
   
-  // If it's design related and NOT a wide image, we want to show it in "hover mode" by default
-  const shouldShowAsHover = (isHovered || (isDesignRelated && !isWideImage));
+  // Determine if the default display should use hover mode
+  // (only applies for design-related narrow images AND not for mobile)
+  const useDefaultHoverMode = !isMobile && isDesignRelated && !isWideImage;
+  
+  // Determine if the card should show hover effects right now
+  // (either actively hovered or using default hover mode)
+  const shouldShowAsHover = !isMobile && (isHovered || useDefaultHoverMode);
   
   // Effect to calculate and store card height on mount
   useEffect(() => {
     if (cardRef.current) {
       // Use a fixed height for cards that better matches the reference images
-      const height = 400; // Adjusted to match reference
+      // Use a slightly smaller height on mobile
+      const height = isMobile ? 320 : 300;
       setCardHeight(height);
     }
-  }, []);
+  }, [isMobile]);
   
   // Effect to handle image load and check aspect ratio
   useEffect(() => {
     const img = new Image();
     img.onload = () => {
-      const isWide = img.width > img.height;
+      // Check if aspect ratio is wider than 4/3 (1.33)
+      const aspectRatio = img.width / img.height;
+      console.log(`Image aspect ratio for ${product.name}: ${aspectRatio} (${img.width}x${img.height})`);
+      
+      // Consider any image with aspect ratio > 4/3 as "wide"
+      const isWide = aspectRatio > 1.33;
       setIsWideImage(isWide);
+      
+      // For wide images, we'll show the standard description even during hover
+      setShowStandardOnHover(isWide);
     };
     img.src = product.thumbnail_url || `https://placehold.co/600x400?text=${encodeURIComponent(product.name)}`;
     
@@ -291,10 +411,12 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   }, [shouldShowAsHover]);
   
   const handleImageMouseEnter = () => {
+    if (isMobile) return;
     setMouseOverImage(true);
   };
   
   const handleImageMouseLeave = () => {
+    if (isMobile) return;
     setMouseOverImage(false);
   };
   
@@ -316,10 +438,11 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
         style={{ 
           height: cardHeight ? `${cardHeight}px` : 'auto', 
           position: 'relative',
-          maxHeight: '300px' // Adjusted to match reference
+          maxHeight: isMobile ? '300px' : '300px'
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onClick={isMobile && isDesignRelated ? handleImageClick : undefined}
       >
         <a href={product.url || "#"} target="#" onClick={(e) => mouseOverImage && shouldShowAsHover && e.preventDefault()}>
           {/* Image container - always present */}
@@ -395,8 +518,8 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
             )}
           </div>
           
-          {/* Overlay description - only visible when in hover mode */}
-          {shouldShowAsHover && (
+          {/* Overlay description - only visible when in hover mode AND not showing standard description on hover */}
+          {shouldShowAsHover && !showStandardOnHover && (
             <div
               style={{
                 position: 'absolute',
@@ -452,8 +575,8 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
             </div>
           )}
           
-          {/* Price tag - always visible when not in hover mode */}
-          {product.price_cents !== undefined && !shouldShowAsHover && (
+          {/* Price tag - always visible when not in hover mode OR when showing standard description on hover */}
+          {product.price_cents !== undefined && (!shouldShowAsHover || showStandardOnHover) && (
             <div className="absolute rounded-md top-3 right-3 flex items-center" style={{ zIndex: 30 }}>
               <div className="relative rounded-md bg-[#FE90EA] text-black font-medium py-0 px-1 text-base border border-t-transparent border-l-black border-r-transparent border-b-black">
                 ${(product.price_cents / 100).toFixed(2)}
@@ -475,16 +598,23 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
             </div>
           )}
           
-          {/* Standard details section - only rendered when not in hover mode */}
-          {showDetails && !shouldShowAsHover && (
+          {/* Standard details section - visible when not in hover mode OR when showing standard description on hover */}
+          {(showDetails && !shouldShowAsHover) || (showStandardOnHover && isHovered) ? (
             <div 
               style={{ 
                 padding: '0.75rem',
+                opacity: isHovered && showStandardOnHover ? 0.9 : 1,
+                backgroundColor: isHovered && showStandardOnHover ? (darkMode ? 'rgba(26, 32, 44, 0.9)' : 'rgba(255, 255, 255, 0.9)') : 'transparent',
+                position: isHovered && showStandardOnHover ? 'absolute' : 'relative',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                zIndex: isHovered && showStandardOnHover ? 20 : 1,
+                backdropFilter: isHovered && showStandardOnHover ? 'blur(2px)' : 'none',
               }}
             >
               <h3 className={`font-medium text-sm ${darkMode ? 'text-gray-100' : 'text-gray-800'} mb-1 line-clamp-1`}>{product.name}</h3>
               
-            
               {/* Rating display with stars */}
               { product.ratings_count > 0 && product.ratings_score !== undefined && (
                 <div className="flex items-center mb-1">
@@ -519,7 +649,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
                 </a>
               </div>
             </div>
-          )}
+          ) : null}
         </a>
       </div>
       
@@ -564,12 +694,10 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
 }
 
 function App() {
-
-
   const [previewProduct, setPreviewProduct] = useState(null);
   const [query, setQuery] = useState('poker');
   const [searchProfile, setSearchProfile] = useState('search_combined_v0_8');
-  const [searchResults, setSearchResults] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -583,38 +711,71 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isFirstSearch, setIsFirstSearch] = useState(true);
   const [showLoadingSpinner, setShowLoadingSpinner] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [tabView, setTabView] = useState('results'); // 'results', 'history', 'metrics'
+  
   const loadingTimerRef = useRef(null);
   const similarProductsRef = useRef(null);
   const searchInputRef = useRef(null);
 
-// Make sure the useEffect for style injection is in place
-
-useEffect(() => {
-  // Create style element
-  const styleElement = document.createElement('style');
-  styleElement.innerHTML = allStyles;
-  document.head.appendChild(styleElement);
+  // Check for mobile viewport on mount and resize
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      
+      // Only update state if the value has changed to avoid render loops
+      if (mobile !== isMobile) {
+        setIsMobile(mobile);
+      }
+    };
+    
+    // Set initial value
+    handleResize();
+    
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMobile]);
   
-  // Cleanup when component unmounts
-  return () => {
-    document.head.removeChild(styleElement);
+  // Handle side effects of mobile state changes
+  useEffect(() => {
+    // Close similar products popup on mobile
+    if (isMobile && showSimilarProducts) {
+      setShowSimilarProducts(false);
+    }
+    
+    // Reset to results view when switching to mobile
+    if (isMobile && tabView !== 'results') {
+      setTabView('results');
+    }
+  }, [isMobile, showSimilarProducts, tabView]);
+
+  // Make sure the useEffect for style injection is in place
+  useEffect(() => {
+    // Create style element
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = allStyles;
+    document.head.appendChild(styleElement);
+    
+    // Cleanup when component unmounts
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
+
+  // Create handlers for mouse enter and leave
+  const handleProductPreviewEnter = (productId) => {
+    if (isMobile) return; // Don't show previews on mobile
+    setPreviewProduct(productId);
   };
-}, []);
 
+  const handleProductPreviewLeave = () => {
+    setPreviewProduct(null);
+  };
 
-// Create handlers for mouse enter and leave
-const handleProductPreviewEnter = (productId) => {
-  setPreviewProduct(productId);
-};
-
-const handleProductPreviewLeave = () => {
-  setPreviewProduct(null);
-};
-
-
-
-
-  function RecentSearchesComponent({ searchHistory, setQuery, handleSearch, darkMode }) {
+  function RecentSearchesComponent({ searchHistory, setQuery, performSearch, darkMode }) {
     if (!searchHistory || searchHistory.length === 0) return null;
     
     return (
@@ -624,12 +785,12 @@ const handleProductPreviewLeave = () => {
           <span className={`${darkMode ? 'text-white' : 'text-black'} border-b-2 border-[#FE90EA] pb-1`}>Your Recent Searches</span>
         </h3>
         
-        <div className="space-y-2 max-h-36 overflow-y-auto pr-1">
+        <div className="space-y-2 max-h-36 overflow-y-auto pr-1 custom-scrollbar">
           {searchHistory.map((item, index) => (
             <div 
               key={index}
               className={`${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'} px-3 py-2 rounded-md cursor-pointer transition-colors flex justify-between items-center`}
-              onClick={() => { setQuery(item.query); handleSearch(); }}
+              onClick={() => { setQuery(item.query); performSearch(item.query); }}
             >
               <div className="flex items-center">
                 <Search className="w-3 h-3 text-[#FE90EA] mr-2" />
@@ -653,115 +814,150 @@ const handleProductPreviewLeave = () => {
   }
   
   // Charts and metrics section completion
-function PerformanceCharts({ performanceData, darkMode }) {
-  return (
-    <>
-      {/* Comparison chart */}
-      <div className="mt-6">
-        <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>Metrics Comparison</h3>
-        <div className="h-48">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={performanceData.comparisonChart}
-              barSize={15}
-              layout="vertical"
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#555" : "#ccc"} />
-              <XAxis 
-                type="number" 
-                domain={[0, 1]} 
-                tickFormatter={(value) => `${(value * 100).toFixed(0)}%`} 
-                stroke={darkMode ? "#aaa" : "#666"}
-              />
-              <YAxis 
-                type="category" 
-                dataKey="name" 
-                width={70} 
-                stroke={darkMode ? "#aaa" : "#666"}
-              />
-              <Tooltip 
-                formatter={(value) => [`${(value * 100).toFixed(1)}%`, 'Score']}
-                contentStyle={{ 
-                  backgroundColor: darkMode ? '#2d3748' : '#fff',
-                  borderColor: darkMode ? '#4a5568' : '#e2e8f0',
-                  color: darkMode ? '#e2e8f0' : '#1a202c'
-                }}
-              />
-              <Legend />
-              <Bar dataKey="current" fill="#3B82F6" name="Current" />
-              <Bar dataKey="baseline" fill={darkMode ? "#6B7280" : "#9CA3AF"} name="Baseline" />
-            </BarChart>
-          </ResponsiveContainer>
+  function PerformanceCharts({ performanceData, darkMode }) {
+    return (
+      <>
+        {/* Comparison chart */}
+        <div className="mt-6">
+          <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>Metrics Comparison</h3>
+          <div className="chart-container h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={performanceData.comparisonChart}
+                barSize={15}
+                layout="vertical"
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#555" : "#ccc"} />
+                <XAxis 
+                  type="number" 
+                  domain={[0, 1]} 
+                  tickFormatter={(value) => `${(value * 100).toFixed(0)}%`} 
+                  stroke={darkMode ? "#aaa" : "#666"}
+                />
+                <YAxis 
+                  type="category" 
+                  dataKey="name" 
+                  width={70} 
+                  stroke={darkMode ? "#aaa" : "#666"}
+                />
+                <Tooltip 
+                  formatter={(value) => [`${(value * 100).toFixed(1)}%`, 'Score']}
+                  contentStyle={{ 
+                    backgroundColor: darkMode ? '#2d3748' : '#fff',
+                    borderColor: darkMode ? '#4a5568' : '#e2e8f0',
+                    color: darkMode ? '#e2e8f0' : '#1a202c'
+                  }}
+                />
+                <Legend />
+                <Bar dataKey="current" fill="#3B82F6" name="Current" />
+                <Bar dataKey="baseline" fill={darkMode ? "#6B7280" : "#9CA3AF"} name="Baseline" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-      </div>
-      
-      {/* Time series chart */}
-      <div className="mt-6">
-        <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>Response Time Trend (ms)</h3>
-        <div className="h-48">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={performanceData.timeData}>
-              <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#555" : "#ccc"} />
-              <XAxis 
-                dataKey="name" 
-                stroke={darkMode ? "#aaa" : "#666"}
-              />
-              <YAxis 
-                stroke={darkMode ? "#aaa" : "#666"}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: darkMode ? '#2d3748' : '#fff',
-                  borderColor: darkMode ? '#4a5568' : '#e2e8f0',
-                  color: darkMode ? '#e2e8f0' : '#1a202c'
-                }}
-              />
-              <Legend />
-              <Line type="monotone" dataKey="current" stroke="#3B82F6" name="Current" strokeWidth={2} />
-              <Line type="monotone" dataKey="baseline" stroke={darkMode ? "#6B7280" : "#9CA3AF"} name="Baseline" strokeWidth={2} />
-            </LineChart>
-          </ResponsiveContainer>
+        
+        {/* Time series chart */}
+        <div className="mt-6">
+          <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>Response Time Trend (ms)</h3>
+          <div className="chart-container h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={performanceData.timeData}>
+                <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#555" : "#ccc"} />
+                <XAxis 
+                  dataKey="name" 
+                  stroke={darkMode ? "#aaa" : "#666"}
+                />
+                <YAxis 
+                  stroke={darkMode ? "#aaa" : "#666"}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: darkMode ? '#2d3748' : '#fff',
+                    borderColor: darkMode ? '#4a5568' : '#e2e8f0',
+                    color: darkMode ? '#e2e8f0' : '#1a202c'
+                  }}
+                />
+                <Legend />
+                <Line type="monotone" dataKey="current" stroke="#3B82F6" name="Current" strokeWidth={2} />
+                <Line type="monotone" dataKey="baseline" stroke={darkMode ? "#6B7280" : "#9CA3AF"} name="Baseline" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
+      </>
+    );
+  }
+
+  function LoadingSpinner({ query, darkMode }) {
+    return (
+      <div className={`flex flex-col items-center justify-center ${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 sm:p-12 rounded-lg shadow-sm text-center`}>
+        <svg 
+          className="animate-spin h-12 w-12 sm:h-16 sm:w-16 text-[#FE90EA] mb-4" 
+          xmlns="http://www.w3.org/2000/svg" 
+          fill="none" 
+          viewBox="0 0 24 24"
+        >
+          <circle 
+            className="opacity-25" 
+            cx="12" 
+            cy="12" 
+            r="10" 
+            stroke="currentColor" 
+            strokeWidth="4"
+          ></circle>
+          <path 
+            className="opacity-75" 
+            fill="currentColor" 
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        <p className={`text-lg font-medium ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+          Searching for {query} products...
+        </p>
+        <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'} mt-2`}>
+          Getting the best results for you
+        </p>
       </div>
-    </>
-  );
-}
-
-
-function LoadingSpinner({ query, darkMode }) {
-  return (
-    <div className={`flex flex-col items-center justify-center ${darkMode ? 'bg-gray-800' : 'bg-white'} p-12 rounded-lg shadow-sm text-center`}>
-      <svg 
-        className="animate-spin h-16 w-16 text-[#FE90EA] mb-4" 
-        xmlns="http://www.w3.org/2000/svg" 
-        fill="none" 
-        viewBox="0 0 24 24"
-      >
-        <circle 
-          className="opacity-25" 
-          cx="12" 
-          cy="12" 
-          r="10" 
-          stroke="currentColor" 
-          strokeWidth="4"
-        ></circle>
-        <path 
-          className="opacity-75" 
-          fill="currentColor" 
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-        ></path>
-      </svg>
-      <p className={`text-lg font-medium ${darkMode ? 'text-white' : 'text-gray-800'}`}>
-        Searching for {query} products...
-      </p>
-      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'} mt-2`}>
-        Getting the best results for you
-      </p>
-    </div>
-  );
-}
-
-
+    );
+  }
+  
+  // Mobile navigation tabs
+  function MobileNavigationTabs({ currentTab, setTabView, darkMode }) {
+    return (
+      <div className={`flex w-full mb-4 rounded-lg overflow-hidden ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
+        <button 
+          className={`flex-1 py-2 text-center text-sm font-medium ${
+            currentTab === 'results' 
+              ? `${darkMode ? 'bg-gray-600 text-white' : 'bg-white text-gray-800'}`
+              : `${darkMode ? 'text-gray-300' : 'text-gray-600'}`
+          }`}
+          onClick={() => setTabView('results')}
+        >
+          Results
+        </button>
+        <button 
+          className={`flex-1 py-2 text-center text-sm font-medium ${
+            currentTab === 'history' 
+              ? `${darkMode ? 'bg-gray-600 text-white' : 'bg-white text-gray-800'}`
+              : `${darkMode ? 'text-gray-300' : 'text-gray-600'}`
+          }`}
+          onClick={() => setTabView('history')}
+        >
+          History
+        </button>
+        <button 
+          className={`flex-1 py-2 text-center text-sm font-medium ${
+            currentTab === 'metrics' 
+              ? `${darkMode ? 'bg-gray-600 text-white' : 'bg-white text-gray-800'}`
+              : `${darkMode ? 'text-gray-300' : 'text-gray-600'}`
+          }`}
+          onClick={() => setTabView('metrics')}
+        >
+          Metrics
+        </button>
+      </div>
+    );
+  }
 
   useEffect(() => {
     performSearch('poker');
@@ -772,7 +968,6 @@ function LoadingSpinner({ query, darkMode }) {
     performSearch(query);
   };
   
-
   const performSearch = async (searchQuery) => {
     if (!searchQuery.trim()) return;
     
@@ -797,6 +992,11 @@ function LoadingSpinner({ query, darkMode }) {
       loadingTimerRef.current = setTimeout(() => {
         setShowLoadingSpinner(true);
       }, 600);
+    }
+    
+    // Always switch to results tab when searching
+    if (isMobile) {
+      setTabView('results');
     }
     
     try {
@@ -846,7 +1046,8 @@ function LoadingSpinner({ query, darkMode }) {
       }
     };
   }, []);
-// Add these new refs
+  
+  // Add these new refs
   const hoverTimerRef = useRef(null);
   const similarProductsScrollRef = useRef(null);
   const [isProductHovered, setIsProductHovered] = useState(false);
@@ -855,6 +1056,9 @@ function LoadingSpinner({ query, darkMode }) {
   const blindSpotTimerRef = useRef(null);
 
   const handleProductHover = useCallback(async (product, event) => {
+    // Skip hover behavior on mobile
+    if (isMobile) return;
+    
     // Clear any existing hover timers
     if (hoverTimerRef.current) {
       clearTimeout(hoverTimerRef.current);
@@ -872,8 +1076,12 @@ function LoadingSpinner({ query, darkMode }) {
     const rect = productCard.getBoundingClientRect();
     
     // Store hover position
+    // Make sure position is valid and doesn't go off screen
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    const xPos = Math.min(rect.right + 10, viewportWidth - 310); // 300px + 10px margin
+    
     setHoverPosition({ 
-      x: rect.right + 10,
+      x: xPos,
       y: rect.top 
     });
     
@@ -907,7 +1115,7 @@ function LoadingSpinner({ query, darkMode }) {
       setSimilarProducts(fakeSimilarProducts);
     }
     
-    // // Set timer to show the similar products after a short delay
+    // Set timer to show the similar products after a short delay
     hoverTimerRef.current = setTimeout(() => {
       setSelectedProduct(product);
       setShowSimilarProducts(true);
@@ -916,8 +1124,8 @@ function LoadingSpinner({ query, darkMode }) {
       if (similarProductsScrollRef.current) {
         similarProductsScrollRef.current.scrollTop = 0;
       }
-    }, 5);
-  }, []);
+    }, 50); // Increased delay slightly for better stability
+  }, [isMobile]);
 
   const closeSimilarProducts = useCallback(() => {
     setShowSimilarProducts(false);
@@ -937,6 +1145,9 @@ function LoadingSpinner({ query, darkMode }) {
   }, []);
 
   const handleProductMouseLeave = useCallback(() => {
+    // Skip on mobile
+    if (isMobile) return;
+    
     setIsProductHovered(false);
     
     // Use a delay before closing to handle the blind spot
@@ -946,9 +1157,12 @@ function LoadingSpinner({ query, darkMode }) {
         closeSimilarProducts();
       }
     }, 100); 
-  }, [isPopupHovered, closeSimilarProducts]);
+  }, [isPopupHovered, closeSimilarProducts, isMobile]);
 
   const handlePopupMouseLeave = useCallback(() => {
+    // Skip on mobile
+    if (isMobile) return;
+    
     setIsPopupHovered(false);
     
     // Close after a short delay if product is not hovered
@@ -957,10 +1171,13 @@ function LoadingSpinner({ query, darkMode }) {
         closeSimilarProducts();
       }
     }, 100);
-  }, [isProductHovered, closeSimilarProducts]);
+  }, [isProductHovered, closeSimilarProducts, isMobile]);
 
   // Handle similar products popup mouse enter
   const handlePopupMouseEnter = () => {
+    // Skip on mobile
+    if (isMobile) return;
+    
     // Set popup as being hovered
     setIsPopupHovered(true);
     
@@ -970,7 +1187,6 @@ function LoadingSpinner({ query, darkMode }) {
       blindSpotTimerRef.current = null;
     }
   };
-
 
   // Clean up timers on unmount
   useEffect(() => {
@@ -1006,207 +1222,197 @@ function LoadingSpinner({ query, darkMode }) {
     return () => document.removeEventListener('click', handleDocumentClick);
   }, [showSimilarProducts, closeSimilarProducts]);
 
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
-    // Toggle dark mode
-    const toggleDarkMode = () => {
-      setDarkMode(!darkMode);
-    };
-
-    // Apply dark mode class to body
-    useEffect(() => {
-      if (darkMode) {
-        document.body.classList.add('dark-mode');
-      } else {
-        document.body.classList.remove('dark-mode');
-      }
-    }, [darkMode]);
+  // Apply dark mode class to body
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode]);
 
   return (
-    <div className={` flex flex-col min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-black'}`}>
+    <div className={`flex flex-col min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-black'}`}>
       {/* Header */}
-      <header className={`${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm py-4 px-6 border-b-2 border-[#FE90EA]`}>
-          <div className="mx-auto flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <img src="/gumroad.png" alt="Gumroad Logo" className="h-8 w-auto" />
-              <h1 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-black'}`}>Gumroad Search Prototype</h1>
-            </div>
-            
-            {/* Middle section with nav links */}
-            <div className="hidden md:flex items-center space-x-6">
-              <div>
-              <a 
-                href="https://www.notion.so/Search-Discovery-Case-Study-Blog-40e476a45ad94596ad323289eac62c2c" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-3 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
-              >
-                Case Study
-              </a>
-              </div>
-              <div>  
-              <a 
-                href="https://phileas.me" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className={`text-sm ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'} transition-colors flex items-center`}
-              >
-                <span className="mr-1">By</span>
-                <span className="font-medium text-[#FE90EA]">Phileas Hocquard</span>
-              </a>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-black'}`}>
-                Indexed Products: 5,467
-              </div>
-              <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-black'}`}>
-                Total Shards: 1 (be gentle 🙏)
-              </div>
-              <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-black'}`}>
-                Search Profile: v0.8
-              </div>
-              {/* Dark mode toggle */}
-              <button 
-                onClick={toggleDarkMode} 
-                className={`p-2 rounded-full  border-2  ${darkMode ? 'bg-gray-700 text-yellow-400 border-[#FE90EA]' : 'bg-gray-200 text-gray-700 border-black'} `}
-                aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </button>
-              {/* <Settings className="h-5 w-5 text-[#FE90EA] cursor-pointer hover:text-gray-400" /> */}
-            </div>
+      <header className={`${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm py-3 sm:py-4 px-4 sm:px-6 border-b-2 border-[#FE90EA] main-header`}>
+        <div className="mx-auto flex flex-wrap justify-between items-center">
+          <div className="flex items-center space-x-2 mb-2 sm:mb-0">
+            <img src="/gumroad.png" alt="Gumroad Logo" className="h-6 sm:h-8 w-auto" />
+            <h1 className={`text-base sm:text-xl font-bold ${darkMode ? 'text-white' : 'text-black'}`}>Gumroad Search Prototype</h1>
           </div>
           
-          {/* Mobile navigation - only shown on small screens */}
-          <div className="md:hidden mt-2 pt-2 border-t border-gray-700 flex justify-center space-x-6">
+          {/* Middle section with nav links */}
+          <div className="flex items-center space-x-3 sm:space-x-6 order-3 sm:order-2 w-full sm:w-auto justify-center mt-3 sm:mt-0">
             <a 
               href="https://www.notion.so/Search-Discovery-Case-Study-Blog-40e476a45ad94596ad323289eac62c2c" 
               target="_blank" 
               rel="noopener noreferrer"
-              className={`text-xs ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'} transition-colors`}
+              className="inline-flex items-center justify-center px-2 sm:px-3 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
             >
               Case Study
             </a>
-            <div className="h-4 border-r border-gray-400"></div>
             <a 
               href="https://phileas.me" 
               target="_blank" 
               rel="noopener noreferrer"
-              className={`text-xs ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'} transition-colors`}
+              className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'} transition-colors flex items-center`}
             >
-              By Phileas Hocquard
+              <span className="mr-1">By</span>
+              <span className="font-medium text-[#FE90EA]">Phileas Hocquard</span>
             </a>
           </div>
-        </header>
+          
+          <div className="flex items-center space-x-2 sm:space-x-4 ml-auto sm:ml-0 order-2 sm:order-3">
+            <div className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-black'} hidden sm:block`}>
+              Products Indexed: 5,467
+            </div>
+            <div className={`text-xs ${darkMode ? 'text-gray-300' : 'text-black'} hidden md:block`}>
+              Shards: 1
+            </div>
+            <div className={`text-xs ${darkMode ? 'text-gray-300' : 'text-black'} hidden lg:block`}>
+              Profile: v0.8
+            </div>
+            {/* Dark mode toggle */}
+            <button 
+              onClick={toggleDarkMode} 
+              className={`p-1 sm:p-2 rounded-full border-2 ${darkMode ? 'bg-gray-700 text-yellow-400 border-[#FE90EA]' : 'bg-gray-200 text-gray-700 border-black'}`}
+              aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {darkMode ? <Sun className="h-4 w-4 sm:h-5 sm:w-5" /> : <Moon className="h-4 w-4 sm:h-5 sm:w-5" />}
+            </button>
+          </div>
+        </div>
+      </header>
+      
       {/* Main content */}
-      <main className="flex-grow py-6 px-6">
-        <div className="w-full mx-auto mx-auto">
+      <main className="flex-grow py-3 sm:py-6 px-3 sm:px-6 page-content">
+        <div className="w-full mx-auto">
           {/* Search form - Common to both layouts */}
           <div className="flex justify-center w-full">
-            {/* Search form - Common to both layouts */}
-            <div className="flex justify-center w-full">
-              <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-6 rounded-lg shadow-sm mb-6 border-2 w-full max-w-7xl mx-auto`}>
-                <form onSubmit={handleSearch} className="flex items-center gap-4">
-                  <div className="relative flex-grow">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#FE90EA]" />
-                    <input
-                      ref={searchInputRef}
-                      type="text"
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                      placeholder="Search for products..."
-                      className={`w-full pl-10 pr-4 py-3 rounded-md border-2 ${
-                        darkMode 
-                          ? 'border-gray-600 bg-gray-700 text-white focus:border-[#FE90EA]' 
-                          : 'border-gray-300 bg-white text-black focus:border-[#FE90EA]'
-                      } focus:outline-none focus:ring-1 focus:ring-[#FE90EA]`}
-                      onClick={(e) => e.target.select()}
-                    />
-                  </div>
-                  <select
-                    value={searchProfile}
-                    onChange={(e) => setSearchProfile(e.target.value)}
-                    className={`px-3 py-3 rounded-md border-2 ${
+            <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-3 sm:p-6 rounded-lg shadow-sm mb-4 sm:mb-6 border-2 w-full max-w-7xl mx-auto`}>
+              <form onSubmit={handleSearch} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4 search-form">
+                <div className="relative flex-grow">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#FE90EA]" />
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search for products..."
+                    className={`w-full pl-10 pr-4 py-2 sm:py-3 rounded-md border-2 ${
                       darkMode 
-                        ? 'border-gray-600 bg-gray-700 text-white' 
-                        : 'border-gray-300 bg-white text-black'
-                    } focus:outline-none focus:border-[#FE90EA] focus:ring-1 focus:ring-[#FE90EA] flex-shrink-0`}
-                  >
-                    {searchProfiles.map(profile => (
-                      <option key={profile.id} value={profile.id}>
-                        {profile.name} {profile.version && <span className="text-[#FE90EA]"> {profile.version}</span>}
-                      </option>
-                    ))}
-                  </select>
-                  <button
-                    type="submit"
-                    className="bg-[#FE90EA] text-black px-6 py-3 rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-2 focus:ring-[#FE90EA] focus:ring-offset-2 font-medium border-2 border-black flex-shrink-0"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Searching...' : 'Search'}
-                  </button>
-                </form>
-              </div>
+                        ? 'border-gray-600 bg-gray-700 text-white focus:border-[#FE90EA]' 
+                        : 'border-gray-300 bg-white text-black focus:border-[#FE90EA]'
+                    } focus:outline-none focus:ring-1 focus:ring-[#FE90EA]`}
+                    onClick={(e) => e.target.select()}
+                  />
+                </div>
+                <select
+                  value={searchProfile}
+                  onChange={(e) => setSearchProfile(e.target.value)}
+                  className={`px-3 py-2 sm:py-3 rounded-md border-2 ${
+                    darkMode 
+                      ? 'border-gray-600 bg-gray-700 text-white' 
+                      : 'border-gray-300 bg-white text-black'
+                  } focus:outline-none focus:border-[#FE90EA] focus:ring-1 focus:ring-[#FE90EA] flex-shrink-0`}
+                >
+                  {searchProfiles.map(profile => (
+                    <option key={profile.id} value={profile.id}>
+                      {profile.name} {profile.version && profile.version}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="submit"
+                  className="bg-[#FE90EA] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-2 focus:ring-[#FE90EA] focus:ring-offset-2 font-medium border-2 border-black flex-shrink-0"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Searching...' : 'Search'}
+                </button>
+              </form>
             </div>
-            </div>
+          </div>
+
+          {/* Mobile navigation tabs - only shown on mobile */}
+          {isMobile && (
+            <MobileNavigationTabs 
+              currentTab={tabView} 
+              setTabView={setTabView} 
+              darkMode={darkMode} 
+            />
+          )}
+
+          {/* ScrollingQueryExamples - Hidden on very small screens */}
+          <div className="hidden sm:block">
+            <ScrollingQueryExamples 
+              setQuery={setQuery} 
+              performSearch={performSearch}
+              darkMode={darkMode}
+            />
+          </div>
+
           {/* Two-column layout for desktop, stacked for mobile */}
-          <div className="flex flex-col lg:flex-row gap-6">
+          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
             {/* Left column (wider) - Search results */}
-            <div className="lg:w-2/3 space-y-6">
+            <div className={`${isMobile && tabView !== 'results' ? 'hidden' : 'block'} lg:w-2/3 space-y-4 sm:space-y-6`}>
               {/* Search results or loading state */}
               {isLoading && showLoadingSpinner ? (
                 <LoadingSpinner darkMode={darkMode} query={query}/>
               ) : searchResults.length > 0 ? (
-                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-sm`}>
-                  <h2 className={`text-xl font-semibold mb-6 ${darkMode ? 'text-white' : 'text-black'} border-b-2 border-[#FE90EA] pb-2 inline-block`}>
+                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm`}>
+                  <h2 className={`text-lg sm:text-xl font-semibold mb-4 sm:mb-6 ${darkMode ? 'text-white' : 'text-black'} border-b-2 border-[#FE90EA] pb-2 inline-block`}>
                     Search Results ({searchResults.length})
                   </h2>
                   
-                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6 product-grid">
                   {searchResults.map((product, index) => (
                     <ProductCard 
                       key={`${product.id || product.name}-${index}`}
                       product={product}
                       index={index}
                       darkMode={darkMode}
-                      onHover={handleProductHover} // This was missing, should call handleProductHover
-                      onLeave={handleProductMouseLeave} // This was missing, should call handleProductMouseLeave
+                      onHover={handleProductHover}
+                      onLeave={handleProductMouseLeave}
                     />
                   ))}
                   </div>
                 </div>
               ) : (
-                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-sm text-center`}>
-                  <p className={`text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm text-center`}>
+                  <p className={`text-base sm:text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                     No results found for "{query}". Try a different search term.
                   </p>
                 </div>
               )}
 
-              {/* Search history section */}
-              {searchHistory.length > 0 && (
-                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-sm`}>
-                  <h2 className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-black'}`}>Recent Searches</h2>
-                  <div className="overflow-x-auto">
-                    <table className={`min-w-full divide-y ${darkMode ? 'divide-gray-700' : 'divide-gray-200'}`}>
+              {/* Search history section - shown on desktop and mobile history tab */}
+              {(!isMobile || tabView === 'history') && searchHistory.length > 0 && (
+                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm`}>
+                  <h2 className={`text-base sm:text-lg font-semibold mb-3 sm:mb-4 ${darkMode ? 'text-white' : 'text-black'}`}>Recent Searches</h2>
+                  <div className="overflow-x-auto table-responsive">
+                    <table className={`min-w-full divide-y ${darkMode ? 'divide-gray-700' : 'divide-gray-200'} history-table`}>
                       <thead className={darkMode ? 'bg-gray-700' : 'bg-gray-50'}>
                         <tr>
-                          <th className={`px-6 py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Query</th>
-                          <th className={`px-6 py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Time</th>
-                          <th className={`px-6 py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Results</th>
-                          <th className={`px-6 py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Query Time</th>
-                          <th className={`px-6 py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Action</th>
+                          <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Query</th>
+                          <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Time</th>
+                          <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Results</th>
+                          <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Query Time</th>
+                          <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Action</th>
                         </tr>
                       </thead>
                       <tbody className={`${darkMode ? 'bg-gray-800 divide-y divide-gray-700' : 'bg-white divide-y divide-gray-200'}`}>
                         {searchHistory.map((item, i) => (
                           <tr key={i} className={darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'}>
-                            <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>{item.query}</td>
-                            <td className={`px-6 py-4 whitespace-nowrap text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.timestamp}</td>
-                            <td className={`px-6 py-4 whitespace-nowrap text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.results}</td>
-                            <td className={`px-6 py-4 whitespace-nowrap text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.queryTime?.toFixed(2) || '-'} ms</td>
-                            <td className={`px-6 py-4 whitespace-nowrap text-sm text-blue-500 hover:text-blue-700`}>
+                            <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-medium ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>{item.query}</td>
+                            <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.timestamp}</td>
+                            <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.results}</td>
+                            <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.queryTime?.toFixed(2) || '-'} ms</td>
+                            <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-blue-500 hover:text-blue-700`}>
                               <button onClick={() => { setQuery(item.query); handleSearch(); }}>
                                 Search again
                               </button>
@@ -1220,284 +1426,182 @@ function LoadingSpinner({ query, darkMode }) {
               )}
             </div>
             
-            {/* Right column */}
-            <div className="lg:w-1/3">
-    
-                {/* Scrolling Query Examples Component */}
-                <ScrollingQueryExamples 
-                setQuery={setQuery} 
-                performSearch={performSearch}
-                darkMode={darkMode}
-              />
-
-
-
+            {/* Right column - Hidden on mobile except in metrics tab */}
+            <div className={`${isMobile && tabView !== 'metrics' ? 'hidden' : 'block'} lg:w-1/3`}>
+              {/* Recent searches component - Only visible on desktop */}
+              {!isMobile && (
                 <RecentSearchesComponent 
                   searchHistory={searchHistory.slice(0, 3)} 
                   setQuery={setQuery} 
                   handleSearch={handleSearch}
                   darkMode={darkMode}
                 />
-
+              )}
+              
+              {/* Performance metrics */}
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm ${!isMobile ? 'sticky top-6' : ''} metrics-section`}>
+                <h2 className={`text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center ${darkMode ? 'text-white' : 'text-black'}`}>
+                  <TrendingUp className="mr-2 text-blue-600" />
+                  Performance Metrics
+                </h2>
+                <div className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-3 sm:mb-4`}>
+                  {searchProfiles.find(p => p.id === searchProfile)?.name}
+                </div>
                 
-                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-sm sticky top-6`}>
-                  <h2 className={`text-lg font-semibold mb-4 flex items-center ${darkMode ? 'text-white' : 'text-black'}`}>
-                    <TrendingUp className="mr-2 text-blue-600" />
-                    Performance Metrics
-                  </h2>
-                  <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-4`}>
-                    {searchProfiles.find(p => p.id === searchProfile)?.name}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 lg:grid-cols-1">
+                  {/* Metric cards */}
+                  <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-3 sm:p-4 rounded-md metrics-card`}>
+                    <div className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'} mb-1`}>Precision</div>
+                    <div className={`text-lg sm:text-2xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>{performanceData.accuracy}%</div>
+                    <div className="text-xs text-green-600 mt-1">+{(performanceData.accuracy - 62).toFixed(1)}% vs baseline</div>
                   </div>
                   
-                  <div className="space-y-4">
-                    {/* Metric cards */}
-                    <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-4 rounded-md`}>
-                      <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'} mb-1`}>Precision</div>
-                      <div className={`text-2xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>{performanceData.accuracy}%</div>
-                      <div className="text-xs text-green-600 mt-1">+{(performanceData.accuracy - 62).toFixed(1)}% vs baseline</div>
-                    </div>
-                    
-                    <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-4 rounded-md`}>
-                      <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'} mb-1`}>Recall</div>
-                      <div className={`text-2xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>{performanceData.recall}%</div>
-                      <div className="text-xs text-green-600 mt-1">+{(performanceData.recall - 65).toFixed(1)}% vs baseline</div>
-                    </div>
-                    
-                    <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-4 rounded-md`}>
-                      <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'} mb-1`}>Avg. Latency</div>
-                      <div className={`text-2xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>{performanceData.latency}ms</div>
-                      <div className="text-xs text-red-600 mt-1">+{(performanceData.latency - 135).toFixed(1)}ms vs baseline</div>
-                    </div>
+                  <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-3 sm:p-4 rounded-md metrics-card`}>
+                    <div className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'} mb-1`}>Recall</div>
+                    <div className={`text-lg sm:text-2xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>{performanceData.recall}%</div>
+                    <div className="text-xs text-green-600 mt-1">+{(performanceData.recall - 65).toFixed(1)}% vs baseline</div>
                   </div>
                   
-                  {/* Comparison chart */}
-                  <div className="mt-6">
-                    <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>Metrics Comparison</h3>
-                    <div className="h-48">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={performanceData.comparisonChart}
-                          barSize={15}
-                          layout="vertical"
-                        >
-                          <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#555" : "#ccc"} />
-                          <XAxis 
-                            type="number" 
-                            domain={[0, 1]} 
-                            tickFormatter={(value) => `${(value * 100).toFixed(0)}%`} 
-                            stroke={darkMode ? "#aaa" : "#666"}
-                          />
-                          <YAxis 
-                            type="category" 
-                            dataKey="name" 
-                            width={70} 
-                            stroke={darkMode ? "#aaa" : "#666"}
-                          />
-                          <Tooltip 
-                            formatter={(value) => [`${(value * 100).toFixed(1)}%`, 'Score']}
-                            contentStyle={{ 
-                              backgroundColor: darkMode ? '#2d3748' : '#fff',
-                              borderColor: darkMode ? '#4a5568' : '#e2e8f0',
-                              color: darkMode ? '#e2e8f0' : '#1a202c'
-                            }}
-                          />
-                          <Legend />
-                          <Bar dataKey="current" fill="#3B82F6" name="Current" />
-                          <Bar dataKey="baseline" fill={darkMode ? "#6B7280" : "#9CA3AF"} name="Baseline" />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
-                  
-                  {/* Time series chart */}
-                  <div className="mt-6">
-                    <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>Response Time Trend (ms)</h3>
-                    <div className="h-48">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={performanceData.timeData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#555" : "#ccc"} />
-                          <XAxis 
-                            dataKey="name" 
-                            stroke={darkMode ? "#aaa" : "#666"}
-                          />
-                          <YAxis 
-                            stroke={darkMode ? "#aaa" : "#666"}
-                          />
-                          <Tooltip 
-                            contentStyle={{ 
-                              backgroundColor: darkMode ? '#2d3748' : '#fff',
-                              borderColor: darkMode ? '#4a5568' : '#e2e8f0',
-                              color: darkMode ? '#e2e8f0' : '#1a202c'
-                            }}
-                          />
-                          <Legend />
-                          <Line type="monotone" dataKey="current" stroke="#3B82F6" name="Current" strokeWidth={2} />
-                          <Line type="monotone" dataKey="baseline" stroke={darkMode ? "#6B7280" : "#9CA3AF"} name="Baseline" strokeWidth={2} />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
+                  <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-3 sm:p-4 rounded-md metrics-card col-span-2 sm:col-span-1 lg:col-span-1`}>
+                    <div className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'} mb-1`}>Avg. Latency</div>
+                    <div className={`text-lg sm:text-2xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>{performanceData.latency}ms</div>
+                    <div className="text-xs text-red-600 mt-1">+{(performanceData.latency - 135).toFixed(1)}ms vs baseline</div>
                   </div>
                 </div>
+                
+                {/* Performance charts - conditionally render based on screen size */}
+                {(!isMobile || tabView === 'metrics') && (
+                  <PerformanceCharts 
+                    performanceData={performanceData} 
+                    darkMode={darkMode} 
+                  />
+                )}
               </div>
+            </div>
+          </div>
         </div> 
-
       </main>
 
-          <div className="space-y-3">
-            {/* Similar products popup */}
-            {showSimilarProducts && selectedProduct && (
-                  <div 
-                    ref={(el) => {
-                      similarProductsRef.current = el;
-                      similarProductsScrollRef.current = el;
-                    }}
-                    className={`fixed ${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-xl p-2 z-50 border-2 border-[#FE90EA] custom-scrollbar`}
-                    style={{
-                      top: `${70+Math.max(hoverPosition.y, 10)}px`,
-                      left: `${hoverPosition.x}px`,
-                      width: '300px', // Fixed width that matches reference
-                      maxHeight: '320px', // Taller to match reference
-                      overflowY: 'auto',
-                    }}
-                    onMouseEnter={handlePopupMouseEnter}
-                    onMouseLeave={handlePopupMouseLeave}
-                  >
-                <div className="flex justify-between items-start pb-2">
-                  <h4 className={`font-small text-sm flex-grow pr-2 border-b-2 border-[#FE90EA] ${darkMode ? 'text-white' : 'text-black'}`}>
-                    Similar items to
-                    "{selectedProduct.name.substring(0, 13)}<span className='text-xs'>{selectedProduct.name.length > 13? '..': ''}</span>"
-                  </h4>
-                  
-                  {/* Close Button */}
-                  <button 
-                    className={`p-1 rounded-full ${darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-black hover:bg-gray-100'}`}
-                    onClick={closeSimilarProducts}
-                    aria-label="Close similar products"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="18" y1="6" x2="6" y2="18"></line>
-                      <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                  </button>
-                </div>
+      {/* Footer */}
+      <CopyrightFooter darkMode={darkMode} />
+      
+      {/* Similar products popup - not shown on mobile */}
+      {!isMobile && showSimilarProducts && selectedProduct && (
+        <div 
+          ref={(el) => {
+            similarProductsRef.current = el;
+            similarProductsScrollRef.current = el;
+          }}
+          className={`fixed ${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-xl p-2 z-50 border-2 border-[#FE90EA] custom-scrollbar`}
+          style={{
+            top: `${Math.max(hoverPosition.y, 10)-150}px`,
+            left: `${hoverPosition.x}px`,
+            width: '300px',
+            maxHeight: '320px',
+            overflowY: 'auto',
+          }}
+          onMouseEnter={handlePopupMouseEnter}
+          onMouseLeave={handlePopupMouseLeave}
+        >
+          <div className="flex justify-between items-start pb-2">
+            <h4 className={`font-small text-sm flex-grow pr-2 border-b-2 border-[#FE90EA] ${darkMode ? 'text-white' : 'text-black'}`}>
+              Similar items to
+              "{selectedProduct.name.substring(0, 13)}<span className='text-xs'>{selectedProduct.name.length > 13? '..': ''}</span>"
+            </h4>
+            
+            {/* Close Button */}
+            <button 
+              className={`p-1 rounded-full ${darkMode ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-black hover:bg-gray-100'}`}
+              onClick={closeSimilarProducts}
+              aria-label="Close similar products"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
 
-                <div className="space-y-4">
-                  {similarProducts.length > 0 ? (
-                    similarProducts.map((product, index) => (
-                      <a href={product.url || "#"} target="#" key={product.id || index} className="block">
-                        <div 
-                          className={`flex items-start py-2 ${darkMode ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-100 hover:bg-gray-50'} border-b last:border-0 transition-colors rounded-md px-2`}
-                        >
-                          {/* Product Image */}
-                          <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
-                            <img 
-                              src={product.thumbnail_url || `https://placehold.co/100x100?text=Similar`} 
-                              alt={product.name} 
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                e.target.src = `https://placehold.co/100x100?text=Similar`;
-                              }}
-                            />
-                          </div>
-                          
-                          {/* Product Details */}
-                          <div className="ml-3 flex-grow min-w-0">
-                            {/* Title and Price Row */}
-                            <div className="flex justify-between items-start w-full">
-                              <h4 className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} truncate max-w-[65%]`}>
-                                {product.name}
-                              </h4>
-                              {product.price_cents !== undefined && (
-                                  <div className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} ml-1 flex-shrink-0`}>
-                                  {product.price_cents > 0 ? `$${(product.price_cents / 100).toFixed(2)}` : "Free"}
-                                </div>
-                              )}
-                            </div>
-                            
-                            {/* Ratings - Only show if greater than 0 */}
-                            {product.ratings_score > 0 && (
-                              <div className="flex items-center text-xs text-yellow-500 mt-1">
-                                {[...Array(5)].map((_, i) => (
-                                  <span key={i} className="text-xs">
-                                    {i < Math.floor(product.ratings_score) ? "★" : "☆"}
-                                  </span>
-                                ))}
-                                <span className={`ml-1 text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                                  {product.ratings_count > 0 ? `(${product.ratings_count})` : ''}
-                                </span>
-                              </div>
-                            )}
-                            {/* Description */}
-                            {product.description && (
-                              <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} mt-1 truncate`}>
-                                {product.description}
-                              </p>
-                            )}
-                            
-                            {/* Similarity Score */}
-                            <div className="mt-2">
-                              <div className="text-xs px-2 py-0.5 bg-[#FE90EA] text-black rounded-full inline-block">
-                                Similarity: {parseFloat(product.score).toFixed(2)}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                    ))
-                  ) : (
-                    <div className="flex items-center justify-center py-6 text-sm text-gray-500">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-[#FE90EA]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Loading similar products...
+          <div className="space-y-4">
+            {similarProducts.length > 0 ? (
+              similarProducts.map((product, index) => (
+                <a href={product.url || "#"} target="#" key={product.id || index} className="block">
+                  <div 
+                    className={`flex items-start py-2 ${darkMode ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-100 hover:bg-gray-50'} border-b last:border-0 transition-colors rounded-md px-2`}
+                  >
+                    {/* Product Image */}
+                    <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
+                      <img 
+                        src={product.thumbnail_url || `https://placehold.co/100x100?text=Similar`} 
+                        alt={product.name} 
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.src = `https://placehold.co/100x100?text=Similar`;
+                        }}
+                      />
                     </div>
-                  )}
-                </div>
+                    
+                    {/* Product Details */}
+                    <div className="ml-3 flex-grow min-w-0">
+                      {/* Title and Price Row */}
+                      <div className="flex justify-between items-start w-full">
+                        <h4 className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} truncate max-w-[65%]`}>
+                          {product.name}
+                        </h4>
+                        {product.price_cents !== undefined && (
+                            <div className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} ml-1 flex-shrink-0`}>
+                            {product.price_cents > 0 ? `${(product.price_cents / 100).toFixed(2)}` : "Free"}
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Ratings - Only show if greater than 0 */}
+                      {product.ratings_score > 0 && (
+                        <div className="flex items-center text-xs text-yellow-500 mt-1">
+                          {[...Array(5)].map((_, i) => (
+                            <span key={i} className="text-xs">
+                              {i < Math.floor(product.ratings_score) ? "★" : "☆"}
+                            </span>
+                          ))}
+                          <span className={`ml-1 text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                            {product.ratings_count > 0 ? `(${product.ratings_count})` : ''}
+                          </span>
+                        </div>
+                      )}
+                      {/* Description */}
+                      {product.description && (
+                        <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} mt-1 truncate`}>
+                          {product.description}
+                        </p>
+                      )}
+                      
+                      {/* Similarity Score */}
+                      <div className="mt-2">
+                        <div className="text-xs px-2 py-0.5 bg-[#FE90EA] text-black rounded-full inline-block">
+                          Similarity: {parseFloat(product.score).toFixed(2)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              ))
+            ) : (
+              <div className="flex items-center justify-center py-6 text-sm text-gray-500">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-[#FE90EA]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Loading similar products...
               </div>
             )}
           </div>
-      
-    <CopyrightFooter darkMode={darkMode} />
+        </div>
+      )}
     </div>
   );
-
-  function CopyrightFooter({ darkMode }) {
-    const currentYear = new Date().getFullYear();
-    
-    return (
-      <footer className={`mt-12 py-6 border-t ${darkMode ? 'border-gray-700 text-gray-400' : 'border-gray-200 text-gray-500'}`}>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <div className="flex items-center">
-                <span className="text-xs">All Rights Reserved. </span>
-                <span className="text-xs ml-2">
-                Interface design and software © Clusterise Inc.
-              </span>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <a href="#" className={`text-xs hover:${darkMode ? 'text-white' : 'text-gray-800'} transition-colors`}>Terms</a>
-              <a href="#" className={`text-xs hover:${darkMode ? 'text-white' : 'text-gray-800'} transition-colors`}>Privacy</a>
-              <a href="#" className={`text-xs hover:${darkMode ? 'text-white' : 'text-gray-800'} transition-colors`}>Contact</a>
-            </div>
-          </div>
-          
-          <div className={`text-xs mt-4 ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-            This application is for demonstration purposes only. Gumroad is a trademark of Gumroad, Inc.
-            Search interface is not affiliated with, endorsed by, or sponsored by Gumroad.
-          </div>
-        </div>
-      </footer>
-    );
-  }
 }
 
-
-// Updated ScrollingQueryExamples Component
+// Updated ScrollingQueryExamples Component for better mobile display
 function ScrollingQueryExamples({ setQuery, performSearch, darkMode }) {
   // Sample query examples
   const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "tennis lessons", "poker online", "preset pack", "tennis course", "ai brushes", "lightroom bundle", "fishing logo", "instagram marketing", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "tennis training", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "digital marketing", "lightroom preset", "amazon kdp", "ableton templates", "jersey 3d", "business marketing", "soccer drills", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "vrchat avatar", "iphone mockup", "kdp interior", "free download", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "mobile app", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "poker ranges", "notion planner", "poker tool", "chatgpt resources", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern", "betting models"];
@@ -1544,13 +1648,13 @@ function ScrollingQueryExamples({ setQuery, performSearch, darkMode }) {
   };
   
   return (
-    <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-5 rounded-lg shadow-sm mb-6 border-2 overflow-hidden`}>
+    <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-3 sm:p-5 rounded-lg shadow-sm mb-4 sm:mb-6 border-2 overflow-hidden`}>
       <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2 flex items-center`}>
         <Search className="w-4 h-4 mr-2 text-[#FE90EA]" />
         <span className={`${darkMode ? 'text-white' : 'text-black'} border-b-2 border-[#FE90EA] pb-1`}>Popular Queries</span>
       </h3>
       
-      <div className="relative h-10 overflow-hidden">
+      <div className="relative h-8 sm:h-10 overflow-hidden">
         {queryExamples.map((query, index) => (
           <div
             key={index}
@@ -1561,7 +1665,7 @@ function ScrollingQueryExamples({ setQuery, performSearch, darkMode }) {
             }`}
           >
             <div 
-              className={`font-medium text-base ${darkMode ? 'text-gray-200 hover:text-[#FE90EA]' : 'text-gray-800 hover:text-[#FE90EA]'} cursor-pointer`}
+              className={`font-medium text-sm sm:text-base ${darkMode ? 'text-gray-200 hover:text-[#FE90EA]' : 'text-gray-800 hover:text-[#FE90EA]'} cursor-pointer truncate`}
               onClick={() => handleQueryClick(query)}
             >
               "{query}"
@@ -1570,6 +1674,38 @@ function ScrollingQueryExamples({ setQuery, performSearch, darkMode }) {
         ))}
       </div>
     </div>
+  );
+}
+
+function CopyrightFooter({ darkMode }) {
+  const currentYear = new Date().getFullYear();
+  
+  return (
+    <footer className={`mt-6 sm:mt-12 py-4 sm:py-6 border-t ${darkMode ? 'border-gray-700 text-gray-400' : 'border-gray-200 text-gray-500'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="mb-4 md:mb-0">
+            <div className="flex items-center flex-wrap justify-center md:justify-start">
+              <span className="text-xs">All Rights Reserved. </span>
+              <span className="text-xs ml-2">
+              Interface design and software © Clusterise Inc.
+            </span>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <a href="#" className={`text-xs hover:${darkMode ? 'text-white' : 'text-gray-800'} transition-colors`}>Terms</a>
+            <a href="#" className={`text-xs hover:${darkMode ? 'text-white' : 'text-gray-800'} transition-colors`}>Privacy</a>
+            <a href="#" className={`text-xs hover:${darkMode ? 'text-white' : 'text-gray-800'} transition-colors`}>Contact</a>
+          </div>
+        </div>
+        
+        <div className={`text-xs mt-4 text-center md:text-left ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+          This application is for demonstration purposes only. Gumroad is a trademark of Gumroad, Inc.
+          Search interface is not affiliated with, endorsed by, or sponsored by Gumroad.
+        </div>
+      </div>
+    </footer>
   );
 }
 

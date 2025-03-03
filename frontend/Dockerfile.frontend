@@ -12,8 +12,10 @@ RUN npm install
 # Copy the rest of the app
 COPY . .
 
-# Expose port 3000 for the development server
+# Expose port 3000 for the prod server
 EXPOSE 3000
 
-# Start the development server
-CMD ["npm", "start"]
+# Start the prod server
+CMD ["npm", "run", "build"]
+
+CMD ["serve", "-s", "build"]
