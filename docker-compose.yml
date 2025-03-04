@@ -1,5 +1,31 @@
 
 services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.2
+    environment:
+      - node.name=es01
+      - cluster.name=docker-cluster
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=${ES_PASSWORD:-changeme}
+      - xpack.security.enabled=true
+      - "ES_JAVA_OPTS=-Xms3g -Xmx3g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - elastic-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -v -s -u elastic:${ES_PASSWORD:-changeme} http://es01:9200/_cluster/health"]
+      interval: 10s
+      timeout: 60s
+      retries: 10
+      start_period: 90s
+
   nginx:
     image: nginx:alpine
     container_name: nginx
@@ -30,7 +56,6 @@ services:
       - elastic-net
     depends_on:
       - api-service
-
 
   # Data Ingestion Service
   ingest-service:
