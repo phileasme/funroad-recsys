@@ -238,6 +238,7 @@ const defaultProfileData = {
   }
 };
 
+const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "tennis lessons", "poker online", "preset pack", "tennis course", "ai brushes", "lightroom bundle", "fishing logo", "instagram marketing", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "tennis training", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "digital marketing", "lightroom preset", "amazon kdp", "ableton templates", "jersey 3d", "business marketing", "soccer drills", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "vrchat avatar", "iphone mockup", "kdp interior", "free download", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "mobile app", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "notion planner", "poker tool", "chatgpt resources", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern", "betting models"];
 // Create default data for all profiles - keeping this section as is
 const searchProfiles = [
   { id: 'search_fuzzy', name: 'Fuzzy Search' },
@@ -696,16 +697,14 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
 
 function App() {
   const [previewProduct, setPreviewProduct] = useState(null);
-  const [query, setQuery] = useState('poker');
+  const [query, setQuery] = useState(null);
   const [searchProfile, setSearchProfile] = useState('search_combined_v0_8');
   const [searchResults, setSearchResults] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [performanceData, setPerformanceData] = useState(defaultProfileData.search_combined_simplified_but_slow);
-  const [searchHistory, setSearchHistory] = useState([
-    { query: 'poker', timestamp: new Date().toLocaleTimeString(), results: 6, queryTime: 145 }
-  ]);
+  const [searchHistory, setSearchHistory] = useState([]);
   const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
   const [darkMode, setDarkMode] = useState(true);
   const [showSimilarProducts, setShowSimilarProducts] = useState(false);
@@ -960,8 +959,10 @@ function App() {
     );
   }
 
+  const firstQuery = queryExamples[Math.floor(Math.random() * queryExamples.length)];
   useEffect(() => {
-    performSearch('poker');
+    setQuery(firstQuery);
+    performSearch(firstQuery);
   }, []);  
 
   const handleSearch = async (e) => {
@@ -1004,12 +1005,13 @@ function App() {
       // API call and search logic
       const data = await searchProducts(searchProfile, searchQuery);
       setSearchResults(data.results || []);
-      
-      // Update search history
-      setSearchHistory(prev => [
-        { query: searchQuery, timestamp: new Date().toLocaleTimeString(), results: data.results?.length || 0, queryTime: data.query_time_ms },
-        ...prev.slice(0, 9)
-      ]);
+      if (!isFirstSearch){
+        // Update search history
+        setSearchHistory(prev => [
+          { query: searchQuery, timestamp: new Date().toLocaleTimeString(), results: data.results?.length || 0, queryTime: data.query_time_ms },
+          ...prev.slice(0, 9)
+        ]);
+      }
     } catch (error) {
       console.error('Search error:', error);
       // Fallback to mock data after a delay to simulate network request
@@ -1336,6 +1338,7 @@ function App() {
                 setQuery={setQuery} 
                 performSearch={performSearch}
                 darkMode={darkMode}
+                queryExamples={queryExamples}
               />
           </div>
           </div>
@@ -1595,9 +1598,8 @@ function App() {
 }
 
 // Updated ScrollingQueryExamples Component for better mobile display
-function ScrollingQueryExamples({ setQuery, performSearch, darkMode }) {
+function ScrollingQueryExamples({ setQuery, performSearch, darkMode, queryExamples}) {
   // Sample query examples
-  const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "tennis lessons", "poker online", "preset pack", "tennis course", "ai brushes", "lightroom bundle", "fishing logo", "instagram marketing", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "tennis training", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "digital marketing", "lightroom preset", "amazon kdp", "ableton templates", "jersey 3d", "business marketing", "soccer drills", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "vrchat avatar", "iphone mockup", "kdp interior", "free download", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "mobile app", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "poker ranges", "notion planner", "poker tool", "chatgpt resources", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern", "betting models"];
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const intervalRef = useRef(null);
