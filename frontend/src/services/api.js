@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Get the API base URL from environment or use default
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -11,14 +11,7 @@ const apiClient = axios.create({
   },
 });
 
-/**
- * Search for products using the specified search profile
- * @param {string} profile - The search profile to use
- * @param {string} query - The search query
- * @param {number} k - Number of results to return
- * @param {number} numCandidates - Number of candidates to consider
- * @returns {Promise<Object>} - The search results
- */
+// Example search function
 export const searchProducts = async (profile, query, k = 50, numCandidates = 100) => {
   console.log(`Calling ${profile} with query: ${query}`);
   
@@ -30,7 +23,6 @@ export const searchProducts = async (profile, query, k = 50, numCandidates = 100
       query,
       k,
       num_candidates: numCandidates
-      // id is not included here since it's optional and not needed for basic search
     };
     
     console.log('Request payload:', payload);
@@ -43,13 +35,11 @@ export const searchProducts = async (profile, query, k = 50, numCandidates = 100
     return response.data;
   } catch (error) {
     console.error('Search error:', error.response || error);
-    // If we get a 422 error, log the validation errors from FastAPI
-    if (error.response && error.response.status === 422) {
-      console.error('Validation error details:', error.response.data);
-    }
     throw error;
   }
 };
+
+// Similar implementations for other API functions...
 
 /**
  * Get similar products based on a product
