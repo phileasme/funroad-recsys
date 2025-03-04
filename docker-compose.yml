@@ -78,26 +78,6 @@ services:
         es01:
           condition: service_healthy
 
-  # Frontend React App
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.frontend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    ports:
-      - "3000:3000"
-    environment:
-      - REACT_APP_API_URL=http://localhost:8000
-      # Hot reload support
-      - CHOKIDAR_USEPOLLING=true  
-      - WDS_SOCKET_PORT=3000
-    networks:
-      - elastic-net
-    depends_on:
-      - api-service
-      
 networks:
   elastic-net:
     driver: bridge
