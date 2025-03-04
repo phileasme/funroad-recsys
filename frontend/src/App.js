@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Search, BarChart as BarChartIcon, PieChart, Layers, Settings, TrendingUp, Sun, Moon, TrendingUpDown } from 'lucide-react';
 import { searchProducts, getSimilarProducts } from './services/api';
+import SearchProfileSelector from './components/SearchProfileSelector';
 
 // Import existing styles - keeping this section as is
 const AppStyles = `
@@ -1248,6 +1249,14 @@ function App() {
           
           {/* Middle section with nav links */}
           <div className="flex items-center space-x-3 sm:space-x-6 order-3 sm:order-2 w-full sm:w-auto justify-center mt-3 sm:mt-0">
+            {/* Search Profile Selector in navbar */}
+            <SearchProfileSelector
+              searchProfile={searchProfile}
+              setSearchProfile={setSearchProfile}
+              searchProfiles={searchProfiles}
+              darkMode={darkMode}
+            />
+            
             <a 
               href="https://www.notion.so/Search-Discovery-Case-Study-Blog-40e476a45ad94596ad323289eac62c2c" 
               target="_blank" 
@@ -1288,9 +1297,10 @@ function App() {
           </div>
         </div>
       </header>
-      
+        
       {/* Main content */}
       <main className="flex-grow py-3 sm:py-6 px-3 sm:px-6 page-content">
+        <div>
         <div className="w-full mx-auto">
           {/* Search form - Common to both layouts */}
           <div className="flex justify-center w-full">
@@ -1312,21 +1322,6 @@ function App() {
                     onClick={(e) => e.target.select()}
                   />
                 </div>
-                <select
-                  value={searchProfile}
-                  onChange={(e) => setSearchProfile(e.target.value)}
-                  className={`px-3 py-2 sm:py-3 rounded-md border-2 ${
-                    darkMode 
-                      ? 'border-gray-600 bg-gray-700 text-white' 
-                      : 'border-gray-300 bg-white text-black'
-                  } focus:outline-none focus:border-[#FE90EA] focus:ring-1 focus:ring-[#FE90EA] flex-shrink-0`}
-                >
-                  {searchProfiles.map(profile => (
-                    <option key={profile.id} value={profile.id}>
-                      {profile.name} {profile.version && profile.version}
-                    </option>
-                  ))}
-                </select>
                 <button
                   type="submit"
                   className="bg-[#FE90EA] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-2 focus:ring-[#FE90EA] focus:ring-offset-2 font-medium border-2 border-black flex-shrink-0"
@@ -1336,6 +1331,14 @@ function App() {
                 </button>
               </form>
             </div>
+            <div className="hidden md:block">
+              <ScrollingQueryExamples 
+                setQuery={setQuery} 
+                performSearch={performSearch}
+                darkMode={darkMode}
+              />
+          </div>
+          </div>
           </div>
 
           {/* Mobile navigation tabs - only shown on mobile */}
@@ -1346,26 +1349,16 @@ function App() {
               darkMode={darkMode} 
             />
           )}
-
-          {/* ScrollingQueryExamples - Hidden on very small screens */}
-          <div className="hidden sm:block">
-            <ScrollingQueryExamples 
-              setQuery={setQuery} 
-              performSearch={performSearch}
-              darkMode={darkMode}
-            />
-          </div>
-
           {/* Two-column layout for desktop, stacked for mobile */}
-          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
+          <div className="flex flex-col lg:flex-row gap-4 sm:gap-4">
             {/* Left column (wider) - Search results */}
             <div className={`${isMobile && tabView !== 'results' ? 'hidden' : 'block'} lg:w-2/3 space-y-4 sm:space-y-6`}>
               {/* Search results or loading state */}
               {isLoading && showLoadingSpinner ? (
                 <LoadingSpinner darkMode={darkMode} query={query}/>
               ) : searchResults.length > 0 ? (
-                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm`}>
-                  <h2 className={`text-lg sm:text-xl font-semibold mb-4 sm:mb-6 ${darkMode ? 'text-white' : 'text-black'} border-b-2 border-[#FE90EA] pb-2 inline-block`}>
+                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 rounded-lg shadow-sm`}>
+                  <h2 className={`text-lg sm:text-xl font-semibold mb-4 sm:mb-4 ${darkMode ? 'text-white' : 'text-black'} border-b-2 border-[#FE90EA] pb-2 inline-block`}>
                     Search Results ({searchResults.length})
                   </h2>
                   
@@ -1433,7 +1426,7 @@ function App() {
                 <RecentSearchesComponent 
                   searchHistory={searchHistory.slice(0, 3)} 
                   setQuery={setQuery} 
-                  handleSearch={handleSearch}
+                  performSearch={performSearch}
                   darkMode={darkMode}
                 />
               )}
@@ -1644,13 +1637,13 @@ function ScrollingQueryExamples({ setQuery, performSearch, darkMode }) {
   // Handle click on a query example
   const handleQueryClick = (query) => {
     setQuery(query);
-    performSearch(query); // Make sure you're calling the passed function
+    performSearch(query);
   };
   
   return (
-    <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-3 sm:p-5 rounded-lg shadow-sm mb-4 sm:mb-6 border-2 overflow-hidden`}>
+    <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} ml-3 sm:w-52 sm:p-3 rounded-lg shadow-sm mb-4 sm:mb-6 border-2 overflow-hidden`}>
       <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2 flex items-center`}>
-        <Search className="w-4 h-4 mr-2 text-[#FE90EA]" />
+        {/* <Search className="w-4 h-4 mr-2 text-[#FE90EA]" /> */}
         <span className={`${darkMode ? 'text-white' : 'text-black'} border-b-2 border-[#FE90EA] pb-1`}>Popular Queries</span>
       </h3>
       
