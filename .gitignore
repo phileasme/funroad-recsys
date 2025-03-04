@@ -4,5 +4,6 @@ gumroad_scraper.py
 huggingface_cache
 recommendation/api/__pycache__
 recommendation/core/__pycache__
+frontend/build
 frontend/node_modules
 evaluation_results

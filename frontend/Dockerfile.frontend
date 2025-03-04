@@ -9,9 +9,11 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-RUN npm run build
 # Copy the rest of the app
 COPY . .
+
+
+RUN npm run build
 
 # Expose port 3000 for the prod server
 EXPOSE 3000
