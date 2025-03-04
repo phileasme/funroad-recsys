@@ -12,5 +12,9 @@ RUN npm install
 # Copy the rest of the app
 COPY . .
 
+RUN npm run build
+
+RUN npm install -g serve
+
 # Build the React app for development (not production)
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build"]
