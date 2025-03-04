@@ -2,9 +2,9 @@
 import axios from 'axios';
 
 // Get the API base URL from environment or use default
-// const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
-const API_BASE_URL = "http://167.71.101.37:8000";
+// const API_BASE_URL = "http://167.71.101.37:8000";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
