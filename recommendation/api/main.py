@@ -1145,6 +1145,25 @@ async def search_combined_optimal(
     query_time = (time.time() - start_time) * 1000
     return SearchResponse(results=results[:query.k], query_time_ms=query_time)
 
+# Updated RATINGS_BOOST_CONFIG to work with Wilson Score
+BOOSTS_CONFIG = {
+    "default": {
+        "ratings_relevance_threshold": 0.7,  
+        "ratings_boost_multiplier": 0.03     
+    },
+    "bm25": {
+        "ratings_relevance_threshold": 0.75,
+        "ratings_boost_multiplier": 1
+    },
+    "colbert": {
+        "ratings_relevance_threshold": 0.85,
+        "ratings_boost_multiplier": 0.01
+    },
+    "clip": {
+        "ratings_relevance_threshold": 0.7,
+        "ratings_boost_multiplier": 0.001
+    }
+}
 
 def wilson_lower_bound(pos, n, confidence=0.95):
     """
@@ -1223,27 +1242,7 @@ def calculate_wilson_ratings_boost(ratings_count, ratings_score, max_ratings=500
     # Combine Wilson score with log scaling
     return 0.7 * wilson_score + 0.3 * log_factor
 
-# Updated RATINGS_BOOST_CONFIG to work with Wilson Score
-RATINGS_BOOST_CONFIG = {
-    "default": {
-        "relevance_threshold": 0.7,  
-        "boost_multiplier": 0.03     
-    },
-    "bm25": {
-        "relevance_threshold": 0.5,
-        "boost_multiplier": 1
-    },
-    "colbert": {
-        "relevance_threshold": 0.7,
-        "boost_multiplier": 0.01
-    },
-    "clip": {
-        "relevance_threshold": 0.7,
-        "boost_multiplier": 0.001
-    }
-}
-
-def apply_ratings_boost(base_score, ratings_count, ratings_score, search_method="default"):
+def apply_ratings_boost(base_score, ratings_count, ratings_score, search_method="default", base_score_weight=False):
     """
     Apply a ratings boost to a base score based on configured parameters for each search method.
     
@@ -1257,9 +1256,9 @@ def apply_ratings_boost(base_score, ratings_count, ratings_score, search_method=
     float: The final score with ratings boost applied
     """
     # Get configuration for this search method, falling back to default if not specified
-    config = RATINGS_BOOST_CONFIG.get(search_method, RATINGS_BOOST_CONFIG["default"])
-    relevance_threshold = config["relevance_threshold"]
-    boost_multiplier = config["boost_multiplier"]
+    config = BOOSTS_CONFIG.get(search_method, BOOSTS_CONFIG["default"])
+    relevance_threshold = config["ratings_relevance_threshold"]
+    boost_multiplier = config["ratings_boost_multiplier"]
     
     # Only apply boost if base score meets threshold and ratings exist
     if base_score < relevance_threshold or ratings_count <= 0 or ratings_score < 0:
