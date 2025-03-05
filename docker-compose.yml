@@ -33,8 +33,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - /etc/letsencrypt:/etc/letsencrypt:ro  # Mount certificates as read-only
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./empty:/etc/nginx/conf.d:ro  # Create an empty directory
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - frontend
       - api-service
