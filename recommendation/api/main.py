@@ -1156,12 +1156,12 @@ BOOSTS_CONFIG = {
         "ratings_boost_multiplier": 1
     },
     "colbert": {
-        "ratings_relevance_threshold": 0.85,
-        "ratings_boost_multiplier": 0.01
+        "ratings_relevance_threshold": 0.8,
+        "ratings_boost_multiplier": 0.05
     },
     "clip": {
         "ratings_relevance_threshold": 0.7,
-        "ratings_boost_multiplier": 0.001
+        "ratings_boost_multiplier": 0.01
     }
 }
 
