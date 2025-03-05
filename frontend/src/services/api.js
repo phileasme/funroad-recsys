@@ -4,8 +4,6 @@ import axios from 'axios';
 // Get the API base URL from environment or use default
 const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
-// const API_BASE_URL = "http://167.71.101.37:8000";
-
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -28,9 +26,6 @@ export const searchProducts = async (profile, query, k = 50, numCandidates = 100
     };
     
     console.log('Request payload:', payload);
-    
-    // Log the complete URL being called
-    console.log('API URL:', `${API_BASE_URL}/${endpoint}`);
     
     const response = await apiClient.post(`/${endpoint}`, payload);
     console.log('Search response:', response.data);
