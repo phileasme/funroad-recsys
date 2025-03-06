@@ -1,5 +1,3 @@
-// services/imageService.js
-
 /**
  * Service for handling images with improved loading and caching
  */
@@ -18,16 +16,27 @@ const IMAGE_LOAD_TIMEOUT = 8000; // 8 seconds timeout
  * @returns {string} - Proxied URL if it's a Gumroad URL, original otherwise
  */
 export const getProxiedImageUrl = (url) => {
+  // Handle empty/invalid URLs
   if (!url) return null;
   
-  // Check if it's a Gumroad URL
-  if (url.includes('public-files.gumroad.com')) {
-    // Replace the domain with our proxy path
-    return url.replace('https://public-files.gumroad.com/', IMAGE_PROXY_PATH);
+  try {
+    // Basic URL validation - URL must be a string and contain 'http'
+    if (typeof url !== 'string' || !url.includes('http')) {
+      return url; // Return as is if it doesn't look like a valid URL
+    }
+    
+    // Check if it's a Gumroad URL
+    if (url.includes('public-files.gumroad.com')) {
+      // Replace the domain with our proxy path
+      return url.replace('https://public-files.gumroad.com/', IMAGE_PROXY_PATH);
+    }
+    
+    // Return original URL for non-Gumroad URLs
+    return url;
+  } catch (error) {
+    console.warn('Error processing URL for proxy:', error);
+    return url; // Return original on error
   }
-  
-  // Return original URL for non-Gumroad URLs
-  return url;
 };
 
 /**
@@ -38,8 +47,32 @@ export const getProxiedImageUrl = (url) => {
  * @returns {string} - Fallback image URL
  */
 export const createFallbackImageUrl = (text, width = 600, height = 400) => {
-  const safeText = encodeURIComponent(text ? text.substring(0, 20) : 'Loading...');
-  return `${FALLBACK_IMAGE_BASE}${safeText}`;
+  // Default text if none provided
+  const defaultText = 'Loading...';
+  
+  // Handle null/undefined text
+  if (!text) {
+    return `${FALLBACK_IMAGE_BASE}${encodeURIComponent(defaultText)}`;
+  }
+  
+  try {
+    // Try to sanitize and encode the text
+    // First remove any problematic characters and limit length
+    const sanitizedText = text
+      .substring(0, 20)                  // Limit length
+      .replace(/[^\w\s-]/g, '')          // Remove special characters
+      .trim();                           // Remove leading/trailing whitespace
+    
+    // If sanitizing removed everything, use default
+    const finalText = sanitizedText || defaultText;
+    
+    // Encode the sanitized text
+    return `${FALLBACK_IMAGE_BASE}${encodeURIComponent(finalText)}`;
+  } catch (error) {
+    // If any encoding error happens, use a simple fallback
+    console.warn('Error creating fallback image URL:', error);
+    return `${FALLBACK_IMAGE_BASE}Image`;
+  }
 };
 
 /**
@@ -138,13 +171,39 @@ export const processProductImages = (products) => {
   return products.map(product => {
     if (!product) return product;
     
-    // Create a new object to avoid mutating the original
-    return {
-      ...product,
-      // Add these new properties
-      proxied_thumbnail_url: product.thumbnail_url ? getProxiedImageUrl(product.thumbnail_url) : null,
-      fallback_url: createFallbackImageUrl(product.name)
-    };
+    try {
+      // Process each product safely
+      let proxiedUrl = null;
+      let fallbackUrl = null;
+      
+      // Create proxied URL if thumbnail exists
+      if (product.thumbnail_url) {
+        try {
+          proxiedUrl = getProxiedImageUrl(product.thumbnail_url);
+        } catch (err) {
+          console.warn(`Failed to proxy URL for product ${product.id || 'unknown'}:`, err);
+        }
+      }
+      
+      // Create fallback URL
+      try {
+        fallbackUrl = createFallbackImageUrl(product.name);
+      } catch (err) {
+        console.warn(`Failed to create fallback URL for product ${product.id || 'unknown'}:`, err);
+        fallbackUrl = `${FALLBACK_IMAGE_BASE}Image`;
+      }
+      
+      // Create a new object to avoid mutating the original
+      return {
+        ...product,
+        proxied_thumbnail_url: proxiedUrl,
+        fallback_url: fallbackUrl
+      };
+    } catch (error) {
+      // If processing fails completely, return the original product
+      console.error('Error processing product image:', error);
+      return product;
+    }
   });
 };
 
