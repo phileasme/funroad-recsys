@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Search, BarChart as BarChartIcon, PieChart, Layers, Settings, TrendingUp, Sun, Moon, TrendingUpDown } from 'lucide-react';
 import { searchProducts, getSimilarProducts } from './services/api';
+import { processProductImages } from './services/imageService';
 import SearchProfileSelector from './components/SearchProfileSelector';
-
+import ProductCard from './components/ProductCard';
 // Import existing styles - keeping this section as is
 const AppStyles = `
 .App {
@@ -238,7 +239,7 @@ const defaultProfileData = {
   }
 };
 
-const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "preset pack", "tennis course", "ai brushes", "lightroom bundle", "fishing logo", "instagram marketing", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "tennis training", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "digital marketing", "lightroom preset", "amazon kdp", "ableton templates", "jersey 3d", "business marketing", "soccer drills", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "vrchat avatar", "iphone mockup", "kdp interior", "free download", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "notion planner", "poker tool", "chatgpt resources", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern", "betting models"];
+const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "preset pack", "tennis course", "ai brushes", "lightroom bundle", "fishing logo", "instagram marketing", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "tennis training", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "digital marketing", "lightroom preset", "amazon kdp",", "jersey 3d", "business marketing", "soccer drills", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "vrchat avatar", "iphone mockup", "kdp interior", "free download", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "notion planner", "poker tool", "chatgpt resources", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern", "betting models"];
 // Create default data for all profiles - keeping this section as is
 const searchProfiles = [
   { id: 'search_fuzzy', name: 'Fuzzy Search' },
@@ -260,440 +261,12 @@ searchProfiles.forEach(profile => {
   }
 });
 
-// Updated Product Card component with better mobile responsiveness
-function ProductCard({ product, index, darkMode, onHover, onLeave }) {
-  // State to track hover
-  const [isHovered, setIsHovered] = useState(false);
-  // State to control actual display of details (with delayed timing)
-  const [showDetails, setShowDetails] = useState(true);
-  // State to control fullscreen image view
-  const [showFullImage, setShowFullImage] = useState(false);
-  // State to track if mouse is over image specifically
-  const [mouseOverImage, setMouseOverImage] = useState(false);
-  // State to track image aspect ratio
-  const [isWideImage, setIsWideImage] = useState(false);
-  // State to track window width for responsive behavior
-  const [isMobile, setIsMobile] = useState(false);
-  // State to control if standard description should be shown during hover
-  const [showStandardOnHover, setShowStandardOnHover] = useState(false);
-  
-  // Refs for height calculation and timeout management
-  const cardRef = useRef(null);
-  const timeoutRef = useRef(null);
-  const imageRef = useRef(null);
-  const resizeHandlerRef = useRef(null);
-  
-  // Store the original height of the card
-  const [cardHeight, setCardHeight] = useState(null);
-
-  // Check for mobile viewport size on mount and resize
-  useEffect(() => {
-    const checkMobile = () => {
-      const mobile = window.innerWidth < 768;
-      if (mobile !== isMobile) {
-        setIsMobile(mobile);
-      }
-    };
-    
-    // Debounce resize handler to improve performance
-    const debouncedResize = () => {
-      if (resizeHandlerRef.current) {
-        clearTimeout(resizeHandlerRef.current);
-      }
-      resizeHandlerRef.current = setTimeout(checkMobile, 100);
-    };
-    
-    // Set initial value
-    checkMobile();
-    
-    // Add resize listener
-    window.addEventListener('resize', debouncedResize);
-    
-    // Clean up
-    return () => {
-      window.removeEventListener('resize', debouncedResize);
-      if (resizeHandlerRef.current) {
-        clearTimeout(resizeHandlerRef.current);
-      }
-    };
-  }, [isMobile]);
-  
-  const handleMouseEnter = (e) => {
-    // Don't trigger hover behavior on mobile
-    if (isMobile) return;
-    
-    // Call the parent's hover handler
-    if (onHover) onHover(product, e);
-    
-    // Set our local hover state
-    setIsHovered(true);
-  };
-    
-  const handleMouseLeave = () => {
-    // Don't trigger hover behavior on mobile
-    if (isMobile) return;
-    
-    // Call the parent's leave handler
-    if (onLeave) onLeave();
-    
-    // Reset our local hover state
-    setIsHovered(false);
-    setMouseOverImage(false);
-  };
-    
-  // Check if product contains design-related keywords
-  const isDesignRelated = useMemo(() => {
-    const keywords = ['design', 'image', 'logo', 'picture', 'stitch'];
-    const searchText = `${product.name} ${product.description}`.toLowerCase();
-    return keywords.some(keyword => searchText.includes(keyword));
-  }, [product.name, product.description]);
-  
-  // Determine if the default display should use hover mode
-  // (only applies for design-related narrow images AND not for mobile)
-  const useDefaultHoverMode = !isMobile && isDesignRelated && !isWideImage;
-  
-  // Determine if the card should show hover effects right now
-  // (either actively hovered or using default hover mode)
-  const shouldShowAsHover = !isMobile && (isHovered || useDefaultHoverMode);
-  
-  // Effect to calculate and store card height on mount
-  useEffect(() => {
-    if (cardRef.current) {
-      // Use a fixed height for cards that better matches the reference images
-      // Use a slightly smaller height on mobile
-      const height = isMobile ? 320 : 300;
-      setCardHeight(height);
-    }
-  }, [isMobile]);
-  
-  // Effect to handle image load and check aspect ratio
-  useEffect(() => {
-    const img = new Image();
-    img.onload = () => {
-      // Check if aspect ratio is wider than 4/3 (1.33)
-      const aspectRatio = img.width / img.height;
-      console.log(`Image aspect ratio for ${product.name}: ${aspectRatio} (${img.width}x${img.height})`);
-      
-      // Consider any image with aspect ratio > 4/3 as "wide"
-      const isWide = aspectRatio > 1.33;
-      setIsWideImage(isWide);
-      
-      // For wide images, we'll show the standard description even during hover
-      setShowStandardOnHover(isWide);
-    };
-    img.src = product.thumbnail_url || `https://placehold.co/600x400?text=${encodeURIComponent(product.name)}`;
-    
-    return () => {
-      img.onload = null; // Clean up
-    };
-  }, [product.thumbnail_url, product.name]);
-  
-  // Effect to handle delayed state changes
-  useEffect(() => {
-    // Clear any existing timeouts
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    
-    if (shouldShowAsHover) {
-      // Immediately hide details when hovering starts
-      setShowDetails(false);
-    } else {
-      // When hover ends, wait for transition to complete before showing details
-      timeoutRef.current = setTimeout(() => {
-        setShowDetails(true);
-      }, 50); // Small delay to ensure transitions complete
-    }
-    
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [shouldShowAsHover]);
-  
-  const handleImageMouseEnter = () => {
-    if (isMobile) return;
-    setMouseOverImage(true);
-  };
-  
-  const handleImageMouseLeave = () => {
-    if (isMobile) return;
-    setMouseOverImage(false);
-  };
-  
-  const handleImageClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setShowFullImage(true);
-  };
-  
-  const handleCloseFullImage = () => {
-    setShowFullImage(false);
-  };
-  
-  return (
-    <>
-      <div
-        ref={cardRef}
-        className={`${darkMode ? 'bg-gray-700 border-gray-600 hover:border-[#FE90EA]' : 'bg-white border-gray-200 hover:border-[#FE90EA]'} border-2 rounded-lg overflow-hidden hover:shadow-lg transition-shadow product-card`}
-        style={{ 
-          height: cardHeight ? `${cardHeight}px` : 'auto', 
-          position: 'relative',
-          maxHeight: isMobile ? '300px' : '300px'
-        }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={isMobile && isDesignRelated ? handleImageClick : undefined}
-      >
-        <a href={product.url || "#"} target="#" onClick={(e) => mouseOverImage && shouldShowAsHover && e.preventDefault()}>
-          {/* Image container - always present */}
-          <div 
-            style={{ 
-              position: shouldShowAsHover ? 'absolute' : 'relative',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: shouldShowAsHover ? '100%' : '160px',
-              padding: shouldShowAsHover ? '8px' : '0',
-              transition: 'padding 0.3s ease, height 0.3s ease',
-              zIndex: 1,
-              display: 'flex',
-              alignItems: shouldShowAsHover ? 'flex-start' : 'center',
-              justifyContent: 'center',
-              cursor: shouldShowAsHover && mouseOverImage ? 'zoom-in' : 'pointer',
-            }}
-            onMouseEnter={handleImageMouseEnter}
-            onMouseLeave={handleImageMouseLeave}
-            onClick={shouldShowAsHover && mouseOverImage ? handleImageClick : undefined}
-          >
-            <img 
-              ref={imageRef}
-              src={product.thumbnail_url || `https://placehold.co/600x400?text=${encodeURIComponent(product.name)}`} 
-              alt={product.name} 
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: shouldShowAsHover ? 'contain' : 'cover',
-                objectPosition: shouldShowAsHover ? 'top' : 'center',
-                transition: 'object-fit 0.3s ease, object-position 0.3s ease',
-              }}
-              onError={(e) => {
-                e.target.src = `https://placehold.co/600x400?text=${encodeURIComponent(product.name.substring(0, 20))}`;
-              }}
-            />
-            
-            {/* Magnifier icon - only visible when mouse is over the image during hover */}
-            {shouldShowAsHover && mouseOverImage && (
-              <div 
-                style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '16px',
-                  backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)',
-                  borderRadius: '50%',
-                  width: '32px',
-                  height: '32px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backdropFilter: 'blur(2px)',
-                  boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
-                }}
-              >
-                <svg 
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke={darkMode ? "white" : "black"} 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  <line x1="11" y1="8" x2="11" y2="14"></line>
-                  <line x1="8" y1="11" x2="14" y2="11"></line>
-                </svg>
-              </div>
-            )}
-          </div>
-          
-          {/* Overlay description - only visible when in hover mode AND not showing standard description on hover */}
-          {shouldShowAsHover && !showStandardOnHover && (
-            <div
-              style={{
-                position: 'absolute',
-                bottom: '8px',
-                left: '8px',
-                right: '8px',
-                zIndex: 20,
-                backgroundColor: darkMode ? 'rgba(26, 32, 44, 0.85)' : 'rgba(255, 255, 255, 0.85)',
-                padding: '8px',
-                borderRadius: '6px',
-                backdropFilter: 'blur(2px)',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-              }}
-            >
-              <h3 className={`font-medium text-sm ${darkMode ? 'text-white' : 'text-gray-800'} mb-1 line-clamp-1`}>
-                {product.name}
-              </h3>
-              <div className="flex items-center mb-1">
-                {product.ratings_score !== undefined && (
-                  <>
-                    <div className="flex text-yellow-400">
-                      {[...Array(5)].map((_, i) => (
-                        <span key={i} className="text-xs">
-                          {i < Math.floor(product.ratings_score) ? "★" : "☆"}
-                        </span>
-                      ))}
-                    </div>
-                    <span className={`ml-1 text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                      {product.ratings_score} {product.ratings_count > 0 ? `(${product.ratings_count})` : ''}
-                    </span>
-                  </>
-                )}
-              </div>
-              <div className="flex items-center justify-between mt-1">
-                <div className="flex items-center">
-                  <span className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'} mr-2`}>
-                    ${(product.price_cents / 100).toFixed(2)}
-                  </span>
-                  <span className={`inline-flex items-center px-1 py-0.5 rounded-md ${darkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-200 text-black'} text-xs font-medium`}>
-                    Score: {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
-                  </span>
-                </div>
-                
-                <a 
-                  href={product.url || "#"} 
-                  target="#"
-                  className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  View details
-                </a>
-              </div>
-            </div>
-          )}
-          
-          {/* Price tag - always visible when not in hover mode OR when showing standard description on hover */}
-          {product.price_cents !== undefined && (!shouldShowAsHover || showStandardOnHover) && (
-            <div className="absolute rounded-md top-3 right-3 flex items-center" style={{ zIndex: 30 }}>
-              <div className="relative rounded-md bg-[#FE90EA] text-black font-medium py-0 px-1 text-base border border-t-transparent border-l-black border-r-transparent border-b-black">
-                ${(product.price_cents / 100).toFixed(2)}
-                <div className="absolute -right-[4px] -top-[1px] w-0 h-0 border-t-[8px] border-b-[7px] border-l-[5px] border-t-transparent border-b-transparent border-l-black"></div>
-                <div className="absolute -right-[4px] bottom-[1px] w-0 h-0 border-t-[7px] border-b-[7px] border-l-[5px] border-t-transparent border-b-transparent border-l-[#FE90EA]"></div>
-              </div>
-            </div>
-          )}
-          
-          {/* Design related label - only visible for design products when not hovered */}
-          {isDesignRelated && !isHovered && (
-            <div 
-              className={`absolute top-2 left-2 text-xs font-medium px-1.5 py-0.5 rounded-full ${
-                darkMode ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800'
-              }`}
-              style={{ zIndex: 25 }}
-            >
-              Design
-            </div>
-          )}
-          
-          {/* Standard details section - visible when not in hover mode OR when showing standard description on hover */}
-          {(showDetails && !shouldShowAsHover) || (showStandardOnHover && isHovered) ? (
-            <div 
-              style={{ 
-                padding: '0.75rem',
-                opacity: isHovered && showStandardOnHover ? 0.9 : 1,
-                backgroundColor: isHovered && showStandardOnHover ? (darkMode ? 'rgba(26, 32, 44, 0.9)' : 'rgba(255, 255, 255, 0.9)') : 'transparent',
-                position: isHovered && showStandardOnHover ? 'absolute' : 'relative',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                zIndex: isHovered && showStandardOnHover ? 20 : 1,
-                backdropFilter: isHovered && showStandardOnHover ? 'blur(2px)' : 'none',
-              }}
-            >
-              <h3 className={`font-medium text-sm ${darkMode ? 'text-gray-100' : 'text-gray-800'} mb-1 line-clamp-1`}>{product.name}</h3>
-              
-              {/* Rating display with stars */}
-              { product.ratings_count > 0 && product.ratings_score !== undefined && (
-                <div className="flex items-center mb-1">
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-xs">
-                        {i < Math.floor(product.ratings_score) ? "★" : "☆"}
-                      </span>
-                    ))}
-                  </div>
-                  <span className={`ml-1 text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                    {product.ratings_score} {product.ratings_count > 0 ? `(${product.ratings_count})` : ''}
-                  </span>
-                </div>
-              )}
-              
-              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} text-xs mb-2 line-clamp-2`}>
-                {product.description || "No description available."}
-              </p>
-              
-              <div className="flex items-center justify-between mt-auto pt-1 border-t border-gray-100">
-                <span className={`inline-flex items-center px-1.5 py-0.5 rounded-md ${darkMode ? 'bg-gray-600 text-gray-200' : 'bg-black/5 text-black'} text-xs font-medium`}>
-                  Score: {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
-                </span>
-                
-                <a 
-                  href={product.url || "#"} 
-                  target="#"
-                  className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
-                >
-                  View details
-                </a>
-              </div>
-            </div>
-          ) : null}
-        </a>
-      </div>
-      
-      {showFullImage && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
-          onClick={handleCloseFullImage}
-        >
-          <div 
-            className="relative max-w-4xl max-h-[85vh] w-full h-full flex items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button 
-              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-black bg-opacity-50 flex items-center justify-center text-white hover:bg-opacity-70 transition-colors"
-              onClick={handleCloseFullImage}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-            
-            <img 
-              src={product.thumbnail_url || `https://placehold.co/1200x800?text=${encodeURIComponent(product.name)}`} 
-              alt={product.name}
-              className="max-w-full max-h-full object-contain cursor-pointer"
-              onClick={() => window.open(product.url || "#", "_blank")}
-              onError={(e) => {
-                e.target.src = `https://placehold.co/1200x800?text=${encodeURIComponent(product.name.substring(0, 20))}`;
-              }}
-            />
-                  
-            <div className="absolute bottom-4 left-0 right-0 text-center text-white bg-black bg-opacity-50 py-2 px-4">
-              <h3 className="font-bold text-base">{product.name}</h3>
-              <p className="text-sm opacity-90">${(product.price_cents / 100).toFixed(2)}</p>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
+// key={`${product.id || product.name}-${index}`}
+// product={product}
+// index={index}
+// darkMode={darkMode}
+// onHover={handleProductHover}
+// onLeave={handleProductMouseLeave}
 
 function App() {
   const [previewProduct, setPreviewProduct] = useState(null);
@@ -717,6 +290,21 @@ function App() {
   const loadingTimerRef = useRef(null);
   const similarProductsRef = useRef(null);
   const searchInputRef = useRef(null);
+
+  // Add this useEffect in your App component
+  useEffect(() => {
+    if (searchResults.length > 0) {
+      // Extract image URLs
+      const imageUrls = searchResults
+        .map(product => product.thumbnail_url)
+        .filter(Boolean);
+      
+      // Preload images in the background
+      import('./services/imageService').then(({ preloadImages }) => {
+        preloadImages(imageUrls);
+      });
+    }
+  }, [searchResults]);
 
   // Check for mobile viewport on mount and resize
   useEffect(() => {
@@ -1004,7 +592,12 @@ function App() {
     try {
       // API call and search logic
       const data = await searchProducts(searchProfile, searchQuery);
-      setSearchResults(data.results || []);
+  
+      // Process the product images to add proxy URLs before setting state
+      const processedResults = processProductImages(data.results || []);
+      
+      setSearchResults(processedResults);
+
       if (!isFirstSearch){
         // Update search history
         setSearchHistory(prev => [
@@ -1089,16 +682,17 @@ function App() {
     });
     
     // Start fetching the data immediately
+    // In your handleProductHover function, after fetching similar products
     try {
       const data = await getSimilarProducts(product.description, product.name, product.id);
-      // Filter out the current product from results
-      const similarProducts = data.results
-        .filter(item => item.name !== product.name)
-        .map(item => ({
-          ...item,
-          score: parseFloat(item.score).toFixed(2) // Format score
-        }));
-        
+      // Filter out the current product from results and process images
+      const similarProducts = processProductImages(
+        data.results.filter(item => item.name !== product.name)
+      ).map(item => ({
+        ...item,
+        score: parseFloat(item.score).toFixed(2) // Format score
+      }));
+          
       setSimilarProducts(similarProducts);
     } catch (error) {
       console.error('Error fetching similar products:', error);

@@ -1,5 +1,6 @@
 // services/api.js
 import axios from 'axios';
+import { processProductImages, preloadImages } from './imageService';
 
 // Get the API base URL from environment or use default
 const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
@@ -9,6 +10,7 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 30000, // 30 second timeout
 });
 
 // Example search function
