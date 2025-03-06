@@ -38,8 +38,32 @@ export const getProxiedImageUrl = (url) => {
  * @returns {string} - Fallback image URL
  */
 export const createFallbackImageUrl = (text, width = 600, height = 400) => {
-  const safeText = encodeURIComponent(text ? text.substring(0, 20) : 'Loading...');
-  return `${FALLBACK_IMAGE_BASE}${safeText}`;
+  // Default text if none provided
+  const defaultText = 'Loading...';
+  
+  // Handle null/undefined text
+  if (!text) {
+    return `${FALLBACK_IMAGE_BASE}${encodeURIComponent(defaultText)}`;
+  }
+  
+  try {
+    // Try to sanitize and encode the text
+    // First remove any problematic characters and limit length
+    const sanitizedText = String(text)
+      .substring(0, 20)                  // Limit length
+      .replace(/[^\w\s-]/g, '')          // Remove special characters
+      .trim();                           // Remove leading/trailing whitespace
+    
+    // If sanitizing removed everything, use default
+    const finalText = sanitizedText || defaultText;
+    
+    // Encode the sanitized text
+    return `${FALLBACK_IMAGE_BASE}${encodeURIComponent(finalText)}`;
+  } catch (error) {
+    // If any encoding error happens, use a simple fallback
+    console.warn('Error creating fallback image URL:', error);
+    return `${FALLBACK_IMAGE_BASE}Image`;
+  }
 };
 
 /**
