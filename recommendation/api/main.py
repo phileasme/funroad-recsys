@@ -6,6 +6,7 @@ from elasticsearch import AsyncElasticsearch as Elasticsearch
 from pydantic import BaseModel
 from numba import jit
 
+import json
 import logging
 import os
 from contextlib import asynccontextmanager
@@ -1415,7 +1416,7 @@ class CachedEmbeddingService:
     def __init__(self, colbert_service):
         self.colbert_service = colbert_service
         self.cache = {}
-        self.max_cache_size = 100
+        self.max_cache_size = 1000
         
     def get_embedding(self, query_text):
         if query_text in self.cache:
@@ -1435,7 +1436,6 @@ class CachedEmbeddingService:
 # FastAPI dependency
 def get_cached_embedding_service(colbert: ColBERTEmbedding = Depends(get_colbert)):
     return CachedEmbeddingService(colbert)
-
 
 @jit(nopython=True)
 def batch_cosine_similarity(query_vector, doc_vectors):
@@ -1593,33 +1593,231 @@ async def two_phase_unnative(
     
     return SearchResponse(results=reranked_results[:query.k], query_time_ms=query_time)
 
-# CachedEmbeddingService implementation
-class CachedEmbeddingService:
-    def __init__(self, colbert_service):
-        self.colbert_service = colbert_service
-        self.cache = {}
-        self.max_cache_size = 100
-        
-    def get_query_embedding(self, query_text):
-        """Get embedding with caching for repeated queries"""
-        if query_text in self.cache:
-            return self.cache[query_text]
-        
-        # Calculate new embedding
-        embedding = self.colbert_service.get_colbert_sentence_embedding(query_text).embedding.tolist()[0]
-        
-        # Manage cache size - remove oldest entry if full
-        if len(self.cache) >= self.max_cache_size:
-            oldest_key = next(iter(self.cache))
-            del self.cache[oldest_key]
-        
-        # Store in cache
-        self.cache[query_text] = embedding
-        return embedding
 
-# FastAPI dependency
-def get_cached_embedding_service(colbert: ColBERTEmbedding = Depends(get_colbert)):
-    return CachedEmbeddingService(colbert)
+
+from fastapi.responses import StreamingResponse
+
+
+@app.post("/two_phase_stream")
+async def two_phase_stream(
+    query: SearchQuery,
+    es_client: Elasticsearch = Depends(get_es_client),
+    colbert: ColBERTEmbedding = Depends(get_colbert)
+):
+    async def generate():
+        start_time = time.time()
+        
+        # First phase: BM25 search (deliver immediately)
+        bm25_query = {
+            "_source": ["name", "description", "thumbnail_url", "id", "ratings", "price_cents", "url", "seller"],
+            "query": {
+                "bool": {
+                    "should": [
+                        {"combined_fields": {"query": query.query, "fields": ["name^3", "description"]}},
+                        {"match_phrase": {"combined_text": {"query": query.query, "boost": 1.0}}},
+                        {"fuzzy": {"name": {"value": query.query, "fuzziness": get_fuzziness(query.query), "boost": 1.0}}}
+                    ]
+                }
+            },
+            "size": min(20, query.k)
+        }
+        
+        bm25_response = await es_client.search(index="products", body=bm25_query)
+        
+        # Process and yield first batch
+        first_batch = []
+        candidate_ids = []
+        doc_data = {}
+        
+        # Store the max score for normalizing
+        max_bm25_score = max([hit.get('_score', 0) for hit in bm25_response["hits"]["hits"]]) if bm25_response["hits"]["hits"] else 1.0
+        
+        for hit in bm25_response["hits"]["hits"]:
+            # Store the full hit data for reranking later
+            doc_data[hit["_id"]] = hit
+            candidate_ids.append(hit["_id"])
+            
+            # Get ratings data
+            ratings = hit["_source"].get("ratings", {})
+            ratings_count = ratings.get("count", 0) if isinstance(ratings, dict) else 0
+            ratings_score = ratings.get("average", -1.0) if isinstance(ratings, dict) else -1.0
+            
+            # Get seller data
+            seller = hit["_source"].get("seller", {})
+            seller_id = seller.get("id", "") if isinstance(seller, dict) else ""
+            seller_name = seller.get("name", "") if isinstance(seller, dict) else ""
+            seller_avatar = seller.get("avatar_url", "") if isinstance(seller, dict) else ""
+            
+            # Create search result
+            result = SearchResult(
+                score=hit.get("_score", 0) / max_bm25_score,
+                base_score=hit.get("_score", 0),
+                score_origin="bm25",
+                name=hit["_source"].get("name", ""),
+                description=hit["_source"].get("description", ""),
+                thumbnail_url=hit["_source"].get("thumbnail_url", ""),
+                ratings_count=ratings_count,
+                ratings_score=ratings_score,
+                price_cents=hit["_source"].get("price_cents", 0),
+                url=hit["_source"].get("url", ""),
+                id=hit["_id"],
+                seller_id=seller_id,
+                seller_name=seller_name,
+                seller_thumbnail=seller_avatar
+            )
+            
+            first_batch.append(result.dict())
+        
+        # Send first batch
+        first_phase_time = (time.time() - start_time) * 1000
+        yield json.dumps({
+            "results": first_batch,
+            "phase": "bm25",
+            "query_time_ms": first_phase_time,
+            "complete": False
+        }) + "\n"
+        
+        # Second phase: Get embeddings and rerank
+        try:
+            # Only proceed with second phase if we have candidates
+            if not candidate_ids:
+                yield json.dumps({
+                    "results": [],
+                    "phase": "reranked",
+                    "query_time_ms": first_phase_time,
+                    "complete": True
+                }) + "\n"
+                return
+            
+            # Get query embedding
+            query_embedding = colbert.get_colbert_sentence_embedding(query.query).embedding.tolist()[0]
+            
+            # Fetch all embeddings in batch
+            embeddings_response = await es_client.search(
+                index="products",
+                body={
+                    "_source": ["description_embedding"],
+                    "query": {
+                        "ids": {
+                            "values": candidate_ids
+                        }
+                    },
+                    "size": len(candidate_ids)
+                }
+            )
+            
+            # Process document embeddings
+            embedding_arrays = []
+            valid_doc_ids = []
+            
+            # Extract document embeddings
+            for hit in embeddings_response["hits"]["hits"]:
+                doc_id = hit["_id"]
+                embedding = hit["_source"].get("description_embedding")
+                if embedding:
+                    embedding_arrays.append(embedding)
+                    valid_doc_ids.append(doc_id)
+            
+            # Calculate similarity scores
+            similarity_scores = {}
+            
+            if embedding_arrays:
+                # Convert to numpy arrays
+                query_vector_array = np.array(query_embedding, dtype=np.float32)
+                doc_vectors_array = np.array(embedding_arrays, dtype=np.float32)
+                
+                # Calculate dot product (no need for Numba)
+                all_similarities = np.dot(doc_vectors_array, query_vector_array)
+                
+                # Map back to document IDs
+                for doc_id, sim_score in zip(valid_doc_ids, all_similarities):
+                    similarity_scores[doc_id] = float(sim_score)
+            
+            # Determine if this is a multi-term query
+            is_multi_term = len([t for t in query.query.split() if len(t) > 3]) > 1
+            bm25_weight = 0.4 if is_multi_term else 0.6
+            colbert_weight = 0.6 if is_multi_term else 0.4
+            
+            # Process results
+            reranked_results = []
+            
+            for doc_id in candidate_ids:
+                hit = doc_data[doc_id]
+                
+                # Get ratings data
+                ratings = hit["_source"].get("ratings", {})
+                ratings_count = ratings.get("count", 0) if isinstance(ratings, dict) else 0
+                ratings_score = ratings.get("average", -1.0) if isinstance(ratings, dict) else -1.0
+                
+                # Normalize BM25 score
+                normalized_bm25 = 1 - 2 / (1 + hit.get("_score", 0))
+                
+                # Get colbert similarity score
+                colbert_score = similarity_scores.get(doc_id, 0)
+                
+                # Calculate final score
+                final_score = (normalized_bm25 * bm25_weight) + (colbert_score * colbert_weight)
+                
+                # Apply ratings boost
+                final_score = apply_ratings_boost(final_score, ratings_count, ratings_score, "hybrid")
+                
+                # Get seller data
+                seller = hit["_source"].get("seller", {})
+                seller_id = seller.get("id", "") if isinstance(seller, dict) else ""
+                seller_name = seller.get("name", "") if isinstance(seller, dict) else ""
+                seller_avatar = seller.get("avatar_url", "") if isinstance(seller, dict) else ""
+                
+                # Create result
+                result = SearchResult(
+                    score=final_score,
+                    base_score=hit.get("_score", 0),
+                    score_origin="hybrid",
+                    name=hit["_source"].get("name", ""),
+                    description=hit["_source"].get("description", ""),
+                    thumbnail_url=hit["_source"].get("thumbnail_url", ""),
+                    ratings_count=ratings_count,
+                    ratings_score=ratings_score,
+                    price_cents=hit["_source"].get("price_cents", 0),
+                    url=hit["_source"].get("url", ""),
+                    id=doc_id,
+                    seller_id=seller_id,
+                    seller_name=seller_name,
+                    seller_thumbnail=seller_avatar
+                )
+                
+                reranked_results.append(result.dict())
+            
+            # Sort results by score
+            reranked_results.sort(key=lambda x: x["score"], reverse=True)
+            
+            # Limit to requested k
+            reranked_results = reranked_results[:query.k]
+            
+            # Send reranked results
+            yield json.dumps({
+                "results": reranked_results,
+                "phase": "reranked",
+                "query_time_ms": (time.time() - start_time) * 1000,
+                "complete": True
+            }) + "\n"
+            
+        except Exception as e:
+            # Log the exception
+            logger.error(f"Error in second phase: {str(e)}", exc_info=True)
+            
+            # Send error but client still has the first batch
+            yield json.dumps({
+                "error": str(e),
+                "phase": "error",
+                "complete": True
+            }) + "\n"
+    
+    return StreamingResponse(
+        generate(),
+        media_type="application/x-ndjson"
+    )
+
+
 
 
 @app.post("/search_fallback", response_model=SearchResponse)
