@@ -477,19 +477,38 @@ function App() {
   }, []);
 
 
-useEffect(() => {
-  // Only execute if query has been initialized and has content
-  if (query && query.trim()) {
-    // Small delay to ensure query state has propagated
-    const timer = setTimeout(() => {
-      performSearch(query);
-    }, 100);
-    return () => clearTimeout(timer);
-  }
-}, [query]); // This will fire whenever query changes
+// useEffect(() => {
+//   // Only execute if query has been initialized and has content
+//   if (query && query.trim()) {
+//     // Small delay to ensure query state has propagated
+//     const timer = setTimeout(() => {
+//       performSearch(query);
+//     }, 100);
+//     return () => clearTimeout(timer);
+//   }
+// }, [query]); // This will fire whenever query changes
   
 
-// Keep track of the most recent query and its timestamp
+// 2. Create a specific function for the initial search
+const initialSearchRef = useRef(false);
+
+// 3. Use a useEffect to set the initial query and perform the search
+useEffect(() => {
+  if (initialSearchRef.current) return; // Only run this once
+  
+  const randomQuery = queryExamples[Math.floor(Math.random() * queryExamples.length)];
+  setQuery(randomQuery);
+  
+  // Use a timeout to ensure the query state is updated before search
+  const timer = setTimeout(() => {
+    console.log("Executing initial search for:", randomQuery);
+    performSearch(randomQuery); // Call search directly with the value
+    initialSearchRef.current = true; // Mark as executed
+  }, 300);
+  
+  return () => clearTimeout(timer);
+}, []); // Empty dependency array means this runs once on mount
+
 const lastQueryRef = useRef({ text: '', timestamp: 0 });
 
 // Create a debounced search function with duplicate check\
@@ -520,6 +539,9 @@ const debouncedSearch = debounce((query, searchFn) => {
   const performSearch = async (searchQuery) => {
     if (!searchQuery.trim()) return;
     
+    // Log for debugging
+    console.log("Performing search for:", searchQuery);
+    
     // Set loading state
     setIsLoading(true);
     
@@ -549,7 +571,8 @@ const debouncedSearch = debounce((query, searchFn) => {
     }
     
     try {
-      let data = ""
+      let data = "";
+      // Use the passed searchQuery parameter, not the component state
       if(searchQuery[0] === "\"" && searchQuery[searchQuery.length - 1] === "\""){
         searchQuery = searchQuery.substring(1, searchQuery.length - 1);
         data = await searchProducts("exact_match", searchQuery);
@@ -557,11 +580,14 @@ const debouncedSearch = debounce((query, searchFn) => {
         data = await searchProducts(searchProfile, searchQuery);
       }
   
+      // Log results for debugging
+      console.log("Search results:", data.results ? data.results.length : 0);
+    
       // Process the product images to add proxy URLs before setting state
       const processedResults = processProductImages(data.results || []);
       
       setSearchResults(processedResults);
-
+  
       if (!isFirstSearch){
         // Update search history
         setSearchHistory(prev => [
