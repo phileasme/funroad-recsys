@@ -1437,44 +1437,13 @@ def get_cached_embedding_service(colbert: ColBERTEmbedding = Depends(get_colbert
     return CachedEmbeddingService(colbert)
 
 
-
-
 @jit(nopython=True)
 def batch_cosine_similarity(query_vector, doc_vectors):
     """
-    Calculate cosine similarity between a query vector and multiple document vectors.
-    Uses Numba JIT compilation for speed.
-    
-    Args:
-        query_vector: The query embedding vector (1D array)
-        doc_vectors: Matrix where each row is a document embedding vector (2D array)
-        
-    Returns:
-        Array of cosine similarity scores
+    Vectorized dot product for pre-normalized vectors.
     """
-    # Calculate the norm of the query vector
-    query_norm = np.sqrt(np.sum(query_vector * query_vector))
-    
-    # Normalize the query vector
-    if query_norm > 0:
-        query_vector = query_vector / query_norm
-    
-    # Compute norms for all document vectors at once
-    doc_norms = np.sqrt(np.sum(doc_vectors * doc_vectors, axis=1))
-    
-    # Initialize similarity array
-    similarities = np.zeros(len(doc_vectors))
-    
-    # Calculate cosine similarities
-    for i in range(len(doc_vectors)):
-        # Skip documents with zero norm
-        if doc_norms[i] > 0:
-            # Normalize the document vector
-            normalized_doc = doc_vectors[i] / doc_norms[i]
-            # Calculate dot product with normalized query vector
-            similarities[i] = np.sum(query_vector * normalized_doc)
-    
-    return similarities
+    # One line, fully vectorized dot product
+    return np.dot(doc_vectors, query_vector)
 
 @app.post("/two_phase_unnative", response_model=SearchResponse)
 async def two_phase_unnative(
