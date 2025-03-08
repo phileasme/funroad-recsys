@@ -55,6 +55,7 @@ services:
       - REACT_APP_API_URL=/api
       - CHOKIDAR_USEPOLLING=true  
       - WDS_SOCKET_PORT=3000
+      - NODE_ENV=production
     networks:
       - elastic-net
 

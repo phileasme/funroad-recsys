@@ -17,6 +17,11 @@ class SearchResult(BaseModel):
     price_cents: Optional[int] = None
     url: Optional[str] = None
     id: Optional[str] = None
+    seller_id: Optional[str] = None
+    seller_name: Optional[str] = None
+    seller_thumbnail: Optional[str] = None
+    score_origin: Optional[str] = None
+    base_score: Optional[float]= None
 
 
 class SearchResponse(BaseModel):

@@ -3,7 +3,6 @@ FROM node:18-alpine
 # Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
 
 # Install dependencies
@@ -19,4 +18,13 @@ COPY . .
 # # Build the React app for development (not production)
 # CMD ["serve", "-s", "build"]
 
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
+
+
+ENV NODE_ENV=production
+ENV REACT_APP_API_URL=/api
+ENV WDS_SOCKET_PORT=3000
+ENV WATCHPACK_POLLING=true
+
+# Start development server with host 0.0.0.0 to allow external connections
+CMD ["npm", "start", "--", "--host", "0.0.0.0"]

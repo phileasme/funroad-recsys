@@ -5,10 +5,17 @@
 // In-memory cache for image status
 const imageStatusCache = new Map();
 
+
+
+const bgColors = ['212121', '4a4a4a', '6b6b6b', '444', '333', '555', '3c5a2d', '7f5e6b', '324d56', '742d1e'];
+const textColors = ['ffffff', 'f0f0f0', 'eeeeee', 'dddddd', 'cccccc'];
+
+
+
 // Constants
 const IMAGE_PROXY_PATH = '/image-proxy/';
-const FALLBACK_IMAGE_BASE = 'https://placehold.co/600x400?text=';
-const IMAGE_LOAD_TIMEOUT = 8000; // 8 seconds timeout
+    
+const IMAGE_LOAD_TIMEOUT = 3000;
 
 /**
  * Rewrite a Gumroad URL to use our proxy
@@ -20,22 +27,30 @@ export const getProxiedImageUrl = (url) => {
   if (!url) return null;
   
   try {
-    // Basic URL validation - URL must be a string and contain 'http'
+    // Basic URL validation
     if (typeof url !== 'string' || !url.includes('http')) {
-      return url; // Return as is if it doesn't look like a valid URL
+      return url;
     }
     
-    // Check if it's a Gumroad URL
+    // Check if it's a Gumroad URL 
     if (url.includes('public-files.gumroad.com')) {
-      // Replace the domain with our proxy path
-      return url.replace('https://public-files.gumroad.com/', IMAGE_PROXY_PATH);
+      // In development, use a direct URL to avoid CORS issues
+      const isDevelopment = process.env.NODE_ENV === 'development';
+      
+      if (isDevelopment) {
+        // Use the original URL in development
+        return url;
+      } else {
+        // In production, use our Nginx proxy
+        return url.replace('https://public-files.gumroad.com/', '/image-proxy/');
+      }
     }
     
     // Return original URL for non-Gumroad URLs
     return url;
   } catch (error) {
     console.warn('Error processing URL for proxy:', error);
-    return url; // Return original on error
+    return url;
   }
 };
 
@@ -50,6 +65,11 @@ export const createFallbackImageUrl = (text, width = 600, height = 400) => {
   // Default text if none provided
   const defaultText = 'Loading...';
   
+
+  const bgColor = bgColors[Math.floor(Math.random() * bgColors.length)];
+  const textColor = textColors[Math.floor(Math.random() * textColors.length)];
+  const FALLBACK_IMAGE_BASE = `https://placehold.co/600x400/${bgColor}/${textColor}?text=`;
+
   // Handle null/undefined text
   if (!text) {
     return `${FALLBACK_IMAGE_BASE}${encodeURIComponent(defaultText)}`;
@@ -59,7 +79,7 @@ export const createFallbackImageUrl = (text, width = 600, height = 400) => {
     // Try to sanitize and encode the text
     // First remove any problematic characters and limit length
     const sanitizedText = text
-      .substring(0, 20)                  // Limit length
+      .substring(0, 25)                  // Limit length
       .replace(/[^\w\s-]/g, '')          // Remove special characters
       .trim();                           // Remove leading/trailing whitespace
     
@@ -166,7 +186,12 @@ export const preloadImages = async (urls, useProxy = true) => {
  * @returns {Array<Object>} - Products with processed URLs
  */
 export const processProductImages = (products) => {
-  if (!products || !products.length) return [];
+  if (!products || !products.length) {
+    console.log("No products to process");
+    return [];
+  }
+  
+  console.log(`Processing ${products.length} products`);
   
   return products.map(product => {
     if (!product) return product;
@@ -190,7 +215,7 @@ export const processProductImages = (products) => {
         fallbackUrl = createFallbackImageUrl(product.name);
       } catch (err) {
         console.warn(`Failed to create fallback URL for product ${product.id || 'unknown'}:`, err);
-        fallbackUrl = `${FALLBACK_IMAGE_BASE}Image`;
+        fallbackUrl = `https://placehold.co/600x400?text=Image`;
       }
       
       // Create a new object to avoid mutating the original

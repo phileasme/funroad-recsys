@@ -16,7 +16,7 @@ function SearchProfileSelector({ searchProfile, setSearchProfile, searchProfiles
   return (
     <div className="relative">
       <button
-        className={`flex items-center space-x-1 px-3 py-2 rounded-md ${
+        className={`flex items-center space-x-1 px-2 py-2 rounded-md ${
           darkMode 
             ? 'hover:bg-gray-700 text-gray-200' 
             : 'hover:bg-gray-100 text-gray-800'
@@ -24,7 +24,7 @@ function SearchProfileSelector({ searchProfile, setSearchProfile, searchProfiles
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
         <BarChartIcon className="w-4 h-4 text-[#FE90EA]" />
-        <span className="truncate max-w-[120px] sm:max-w-[150px]">
+        <span className="truncate max-w-[180px] sm:max-w-[220px]">
           {currentProfile.name} {currentProfile.version || ''}
         </span>
         <svg 

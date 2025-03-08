@@ -5,6 +5,9 @@ import { searchProducts, getSimilarProducts } from './services/api';
 import { processProductImages } from './services/imageService';
 import SearchProfileSelector from './components/SearchProfileSelector';
 import ProductCard from './components/ProductCard';
+// Import debounce from lodash
+import { debounce } from 'lodash';
+
 // Import existing styles - keeping this section as is
 const AppStyles = `
 .App {
@@ -239,39 +242,34 @@ const defaultProfileData = {
   }
 };
 
-const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "preset pack", "tennis course", "ai brushes", "lightroom bundle", "fishing logo", "instagram marketing", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "lightroom preset", "amazon kdp", "jersey 3d", "business marketing", "soccer drills", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "vrchat avatar", "iphone mockup", "kdp interior", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "notion planner", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern"];
-// Create default data for all profiles - keeping this section as is
+const queryExamples = ["ios 14 app icons", "kdp cover design", "python for beginners", "macbook air mockup", "ios 14 icons", "procreate brush pack", "mtt sng cash", "cross stitch pattern", "windows 11 themes", "max for live", "forex expert advisor", "figma ui kit", "kdp book cover", "cross stitch pdf", "ready to render", "macbook pro mockup", "ableton live packs", "kdp digital design", "royalty free music", "mt4 expert advisor", "sample pack", "betting system", "phone wallpaper", "design system", "preset pack", "tennis course", "lightroom bundle", "fishing logo", "oil painting", "notion template", "prompt engineering", "music production", "web design", "icon set", "abstract background", "pokertracker 4", "mobile mockup", "gambling tips", "sport car", "tennis training", "chatgpt mastery", "sports betting", "keyshot scene", "mockup template", "furry art", "football coach", "lightroom preset", "amazon kdp", "jersey 3d", "business marketing", "macbook mockup", "business growth", "ui kit", "graphic design", "laptop mockup", "ios14 icons", "wallpaper phone", "vj clip", "design patterns", "john deere", "vrchat avatar", "iphone mockup", "kdp interior", "ui design", "landing page", "vrchat accessories", "kids tennis", "wrapping papers", "apple mockup", "vj pack", "jersey template", "cheat sheet", "betfair trading", "fishing illustration", "wallpaper pack", "cross stitch", "motion graphics", "hand drawn", "diseño gráfico", "tennis technique", "notion layout", "vrchat asset", "ableton live", "poker tournaments", "zenbits gambling", "soccer training", "chatgpt course", "seamless clipart", "lightroom presets", "canva template", "tennis coaching", "sports trading", "best mom", "device mockup", "figma template", "iphone wallpaper", "digital art", "chatgpt tutorial", "3d model", "chatgpt prompts", "vrchat clothing", "business plan", "online poker", "hunting logo", "digital paper", "digital download", "procreate stamps", "notion templates", "digital painting", "clipart set", "lightroom mobile", "furry base", "tennis teaching", "jersey mockup", "icon pack", "after effects", "vector illustration", "notion planner", "procreate brush", "kdp book", "kdp template", "procreate brushes", "adobe illustrator", "design templates", "passive income", "dice control", "poker strategy", "social media", "vj loops", "notion dashboard", "subversive pattern"];
+
 const searchProfiles = [
   { id: 'search_fuzzy', name: 'Fuzzy Search' },
   { id: 'search_vision', name: 'Vision Search' },
   { id: 'search_colbert', name: 'Sentence Embedding Search' },
+  {id: 'exact_match', name: 'ExactMatch'},
   { id: 'search_combined_v0_7', name: ' Combined No rating', version: "(v0.7)" },
   {id: 'search_combined_v0_8', name: 'Combine with ratings', version: "(v0.8)" },
+  {id: 'two_phase_unnative',name:"2phase, BM25 & Colbert", version: "(v0.9)" },
+
 ];
 
-// Initialize all profiles that don't have specific data - keeping this section as is
-searchProfiles.forEach(profile => {
+searchProfiles.reverse().forEach(profile => {
   if (!defaultProfileData[profile.id]) {
     defaultProfileData[profile.id] = {
       ...defaultProfileData.default,
-      // Add a random variation to make each profile look different
       accuracy: defaultProfileData.default.accuracy + Math.floor(Math.random() * 15),
       recall: defaultProfileData.default.recall + Math.floor(Math.random() * 15)
     };
   }
 });
 
-// key={`${product.id || product.name}-${index}`}
-// product={product}
-// index={index}
-// darkMode={darkMode}
-// onHover={handleProductHover}
-// onLeave={handleProductMouseLeave}
 
 function App() {
   const [previewProduct, setPreviewProduct] = useState(null);
   const [query, setQuery] = useState(null);
-  const [searchProfile, setSearchProfile] = useState('search_combined_v0_8');
+  const [searchProfile, setSearchProfile] = useState('two_phase_unnative');
   const [searchResults, setSearchResults] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [hoveredProduct, setHoveredProduct] = useState(null);
@@ -291,7 +289,7 @@ function App() {
   const similarProductsRef = useRef(null);
   const searchInputRef = useRef(null);
 
-  // Add this useEffect in your App component
+
   useEffect(() => {
     if (searchResults.length > 0) {
       // Extract image URLs
@@ -400,81 +398,6 @@ function App() {
       </div>
     );
   }
-  
-  // Charts and metrics section completion
-  function PerformanceCharts({ performanceData, darkMode }) {
-    return (
-      <>
-        {/* Comparison chart */}
-        <div className="mt-6">
-          <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>Metrics Comparison</h3>
-          <div className="chart-container h-48">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={performanceData.comparisonChart}
-                barSize={15}
-                layout="vertical"
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#555" : "#ccc"} />
-                <XAxis 
-                  type="number" 
-                  domain={[0, 1]} 
-                  tickFormatter={(value) => `${(value * 100).toFixed(0)}%`} 
-                  stroke={darkMode ? "#aaa" : "#666"}
-                />
-                <YAxis 
-                  type="category" 
-                  dataKey="name" 
-                  width={70} 
-                  stroke={darkMode ? "#aaa" : "#666"}
-                />
-                <Tooltip 
-                  formatter={(value) => [`${(value * 100).toFixed(1)}%`, 'Score']}
-                  contentStyle={{ 
-                    backgroundColor: darkMode ? '#2d3748' : '#fff',
-                    borderColor: darkMode ? '#4a5568' : '#e2e8f0',
-                    color: darkMode ? '#e2e8f0' : '#1a202c'
-                  }}
-                />
-                <Legend />
-                <Bar dataKey="current" fill="#3B82F6" name="Current" />
-                <Bar dataKey="baseline" fill={darkMode ? "#6B7280" : "#9CA3AF"} name="Baseline" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-        
-        {/* Time series chart */}
-        <div className="mt-6">
-          <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>Response Time Trend (ms)</h3>
-          <div className="chart-container h-48">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={performanceData.timeData}>
-                <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#555" : "#ccc"} />
-                <XAxis 
-                  dataKey="name" 
-                  stroke={darkMode ? "#aaa" : "#666"}
-                />
-                <YAxis 
-                  stroke={darkMode ? "#aaa" : "#666"}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: darkMode ? '#2d3748' : '#fff',
-                    borderColor: darkMode ? '#4a5568' : '#e2e8f0',
-                    color: darkMode ? '#e2e8f0' : '#1a202c'
-                  }}
-                />
-                <Legend />
-                <Line type="monotone" dataKey="current" stroke="#3B82F6" name="Current" strokeWidth={2} />
-                <Line type="monotone" dataKey="baseline" stroke={darkMode ? "#6B7280" : "#9CA3AF"} name="Baseline" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </>
-    );
-  }
 
   function LoadingSpinner({ query, darkMode }) {
     return (
@@ -548,10 +471,34 @@ function App() {
   }
 
   const firstQuery = queryExamples[Math.floor(Math.random() * queryExamples.length)];
+
   useEffect(() => {
     setQuery(firstQuery);
-    performSearch(firstQuery);
-  }, []);  
+  }, []);
+  
+
+// Keep track of the most recent query and its timestamp
+let lastQuery = { text: '', timestamp: 0 };
+
+// Create a debounced search function with duplicate check
+const debouncedSearch = debounce((query, searchFn) => {
+  if (query && query.trim()) {
+    const trimmedQuery = query.trim();
+    const now = Date.now();
+    
+    // Check if this exact query was made in the last second
+    if (trimmedQuery === lastQuery.text && now - lastQuery.timestamp < 1000) {
+      console.log('Skipping duplicate query within 1 second:', trimmedQuery);
+      return;
+    }
+    
+    // Update the last query info
+    lastQuery = { text: trimmedQuery, timestamp: now };
+    
+    // Perform the search
+    searchFn(trimmedQuery);
+  }
+}, 500);
 
   const handleSearch = async (e) => {
     if (e) e.preventDefault();
@@ -590,8 +537,13 @@ function App() {
     }
     
     try {
-      // API call and search logic
-      const data = await searchProducts(searchProfile, searchQuery);
+      let data = ""
+      if(searchQuery[0] === "\"" && searchQuery[searchQuery.length - 1] === "\""){
+        searchQuery = searchQuery.substring(1, searchQuery.length - 1);
+        data = await searchProducts("exact_match", searchQuery);
+      } else {
+        data = await searchProducts(searchProfile, searchQuery);
+      }
   
       // Process the product images to add proxy URLs before setting state
       const processedResults = processProductImages(data.results || []);
@@ -609,18 +561,27 @@ function App() {
       console.error('Search error:', error);
       // Fallback to mock data after a delay to simulate network request
       setTimeout(() => {
-        setSearchResults(Array(6).fill(0).map((_, i) => ({
-          id: `result-${i}`,
-          score: (Math.random() * 0.2 + 0.8).toFixed(2),
-          name: `${searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1)} Product ${i + 1}`,
-          description: `This is a sample product related to "${searchQuery}".`,
-          thumbnail_url: `https://placehold.co/600x400?text=${encodeURIComponent(searchQuery)}+${i+1}`,
-          price_cents: Math.floor(Math.random() * 5000) + 1000,
-          ratings_score: (Math.random() * 1 + 4).toFixed(1),
-          ratings_count: Math.floor(Math.random() * 300) + 50,
-          url: '#'
-        })));
-      }, 1000);
+        setSearchResults(Array(6).fill(0).map((_, i) => {
+          // Generate random colors
+          const bgColors = ['212121', '4a4a4a', '6b6b6b', '444', '333', '555', 'abd123', 'fe90ea', '256789', '742d1e'];
+          const textColors = ['ffffff', 'f0f0f0', 'eeeeee', 'dddddd', 'cccccc'];
+          
+          // Select random colors from our arrays
+          const bgColor = bgColors[Math.floor(Math.random() * bgColors.length)];
+          const textColor = textColors[Math.floor(Math.random() * textColors.length)];
+          
+          return {
+            id: `result-${i}`,
+            score: (Math.random() * 0.2 + 0.8).toFixed(2),
+            name: `${searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1)} Product ${i + 1}`,
+            description: `This is a sample product related to "${searchQuery}".`,
+            thumbnail_url: `https://placehold.co/600x400/${bgColor}/${textColor}?text=${encodeURIComponent(searchQuery)}+${i+1}`,
+            price_cents: Math.floor(Math.random() * 5000) + 1000,
+            ratings_score: (Math.random() * 1 + 4).toFixed(1),
+            ratings_count: Math.floor(Math.random() * 300) + 50,
+            url: '#'
+          };
+        }))}, 1000)
     } finally {
       // IMPORTANT: Clear the spinner timer immediately
       if (loadingTimerRef.current) {
@@ -681,7 +642,6 @@ function App() {
       y: rect.top 
     });
     
-    // Start fetching the data immediately
     // In your handleProductHover function, after fetching similar products
     try {
       const data = await getSimilarProducts(product.description, product.name, product.id);
@@ -833,25 +793,31 @@ function App() {
     }
   }, [darkMode]);
 
+  const searchCopy = [...searchResults].reverse();
+searchCopy.forEach((product, index) => {
+  console.log({
+    index: searchResults.length - 1 - index,
+    name: product.name,
+    score_origin: product.score_origin,
+    score: product.score,
+    base_score: product.base_score,
+    ratings: product.ratings_score,
+    ratings_counts: product.ratings_count
+  });
+});
+
   return (
     <div className={`flex flex-col min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-black'}`}>
       {/* Header */}
       <header className={`${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm py-3 sm:py-4 px-4 sm:px-6 border-b-2 border-[#FE90EA] main-header`}>
         <div className="mx-auto flex flex-wrap justify-between items-center">
           <div className="flex items-center space-x-2 mb-2 sm:mb-0">
-            <img src="/gumroad.png" alt="Gumroad Logo" className="h-6 sm:h-8 w-auto" />
-            <h1 className={`text-base sm:text-xl font-bold ${darkMode ? 'text-white' : 'text-black'}`}>Gumroad Search Prototype</h1>
+            <img src="/gum.png" alt="Gum" className="h-6 sm:h-8 w-auto" />
+            <h1 className={`text-base sm:text-xl font-bold ${darkMode ? 'text-white' : 'text-black'}`}>Search Prototype</h1>
           </div>
           
           {/* Middle section with nav links */}
           <div className="flex items-center space-x-3 sm:space-x-6 order-3 sm:order-2 w-full sm:w-auto justify-center mt-3 sm:mt-0">
-            {/* Search Profile Selector in navbar */}
-            <SearchProfileSelector
-              searchProfile={searchProfile}
-              setSearchProfile={setSearchProfile}
-              searchProfiles={searchProfiles}
-              darkMode={darkMode}
-            />
             
             <a 
               href="https://www.notion.so/Search-Discovery-Case-Study-Blog-40e476a45ad94596ad323289eac62c2c" 
@@ -879,9 +845,12 @@ function App() {
             <div className={`text-xs ${darkMode ? 'text-gray-300' : 'text-black'} hidden md:block`}>
               Shards: 1
             </div>
-            <div className={`text-xs ${darkMode ? 'text-gray-300' : 'text-black'} hidden lg:block`}>
-              Profile: v0.8
-            </div>
+            <SearchProfileSelector
+              searchProfile={searchProfile}
+              setSearchProfile={setSearchProfile}
+              searchProfiles={searchProfiles}
+              darkMode={darkMode}
+            />
             {/* Dark mode toggle */}
             <button 
               onClick={toggleDarkMode} 
@@ -896,180 +865,141 @@ function App() {
         
       {/* Main content */}
       <main className="flex-grow py-3 sm:py-6 px-3 sm:px-6 page-content">
-        <div>
-        <div className="w-full mx-auto">
-          {/* Search form - Common to both layouts */}
-          <div className="flex justify-center w-full">
-            <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-3 sm:p-6 rounded-lg shadow-sm mb-4 sm:mb-6 border-2 w-full max-w-7xl mx-auto`}>
-              <form onSubmit={handleSearch} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4 search-form">
-                <div className="relative flex-grow">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#FE90EA]" />
-                  <input
-                    ref={searchInputRef}
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search for products..."
-                    className={`w-full pl-10 pr-4 py-2 sm:py-3 rounded-md border-2 ${
-                      darkMode 
-                        ? 'border-gray-600 bg-gray-700 text-white focus:border-[#FE90EA]' 
-                        : 'border-gray-300 bg-white text-black focus:border-[#FE90EA]'
-                    } focus:outline-none focus:ring-1 focus:ring-[#FE90EA]`}
-                    onClick={(e) => e.target.select()}
-                  />
+        <div className="w-full max-w-7xl mx-auto">
+          {/* Search form with ScrollingQueryExamples to the right */}
+          <div className="flex flex-col md:flex-row md:items-start w-full">
+            <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-3 rounded-lg shadow-sm mb-4 border-2 w-full md:flex-grow sm:p-6 sm:mb-6`}>
+              <form onSubmit={handleSearch} className="w-full search-form">
+                <div className="flex flex-col w-full md:flex-row md:items-center md:gap-4">
+                  <div className="relative flex-grow w-full mb-2 md:mb-0">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#FE90EA]" />
+                    <input
+                      ref={searchInputRef}
+                      type="text"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder="Search for products..."
+                      className={`w-full pl-10 pr-4 py-2 sm:py-3 rounded-md border-2 ${
+                        darkMode
+                          ? 'border-gray-600 bg-gray-700 text-white focus:border-[#FE90EA]'
+                          : 'border-gray-300 bg-white text-black focus:border-[#FE90EA]'
+                      } focus:outline-none focus:ring-1 focus:ring-[#FE90EA]`}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full md:w-auto bg-[#FE90EA] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-2 focus:ring-[#FE90EA] focus:ring-offset-2 font-medium border-2 border-black flex-shrink-0"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Searching...' : 'Search'}
+                  </button>
                 </div>
-                <button
-                  type="submit"
-                  className="bg-[#FE90EA] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-2 focus:ring-[#FE90EA] focus:ring-offset-2 font-medium border-2 border-black flex-shrink-0"
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Searching...' : 'Search'}
-                </button>
               </form>
             </div>
-            <div className="hidden md:block">
-              <ScrollingQueryExamples 
+            <div className="hidden md:block md:flex-shrink-0">
+            <ScrollingQueryExamples
+              setQuery={setQuery}
+              performSearch={performSearch}
+              darkMode={darkMode}
+              queryExamples={queryExamples}
+            />
+          </div>
+        </div>
+      </div>
+
+        {/* Mobile navigation tabs - only shown on mobile */}
+        {isMobile && (
+          <MobileNavigationTabs 
+            currentTab={tabView} 
+            setTabView={setTabView} 
+            darkMode={darkMode} 
+          />
+        )}
+        {/* Two-column layout for desktop, stacked for mobile */}
+        <div className="flex flex-col lg:flex-row gap-4 sm:gap-4">
+          {/* Left column (wider) - Search results */}
+          <div className={`${isMobile && tabView !== 'results' ? 'hidden' : 'block'} lg:w-2/3 space-y-4 sm:space-y-6`}>
+            {/* Search results or loading state */}
+            {isLoading && showLoadingSpinner ? (
+              <LoadingSpinner darkMode={darkMode} query={query}/>
+            ) : searchResults.length > 0 ? (
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 rounded-lg shadow-sm`}>
+                <h2 className={`text-lg sm:text-xl font-semibold mb-4 sm:mb-4 ${darkMode ? 'text-white' : 'text-black'} border-b-2 border-[#FE90EA] pb-2 inline-block`}>
+                  Search Results ({searchResults.length})
+                </h2>
+                
+                <div className="grid gap-3 sm:gap-6 grid-cols-2 xl:grid-cols-3 product-grid">
+                {searchResults.map((product, index) => (
+                  <ProductCard 
+                    key={`${product.id || product.name}-${index}`}
+                    product={product}
+                    index={index}
+                    darkMode={darkMode}
+                    onHover={handleProductHover}
+                    onLeave={handleProductMouseLeave}
+                  />
+                ))}
+                </div>
+              </div>
+            ) : (
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm text-center`}>
+                <p className={`text-base sm:text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  No results found for "{query}". Try a different search term.
+                </p>
+              </div>
+            )}
+
+            {/* Search history section - shown on desktop and mobile history tab */}
+            {(!isMobile || tabView === 'history') && searchHistory.length > 0 && (
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm`}>
+                <h2 className={`text-base sm:text-lg font-semibold mb-3 sm:mb-4 ${darkMode ? 'text-white' : 'text-black'}`}>Recent Searches</h2>
+                <div className="overflow-x-auto table-responsive">
+                  <table className={`min-w-full divide-y ${darkMode ? 'divide-gray-700' : 'divide-gray-200'} history-table`}>
+                    <thead className={darkMode ? 'bg-gray-700' : 'bg-gray-50'}>
+                      <tr>
+                        <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Query</th>
+                        <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Time</th>
+                        <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Results</th>
+                        <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Query Time</th>
+                        <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className={`${darkMode ? 'bg-gray-800 divide-y divide-gray-700' : 'bg-white divide-y divide-gray-200'}`}>
+                      {searchHistory.map((item, i) => (
+                        <tr key={i} className={darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'}>
+                          <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-medium ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>{item.query}</td>
+                          <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.timestamp}</td>
+                          <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.results}</td>
+                          <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.queryTime?.toFixed(2) || '-'} ms</td>
+                          <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-blue-500 hover:text-blue-700`}>
+                            <button onClick={() => { setQuery(item.query); handleSearch(); }}>
+                              Search again
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          {/* Right column - Hidden on mobile except in metrics tab */}
+          <div className={`${isMobile && tabView !== 'metrics' ? 'hidden' : 'block'} lg:w-1/3`}>
+            {/* Recent searches component - Only visible on desktop */}
+            {!isMobile && (
+              <RecentSearchesComponent 
+                searchHistory={searchHistory.slice(0, 3)} 
                 setQuery={setQuery} 
                 performSearch={performSearch}
                 darkMode={darkMode}
-                queryExamples={queryExamples}
               />
+            )}
           </div>
-          </div>
-          </div>
-
-          {/* Mobile navigation tabs - only shown on mobile */}
-          {isMobile && (
-            <MobileNavigationTabs 
-              currentTab={tabView} 
-              setTabView={setTabView} 
-              darkMode={darkMode} 
-            />
-          )}
-          {/* Two-column layout for desktop, stacked for mobile */}
-          <div className="flex flex-col lg:flex-row gap-4 sm:gap-4">
-            {/* Left column (wider) - Search results */}
-            <div className={`${isMobile && tabView !== 'results' ? 'hidden' : 'block'} lg:w-2/3 space-y-4 sm:space-y-6`}>
-              {/* Search results or loading state */}
-              {isLoading && showLoadingSpinner ? (
-                <LoadingSpinner darkMode={darkMode} query={query}/>
-              ) : searchResults.length > 0 ? (
-                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 rounded-lg shadow-sm`}>
-                  <h2 className={`text-lg sm:text-xl font-semibold mb-4 sm:mb-4 ${darkMode ? 'text-white' : 'text-black'} border-b-2 border-[#FE90EA] pb-2 inline-block`}>
-                    Search Results ({searchResults.length})
-                  </h2>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6 product-grid">
-                  {searchResults.map((product, index) => (
-                    <ProductCard 
-                      key={`${product.id || product.name}-${index}`}
-                      product={product}
-                      index={index}
-                      darkMode={darkMode}
-                      onHover={handleProductHover}
-                      onLeave={handleProductMouseLeave}
-                    />
-                  ))}
-                  </div>
-                </div>
-              ) : (
-                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm text-center`}>
-                  <p className={`text-base sm:text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                    No results found for "{query}". Try a different search term.
-                  </p>
-                </div>
-              )}
-
-              {/* Search history section - shown on desktop and mobile history tab */}
-              {(!isMobile || tabView === 'history') && searchHistory.length > 0 && (
-                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm`}>
-                  <h2 className={`text-base sm:text-lg font-semibold mb-3 sm:mb-4 ${darkMode ? 'text-white' : 'text-black'}`}>Recent Searches</h2>
-                  <div className="overflow-x-auto table-responsive">
-                    <table className={`min-w-full divide-y ${darkMode ? 'divide-gray-700' : 'divide-gray-200'} history-table`}>
-                      <thead className={darkMode ? 'bg-gray-700' : 'bg-gray-50'}>
-                        <tr>
-                          <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Query</th>
-                          <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Time</th>
-                          <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Results</th>
-                          <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Query Time</th>
-                          <th className={`px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium ${darkMode ? 'text-gray-300' : 'text-gray-500'} uppercase tracking-wider`}>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody className={`${darkMode ? 'bg-gray-800 divide-y divide-gray-700' : 'bg-white divide-y divide-gray-200'}`}>
-                        {searchHistory.map((item, i) => (
-                          <tr key={i} className={darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'}>
-                            <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-medium ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>{item.query}</td>
-                            <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.timestamp}</td>
-                            <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.results}</td>
-                            <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>{item.queryTime?.toFixed(2) || '-'} ms</td>
-                            <td className={`px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-blue-500 hover:text-blue-700`}>
-                              <button onClick={() => { setQuery(item.query); handleSearch(); }}>
-                                Search again
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
-            </div>
             
-            {/* Right column - Hidden on mobile except in metrics tab */}
-            <div className={`${isMobile && tabView !== 'metrics' ? 'hidden' : 'block'} lg:w-1/3`}>
-              {/* Recent searches component - Only visible on desktop */}
-              {!isMobile && (
-                <RecentSearchesComponent 
-                  searchHistory={searchHistory.slice(0, 3)} 
-                  setQuery={setQuery} 
-                  performSearch={performSearch}
-                  darkMode={darkMode}
-                />
-              )}
-              
-              {/* Performance metrics */}
-              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm ${!isMobile ? 'sticky top-6' : ''} metrics-section`}>
-                <h2 className={`text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center ${darkMode ? 'text-white' : 'text-black'}`}>
-                  <TrendingUp className="mr-2 text-blue-600" />
-                  Performance Metrics
-                </h2>
-                <div className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-3 sm:mb-4`}>
-                  {searchProfiles.find(p => p.id === searchProfile)?.name}
-                </div>
-                
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 lg:grid-cols-1">
-                  {/* Metric cards */}
-                  <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-3 sm:p-4 rounded-md metrics-card`}>
-                    <div className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'} mb-1`}>Precision</div>
-                    <div className={`text-lg sm:text-2xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>{performanceData.accuracy}%</div>
-                    <div className="text-xs text-green-600 mt-1">+{(performanceData.accuracy - 62).toFixed(1)}% vs baseline</div>
-                  </div>
-                  
-                  <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-3 sm:p-4 rounded-md metrics-card`}>
-                    <div className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'} mb-1`}>Recall</div>
-                    <div className={`text-lg sm:text-2xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>{performanceData.recall}%</div>
-                    <div className="text-xs text-green-600 mt-1">+{(performanceData.recall - 65).toFixed(1)}% vs baseline</div>
-                  </div>
-                  
-                  <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-3 sm:p-4 rounded-md metrics-card col-span-2 sm:col-span-1 lg:col-span-1`}>
-                    <div className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'} mb-1`}>Avg. Latency</div>
-                    <div className={`text-lg sm:text-2xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>{performanceData.latency}ms</div>
-                    <div className="text-xs text-red-600 mt-1">+{(performanceData.latency - 135).toFixed(1)}ms vs baseline</div>
-                  </div>
-                </div>
-                
-                {/* Performance charts - conditionally render based on screen size */}
-                {(!isMobile || tabView === 'metrics') && (
-                  <PerformanceCharts 
-                    performanceData={performanceData} 
-                    darkMode={darkMode} 
-                  />
-                )}
-              </div>
             </div>
-          </div>
-        </div> 
       </main>
 
       {/* Footer */}

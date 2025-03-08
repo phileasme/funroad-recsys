@@ -22,6 +22,11 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   const [imageError, setImageError] = useState(false);
   // State for image dimensions
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
+  // State for the image URL with fallback mechanism
+  const [imageUrl, setImageUrl] = useState(
+    product.proxied_thumbnail_url || 
+    (product.thumbnail_url ? getProxiedImageUrl(product.thumbnail_url) : createFallbackImageUrl(product.name))
+  );
   
   // Refs for height calculation and timeout management
   const cardRef = useRef(null);
@@ -31,19 +36,6 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   
   // Store the original height of the card
   const [cardHeight, setCardHeight] = useState(null);
-  
-  // Process the image URL to use our proxy for Gumroad URLs
-  const imageUrl = useMemo(() => {
-    // First check if we already have a proxied URL from the backend
-    if (product.proxied_thumbnail_url) {
-      return product.proxied_thumbnail_url;
-    }
-    
-    // If not, create one on the client side
-    return product.thumbnail_url ? 
-      getProxiedImageUrl(product.thumbnail_url) : 
-      createFallbackImageUrl(product.name);
-  }, [product.proxied_thumbnail_url, product.thumbnail_url, product.name]);
   
   // Fallback image URL as a backup
   const fallbackUrl = useMemo(() => 
@@ -83,6 +75,60 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     };
   }, [isMobile]);
   
+  // Add this useEffect for robust image loading with fallbacks
+  useEffect(() => {
+    // Set up image loading with multiple fallbacks
+    const tryLoadImage = (url, fallbackIndex = 0) => {
+      const img = new Image();
+    
+
+      img.onload = () => {
+        setImageUrl(url);
+        setImageLoaded(true);
+        setImageError(false);
+      };
+      
+      img.onerror = () => {
+
+        const bgColors = ['212121', '4a4a4a', '6b6b6b', '444', '333', '555', 'abd123', 'fe90ea', '256789', '742d1e'];
+        const textColors = ['ffffff', 'f0f0f0', 'eeeeee', 'dddddd', 'cccccc'];
+        
+        // Select random colors from our arrays
+        const bgColor = bgColors[Math.floor(Math.random() * bgColors.length)];
+        const textColor = textColors[Math.floor(Math.random() * textColors.length)];
+
+        console.log(`Image failed to load: ${url}`);
+        // Try fallbacks in order
+        const fallbacks = [
+          product.thumbnail_url, // Original URL
+          createFallbackImageUrl(product.name), // Placeholder with name
+          `https://placehold.co/600x400/${bgColor}/${textColor}?text=${encodeURIComponent(product.name.substring(0, 20))}`
+        ];
+
+
+        
+        if (fallbackIndex < fallbacks.length - 1) {
+          console.log(`Trying fallback ${fallbackIndex + 1}: ${fallbacks[fallbackIndex + 1]}`);
+          tryLoadImage(fallbacks[fallbackIndex + 1], fallbackIndex + 1);
+        } else {
+          // All fallbacks failed
+          console.log('All image fallbacks failed');
+          setImageError(true);
+          setImageLoaded(true); // Set as loaded so UI isn't stuck
+        }
+      };
+      
+      img.src = url;
+    };
+    
+    // Reset loading state when we start
+    setImageLoaded(false);
+    setImageError(false);
+    
+    // Start with our current imageUrl
+    tryLoadImage(imageUrl);
+  }, [product.thumbnail_url, product.name]);
+  
   const handleMouseEnter = (e) => {
     // Don't trigger hover behavior on mobile
     if (isMobile) return;
@@ -109,7 +155,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   // Check if product contains design-related keywords
   const isDesignRelated = useMemo(() => {
     const keywords = ['design', 'image', 'logo', 'picture', 'stitch'];
-    const searchText = `${product.name} ${product.description}`.toLowerCase();
+    const searchText = `${product.name} ${product.description || ''}`.toLowerCase();
     return keywords.some(keyword => searchText.includes(keyword));
   }, [product.name, product.description]);
   
@@ -142,7 +188,6 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     
     // Check if aspect ratio is wider than 4/3 (1.33)
     const aspectRatio = naturalWidth / naturalHeight;
-    console.log(`Image loaded for ${product.name}: ${aspectRatio} (${naturalWidth}x${naturalHeight})`);
     
     // Consider any image with aspect ratio > 4/3 as "wide"
     const isWide = aspectRatio > 1.33;
@@ -157,7 +202,19 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   
   const handleImageError = () => {
     console.log(`Image error for ${product.name} with URL: ${imageUrl}`);
+    // We'll now use the fallbackUrl directly
     setImageError(true);
+    
+    // Try to load directly from the original URL as a last resort
+    if (product.thumbnail_url && imageUrl !== product.thumbnail_url) {
+      const img = new Image();
+      img.onload = () => {
+        // If the original URL loads successfully, use it
+        setImageUrl(product.thumbnail_url);
+        setImageError(false);
+      };
+      img.src = product.thumbnail_url;
+    }
   };
   
   // Effect to handle delayed state changes
@@ -206,6 +263,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   
   return (
     <>
+    
       <div
         ref={cardRef}
         className={`${darkMode ? 'bg-gray-700 border-gray-600 hover:border-[#FE90EA]' : 'bg-white border-gray-200 hover:border-[#FE90EA]'} border-2 rounded-lg overflow-hidden hover:shadow-lg transition-shadow product-card`}
@@ -216,10 +274,13 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        onClick={isMobile && isDesignRelated ? handleImageClick : undefined}
-      >
-        <a href={product.url || "#"} target="#" onClick={(e) => mouseOverImage && shouldShowAsHover && e.preventDefault()}>
-          {/* Image container - always present */}
+        onClick={(e) => {
+            if (isMobile && isDesignRelated) {
+              handleImageClick(e);
+            } else if (!(mouseOverImage && shouldShowAsHover) && !e.defaultPrevented) {
+              window.open(product.url || "#", "_blank");
+            }
+          }}>
           <div 
             style={{ 
               position: shouldShowAsHover ? 'absolute' : 'relative',
@@ -256,7 +317,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
             {/* The actual image */}
             <img
               loading="lazy"
-              fetchpriority="high"
+              fetchPriority="high"
               ref={imageRef}
               src={imageError ? fallbackUrl : imageUrl}
               alt={product.name}
@@ -347,9 +408,11 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
               </div>
               <div className="flex items-center justify-between mt-1">
                 <div className="flex items-center">
-                  <span className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'} mr-2`}>
-                    ${(product.price_cents / 100).toFixed(2)}
-                  </span>
+                  {product.price_cents !== undefined && (
+                    <span className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'} mr-2`}>
+                      ${(product.price_cents / 100).toFixed(2)}
+                    </span>
+                  )}
                   <span className={`inline-flex items-center px-1 py-0.5 rounded-md ${darkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-200 text-black'} text-xs font-medium`}>
                     Score: {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
                   </span>
@@ -442,7 +505,6 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
               </div>
             </div>
           ) : null}
-        </a>
       </div>
       
       {/* Fullscreen image view */}

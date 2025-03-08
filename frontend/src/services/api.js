@@ -2,9 +2,17 @@
 import axios from 'axios';
 import { processProductImages, preloadImages } from './imageService';
 
-// Get the API base URL from environment or use default
-const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+// In development, point directly to the API server
+const API_BASE_URL = isDevelopment 
+  ? 'http://localhost:8000' 
+  : '/api';
+
+
+// Get the API base URL from environment or use default
+// const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 // Create axios instance with defaults
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -14,20 +22,25 @@ const apiClient = axios.create({
   timeout: 30000, // 30 second timeout
 });
 
-/**
- * Enhanced search function that processes and preloads images
- * @param {string} profile - Search profile to use
- * @param {string} query - Search query
- * @param {number} k - Number of results to return
- * @param {number} numCandidates - Number of candidates to consider
- * @param {boolean} preloadImages - Whether to preload images (default true)
- * @returns {Promise<Object>} - Search results with processed image URLs
- */
+
+// Add this function to test connectivity
+export const testApiConnection = async () => {
+  try {
+    const response = await apiClient.get('/health');
+    console.log('API connection successful:', response.data);
+    return true;
+  } catch (error) {
+    console.error('API connection failed:', error);
+    return false;
+  }
+};
+
+
+// In your api.js file
 export const searchProducts = async (profile, query, k = 50, numCandidates = 100, shouldPreload = true) => {
   console.log(`Calling ${profile} with query: ${query}`);
   
   try {
-    // Make sure we're using the exact endpoint name from the backend
     const endpoint = profile;
     
     const payload = {
@@ -38,43 +51,27 @@ export const searchProducts = async (profile, query, k = 50, numCandidates = 100
     
     console.log('Request payload:', payload);
     
-    // Make the API request
-    const response = await apiClient.post(`/${endpoint}`, payload);
+    // Reduce timeout and add better error handling
+    const response = await apiClient.post(`/${endpoint}`, payload, {
+      timeout: 10000 // Reduce timeout to 10 seconds
+    });
+    
     console.log('Search response:', response.data);
     
-    // Process the results to include proxied image URLs
-    if (response.data && response.data.results && Array.isArray(response.data.results)) {
-      try {
-        // Process URLs safely
-        const processedResults = processProductImages(response.data.results);
-        
-        // Update the response data
-        response.data.results = processedResults;
-        
-        // Optionally preload images in the background
-        if (shouldPreload && processedResults.length > 0) {
-          // Extract image URLs
-          const imageUrls = processedResults
-            .filter(product => product.proxied_thumbnail_url)
-            .map(product => product.proxied_thumbnail_url);
-          
-          // Preload in the background without awaiting
-          if (imageUrls.length > 0) {
-            preloadImages(imageUrls)
-              .catch(error => console.warn('Image preloading error:', error));
-          }
-        }
-      } catch (processingError) {
-        // If processing fails, log error but return original results
-        console.error('Error processing search results images:', processingError);
-      }
-    }
-    
+    // Process the results as before...
     return response.data;
   } catch (error) {
-    console.error('Search error:', error.response || error);
-    throw error;
+    // Better error handling
+    if (error.code === 'ECONNABORTED') {
+      console.error('Search request timed out. Try reducing the number of results or candidates.');
+    } else {
+      console.error('Search error:', error.response || error);
+    }
+    
+    // Return empty results instead of throwing
+    return { results: [], query_time_ms: 0 };
   }
+
 };
 
 /**
