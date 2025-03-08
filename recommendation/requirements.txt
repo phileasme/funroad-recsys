@@ -9,3 +9,5 @@ numpy
 uvicorn
 fastapi
 python-multipart
+numba
+pydantic
