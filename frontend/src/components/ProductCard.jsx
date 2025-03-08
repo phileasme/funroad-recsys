@@ -28,6 +28,15 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     (product.thumbnail_url ? getProxiedImageUrl(product.thumbnail_url) : createFallbackImageUrl(product.name))
   );
   
+  // State for seller thumbnail with fallback
+  const [sellerThumbnailUrl, setSellerThumbnailUrl] = useState(
+    product.seller_thumbnail ? getProxiedImageUrl(product.seller_thumbnail) : null
+  );
+  
+  // State to track seller image loading
+  const [sellerImageLoaded, setSellerImageLoaded] = useState(false);
+  const [sellerImageError, setSellerImageError] = useState(false);
+  
   // Refs for height calculation and timeout management
   const cardRef = useRef(null);
   const timeoutRef = useRef(null);
@@ -41,6 +50,12 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   const fallbackUrl = useMemo(() => 
     product.fallback_url || createFallbackImageUrl(product.name),
     [product.fallback_url, product.name]
+  );
+  
+  // Seller fallback image URL
+  const sellerFallbackUrl = useMemo(() => 
+    product.seller_name ? `https://placehold.co/32x32/fe90ea/ffffff?text=${encodeURIComponent(product.seller_name.substring(0, 1).toUpperCase())}` : null,
+    [product.seller_name]
   );
 
   // Check for mobile viewport size on mount and resize
@@ -81,7 +96,6 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     const tryLoadImage = (url, fallbackIndex = 0) => {
       const img = new Image();
     
-
       img.onload = () => {
         setImageUrl(url);
         setImageLoaded(true);
@@ -89,7 +103,6 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
       };
       
       img.onerror = () => {
-
         const bgColors = ['212121', '4a4a4a', '6b6b6b', '444', '333', '555', 'abd123', 'fe90ea', '256789', '742d1e'];
         const textColors = ['ffffff', 'f0f0f0', 'eeeeee', 'dddddd', 'cccccc'];
         
@@ -104,8 +117,6 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
           createFallbackImageUrl(product.name), // Placeholder with name
           `https://placehold.co/600x400/${bgColor}/${textColor}?text=${encodeURIComponent(product.name.substring(0, 20))}`
         ];
-
-
         
         if (fallbackIndex < fallbacks.length - 1) {
           console.log(`Trying fallback ${fallbackIndex + 1}: ${fallbacks[fallbackIndex + 1]}`);
@@ -128,6 +139,31 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     // Start with our current imageUrl
     tryLoadImage(imageUrl);
   }, [product.thumbnail_url, product.name]);
+  
+  // Similar functionality for seller thumbnail
+  useEffect(() => {
+    if (!product.seller_thumbnail) {
+      setSellerImageLoaded(false);
+      setSellerImageError(true);
+      return;
+    }
+    
+    const img = new Image();
+    
+    img.onload = () => {
+      setSellerThumbnailUrl(product.seller_thumbnail);
+      setSellerImageLoaded(true);
+      setSellerImageError(false);
+    };
+    
+    img.onerror = () => {
+      console.log(`Seller image failed to load: ${product.seller_thumbnail}`);
+      setSellerImageError(true);
+      setSellerImageLoaded(true); // Set as loaded so UI isn't stuck
+    };
+    
+    img.src = product.seller_thumbnail;
+  }, [product.seller_thumbnail]);
   
   const handleMouseEnter = (e) => {
     // Don't trigger hover behavior on mobile
@@ -261,9 +297,48 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     setShowFullImage(false);
   };
   
+  // Seller component to replace score
+  const SellerInfo = () => {
+    // Only show if we have seller name or id
+    if (!product.seller_name && !product.seller_id) return null;
+    
+    return (
+      <div className="flex items-center">
+        {/* Seller Avatar */}
+        <div 
+          className={`w-5 h-5 rounded-full overflow-hidden flex items-center justify-center mr-1 ${
+            darkMode ? 'bg-gray-600' : 'bg-gray-200'
+          }`}
+        >
+          {sellerImageError || !product.seller_thumbnail ? (
+            <div 
+              className="w-full h-full flex items-center justify-center text-xs font-bold"
+              style={{ backgroundColor: '#FE90EA', color: 'white' }}
+            >
+              {product.seller_name ? product.seller_name.charAt(0).toUpperCase() : 'S'}
+            </div>
+          ) : (
+            <img 
+              src={sellerThumbnailUrl} 
+              alt={product.seller_name || "Seller"}
+              className="w-full h-full object-cover"
+              onError={() => setSellerImageError(true)}
+            />
+          )}
+        </div>
+        
+        {/* Seller Name */}
+        {product.seller_name && (
+          <span className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'} truncate max-w-[80px]`}>
+            {product.seller_name}
+          </span>
+        )}
+      </div>
+    );
+  };
+  
   return (
     <>
-    
       <div
         ref={cardRef}
         className={`${darkMode ? 'bg-gray-700 border-gray-600 hover:border-[#FE90EA]' : 'bg-white border-gray-200 hover:border-[#FE90EA]'} border-2 rounded-lg overflow-hidden hover:shadow-lg transition-shadow product-card`}
@@ -387,9 +462,19 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
               }}
             >
-              <h3 className={`font-medium text-sm ${darkMode ? 'text-white' : 'text-gray-800'} mb-1 line-clamp-1`}>
-                {product.name}
-              </h3>
+              <div className="flex justify-between items-start mb-1">
+                <h3 className={`font-medium text-sm ${darkMode ? 'text-white' : 'text-gray-800'} line-clamp-1 max-w-[70%]`}>
+                  {product.name}
+                </h3>
+                
+                {/* Score tag in hover mode */}
+                {product.score !== undefined && (
+                  <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-red-600 text-white text-xs font-medium">
+                    {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
+                  </span>
+                )}
+              </div>
+              
               <div className="flex items-center mb-1">
                 {product.ratings_score !== undefined && (
                   <>
@@ -407,16 +492,13 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
                 )}
               </div>
               <div className="flex items-center justify-between mt-1">
-                <div className="flex items-center">
-                  {product.price_cents !== undefined && (
-                    <span className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'} mr-2`}>
-                      ${(product.price_cents / 100).toFixed(2)}
-                    </span>
-                  )}
-                  <span className={`inline-flex items-center px-1 py-0.5 rounded-md ${darkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-200 text-black'} text-xs font-medium`}>
-                    Score: {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
+                <SellerInfo />
+                
+                {product.price_cents !== undefined && (
+                  <span className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'} mr-2`}>
+                    ${(product.price_cents / 100).toFixed(2)}
                   </span>
-                </div>
+                )}
                 
                 <a 
                   href={product.url || "#"} 
@@ -450,6 +532,19 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
               style={{ zIndex: 25 }}
             >
               Design
+            </div>
+          )}
+          
+          {/* Score tag - always visible when not in hover mode */}
+          {product.score !== undefined && !shouldShowAsHover && (
+            <div 
+              className="absolute top-2 left-2 text-xs font-medium px-1.5 py-0.5 rounded-full bg-red-600 text-white"
+              style={{ 
+                zIndex: 25,
+                left: isDesignRelated ? '60px' : '10px' // Position to the right of Design tag if present
+              }}
+            >
+              Score: {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
             </div>
           )}
           
@@ -491,9 +586,8 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
               </p>
               
               <div className="flex items-center justify-between mt-auto pt-1 border-t border-gray-100">
-                <span className={`inline-flex items-center px-1.5 py-0.5 rounded-md ${darkMode ? 'bg-gray-600 text-gray-200' : 'bg-black/5 text-black'} text-xs font-medium`}>
-                  Score: {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
-                </span>
+                {/* Replace score with seller info */}
+                <SellerInfo />
                 
                 <a 
                   href={product.url || "#"} 
@@ -537,9 +631,29 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
                   
             <div className="absolute bottom-4 left-0 right-0 text-center text-white bg-black bg-opacity-50 py-2 px-4">
               <h3 className="font-bold text-base">{product.name}</h3>
-              <p className="text-sm opacity-90">
-                {product.price_cents ? `$${(product.price_cents / 100).toFixed(2)}` : 'Free'}
-              </p>
+              <div className="flex items-center justify-center mt-1">
+                {product.seller_name && (
+                  <div className="flex items-center mr-3">
+                    <div className="w-5 h-5 rounded-full overflow-hidden mr-1 bg-[#FE90EA] flex items-center justify-center">
+                      {sellerImageError || !product.seller_thumbnail ? (
+                        <span className="text-xs font-bold text-white">
+                          {product.seller_name.charAt(0).toUpperCase()}
+                        </span>
+                      ) : (
+                        <img 
+                          src={sellerThumbnailUrl} 
+                          alt={product.seller_name} 
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </div>
+                    <span className="text-sm opacity-90">{product.seller_name}</span>
+                  </div>
+                )}
+                <p className="text-sm opacity-90">
+                  {product.price_cents ? `$${(product.price_cents / 100).toFixed(2)}` : 'Free'}
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -18,6 +18,8 @@ COPY . .
 # # Build the React app for development (not production)
 # CMD ["serve", "-s", "build"]
 
+ENV NODE_ENV=production
+
 CMD ["npm", "start"]
 
 # Start development server with host 0.0.0.0 to allow external connections

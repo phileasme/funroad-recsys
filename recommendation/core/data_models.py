@@ -22,6 +22,7 @@ class SearchResult(BaseModel):
     seller_thumbnail: Optional[str] = None
     score_origin: Optional[str] = None
     base_score: Optional[float]= None
+    other_score: Optional[float]= None
 
 
 class SearchResponse(BaseModel):

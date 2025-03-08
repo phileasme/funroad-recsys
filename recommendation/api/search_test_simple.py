@@ -16,8 +16,8 @@ import requests
 # API endpoint 
 # url = "http://localhost:8000/similar_vision"
 # search_combined_simplified_but_slow
+# url = "http://localhost:8000/unn"
 url = "http://localhost:8000/search_combined_v0_8"
-# url = "http://localhost:8000/search_combined_v0_8"
 
 # Example query payload
 payload = {

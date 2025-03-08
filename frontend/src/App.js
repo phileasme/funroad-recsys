@@ -251,7 +251,7 @@ const searchProfiles = [
   {id: 'exact_match', name: 'ExactMatch'},
   { id: 'search_combined_v0_7', name: ' Combined No rating', version: "(v0.7)" },
   {id: 'search_combined_v0_8', name: 'Combine with ratings', version: "(v0.8)" },
-  {id: 'two_phase_unnative',name:"2phase, BM25 & Colbert", version: "(v0.9)" },
+  {id: 'two_phase_unnative_optimized', name: "2phase jit", version: "(v0.10)"}
 
 ];
 
@@ -269,7 +269,7 @@ searchProfiles.reverse().forEach(profile => {
 function App() {
   const [previewProduct, setPreviewProduct] = useState(null);
   const [query, setQuery] = useState('');
-  const [searchProfile, setSearchProfile] = useState('two_phase_unnative');
+  const [searchProfile, setSearchProfile] = useState('two_phase_unnative_optimized');
   const [searchResults, setSearchResults] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [hoveredProduct, setHoveredProduct] = useState(null);
@@ -562,7 +562,7 @@ const debouncedSearch = debounce((query, searchFn) => {
       // Set timer to show spinner after 600ms
       loadingTimerRef.current = setTimeout(() => {
         setShowLoadingSpinner(true);
-      }, 600);
+      }, 1000);
     }
     
     // Always switch to results tab when searching
@@ -832,17 +832,17 @@ const debouncedSearch = debounce((query, searchFn) => {
   }, [darkMode]);
 
   const searchCopy = [...searchResults].reverse();
-searchCopy.forEach((product, index) => {
-  console.log({
-    index: searchResults.length - 1 - index,
-    name: product.name,
-    score_origin: product.score_origin,
-    score: product.score,
-    base_score: product.base_score,
-    ratings: product.ratings_score,
-    ratings_counts: product.ratings_count
-  });
-});
+// searchCopy.forEach((product, index) => {
+//   console.log({
+//     index: searchResults.length - 1 - index,
+//     name: product.name,
+//     score_origin: product.score_origin,
+//     score: product.score,
+//     base_score: product.base_score,
+//     ratings: product.ratings_score,
+//     ratings_counts: product.ratings_count
+//   });
+// });
 
   return (
     <div className={`flex flex-col min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-black'}`}>

@@ -7,6 +7,8 @@ from dataclasses import dataclass
 import time
 import os
 from functools import lru_cache
+from numba import jit
+import asyncio
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -37,6 +39,46 @@ class EmbeddingMetadata:
     input_type: str  # 'text' or 'image'
     original_size: Optional[Tuple[int, int]] = None  # For images only
     token_count: Optional[int] = None  # For text only
+
+@jit(nopython=True)
+def _compute_sentence_embedding_jit(token_embeddings, attention_mask):
+    """
+    JIT-optimized function to compute sentence embedding from token embeddings
+    This must be outside the class!
+    
+    Args:
+        token_embeddings: Token-level embeddings (numpy array)
+        attention_mask: Attention mask (numpy array)
+        
+    Returns:
+        Normalized sentence embedding
+    """
+    # Create mask for valid tokens
+    valid_token_mask = attention_mask[0] == 1
+    
+    # Extract embeddings for valid tokens
+    valid_embeddings = token_embeddings[0][valid_token_mask]
+    
+    # Manual computation of mean (avoid using np.mean with axis parameter)
+    if len(valid_embeddings) > 0:
+        # Sum along first dimension and divide by count
+        sentence_embedding = np.zeros(valid_embeddings.shape[1], dtype=np.float32)
+        for i in range(len(valid_embeddings)):
+            sentence_embedding += valid_embeddings[i]
+        sentence_embedding = sentence_embedding / len(valid_embeddings)
+    else:
+        # Fallback for empty sequence (shouldn't happen with proper attention mask)
+        sentence_embedding = np.zeros(token_embeddings.shape[2], dtype=np.float32)
+    
+    # Normalize the embedding (L2 norm)
+    norm = np.sqrt(np.sum(sentence_embedding * sentence_embedding))
+    if norm > 0:
+        normalized_embedding = sentence_embedding / norm
+    else:
+        normalized_embedding = sentence_embedding
+    
+    # Reshape to expected format
+    return normalized_embedding.reshape(1, -1)
 
 class ColBERTEmbedding:
 
@@ -91,10 +133,12 @@ class ColBERTEmbedding:
             return_tensors="pt"
         )
  
+    
     @lru_cache(maxsize=1024)
     def get_colbert_sentence_embedding(self, text: str) -> EmbeddingMetadata:
         """
         Generate a normalized sentence-level embedding from token-level embeddings
+        with JIT optimization while preserving caching
         
         Args:
             text: Input text string
@@ -103,30 +147,31 @@ class ColBERTEmbedding:
             Normalized sentence embedding vector
         """
         start_time = time.time()
-        # Get the token-level embeddings
+        
+        # Get token-level embeddings (this call is already cached)
         token_embedding_metadata = self.get_colbert_word_embedding(text)
         
-        # Get the embeddings and attention mask
+        # Extract the relevant numpy arrays
         token_embeddings = token_embedding_metadata.embedding
         attention_mask = token_embedding_metadata.attention_mask
         
-        # Create a mask for valid tokens (where attention_mask is 1)
-        valid_token_mask = attention_mask[0] == 1
+        # Use the JIT-optimized function for the computation-intensive part
+        normalized_sentence_embedding = _compute_sentence_embedding_jit(
+            token_embeddings, 
+            attention_mask
+        )
         
-        # Extract only the embeddings of valid tokens
-        valid_embeddings = token_embeddings[0][valid_token_mask]
+        # Calculate token count (can't be done inside JIT function due to dataclass)
+        token_count = np.sum(attention_mask[0] == 1)
         
-        # Compute the mean of valid token embeddings
-        sentence_embedding = np.mean(valid_embeddings, axis=0)
-        
-        # Normalize the sentence embedding (L2 normalization)
-        normalized_sentence_embedding = sentence_embedding / np.linalg.norm(sentence_embedding)
-
-        normalized_sentence_embedding = normalized_sentence_embedding.reshape(1,-1)
-
         processing_time = time.time() - start_time
         
-        return EmbeddingMetadata(normalized_sentence_embedding, processing_time, "text", token_count=np.sum(valid_token_mask))
+        return EmbeddingMetadata(
+            embedding=normalized_sentence_embedding,
+            processing_time=processing_time,
+            input_type="text",
+            token_count=token_count
+        )
 
     @lru_cache(maxsize=1024)
     def get_colbert_word_embedding(self, text: str) -> ColBERTEmbeddingMetadata:
@@ -211,6 +256,67 @@ class ColBERTEmbedding:
             
         return results
     
+
+    async def get_embedding_async(self, text: str) -> EmbeddingMetadata:
+        """
+        Asynchronous version of get_colbert_sentence_embedding with JIT optimization
+        
+        Args:
+            text: Input text string
+            
+        Returns:
+            Normalized sentence embedding vector
+        """
+        # Check if embedding is already in cache
+        async with self._cache_lock:
+            if text in self._embedding_cache:
+                return self._embedding_cache[text]
+        
+        # Run embedding computation in thread pool to avoid blocking the event loop
+        loop = asyncio.get_running_loop()
+        
+        # Get token embeddings first
+        token_embedding_metadata = await loop.run_in_executor(
+            self._executor, 
+            self.get_colbert_word_embedding,
+            text
+        )
+        
+        # Extract the numpy arrays
+        token_embeddings = token_embedding_metadata.embedding
+        attention_mask = token_embedding_metadata.attention_mask
+        
+        # Run the JIT-optimized computation
+        start_time = time.time()
+        normalized_embedding = await loop.run_in_executor(
+            self._executor,
+            _compute_sentence_embedding_jit,
+            token_embeddings,
+            attention_mask
+        )
+        
+        # Calculate token count
+        token_count = np.sum(attention_mask[0] == 1)
+        
+        processing_time = time.time() - start_time
+        
+        # Create the metadata object
+        embedding_metadata = EmbeddingMetadata(
+            embedding=normalized_embedding,
+            processing_time=processing_time,
+            input_type="text",
+            token_count=token_count
+        )
+        
+        # Cache the result
+        async with self._cache_lock:
+            self._embedding_cache[text] = embedding_metadata
+            # Limit cache size
+            if len(self._embedding_cache) > 1024:
+                self._embedding_cache.pop(next(iter(self._embedding_cache)))
+        
+        return embedding_metadata
+     
     def compute_token_similarity(
         self,
         query_embedding: np.ndarray,
