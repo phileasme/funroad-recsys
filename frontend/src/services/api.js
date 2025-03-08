@@ -3,16 +3,15 @@ import axios from 'axios';
 import { processProductImages, preloadImages } from './imageService';
 
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isProduction = window.location.hostname === 'gumroad.phileas.me';
 
-// In development, point directly to the API server
-const API_BASE_URL = isDevelopment 
-  ? 'http://localhost:8000' 
-  : '/api';
+// Set the API base URL based on hostname, not NODE_ENV
+const API_BASE_URL = isProduction 
+  ? '/api' 
+  : 'http://localhost:8000';
 
-  console.log('NODE_ENV:', process.env.NODE_ENV);
-  console.log('isDevelopment:', isDevelopment);
-  console.log('API_BASE_URL:', API_BASE_URL);
+console.log('Hostname:', window.location.hostname);
+console.log('Using API URL:', API_BASE_URL);
 
 
 // Get the API base URL from environment or use default
