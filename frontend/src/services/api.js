@@ -10,6 +10,10 @@ const API_BASE_URL = isDevelopment
   ? 'http://localhost:8000' 
   : '/api';
 
+  console.log('NODE_ENV:', process.env.NODE_ENV);
+  console.log('isDevelopment:', isDevelopment);
+  console.log('API_BASE_URL:', API_BASE_URL);
+
 
 // Get the API base URL from environment or use default
 // const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
@@ -42,6 +46,9 @@ export const searchProducts = async (profile, query, k = 50, numCandidates = 100
   
   try {
     const endpoint = profile;
+
+
+    console.log('Making request to:', `${API_BASE_URL}/${endpoint}`);
     
     const payload = {
       query,
