@@ -268,7 +268,7 @@ searchProfiles.reverse().forEach(profile => {
 
 function App() {
   const [previewProduct, setPreviewProduct] = useState(null);
-  const [query, setQuery] = useState(null);
+  const [query, setQuery] = useState('');
   const [searchProfile, setSearchProfile] = useState('two_phase_unnative');
   const [searchResults, setSearchResults] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
@@ -475,25 +475,37 @@ function App() {
   useEffect(() => {
     setQuery(firstQuery);
   }, []);
+
+
+useEffect(() => {
+  // Only execute if query has been initialized and has content
+  if (query && query.trim()) {
+    // Small delay to ensure query state has propagated
+    const timer = setTimeout(() => {
+      performSearch(query);
+    }, 100);
+    return () => clearTimeout(timer);
+  }
+}, [query]); // This will fire whenever query changes
   
 
 // Keep track of the most recent query and its timestamp
-let lastQuery = { text: '', timestamp: 0 };
+const lastQueryRef = useRef({ text: '', timestamp: 0 });
 
-// Create a debounced search function with duplicate check
+// Create a debounced search function with duplicate check\
 const debouncedSearch = debounce((query, searchFn) => {
   if (query && query.trim()) {
     const trimmedQuery = query.trim();
     const now = Date.now();
     
     // Check if this exact query was made in the last second
-    if (trimmedQuery === lastQuery.text && now - lastQuery.timestamp < 1000) {
+    if (trimmedQuery === lastQueryRef.current.text && now - lastQueryRef.current.timestamp < 1000) {
       console.log('Skipping duplicate query within 1 second:', trimmedQuery);
       return;
     }
     
     // Update the last query info
-    lastQuery = { text: trimmedQuery, timestamp: now };
+    lastQueryRef.current = { text: trimmedQuery, timestamp: now };
     
     // Perform the search
     searchFn(trimmedQuery);
