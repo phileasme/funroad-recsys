@@ -1207,7 +1207,7 @@ async def two_phase_unnative_optimized(
         try:
             done, pending = await asyncio.wait(
                 [query_embedding_task, bm25_response_task], 
-                timeout=5.0,
+                timeout=10.0,
                 return_when=asyncio.ALL_COMPLETED
             )
             
@@ -1268,7 +1268,7 @@ async def two_phase_unnative_optimized(
         for doc_id in candidate_ids:
             hit = doc_data[doc_id]
             
-            # Get ratings data
+            # # Get ratings data
             ratings = hit['_source'].get('ratings', {})
             ratings_count = ratings.get('count', 0) if isinstance(ratings, dict) else 0
             ratings_score = ratings.get('average', -1.0) if isinstance(ratings, dict) else -1.0
@@ -1280,15 +1280,6 @@ async def two_phase_unnative_optimized(
             # Get colbert similarity score
             colbert_score = similarity_scores.get(doc_id, 0)
 
-            # if colbert_score > 0.51:
-            #     try:
-            #         ratings_boost = calculate_wilson_ratings_boost_jit(ratings_count, ratings_score)
-            #         colbert_score = combined_score + (0.1 * ratings_boost)  # Using hybrid boost multiplier
-
-            #     except Exception as e:
-            #         print(e)
-            
-            # Calculate combined score
             combined_score = (normalized_bm25 * bm25_weight) + (colbert_score * colbert_weight)
             
             
@@ -1320,9 +1311,10 @@ async def two_phase_unnative_optimized(
         # Sort by score
         reranked_results.sort(key=lambda x: x.score, reverse=True)
 
-
+        counter = 0
         for x in reranked_results[::-1]:
-            print(x.ratings_count, x.ratings_score, x.base_score, x.other_score, x.score, x.name)
+            print(x.ratings_count, x.ratings_score, x.base_score, x.other_score, x.score, counter, x.name)
+            counter += 1
         
         # Calculate query time
         query_time = (time.time() - start_time) * 1000
@@ -1334,6 +1326,223 @@ async def two_phase_unnative_optimized(
         logger.error(f"Error in search: {str(e)}", exc_info=True)
         return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
             
+
+
+@app.post("/elasticsearch_vector_optimized", response_model=SearchResponse)
+async def elasticsearch_vector_optimized(
+    query: SearchQuery,
+    es_client: Elasticsearch = Depends(get_es_client),
+    embedding_service = Depends(get_async_cached_embedding_service)
+):
+    start_time = time.time()
+    
+    try:
+        # Get query embedding in parallel with BM25 search
+        query_embedding_task = asyncio.create_task(get_embedding_async(query.query, embedding_service))
+        
+        # BM25 query component
+        bm25_component = {
+            "bool": {
+                "should": [
+                    {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "OR"}},
+                    {"fuzzy": {"name": {"value": query.query, "fuzziness": get_fuzziness(query.query), "boost": 1.0}}}
+                ]
+            }
+        }
+        
+        # First phase: Execute BM25 search to get initial candidates
+        bm25_query = {
+            "_source": ["name", "description", "thumbnail_url", "id", 
+                      "ratings.count", "ratings.average", "price_cents", "url", 
+                      "seller.id", "seller.name", "seller.avatar_url"],
+            "query": bm25_component,
+            "size": min(100, query.num_candidates)
+        }
+        
+        bm25_response_task = asyncio.create_task(es_client.search(index='products', body=bm25_query))
+        
+        # Wait for both tasks with timeout
+        try:
+            done, pending = await asyncio.wait(
+                [query_embedding_task, bm25_response_task], 
+                timeout=10.0,
+                return_when=asyncio.ALL_COMPLETED
+            )
+            
+            # Cancel any pending tasks
+            for task in pending:
+                task.cancel()
+            
+            # Check if all tasks completed
+            if len(done) < 2:
+                raise TimeoutError("Some tasks did not complete in time")
+            
+            # Get results
+            query_vector = await query_embedding_task
+            bm25_response = await bm25_response_task
+            
+        except TimeoutError:
+            logger.warning("Timeout occurred while waiting for tasks")
+            # If BM25 completed but not embeddings, we can still return results
+            if bm25_response_task.done() and not query_embedding_task.done():
+                bm25_response = await bm25_response_task
+                query_vector = None
+            else:
+                # If BM25 didn't complete, we can't proceed
+                return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
+        
+        # If no embedding was generated or no BM25 results, use BM25 results only
+        if query_vector is None or not bm25_response['hits']['hits']:
+            candidates = bm25_response['hits']['hits']
+            
+            if not candidates:
+                return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
+            
+            # Process BM25 results only
+            results = []
+            for hit in candidates:
+                # Get ratings data
+                ratings = hit['_source'].get('ratings', {})
+                ratings_count = ratings.get('count', 0) if isinstance(ratings, dict) else 0
+                ratings_score = ratings.get('average', -1.0) if isinstance(ratings, dict) else -1.0
+                
+                # Normalize BM25 score
+                bm25_score = hit.get('_score', 0)
+                normalized_bm25 = 1 - 2 / (1 + bm25_score)
+                
+                # Get seller data
+                seller = hit['_source'].get('seller', {})
+                seller_id = seller.get('id', '') if isinstance(seller, dict) else ''
+                seller_name = seller.get('name', '') if isinstance(seller, dict) else ''
+                seller_avatar = seller.get('avatar_url', '') if isinstance(seller, dict) else ''
+                
+                results.append(SearchResult(
+                    score=float(normalized_bm25),
+                    base_score=float(normalized_bm25),
+                    other_score=0.0,
+                    score_origin="bm25",
+                    name=hit['_source'].get('name', ''),
+                    description=hit['_source'].get('description', ''),
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=int(ratings_count),
+                    ratings_score=float(ratings_score),
+                    price_cents=hit['_source'].get('price_cents', 0),
+                    url=hit['_source'].get('url', ''),
+                    id=hit['_id'],
+                    seller_id=seller_id,
+                    seller_name=seller_name,
+                    seller_thumbnail=seller_avatar
+                ))
+            
+            # Sort by score and return
+            results.sort(key=lambda x: x.score, reverse=True)
+            return SearchResponse(
+                results=results[:query.k], 
+                query_time_ms=(time.time() - start_time) * 1000
+            )
+        
+        # If we have both embeddings and BM25 results, use a hybrid approach
+        
+        # Get the candidate IDs from BM25 for filtering
+        candidate_ids = [hit['_id'] for hit in bm25_response['hits']['hits']]
+        
+        # Determine if this is a multi-term query
+        is_multi_term = len([t for t in query.query.split() if len(t) > 3]) > 1
+        bm25_weight = 0.4 if is_multi_term else 0.6
+        vector_weight = 0.6 if is_multi_term else 0.4
+        
+        # Store BM25 scores for later use
+        bm25_scores = {hit['_id']: hit.get('_score', 0) for hit in bm25_response['hits']['hits']}
+        
+        # Create and execute a hybrid query with vector search restricted to BM25 candidates
+        hybrid_query = {
+            "_source": ["name", "description", "thumbnail_url", "id", 
+                      "ratings.count", "ratings.average", "price_cents", "url", 
+                      "seller.id", "seller.name", "seller.avatar_url"],
+            "query": {
+                "bool": {
+                    "must": [
+                        {
+                            "ids": {
+                                "values": candidate_ids
+                            }
+                        },
+                        {
+                            "script_score": {
+                                "query": {"match_all": {}},
+                                "script": {
+                                    "source": "cosineSimilarity(params.query_vector, 'description_embedding') + 1.0",
+                                    "params": {
+                                        "query_vector": query_vector
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "size": query.k
+        }
+        
+        vector_response = await es_client.search(index='products', body=hybrid_query)
+        
+        # Process results with combined scoring
+        results = []
+        for hit in vector_response['hits']['hits']:
+            doc_id = hit['_id']
+            
+            # Get ratings data
+            ratings = hit['_source'].get('ratings', {})
+            ratings_count = ratings.get('count', 0) if isinstance(ratings, dict) else 0
+            ratings_score = ratings.get('average', -1.0) if isinstance(ratings, dict) else -1.0
+            
+            # Get and normalize BM25 score
+            bm25_score = bm25_scores.get(doc_id, 0)
+            normalized_bm25 = 1 - 2 / (1 + bm25_score)
+            
+            # Get vector score (already normalized by Elasticsearch)
+            vector_score = hit.get('_score', 0) - 1.0  # Adjust for the +1.0 in the script
+            
+            # Combine scores
+            combined_score = (normalized_bm25 * bm25_weight) + (vector_score * vector_weight)
+            
+            # Get seller data
+            seller = hit['_source'].get('seller', {})
+            seller_id = seller.get('id', '') if isinstance(seller, dict) else ''
+            seller_name = seller.get('name', '') if isinstance(seller, dict) else ''
+            seller_avatar = seller.get('avatar_url', '') if isinstance(seller, dict) else ''
+            
+            results.append(SearchResult(
+                score=float(combined_score),
+                base_score=float(normalized_bm25),
+                other_score=float(vector_score),
+                score_origin="hybrid",
+                name=hit['_source'].get('name', ''),
+                description=hit['_source'].get('description', ''),
+                thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                ratings_count=int(ratings_count),
+                ratings_score=float(ratings_score),
+                price_cents=hit['_source'].get('price_cents', 0),
+                url=hit['_source'].get('url', ''),
+                id=doc_id,
+                seller_id=seller_id,
+                seller_name=seller_name,
+                seller_thumbnail=seller_avatar
+            ))
+        
+        # Sort by final score
+        results.sort(key=lambda x: x.score, reverse=True)
+        
+        return SearchResponse(
+            results=results[:query.k], 
+            query_time_ms=(time.time() - start_time) * 1000
+        )
+        
+    except Exception as e:
+        # Log the error and return an empty response
+        logger.error(f"Error in search: {str(e)}", exc_info=True)
+        return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
+    
 @app.post("/search_fallback", response_model=SearchResponse)
 async def search_fallback(
     query: SearchQuery,

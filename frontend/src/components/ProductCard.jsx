@@ -46,15 +46,24 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
   // Store the original height of the card
   const [cardHeight, setCardHeight] = useState(null);
   
-  // Fallback image URL as a backup
+
+  const sanitizeForURI = (str) => {
+    if (!str) return '';
+    // Remove control characters and other problematic characters
+    return str.replace(/[\u0000-\u001F\u007F-\u009F\u2000-\u200F]/g, '')
+             .replace(/[^\w\s-.,]/g, ' ')
+             .trim();
+  };
+  
   const fallbackUrl = useMemo(() => 
-    product.fallback_url || createFallbackImageUrl(product.name),
+    product.fallback_url || createFallbackImageUrl(sanitizeForURI(product.name)),
     [product.fallback_url, product.name]
   );
   
-  // Seller fallback image URL
   const sellerFallbackUrl = useMemo(() => 
-    product.seller_name ? `https://placehold.co/32x32/fe90ea/ffffff?text=${encodeURIComponent(product.seller_name.substring(0, 1).toUpperCase())}` : null,
+    product.seller_name 
+      ? `https://placehold.co/32x32/fe90ea/ffffff?text=${encodeURIComponent(sanitizeForURI(product.seller_name).substring(0, 1).toUpperCase())}`
+      : null,
     [product.seller_name]
   );
 
@@ -470,7 +479,7 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
                 {/* Score tag in hover mode */}
                 {product.score !== undefined && (
                   <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-red-600 text-white text-xs font-medium">
-                    {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
+                    {typeof product.score === 'number' ? product.score.toFixed(4) : product.score}
                   </span>
                 )}
               </div>

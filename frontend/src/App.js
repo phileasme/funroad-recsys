@@ -5,6 +5,7 @@ import { searchProducts, getSimilarProducts } from './services/api';
 import { processProductImages } from './services/imageService';
 import SearchProfileSelector from './components/SearchProfileSelector';
 import ProductCard from './components/ProductCard';
+import SearchResultsWithSellerFilter from './components/SearchResultsWithSellerFilter';
 // Import debounce from lodash
 import { debounce } from 'lodash';
 
@@ -251,7 +252,8 @@ const searchProfiles = [
   {id: 'exact_match', name: 'ExactMatch'},
   { id: 'search_combined_v0_7', name: ' Combined No rating', version: "(v0.7)" },
   {id: 'search_combined_v0_8', name: 'Combine with ratings', version: "(v0.8)" },
-  {id: 'two_phase_unnative_optimized', name: "2phase jit", version: "(v0.10)"}
+  {id: 'two_phase_unnative_optimized', name: "2phase jit", version: "(v0.10)"},
+  {id: 'elasticsearch_vector_optimized', name: "2phase es", version: "(v0.11)"},
 
 ];
 
@@ -264,7 +266,6 @@ searchProfiles.reverse().forEach(profile => {
     };
   }
 });
-
 
 function App() {
   const [previewProduct, setPreviewProduct] = useState(null);
@@ -285,6 +286,9 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [tabView, setTabView] = useState('results'); // 'results', 'history', 'metrics'
   
+  const [selectedSeller, setSelectedSeller] = useState(null);
+  const [sellerGroups, setSellerGroups] = useState({});
+
   const loadingTimerRef = useRef(null);
   const similarProductsRef = useRef(null);
   const searchInputRef = useRef(null);
@@ -476,23 +480,8 @@ function App() {
     setQuery(firstQuery);
   }, []);
 
-
-// useEffect(() => {
-//   // Only execute if query has been initialized and has content
-//   if (query && query.trim()) {
-//     // Small delay to ensure query state has propagated
-//     const timer = setTimeout(() => {
-//       performSearch(query);
-//     }, 100);
-//     return () => clearTimeout(timer);
-//   }
-// }, [query]); // This will fire whenever query changes
-  
-
-// 2. Create a specific function for the initial search
 const initialSearchRef = useRef(false);
 
-// 3. Use a useEffect to set the initial query and perform the search
 useEffect(() => {
   if (initialSearchRef.current) return; // Only run this once
   
@@ -571,7 +560,7 @@ const debouncedSearch = debounce((query, searchFn) => {
     }
     
     try {
-      let data = "";
+      let data;
       // Use the passed searchQuery parameter, not the component state
       if(searchQuery[0] === "\"" && searchQuery[searchQuery.length - 1] === "\""){
         searchQuery = searchQuery.substring(1, searchQuery.length - 1);
@@ -584,22 +573,28 @@ const debouncedSearch = debounce((query, searchFn) => {
       console.log("Search results:", data.results ? data.results.length : 0);
     
       // Process the product images to add proxy URLs before setting state
-      const processedResults = processProductImages(data.results || []);
+      const processedResults = data.results && data.results.length > 0 
+        ? processProductImages(data.results) 
+        : [];
       
+      // Make sure we're setting an array even if data.results is undefined
       setSearchResults(processedResults);
   
-      if (!isFirstSearch){
-        // Update search history
+      // Update search history
+      if (!isFirstSearch && data.results){
         setSearchHistory(prev => [
-          { query: searchQuery, timestamp: new Date().toLocaleTimeString(), results: data.results?.length || 0, queryTime: data.query_time_ms },
+          { query: searchQuery, timestamp: new Date().toLocaleTimeString(), results: data.results.length || 0, queryTime: data.query_time_ms },
           ...prev.slice(0, 9)
         ]);
       }
     } catch (error) {
       console.error('Search error:', error);
+      // In case of error, set empty results instead of keeping old results
+      setSearchResults([]);
+      
       // Fallback to mock data after a delay to simulate network request
       setTimeout(() => {
-        setSearchResults(Array(6).fill(0).map((_, i) => {
+        const mockResults = Array(6).fill(0).map((_, i) => {
           // Generate random colors
           const bgColors = ['212121', '4a4a4a', '6b6b6b', '444', '333', '555', 'abd123', 'fe90ea', '256789', '742d1e'];
           const textColors = ['ffffff', 'f0f0f0', 'eeeeee', 'dddddd', 'cccccc'];
@@ -617,9 +612,13 @@ const debouncedSearch = debounce((query, searchFn) => {
             price_cents: Math.floor(Math.random() * 5000) + 1000,
             ratings_score: (Math.random() * 1 + 4).toFixed(1),
             ratings_count: Math.floor(Math.random() * 300) + 50,
+            seller_name: `Seller ${i % 3 + 1}`,
+            seller_id: `seller-${i % 3 + 1}`,
             url: '#'
           };
-        }))}, 1000)
+        });
+        setSearchResults(mockResults);
+      }, 1000);
     } finally {
       // IMPORTANT: Clear the spinner timer immediately
       if (loadingTimerRef.current) {
@@ -632,6 +631,7 @@ const debouncedSearch = debounce((query, searchFn) => {
       setIsLoading(false);
     }
   };
+  
   
   // Make sure to clean up on unmount
   useEffect(() => {
@@ -650,7 +650,7 @@ const debouncedSearch = debounce((query, searchFn) => {
   const hoverIntentTimerRef = useRef(null);
   const blindSpotTimerRef = useRef(null);
 
-  const handleProductHover = useCallback(async (product, event) => {
+  const handleProductHover = useCallback(async (productOrSeller, event, isSeller = false) => {
     // Skip hover behavior on mobile
     if (isMobile) return;
     
@@ -664,11 +664,11 @@ const debouncedSearch = debounce((query, searchFn) => {
     
     // Set product as being hovered
     setIsProductHovered(true);
-    setHoveredProduct(product);
+    setHoveredProduct(productOrSeller);
     
-    // Get the dimensions and position of the product card
-    const productCard = event.currentTarget;
-    const rect = productCard.getBoundingClientRect();
+    // Get the dimensions and position of the card
+    const card = event.currentTarget;
+    const rect = card.getBoundingClientRect();
     
     // Store hover position
     // Make sure position is valid and doesn't go off screen
@@ -680,46 +680,70 @@ const debouncedSearch = debounce((query, searchFn) => {
       y: rect.top 
     });
     
-    // In your handleProductHover function, after fetching similar products
-    try {
-      const data = await getSimilarProducts(product.description, product.name, product.id);
-      // Filter out the current product from results and process images
-      const similarProducts = processProductImages(
-        data.results.filter(item => item.name !== product.name)
-      ).map(item => ({
-        ...item,
-        score: parseFloat(item.score).toFixed(2) // Format score
-      }));
-          
-      setSimilarProducts(similarProducts);
-    } catch (error) {
-      console.error('Error fetching similar products:', error);
-      // Fallback to mock data
-      const fakeSimilarProducts = Array(5).fill(0).map((_, i) => ({
-        id: `similar-${i}`,
-        name: `Similar (images) to ${product.name} - Item ${i + 1}`,
-        description: `A product similar to ${product.name}.`,
-        thumbnail_url: `https://placehold.co/50x50?text=Similar+${i+1}`,
-        score: (Math.random() * 0.3 + 0.7).toFixed(2),
-        ratings_count: Math.floor(Math.random() * 100) + 5,
-        ratings_score: (Math.random() * 1 + 4).toFixed(1),
-        price_cents: Math.floor(Math.random() * 5000) + 500,
-        url: '#'
+    // Different behavior based on whether it's a seller card or product card
+    if (isSeller) {
+      // For seller cards, we already have the products, so we use those directly
+      const sellerProducts = productOrSeller.products || [];
+      
+      // Use all the products instead of limiting them
+      // Process the images for consistent display
+      const formattedProducts = sellerProducts.map(product => ({
+        ...product,
+        score: product.score || "1.00", // Default high score since these are direct matches
+        thumbnail_url: product.thumbnail_url || `https://placehold.co/100x100?text=Product`
       }));
       
-      setSimilarProducts(fakeSimilarProducts);
+      setSimilarProducts(formattedProducts);
+      
+      // Set the title for the popup
+      setSelectedProduct({
+        ...productOrSeller,
+        name: productOrSeller.name || "This Seller", // Use seller name
+        isSeller: true // Flag to indicate this is a seller
+      });
+    } else {
+      // This is a regular product, fetch similar products as before
+      try {
+        const data = await getSimilarProducts(productOrSeller.description, productOrSeller.name, productOrSeller.id);
+        // Filter out the current product from results and process images
+        const similarProducts = processProductImages(
+          data.results.filter(item => item.name !== productOrSeller.name)
+        ).map(item => ({
+          ...item,
+          score: parseFloat(item.score).toFixed(2) // Format score
+        }));
+            
+        setSimilarProducts(similarProducts);
+        setSelectedProduct(productOrSeller); // Store the hovered product
+      } catch (error) {
+        console.error('Error fetching similar products:', error);
+        // Fallback to mock data
+        const fakeSimilarProducts = Array(5).fill(0).map((_, i) => ({
+          id: `similar-${i}`,
+          name: `Similar (images) to ${productOrSeller.name} - Item ${i + 1}`,
+          description: `A product similar to ${productOrSeller.name}.`,
+          thumbnail_url: `https://placehold.co/50x50?text=Similar+${i+1}`,
+          score: (Math.random() * 0.3 + 0.7).toFixed(2),
+          ratings_count: Math.floor(Math.random() * 100) + 5,
+          ratings_score: (Math.random() * 1 + 4).toFixed(1),
+          price_cents: Math.floor(Math.random() * 5000) + 500,
+          url: '#'
+        }));
+        
+        setSimilarProducts(fakeSimilarProducts);
+        setSelectedProduct(productOrSeller);
+      }
     }
     
     // Set timer to show the similar products after a short delay
     hoverTimerRef.current = setTimeout(() => {
-      setSelectedProduct(product);
       setShowSimilarProducts(true);
       
       // Reset scroll position when showing popup
       if (similarProductsScrollRef.current) {
         similarProductsScrollRef.current.scrollTop = 0;
       }
-    }, 50); // Increased delay slightly for better stability
+    }, 50);
   }, [isMobile]);
 
   const closeSimilarProducts = useCallback(() => {
@@ -831,18 +855,35 @@ const debouncedSearch = debounce((query, searchFn) => {
     }
   }, [darkMode]);
 
-  const searchCopy = [...searchResults].reverse();
-// searchCopy.forEach((product, index) => {
-//   console.log({
-//     index: searchResults.length - 1 - index,
-//     name: product.name,
-//     score_origin: product.score_origin,
-//     score: product.score,
-//     base_score: product.base_score,
-//     ratings: product.ratings_score,
-//     ratings_counts: product.ratings_count
-//   });
-// });
+  // Group products by seller whenever search results change
+  useEffect(() => {
+    if (searchResults && searchResults.length > 0) {
+      // Create seller groups from search results
+      const groups = {};
+      
+      searchResults.forEach(product => {
+        // Extract seller info from product
+        const sellerId = product.seller?.id || 
+                        (product.seller_name ? `seller-${product.seller_name}` : 'unknown');
+        const sellerName = product.seller?.name || product.seller_name || 'Unknown Seller';
+        
+        if (!groups[sellerId]) {
+          groups[sellerId] = {
+            id: sellerId,
+            name: sellerName,
+            products: []
+          };
+        }
+        
+        groups[sellerId].products.push(product);
+      });
+      
+      setSellerGroups(groups);
+    } else {
+      setSellerGroups({});
+    }
+  }, [searchResults]);
+
 
   return (
     <div className={`flex flex-col min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-black'}`}>
@@ -961,14 +1002,15 @@ const debouncedSearch = debounce((query, searchFn) => {
             {/* Search results or loading state */}
             {isLoading && showLoadingSpinner ? (
               <LoadingSpinner darkMode={darkMode} query={query}/>
-            ) : searchResults.length > 0 ? (
-              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 rounded-lg shadow-sm`}>
-                <h2 className={`text-lg sm:text-xl font-semibold mb-4 sm:mb-4 ${darkMode ? 'text-white' : 'text-black'} border-b-2 border-[#FE90EA] pb-2 inline-block`}>
-                  Search Results ({searchResults.length})
-                </h2>
-                
-                <div className="grid gap-3 sm:gap-6 grid-cols-2 xl:grid-cols-3 product-grid">
-                {searchResults.map((product, index) => (
+            ) : (
+              <SearchResultsWithSellerFilter
+                searchResults={searchResults}
+                darkMode={darkMode}
+                isLoading={isLoading}
+                query={query}
+                onHover={handleProductHover}
+                onLeave={handleProductMouseLeave}
+                renderProductCard={(product, index) => (
                   <ProductCard 
                     key={`${product.id || product.name}-${index}`}
                     product={product}
@@ -977,17 +1019,9 @@ const debouncedSearch = debounce((query, searchFn) => {
                     onHover={handleProductHover}
                     onLeave={handleProductMouseLeave}
                   />
-                ))}
-                </div>
-              </div>
-            ) : (
-              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm text-center`}>
-                <p className={`text-base sm:text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                  No results found for "{query}". Try a different search term.
-                </p>
-              </div>
+                )}
+              />
             )}
-
             {/* Search history section - shown on desktop and mobile history tab */}
             {(!isMobile || tabView === 'history') && searchHistory.length > 0 && (
               <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-4 sm:p-6 rounded-lg shadow-sm`}>
@@ -1063,8 +1097,9 @@ const debouncedSearch = debounce((query, searchFn) => {
         >
           <div className="flex justify-between items-start pb-2">
             <h4 className={`font-small text-sm flex-grow pr-2 border-b-2 border-[#FE90EA] ${darkMode ? 'text-white' : 'text-black'}`}>
-              Similar items to
-              "{selectedProduct.name.substring(0, 13)}<span className='text-xs'>{selectedProduct.name.length > 13? '..': ''}</span>"
+              {selectedProduct.isSeller 
+                ? `Products from ${selectedProduct.name}`
+                : `Similar items to "${selectedProduct.name.substring(0, 13)}${selectedProduct.name.length > 13 ? '...' : ''}"`}
             </h4>
             
             {/* Close Button */}
@@ -1083,18 +1118,18 @@ const debouncedSearch = debounce((query, searchFn) => {
           <div className="space-y-4">
             {similarProducts.length > 0 ? (
               similarProducts.map((product, index) => (
-                <a href={product.url || "#"} target="#" key={product.id || index} className="block">
+                <a href={product.url || "#"} target="_blank" rel="noopener noreferrer" key={product.id || index} className="block">
                   <div 
                     className={`flex items-start py-2 ${darkMode ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-100 hover:bg-gray-50'} border-b last:border-0 transition-colors rounded-md px-2`}
                   >
                     {/* Product Image */}
                     <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
                       <img 
-                        src={product.thumbnail_url || `https://placehold.co/100x100?text=Similar`} 
+                        src={product.thumbnail_url || `https://placehold.co/100x100?text=Product`} 
                         alt={product.name} 
                         className="w-full h-full object-cover"
                         onError={(e) => {
-                          e.target.src = `https://placehold.co/100x100?text=Similar`;
+                          e.target.src = `https://placehold.co/100x100?text=Product`;
                         }}
                       />
                     </div>
@@ -1107,8 +1142,8 @@ const debouncedSearch = debounce((query, searchFn) => {
                           {product.name}
                         </h4>
                         {product.price_cents !== undefined && (
-                            <div className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} ml-1 flex-shrink-0`}>
-                            {product.price_cents > 0 ? `${(product.price_cents / 100).toFixed(2)}` : "Free"}
+                          <div className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'} ml-1 flex-shrink-0`}>
+                            ${(product.price_cents / 100).toFixed(2)}
                           </div>
                         )}
                       </div>
@@ -1126,6 +1161,7 @@ const debouncedSearch = debounce((query, searchFn) => {
                           </span>
                         </div>
                       )}
+                      
                       {/* Description */}
                       {product.description && (
                         <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} mt-1 truncate`}>
@@ -1133,12 +1169,14 @@ const debouncedSearch = debounce((query, searchFn) => {
                         </p>
                       )}
                       
-                      {/* Similarity Score */}
-                      <div className="mt-2">
-                        <div className="text-xs px-2 py-0.5 bg-[#FE90EA] text-black rounded-full inline-block">
-                          Similarity: {parseFloat(product.score).toFixed(2)}
+                      {/* Score - Show for similar products, but not for seller products */}
+                      {!selectedProduct.isSeller && product.score && (
+                        <div className="mt-2">
+                          <div className="text-xs px-2 py-0.5 bg-[#FE90EA] text-black rounded-full inline-block">
+                            Similarity: {parseFloat(product.score).toFixed(2)}
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </a>
@@ -1149,7 +1187,7 @@ const debouncedSearch = debounce((query, searchFn) => {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Loading similar products...
+                Loading products...
               </div>
             )}
           </div>

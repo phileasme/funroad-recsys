@@ -40,7 +40,7 @@ export const testApiConnection = async () => {
 
 
 // In your api.js file
-export const searchProducts = async (profile, query, k = 50, numCandidates = 100, shouldPreload = true) => {
+export const searchProducts = async (profile, query, k = 100, numCandidates = 100, shouldPreload = true) => {
   console.log(`Calling ${profile} with query: ${query}`);
   
   try {
