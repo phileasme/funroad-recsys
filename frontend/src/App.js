@@ -9,6 +9,7 @@ import SearchResultsWithSellerFilter from './components/SearchResultsWithSellerF
 // Import debounce from lodash
 import { debounce } from 'lodash';
 
+
 // Import existing styles - keeping this section as is
 const AppStyles = `
 .App {
@@ -687,11 +688,47 @@ const debouncedSearch = debounce((query, searchFn) => {
       
       // Use all the products instead of limiting them
       // Process the images for consistent display
-      const formattedProducts = sellerProducts.map(product => ({
+      const formattedProducts = sellerProducts
+      .map(product => ({
         ...product,
-        score: product.score || "1.00", // Default high score since these are direct matches
-        thumbnail_url: product.thumbnail_url || `https://placehold.co/100x100?text=Product`
-      }));
+        score: product.score || "1.00",
+        thumbnail_url: product.thumbnail_url || generatePlaceholder(100,100,product.name)
+      }))
+      .sort((a, b) => {
+        // First, we need to calculate mean and standard deviation for both metrics
+        const calculateStats = (products, key) => {
+          const values = products.map(p => p[key] || 0);
+          const sum = values.reduce((acc, val) => acc + val, 0);
+          const mean = sum / values.length;
+          const squaredDiffs = values.map(val => Math.pow(val - mean, 2));
+          const variance = squaredDiffs.reduce((acc, val) => acc + val, 0) / values.length;
+          const stdDev = Math.sqrt(variance);
+          return { mean, stdDev };
+        };
+
+        const { mean: countMean, stdDev: countStdDev } = calculateStats(sellerProducts, 'ratings_count');
+        const { mean: scoreMean, stdDev: scoreStdDev } = calculateStats(sellerProducts, 'ratings_score');
+
+        // Calculate z-scores for both products
+        const getZScore = (value, mean, stdDev) => {
+          // Handle case of zero standard deviation
+          if (stdDev === 0) return 0;
+          return (value - mean) / stdDev;
+        };
+
+        const countZScoreA = getZScore(a.ratings_count || 0, countMean, countStdDev);
+        const scoreZScoreA = getZScore(a.ratings_score || 0, scoreMean, scoreStdDev);
+        
+        const countZScoreB = getZScore(b.ratings_count || 0, countMean, countStdDev);
+        const scoreZScoreB = getZScore(b.ratings_score || 0, scoreMean, scoreStdDev);
+
+        // Combine z-scores (you can adjust weights if needed)
+        const combinedZScoreA = countZScoreA + scoreZScoreA;
+        const combinedZScoreB = countZScoreB + scoreZScoreB;
+
+        // Sort descending by combined z-score
+        return combinedZScoreB - combinedZScoreA;
+      });
       
       setSimilarProducts(formattedProducts);
       
@@ -1125,11 +1162,11 @@ const debouncedSearch = debounce((query, searchFn) => {
                     {/* Product Image */}
                     <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
                       <img 
-                        src={product.thumbnail_url || `https://placehold.co/100x100?text=Product`} 
+                        src={product.thumbnail_url || generatePlaceholder(100,100, product.name)} 
                         alt={product.name} 
                         className="w-full h-full object-cover"
                         onError={(e) => {
-                          e.target.src = `https://placehold.co/100x100?text=Product`;
+                          e.target.src = generatePlaceholder(100,100, product.name);
                         }}
                       />
                     </div>
@@ -1302,6 +1339,17 @@ function CopyrightFooter({ darkMode }) {
       </div>
     </footer>
   );
+}
+
+const generatePlaceholder = (dim1, dim2, title) => {
+  const bgColors = ['212121', '4a4a4a', '6b6b6b', '444', '333', '555', 'abd123', 'fe90ea', '256789', '742d1e'];
+  const textColors = ['ffffff', 'f0f0f0', 'eeeeee', 'dddddd', 'cccccc'];
+
+  const bgColor = bgColors[Math.floor(Math.random() * bgColors.length)];
+  const textColor = textColors[Math.floor(Math.random() * textColors.length)];
+
+
+  return `https://placehold.co/${dim1}x${dim2}/${bgColor}/${textColor}?text=${title}`
 }
 
 export default App;

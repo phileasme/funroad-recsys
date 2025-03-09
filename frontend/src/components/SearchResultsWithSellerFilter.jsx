@@ -22,6 +22,18 @@ const getEnhancedScore = (products) => {
   return enhancedScore.toFixed(2);
 };
 
+
+const generatePlaceholder = (dim1, dim2, title) => {
+  const bgColors = ['212121', '4a4a4a', '6b6b6b', '444', '333', '555', 'abd123', 'fe90ea', '256789', '742d1e'];
+  const textColors = ['ffffff', 'f0f0f0', 'eeeeee', 'dddddd', 'cccccc'];
+
+  const bgColor = bgColors[Math.floor(Math.random() * bgColors.length)];
+  const textColor = textColors[Math.floor(Math.random() * textColors.length)];
+
+
+  return `https://placehold.co/${dim1}x${dim2}/${bgColor}/${textColor}?text=${title}`
+}
+
 const getAverageRating = (products) => {
   const validRatings = products.filter(p => p.ratings_score != null && p.ratings_score > 0);
   if (validRatings.length === 0) return null;
@@ -107,11 +119,11 @@ const SellerCard = ({
                   className="aspect-video overflow-hidden relative"
                 >
                   <img 
-                    src={product.thumbnail_url || `https://placehold.co/300x150?text=Product`}
+                    src={product.thumbnail_url || generatePlaceholder(300,150, product.name)}
                     alt={product.name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      e.target.src = `https://placehold.co/300x150?text=Product`;
+                      e.target.src = generatePlaceholder(300,150, product.name);
                     }}
                   />
                   {/* Price tag */}
@@ -134,11 +146,11 @@ const SellerCard = ({
             <div className="flex flex-col gap-1">
               <div className="aspect-video overflow-hidden relative">
                 <img 
-                  src={prioritizedProducts[0].thumbnail_url || `https://placehold.co/400x200?text=Product`}
+                  src={prioritizedProducts[0].thumbnail_url || generatePlaceholder(400,200, prioritizedProducts[0].name)}
                   alt={prioritizedProducts[0].name}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    e.target.src = `https://placehold.co/400x200?text=Product`;
+                    e.target.src = generatePlaceholder(400,200, prioritizedProducts[0].name);
                   }}
                 />
                 {/* Price tag */}
@@ -159,11 +171,11 @@ const SellerCard = ({
                     className="aspect-video overflow-hidden relative"
                   >
                     <img 
-                      src={product.thumbnail_url || `https://placehold.co/200x100?text=Product`}
+                      src={product.thumbnail_url || generatePlaceholder(200,100, product.name)}
                       alt={product.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        e.target.src = `https://placehold.co/200x100?text=Product`;
+                        e.target.src = generatePlaceholder(200,100, product.name);
                       }}
                     />
                     {/* Price tag */}
@@ -187,11 +199,11 @@ const SellerCard = ({
             <div className="flex flex-col gap-1">
               <div className="aspect-video overflow-hidden relative">
                 <img 
-                  src={prioritizedProducts[0].thumbnail_url || `https://placehold.co/300x150?text=Product`}
+                  src={prioritizedProducts[0].thumbnail_url || generatePlaceholder(300,150, prioritizedProducts[0].name)}
                   alt={prioritizedProducts[0].name}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    e.target.src = `https://placehold.co/300x150?text=Product`;
+                    e.target.src = generatePlaceholder(300,150, prioritizedProducts[0].name);
                   }}
                 />
                 {/* Price tag */}
@@ -212,11 +224,11 @@ const SellerCard = ({
                     className="aspect-square overflow-hidden relative"
                   >
                     <img 
-                      src={product.thumbnail_url || `https://placehold.co/100x100?text=Product`}
+                      src={product.thumbnail_url || generatePlaceholder(100,100, product.name)}
                       alt={product.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        e.target.src = `https://placehold.co/100x100?text=Product`;
+                        e.target.src = generatePlaceholder(100,100, product.name);
                       }}
                     />
                     {/* Price tag - only show if not the last one with +N overlay */}
@@ -252,11 +264,11 @@ const SellerCard = ({
                   className="flex-1 overflow-hidden relative"
                 >
                   <img 
-                    src={product.thumbnail_url || `https://placehold.co/400x150?text=Product`}
+                    src={product.thumbnail_url || generatePlaceholder(400,150, product.name)}
                     alt={product.name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      e.target.src = `https://placehold.co/400x150?text=Product`;
+                      e.target.src = generatePlaceholder(400,150, product.name);
                     }}
                   />
                   {/* Price tag */}
@@ -279,11 +291,11 @@ const SellerCard = ({
             <div className="flex flex-col gap-1 h-64">
               <div className="flex-1 overflow-hidden relative">
                 <img 
-                  src={prioritizedProducts[0].thumbnail_url || `https://placehold.co/400x150?text=Product`}
+                  src={prioritizedProducts[0].thumbnail_url || generatePlaceholder(400,150, prioritizedProducts[0].name)}
                   alt={prioritizedProducts[0].name}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    e.target.src = `https://placehold.co/400x150?text=Product`;
+                    e.target.src = generatePlaceholder(400,150, prioritizedProducts[0].name);
                   }}
                 />
                 {/* Price tag */}
@@ -304,11 +316,11 @@ const SellerCard = ({
                     className="overflow-hidden relative"
                   >
                     <img 
-                      src={product.thumbnail_url || `https://placehold.co/200x150?text=Product`}
+                      src={product.thumbnail_url || generatePlaceholder(200,150, product.name)}
                       alt={product.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        e.target.src = `https://placehold.co/200x150?text=Product`;
+                        e.target.src = generatePlaceholder(200,150, product.name);
                       }}
                     />
                     {/* Price tag */}
