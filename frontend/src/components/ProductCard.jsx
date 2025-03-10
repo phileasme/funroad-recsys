@@ -45,6 +45,10 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
   
   // Store the original height of the card
   const [cardHeight, setCardHeight] = useState(null);
+
+  const [isTallImage, setIsTallImage] = useState(false);
+  const [isSquareImage, setIsSquareImage] = useState(false);
+
   
 
   const sanitizeForURI = (str) => {
@@ -209,12 +213,14 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
   
   // Determine if the default display should use hover mode
   // (only applies for design-related narrow images AND not for mobile)
-  const useDefaultHoverMode = !isMobile && isDesignRelated && !isWideImage;
-  
-  // Determine if the card should show hover effects right now
-  // (either actively hovered or using default hover mode)
-  const shouldShowAsHover = !isMobile && (isHovered || useDefaultHoverMode);
-  
+  const useDefaultHoverMode = !isMobile && isDesignRelated && !isWideImage && !isTallImage && !isSquareImage;
+
+// Determine if the card should show hover effects right now based on image type
+const shouldShowAsHover = !isMobile && (
+  (isHovered && (isTallImage || isSquareImage)) ||  // Tall/square images show description on hover
+  (isHovered && useDefaultHoverMode) ||             // Wide design images show image on hover
+  (!isHovered && useDefaultHoverMode)               // Wide design images show image when not hovered
+);
   // Effect to calculate and store card height on mount
   useEffect(() => {
     if (cardRef.current) {
@@ -234,20 +240,32 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
       height: naturalHeight
     });
     
-    // Check if aspect ratio is wider than 4/3 (1.33)
+    // Calculate aspect ratio
     const aspectRatio = naturalWidth / naturalHeight;
+    console.log(`Image for ${product.name} has aspect ratio: ${aspectRatio.toFixed(2)}`);
     
-    // Consider any image with aspect ratio > 4/3 as "wide"
+    // Check if image is tall (portrait)
+    const isTall = aspectRatio < 0.9;
+    setIsTallImage(isTall);
+    
+    // Check if image is square-ish
+    const isSquare = aspectRatio >= 0.9 && aspectRatio <= 1.1;
+    setIsSquareImage(isSquare);
+    
+    // Check if aspect ratio is wider than 4/3 (1.33)
     const isWide = aspectRatio > 1.33;
     setIsWideImage(isWide);
     
-    // For wide images, we'll show the standard description even during hover
-    setShowStandardOnHover(isWide);
+    // Set the hover behavior based on image shape:
+    // - For wide images: show the standard description even during hover
+    // - For tall/square images: invert the hover behavior (show description on hover)
+    setShowStandardOnHover(isWide && !isTall && !isSquare);
     
     // Mark as loaded
     setImageLoaded(true);
   };
   
+
   const handleImageError = () => {
     console.log(`Image error for ${product.name} with URL: ${imageUrl}`);
     // We'll now use the fallbackUrl directly
@@ -382,7 +400,7 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
               alignItems: shouldShowAsHover ? 'flex-start' : 'center',
               justifyContent: 'center',
               cursor: shouldShowAsHover && mouseOverImage ? 'zoom-in' : 'pointer',
-              backgroundColor: darkMode ? '#2D3748' : '#F7FAFC',  // Background while loading
+              backgroundColor: darkMode ? '#2D3748' : '#F7FAFC',
             }}
             onMouseEnter={handleImageMouseEnter}
             onMouseLeave={handleImageMouseLeave}
@@ -457,7 +475,16 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
               </div>
             )}
           </div>
-          
+          {(isTallImage || isSquareImage) && !isHovered && (
+          <div 
+            className={`absolute top-2 ${isDesignRelated ? 'left-14' : 'left-2'} text-xs font-medium px-1.5 py-0.5 rounded-full ${
+              darkMode ? 'bg-purple-600 text-white' : 'bg-purple-100 text-purple-800'
+            }`}
+            style={{ zIndex: 25 }}
+          >
+            {isTallImage ? 'Tall' : 'Square'}
+          </div>
+          )}
           {/* Overlay description - only visible when in hover mode AND not showing standard description on hover */}
           {shouldShowAsHover && !showStandardOnHover && (
             <div
