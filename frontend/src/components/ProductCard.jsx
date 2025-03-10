@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { createFallbackImageUrl, getProxiedImageUrl } from '../services/imageService';
 
-function ProductCard({ product, index, darkMode, onHover, onLeave }) {
+const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) => {
   // State to track hover
   const [isHovered, setIsHovered] = useState(false);
   // State to control actual display of details (with delayed timing)
@@ -174,9 +174,12 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
     img.src = product.seller_thumbnail;
   }, [product.seller_thumbnail]);
   
+  // In your ProductCard component, add this log
   const handleMouseEnter = (e) => {
     // Don't trigger hover behavior on mobile
     if (isMobile) return;
+    
+    console.log(`ProductCard mouseEnter: ${product.id || product.name}`);
     
     // Call the parent's hover handler
     if (onHover) onHover(product, e);
@@ -669,6 +672,6 @@ function ProductCard({ product, index, darkMode, onHover, onLeave }) {
       )}
     </>
   );
-}
+})
 
 export default ProductCard;

@@ -5,9 +5,8 @@ import { searchProducts, getSimilarProducts } from './services/api';
 import { processProductImages } from './services/imageService';
 import SearchProfileSelector from './components/SearchProfileSelector';
 import ProductCard from './components/ProductCard';
-import SearchResultsWithSellerFilter from './components/SearchResultsWithSellerFilter';
-// Import debounce from lodash
 import { debounce } from 'lodash';
+const SearchResultsWithSellerFilter = React.lazy(() => import('./components/SearchResultsWithSellerFilter'));
 
 
 // Import existing styles - keeping this section as is
@@ -501,25 +500,7 @@ useEffect(() => {
 
 const lastQueryRef = useRef({ text: '', timestamp: 0 });
 
-// Create a debounced search function with duplicate check\
-const debouncedSearch = debounce((query, searchFn) => {
-  if (query && query.trim()) {
-    const trimmedQuery = query.trim();
-    const now = Date.now();
-    
-    // Check if this exact query was made in the last second
-    if (trimmedQuery === lastQueryRef.current.text && now - lastQueryRef.current.timestamp < 1000) {
-      console.log('Skipping duplicate query within 1 second:', trimmedQuery);
-      return;
-    }
-    
-    // Update the last query info
-    lastQueryRef.current = { text: trimmedQuery, timestamp: now };
-    
-    // Perform the search
-    searchFn(trimmedQuery);
-  }
-}, 500);
+
 
   const handleSearch = async (e) => {
     if (e) e.preventDefault();
