@@ -507,11 +507,11 @@ const shouldShowAsHover = !isMobile && (
                 </h3>
                 
                 {/* Score tag in hover mode */}
-                {product.score !== undefined && (
+                {/* {product.score !== undefined && (
                   <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-red-600 text-white text-xs font-medium">
                     {typeof product.score === 'number' ? product.score.toFixed(4) : product.score}
                   </span>
-                )}
+                )} */}
               </div>
               
               <div className="flex items-center mb-1">
@@ -575,7 +575,7 @@ const shouldShowAsHover = !isMobile && (
           )}
           
           {/* Score tag - always visible when not in hover mode */}
-          {product.score !== undefined && !shouldShowAsHover && (
+          {/* {product.score !== undefined && !shouldShowAsHover && (
             <div 
               className="absolute top-2 left-2 text-xs font-medium px-1.5 py-0.5 rounded-full bg-red-600 text-white"
               style={{ 
@@ -585,7 +585,7 @@ const shouldShowAsHover = !isMobile && (
             >
               Score: {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
             </div>
-          )}
+          )} */}
           
           {/* Standard details section - visible when not in hover mode OR when showing standard description on hover */}
           {(showDetails && !shouldShowAsHover) || (showStandardOnHover && isHovered) ? (

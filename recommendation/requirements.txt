@@ -11,4 +11,5 @@ fastapi
 python-multipart
 numba
 pydantic
+nltk>=3.9.1
 scipy>=1.7.0

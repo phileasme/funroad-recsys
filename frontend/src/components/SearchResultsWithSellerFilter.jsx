@@ -157,12 +157,12 @@ const SellerCard = React.memo(({ seller, darkMode, handleSellerClick, onHover, o
       onMouseLeave={onLeave}
     >
       {/* Score badge - for consistency with product cards */}
-      <div className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 py-0.5 px-1.5 rounded text-xs font-medium flex items-center z-40">
+      {/* <div className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 py-0.5 px-1.5 rounded text-xs font-medium flex items-center z-40">
         <span>Score: </span>
         <span className="text-[#FE90EA] ml-1">
           {seller.compositeScore ? seller.compositeScore.toFixed(2) : "N/A"}
         </span>
-      </div>
+      </div> */}
 
       {/* Product image grid - different layout for mobile vs desktop */}
       <div className={`relative group`}>
@@ -823,7 +823,7 @@ const SearchResultsWithSellerFilter = ({
           processedProduct.bayesianRating = bayesianAverage(
             processedProduct.ratings_score,
             processedProduct.ratings_count,
-            10,  // m parameter - minimum ratings for confidence
+            2,  // m parameter - minimum ratings for confidence
             3.0  // C parameter - global average rating
           );
         } else {
@@ -929,7 +929,7 @@ const SearchResultsWithSellerFilter = ({
           seller.avgRating = bayesianAverage(
             rawAvgRating, 
             seller.totalRatingsCount, 
-            10,  // m parameter - minimum ratings for confidence
+            2,  // m parameter - minimum ratings for confidence
             3.0  // C parameter - global average rating
           );
           
@@ -1283,40 +1283,6 @@ const SearchResultsWithSellerFilter = ({
           return (b.totalRatingsCount || 0) - (a.totalRatingsCount || 0);
       }
     });
-    // Then sort with normalized scores
-    // const sortedSellers = [...normalizedSellerGroups].sort((a, b) => {
-    //   switch (sortOrder) {
-    //     case 'price-asc':
-    //       // Sort by average price ascending
-
-    //       const aAvg = a.avgPrice !== undefined ? a.avgPrice : Infinity;
-    //       const bAvg = b.avgPrice !== undefined ? b.avgPrice : Infinity;
-          
-    //       // This ensures $0.00 items appear first when sorting by price ascending
-    //       return aAvg - bAvg;
-    //     case 'price-desc':
-    //       // Sort by average price descending
-
-    //       const aAvgD = a.avgPrice !== undefined ? a.avgPrice : -1;
-    //       const bAvgD = b.avgPrice !== undefined ? b.avgPrice : -1;
-    //       return bAvgD - aAvgD;
-    //     case 'rating':
-    //       // Sort by Bayesian-adjusted rating, with tie-breaker on rating count
-    //       if (Math.abs((b.avgRating || 0) - (a.avgRating || 0)) < 0.01) {
-    //         // If ratings are very close, use total ratings count as tie-breaker
-    //         return (b.totalRatingsCount || 0) - (a.totalRatingsCount || 0);
-    //       }
-    //       return (b.avgRating || 0) - (a.avgRating || 0);
-    //     case 'score':
-    //     default:
-    //       // Sort by combined score (product score + ratings) with precise comparison
-    //       if (Math.abs((b.combinedScore || 0) - (a.combinedScore || 0)) < 0.0001) {
-    //         // If scores are very close, use product count as tie-breaker
-    //         return (b.products?.length || 0) - (a.products?.length || 0);
-    //       }
-    //       return (b.combinedScore || 0) - (a.combinedScore || 0);
-    //   }
-    // });
     
     // DEBUG: Log after sorting sellers
     console.log("Sample of sellers AFTER sorting:", sortedSellers.slice(0, 2).map(seller => ({
@@ -1424,8 +1390,8 @@ const SearchResultsWithSellerFilter = ({
         <div className="flex items-center space-x-2 mb-2 sm:mb-0">
         <h2 className={`text-lg sm:text-xl font-semibold ${darkMode ? "text-white" : "text-black"} border-b-2 border-[#FE90EA] pb-2 inline-block`}>
           {selectedSeller
-            ? `${selectedSellerName}'s Products (${filteredResults.length})`
-            : `Search Results (${filteredResults.length} of ${searchResults.length})`}
+            ? `${selectedSellerName.split(" ")[0]}'s Products (${filteredResults.length})`
+            : `Search Results (${filteredResults.length})`}
         </h2>
         <span className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
           related to "{query}"

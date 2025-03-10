@@ -34,10 +34,13 @@ from core.colbert_embeddings import ColBERTEmbedding
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+from nltk.corpus import stopwords
+
+stopwords_set = set(stopwords.words('english')) 
 
 '''
     HI! I don't expect this to run in production, the code here meant to be quick and dirty. Hence the words "prototype".
-    Given the write amount of time i'll clean up, setup up tests, modularize and comportemtalize the hell out it.
+    Given the right amount of time i'll clean up, setup up tests, modularize and compartementalize the hell out it.
 '''
 
 # Global state
@@ -1259,9 +1262,9 @@ async def two_phase_unnative_optimized(
                     similarity_scores[doc_id] = float(np.dot(doc_vector, query_vector_array))
         
         # Determine if this is a multi-term query
-        is_multi_term = len([t for t in query.query.split() if len(t) > 3]) > 1
-        bm25_weight = 0.4 if is_multi_term else 0.6
-        colbert_weight = 0.6 if is_multi_term else 0.4
+        is_multi_term = len([t for t in query.query.split() if len(t) > 2 and t not in stopwords]) > 1
+        bm25_weight = 0.30 if is_multi_term else 0.7
+        colbert_weight = 0.70 if is_multi_term else 0.30
         
         # Process results using simple, reliable code
         reranked_results = []
