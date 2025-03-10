@@ -461,16 +461,6 @@ function App() {
         >
           History
         </button>
-        <button 
-          className={`flex-1 py-2 text-center text-sm font-medium ${
-            currentTab === 'metrics' 
-              ? `${darkMode ? 'bg-gray-600 text-white' : 'bg-white text-gray-800'}`
-              : `${darkMode ? 'text-gray-300' : 'text-gray-600'}`
-          }`}
-          onClick={() => setTabView('metrics')}
-        >
-          Metrics
-        </button>
       </div>
     );
   }

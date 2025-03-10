@@ -725,7 +725,7 @@ const SearchResultsWithSellerFilter = ({
   });
   
   // Component state
-  const [groupBySeller, setGroupBySeller] = useState(true);
+  const [groupBySeller, setGroupBySeller] = useState(false);
   const [selectedSeller, setSelectedSeller] = useState(null);
   const [sellerGroups, setSellerGroups] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
@@ -1216,35 +1216,107 @@ const SearchResultsWithSellerFilter = ({
       switch (sortOrder) {
         case 'price-asc':
           // Sort by average price ascending
-
-          const aAvg = a.avgPrice !== undefined ? a.avgPrice : Infinity;
-          const bAvg = b.avgPrice !== undefined ? b.avgPrice : Infinity;
+          const aAvg = a.avgPrice !== undefined ? a.avgPrice : Number.MAX_SAFE_INTEGER;
+          const bAvg = b.avgPrice !== undefined ? b.avgPrice : Number.MAX_SAFE_INTEGER;
           
           // This ensures $0.00 items appear first when sorting by price ascending
-          return aAvg - bAvg;
+          if (aAvg !== bAvg) return aAvg - bAvg;
+          
+          // If prices are equal, use secondary sorting criteria
+          return (a.products?.length || 0) - (b.products?.length || 0);
+
         case 'price-desc':
           // Sort by average price descending
+          const aAvgD = a.avgPrice !== undefined ? a.avgPrice : Number.MIN_SAFE_INTEGER;
+          const bAvgD = b.avgPrice !== undefined ? b.avgPrice : Number.MIN_SAFE_INTEGER;
+          
+          if (aAvgD !== bAvgD) return bAvgD - aAvgD;
+          
+          // If prices are equal, use secondary sorting criteria
+          return (b.products?.length || 0) - (a.products?.length || 0);
 
-          const aAvgD = a.avgPrice !== undefined ? a.avgPrice : -1;
-          const bAvgD = b.avgPrice !== undefined ? b.avgPrice : -1;
-          return bAvgD - aAvgD;
         case 'rating':
-          // Sort by Bayesian-adjusted rating, with tie-breaker on rating count
-          if (Math.abs((b.avgRating || 0) - (a.avgRating || 0)) < 0.01) {
-            // If ratings are very close, use total ratings count as tie-breaker
-            return (b.totalRatingsCount || 0) - (a.totalRatingsCount || 0);
+          // Sort by Bayesian-adjusted rating
+          const aRating = a.avgRating || 0;
+          const bRating = b.avgRating || 0;
+          
+          if (Math.abs(bRating - aRating) > 0.01) {
+            return bRating - aRating;
           }
-          return (b.avgRating || 0) - (a.avgRating || 0);
+          
+          // If ratings are very close, use rating count as tie-breaker
+          const aRatingCount = a.totalRatingsCount || 0;
+          const bRatingCount = b.totalRatingsCount || 0;
+          
+          if (aRatingCount !== bRatingCount) {
+            return bRatingCount - aRatingCount;
+          }
+          
+          // If rating counts are equal, use product count
+          return (b.products?.length || 0) - (a.products?.length || 0);
+
         case 'score':
         default:
-          // Sort by combined score (product score + ratings) with precise comparison
-          if (Math.abs((b.combinedScore || 0) - (a.combinedScore || 0)) < 0.0001) {
-            // If scores are very close, use product count as tie-breaker
+          // Prioritize combined score
+          const aCombinedScore = a.combinedScore || 0;
+          const bCombinedScore = b.combinedScore || 0;
+          
+          if (Math.abs(bCombinedScore - aCombinedScore) > 0.0001) {
+            return bCombinedScore - aCombinedScore;
+          }
+          
+          // If combined scores are very close, use multiple tie-breakers
+          // First, use product count
+          if (a.products?.length !== b.products?.length) {
             return (b.products?.length || 0) - (a.products?.length || 0);
           }
-          return (b.combinedScore || 0) - (a.combinedScore || 0);
+          
+          // Then, use average rating as a secondary tie-breaker
+          const aSecondaryRating = a.avgRating || 0;
+          const bSecondaryRating = b.avgRating || 0;
+          
+          if (Math.abs(bSecondaryRating - aSecondaryRating) > 0.01) {
+            return bSecondaryRating - aSecondaryRating;
+          }
+          
+          // Final tie-breaker: total ratings count
+          return (b.totalRatingsCount || 0) - (a.totalRatingsCount || 0);
       }
     });
+    // Then sort with normalized scores
+    // const sortedSellers = [...normalizedSellerGroups].sort((a, b) => {
+    //   switch (sortOrder) {
+    //     case 'price-asc':
+    //       // Sort by average price ascending
+
+    //       const aAvg = a.avgPrice !== undefined ? a.avgPrice : Infinity;
+    //       const bAvg = b.avgPrice !== undefined ? b.avgPrice : Infinity;
+          
+    //       // This ensures $0.00 items appear first when sorting by price ascending
+    //       return aAvg - bAvg;
+    //     case 'price-desc':
+    //       // Sort by average price descending
+
+    //       const aAvgD = a.avgPrice !== undefined ? a.avgPrice : -1;
+    //       const bAvgD = b.avgPrice !== undefined ? b.avgPrice : -1;
+    //       return bAvgD - aAvgD;
+    //     case 'rating':
+    //       // Sort by Bayesian-adjusted rating, with tie-breaker on rating count
+    //       if (Math.abs((b.avgRating || 0) - (a.avgRating || 0)) < 0.01) {
+    //         // If ratings are very close, use total ratings count as tie-breaker
+    //         return (b.totalRatingsCount || 0) - (a.totalRatingsCount || 0);
+    //       }
+    //       return (b.avgRating || 0) - (a.avgRating || 0);
+    //     case 'score':
+    //     default:
+    //       // Sort by combined score (product score + ratings) with precise comparison
+    //       if (Math.abs((b.combinedScore || 0) - (a.combinedScore || 0)) < 0.0001) {
+    //         // If scores are very close, use product count as tie-breaker
+    //         return (b.products?.length || 0) - (a.products?.length || 0);
+    //       }
+    //       return (b.combinedScore || 0) - (a.combinedScore || 0);
+    //   }
+    // });
     
     // DEBUG: Log after sorting sellers
     console.log("Sample of sellers AFTER sorting:", sortedSellers.slice(0, 2).map(seller => ({
@@ -1349,11 +1421,16 @@ const SearchResultsWithSellerFilter = ({
       {/* Results header and controls */}
       <div className={`${darkMode ? "bg-gray-800" : "bg-white"} p-4 rounded-lg shadow-sm`}>
         <div className="flex flex-wrap justify-between items-center">
-          <h2 className={`text-lg sm:text-xl font-semibold ${darkMode ? "text-white" : "text-black"} border-b-2 border-[#FE90EA] pb-2 inline-block`}>
-            {selectedSeller
-              ? `${selectedSellerName}'s Products (${filteredResults.length})`
-              : `Search Results (${filteredResults.length} of ${searchResults.length})`}
-          </h2>
+        <div className="flex items-center space-x-2 mb-2 sm:mb-0">
+        <h2 className={`text-lg sm:text-xl font-semibold ${darkMode ? "text-white" : "text-black"} border-b-2 border-[#FE90EA] pb-2 inline-block`}>
+          {selectedSeller
+            ? `${selectedSellerName}'s Products (${filteredResults.length})`
+            : `Search Results (${filteredResults.length} of ${searchResults.length})`}
+        </h2>
+        <span className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+          related to "{query}"
+        </span>
+      </div>
 
           <div className="flex items-center space-x-4 mt-2 sm:mt-0">
             {selectedSeller && (
@@ -1382,21 +1459,6 @@ const SearchResultsWithSellerFilter = ({
                 <option value="price-desc">Price: High to Low</option>
               </select>
             </div>
-
-            {/* View mode toggle (grid/list) */}
-            <button
-              onClick={toggleViewMode}
-              className={`p-1 rounded-md ${
-                darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'
-              }`}
-              aria-label={showGridView ? 'Switch to list view' : 'Switch to grid view'}
-            >
-              {showGridView ? (
-                <List size={16} className={darkMode ? 'text-gray-300' : 'text-gray-700'} />
-              ) : (
-                <Grid size={16} className={darkMode ? 'text-gray-300' : 'text-gray-700'} />
-              )}
-            </button>
 
             {/* Toggle switch for grouping by seller */}
             <div className="flex items-center">
