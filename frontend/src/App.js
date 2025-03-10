@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Search, BarChart as BarChartIcon, PieChart, Layers, Settings, TrendingUp, Sun, Moon, TrendingUpDown } from 'lucide-react';
