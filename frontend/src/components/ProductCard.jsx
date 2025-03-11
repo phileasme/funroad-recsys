@@ -2,20 +2,22 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { createFallbackImageUrl, getProxiedImageUrl } from '../services/imageService';
 
 const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) => {
-  // State to track hover
+  // State to track which view mode is active
+  const [showImageView, setShowImageView] = useState(false);
+  // State to track the initial (default) view mode
+  const [initialViewIsImage, setInitialViewIsImage] = useState(false);
+  // State to track if card is hovered
   const [isHovered, setIsHovered] = useState(false);
-  // State to control actual display of details (with delayed timing)
-  const [showDetails, setShowDetails] = useState(true);
   // State to control fullscreen image view
   const [showFullImage, setShowFullImage] = useState(false);
   // State to track if mouse is over image specifically
   const [mouseOverImage, setMouseOverImage] = useState(false);
   // State to track image aspect ratio
   const [isWideImage, setIsWideImage] = useState(false);
+  const [isTallImage, setIsTallImage] = useState(false);
+  const [isSquareImage, setIsSquareImage] = useState(false);
   // State to track window width for responsive behavior
   const [isMobile, setIsMobile] = useState(false);
-  // State to control if standard description should be shown during hover
-  const [showStandardOnHover, setShowStandardOnHover] = useState(false);
   // State to track image loading
   const [imageLoaded, setImageLoaded] = useState(false);
   // State to track image error
@@ -39,26 +41,29 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
   
   // Refs for height calculation and timeout management
   const cardRef = useRef(null);
-  const timeoutRef = useRef(null);
+  const hoverTimerRef = useRef(null);
   const imageRef = useRef(null);
   const resizeHandlerRef = useRef(null);
   
   // Store the original height of the card
   const [cardHeight, setCardHeight] = useState(null);
 
-  const [isTallImage, setIsTallImage] = useState(false);
-  const [isSquareImage, setIsSquareImage] = useState(false);
-
+  // Check if product contains design-related or art-related keywords
+  const isArtRelated = useMemo(() => {
+    const keywords = ['design', 'image', 'logo', 'picture', 'stitch', 'photography', 'photo', 'mockup', 'template'];
+    const searchText = `${product.name} ${product.description || ''}`.toLowerCase();
+    return keywords.some(keyword => searchText.includes(keyword));
+  }, [product.name, product.description]);
   
-
+  // Function to safely handle URIs
   const sanitizeForURI = (str) => {
     if (!str) return '';
-    // Remove control characters and other problematic characters
     return str.replace(/[\u0000-\u001F\u007F-\u009F\u2000-\u200F]/g, '')
              .replace(/[^\w\s-.,]/g, ' ')
              .trim();
   };
   
+  // Generate fallback URLs
   const fallbackUrl = useMemo(() => 
     product.fallback_url || createFallbackImageUrl(sanitizeForURI(product.name)),
     [product.fallback_url, product.name]
@@ -71,6 +76,34 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
     [product.seller_name]
   );
 
+  // Function to toggle view mode manually
+  const toggleView = () => {
+    // Only allow toggling if not on mobile and not a wide image
+    if (!isMobile && !(isArtRelated && isWideImage)) {
+      setShowImageView(prev => !prev);
+    }
+  };
+
+  // Initialize card view based on art detection and image type
+  useEffect(() => {
+    // Set initial state based on image dimensions
+    if (!isMobile) {
+      if (isTallImage || isSquareImage) {
+        // For art-related tall or square images, default to details view
+        setShowImageView(true);
+        setInitialViewIsImage(true);
+      } else {
+        setShowImageView(false);
+        setInitialViewIsImage(false);
+      }
+    } else {
+      // For non-art content, always default to details view
+      setShowImageView(false);
+      setInitialViewIsImage(false);
+    }
+  }, [isArtRelated, isMobile, isTallImage, isSquareImage, isWideImage]);
+  
+
   // Check for mobile viewport size on mount and resize
   useEffect(() => {
     const checkMobile = () => {
@@ -80,7 +113,6 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
       }
     };
     
-    // Debounce resize handler to improve performance
     const debouncedResize = () => {
       if (resizeHandlerRef.current) {
         clearTimeout(resizeHandlerRef.current);
@@ -88,13 +120,9 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
       resizeHandlerRef.current = setTimeout(checkMobile, 100);
     };
     
-    // Set initial value
     checkMobile();
-    
-    // Add resize listener
     window.addEventListener('resize', debouncedResize);
     
-    // Clean up
     return () => {
       window.removeEventListener('resize', debouncedResize);
       if (resizeHandlerRef.current) {
@@ -103,9 +131,8 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
     };
   }, [isMobile]);
   
-  // Add this useEffect for robust image loading with fallbacks
+  // Image loading with fallbacks
   useEffect(() => {
-    // Set up image loading with multiple fallbacks
     const tryLoadImage = (url, fallbackIndex = 0) => {
       const img = new Image();
     
@@ -119,15 +146,13 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
         const bgColors = ['212121', '4a4a4a', '6b6b6b', '444', '333', '555', 'abd123', 'fe90ea', '256789', '742d1e'];
         const textColors = ['ffffff', 'f0f0f0', 'eeeeee', 'dddddd', 'cccccc'];
         
-        // Select random colors from our arrays
         const bgColor = bgColors[Math.floor(Math.random() * bgColors.length)];
         const textColor = textColors[Math.floor(Math.random() * textColors.length)];
 
         console.log(`Image failed to load: ${url}`);
-        // Try fallbacks in order
         const fallbacks = [
-          product.thumbnail_url, // Original URL
-          createFallbackImageUrl(product.name), // Placeholder with name
+          product.thumbnail_url,
+          createFallbackImageUrl(product.name),
           `https://placehold.co/600x400/${bgColor}/${textColor}?text=${encodeURIComponent(product.name.substring(0, 20))}`
         ];
         
@@ -135,25 +160,21 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
           console.log(`Trying fallback ${fallbackIndex + 1}: ${fallbacks[fallbackIndex + 1]}`);
           tryLoadImage(fallbacks[fallbackIndex + 1], fallbackIndex + 1);
         } else {
-          // All fallbacks failed
           console.log('All image fallbacks failed');
           setImageError(true);
-          setImageLoaded(true); // Set as loaded so UI isn't stuck
+          setImageLoaded(true);
         }
       };
       
       img.src = url;
     };
     
-    // Reset loading state when we start
     setImageLoaded(false);
     setImageError(false);
-    
-    // Start with our current imageUrl
     tryLoadImage(imageUrl);
   }, [product.thumbnail_url, product.name]);
   
-  // Similar functionality for seller thumbnail
+  // Seller thumbnail loading
   useEffect(() => {
     if (!product.seller_thumbnail) {
       setSellerImageLoaded(false);
@@ -172,60 +193,65 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
     img.onerror = () => {
       console.log(`Seller image failed to load: ${product.seller_thumbnail}`);
       setSellerImageError(true);
-      setSellerImageLoaded(true); // Set as loaded so UI isn't stuck
+      setSellerImageLoaded(true);
     };
     
     img.src = product.seller_thumbnail;
   }, [product.seller_thumbnail]);
   
-  // In your ProductCard component, add this log
+  // Mouse enter handler - with view toggle on hover
   const handleMouseEnter = (e) => {
-    // Don't trigger hover behavior on mobile
     if (isMobile) return;
     
     console.log(`ProductCard mouseEnter: ${product.id || product.name}`);
-    
-    // Call the parent's hover handler
-    if (onHover) onHover(product, e);
-    
-    // Set our local hover state
     setIsHovered(true);
+    
+    // Only toggle view for art-related content that's tall or square
+    if (isTallImage || isSquareImage) {
+      // Clear any existing hover timers
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
+      }
+      
+      // Use a short delay to prevent rapid toggling
+      hoverTimerRef.current = setTimeout(() => {
+        // Toggle to opposite of initial state on hover
+        setShowImageView(!initialViewIsImage);
+      }, 50);
+    }
+    
+    // Don't toggle for wide images (more width than height)
+    // This keeps them in their default state
+    
+    // Call the parent's hover handler if provided
+    if (onHover) onHover(product, e);
   };
     
+  // Mouse leave handler
   const handleMouseLeave = () => {
-    // Don't trigger hover behavior on mobile
     if (isMobile) return;
     
-    // Call the parent's leave handler
-    if (onLeave) onLeave();
-    
-    // Reset our local hover state
     setIsHovered(false);
     setMouseOverImage(false);
-  };
     
-  // Check if product contains design-related keywords
-  const isDesignRelated = useMemo(() => {
-    const keywords = ['design', 'image', 'logo', 'picture', 'stitch'];
-    const searchText = `${product.name} ${product.description || ''}`.toLowerCase();
-    return keywords.some(keyword => searchText.includes(keyword));
-  }, [product.name, product.description]);
+    // Clear any existing hover timers
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+    }
+    
+    // Reset to initial view state on mouse leave, but only for togglable cards
+    if (isTallImage || isSquareImage) {
+      setShowImageView(initialViewIsImage);
+    }
+    
+    // Call the parent's leave handler if provided
+    if (onLeave) onLeave();
+  };
   
-  // Determine if the default display should use hover mode
-  // (only applies for design-related narrow images AND not for mobile)
-  const useDefaultHoverMode = !isMobile && isDesignRelated && !isWideImage && !isTallImage && !isSquareImage;
-
-// Determine if the card should show hover effects right now based on image type
-const shouldShowAsHover = !isMobile && (
-  (isHovered && (isTallImage || isSquareImage)) ||  // Tall/square images show description on hover
-  (isHovered && useDefaultHoverMode) ||             // Wide design images show image on hover
-  (!isHovered && useDefaultHoverMode)               // Wide design images show image when not hovered
-);
-  // Effect to calculate and store card height on mount
+    
+  // Calculate card height
   useEffect(() => {
     if (cardRef.current) {
-      // Use a fixed height for cards that better matches the reference images
-      // Use a slightly smaller height on mobile
       const height = isMobile ? 320 : 300;
       setCardHeight(height);
     }
@@ -233,7 +259,6 @@ const shouldShowAsHover = !isMobile && (
   
   // Handle image loading and errors
   const handleImageLoad = (e) => {
-    // Capture intrinsic dimensions
     const { naturalWidth, naturalHeight } = e.target;
     setImageDimensions({
       width: naturalWidth,
@@ -244,38 +269,40 @@ const shouldShowAsHover = !isMobile && (
     const aspectRatio = naturalWidth / naturalHeight;
     console.log(`Image for ${product.name} has aspect ratio: ${aspectRatio.toFixed(2)}`);
     
-    // Check if image is tall (portrait)
+    // Check image shape
     const isTall = aspectRatio < 0.9;
     setIsTallImage(isTall);
     
-    // Check if image is square-ish
     const isSquare = aspectRatio >= 0.9 && aspectRatio <= 1.1;
     setIsSquareImage(isSquare);
     
-    // Check if aspect ratio is wider than 4/3 (1.33)
     const isWide = aspectRatio > 1.33;
     setIsWideImage(isWide);
     
-    // Set the hover behavior based on image shape:
-    // - For wide images: show the standard description even during hover
-    // - For tall/square images: invert the hover behavior (show description on hover)
-    setShowStandardOnHover(isWide && !isTall && !isSquare);
-    
     // Mark as loaded
     setImageLoaded(true);
+    
+    // Update initial view mode based on image type (if art-related)
+    if (isArtRelated && !isMobile) {
+      // For tall/square images, we prefer details view initially
+      if (isTall || isSquare) {
+        setInitialViewIsImage(false);
+        setShowImageView(false);
+      } else {
+        // For wide images, we prefer image view initially
+        setInitialViewIsImage(true);
+        setShowImageView(true);
+      }
+    }
   };
   
-
   const handleImageError = () => {
     console.log(`Image error for ${product.name} with URL: ${imageUrl}`);
-    // We'll now use the fallbackUrl directly
     setImageError(true);
     
-    // Try to load directly from the original URL as a last resort
     if (product.thumbnail_url && imageUrl !== product.thumbnail_url) {
       const img = new Image();
       img.onload = () => {
-        // If the original URL loads successfully, use it
         setImageUrl(product.thumbnail_url);
         setImageError(false);
       };
@@ -283,30 +310,7 @@ const shouldShowAsHover = !isMobile && (
     }
   };
   
-  // Effect to handle delayed state changes
-  useEffect(() => {
-    // Clear any existing timeouts
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    
-    if (shouldShowAsHover) {
-      // Immediately hide details when hovering starts
-      setShowDetails(false);
-    } else {
-      // When hover ends, wait for transition to complete before showing details
-      timeoutRef.current = setTimeout(() => {
-        setShowDetails(true);
-      }, 50); // Small delay to ensure transitions complete
-    }
-    
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [shouldShowAsHover]);
-  
+  // Image-specific mouse events
   const handleImageMouseEnter = () => {
     if (isMobile) return;
     setMouseOverImage(true);
@@ -317,6 +321,7 @@ const shouldShowAsHover = !isMobile && (
     setMouseOverImage(false);
   };
   
+  // Fullscreen image handling
   const handleImageClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -327,14 +332,21 @@ const shouldShowAsHover = !isMobile && (
     setShowFullImage(false);
   };
   
-  // Seller component to replace score
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
+      }
+    };
+  }, []);
+  
+  // Seller information component
   const SellerInfo = () => {
-    // Only show if we have seller name or id
     if (!product.seller_name && !product.seller_id) return null;
     
     return (
       <div className="flex items-center">
-        {/* Seller Avatar */}
         <div 
           className={`w-5 h-5 rounded-full overflow-hidden flex items-center justify-center mr-1 ${
             darkMode ? 'bg-gray-600' : 'bg-gray-200'
@@ -357,7 +369,6 @@ const shouldShowAsHover = !isMobile && (
           )}
         </div>
         
-        {/* Seller Name */}
         {product.seller_name && (
           <span className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'} truncate max-w-[80px]`}>
             {product.seller_name}
@@ -367,6 +378,22 @@ const shouldShowAsHover = !isMobile && (
     );
   };
   
+  // Helper to display score in a consistent format
+  const getDisplayScore = () => {
+    if (product.displayScore !== undefined) {
+      const label = product.scoreLabel ? `${product.scoreLabel}: ` : '';
+      return `${label}${product.displayScore}`;
+    }
+    
+    if (product.score !== undefined) {
+      const scoreValue = typeof product.score === 'number' ? 
+        product.score.toFixed(4) : product.score;
+      return `Score: ${scoreValue}`;
+    }
+    
+    return "N/A";
+  };
+
   return (
     <>
       <div
@@ -380,233 +407,189 @@ const shouldShowAsHover = !isMobile && (
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={(e) => {
-            if (isMobile && isDesignRelated) {
+            if (isMobile && isArtRelated) {
               handleImageClick(e);
-            } else if (!(mouseOverImage && shouldShowAsHover) && !e.defaultPrevented) {
+            } else if (!(mouseOverImage && showImageView) && !e.defaultPrevented) {
               window.open(product.url || "#", "_blank");
             }
-          }}>
-          <div 
-            style={{ 
-              position: shouldShowAsHover ? 'absolute' : 'relative',
-              top: 0,
-              left: 0,
+          }}
+      >
+        {/* Image section */}
+        <div 
+          style={{ 
+            position: showImageView ? 'absolute' : 'relative',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: showImageView ? '100%' : '160px',
+            padding: showImageView ? '8px' : '0',
+            transition: 'padding 0.3s ease, height 0.3s ease',
+            zIndex: 1,
+            display: 'flex',
+            alignItems: showImageView ? 'flex-start' : 'center',
+            justifyContent: 'center',
+            cursor: showImageView && mouseOverImage ? 'zoom-in' : 'pointer',
+            backgroundColor: darkMode ? '#2D3748' : '#F7FAFC',
+          }}
+          onMouseEnter={handleImageMouseEnter}
+          onMouseLeave={handleImageMouseLeave}
+          onClick={showImageView && mouseOverImage ? handleImageClick : undefined}
+        >
+          {/* Loading indicator */}
+          {!imageLoaded && !imageError && (
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              opacity: 0.7
+            }}>
+              <div className={`${darkMode ? 'text-gray-200' : 'text-gray-600'} text-xs font-medium`}>Loading...</div>
+            </div>
+          )}
+          
+          {/* The image */}
+          <img
+            loading="lazy"
+            fetchPriority="high"
+            ref={imageRef}
+            src={imageError ? fallbackUrl : imageUrl}
+            alt={product.name}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            style={{
               width: '100%',
-              height: shouldShowAsHover ? '100%' : '160px',
-              padding: shouldShowAsHover ? '8px' : '0',
-              transition: 'padding 0.3s ease, height 0.3s ease',
-              zIndex: 1,
-              display: 'flex',
-              alignItems: shouldShowAsHover ? 'flex-start' : 'center',
-              justifyContent: 'center',
-              cursor: shouldShowAsHover && mouseOverImage ? 'zoom-in' : 'pointer',
-              backgroundColor: darkMode ? '#2D3748' : '#F7FAFC',
+              height: '100%',
+              objectFit: showImageView ? 'contain' : 'cover',
+              objectPosition: showImageView ? 'top' : 'center',
+              transition: 'object-fit 0.3s ease, object-position 0.3s ease',
+              opacity: imageLoaded ? 1 : 0,
+              visibility: imageLoaded ? 'visible' : 'hidden',
             }}
-            onMouseEnter={handleImageMouseEnter}
-            onMouseLeave={handleImageMouseLeave}
-            onClick={shouldShowAsHover && mouseOverImage ? handleImageClick : undefined}
-          >
-            {/* Loading indicator */}
-            {!imageLoaded && !imageError && (
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                opacity: 0.7
-              }}>
-                <div className={`${darkMode ? 'text-gray-200' : 'text-gray-600'} text-xs font-medium`}>Loading...</div>
-              </div>
-            )}
-            
-            {/* The actual image */}
-            <img
-              loading="lazy"
-              fetchPriority="high"
-              ref={imageRef}
-              src={imageError ? fallbackUrl : imageUrl}
-              alt={product.name}
-              onLoad={handleImageLoad}
-              onError={handleImageError}
+          />
+          
+          {/* Magnifier icon for image view */}
+          {showImageView && mouseOverImage && (
+            <div 
               style={{
-                width: '100%',
-                height: '100%',
-                objectFit: shouldShowAsHover ? 'contain' : 'cover',
-                objectPosition: shouldShowAsHover ? 'top' : 'center',
-                transition: 'object-fit 0.3s ease, object-position 0.3s ease',
-                opacity: imageLoaded ? 1 : 0,  // Only show when loaded
-                visibility: imageLoaded ? 'visible' : 'hidden',
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)',
+                borderRadius: '50%',
+                width: '32px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backdropFilter: 'blur(2px)',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
               }}
-            />
-            
-            {/* Magnifier icon - only visible when mouse is over the image during hover */}
-            {shouldShowAsHover && mouseOverImage && (
-              <div 
-                style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '16px',
-                  backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)',
-                  borderRadius: '50%',
-                  width: '32px',
-                  height: '32px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backdropFilter: 'blur(2px)',
-                  boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
-                }}
+            >
+              <svg 
+                width="20"
+                height="20"
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke={darkMode ? "white" : "black"} 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
               >
-                <svg 
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke={darkMode ? "white" : "black"} 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  <line x1="11" y1="8" x2="11" y2="14"></line>
-                  <line x1="8" y1="11" x2="14" y2="11"></line>
-                </svg>
-              </div>
-            )}
-          </div>
-          {(isTallImage || isSquareImage) && !isHovered && (
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="11" y1="8" x2="11" y2="14"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+            </div>
+          )}
+          
+          {/* Toggle view button */}
+          {!isMobile && (isArtRelated || isTallImage || isSquareImage) &&  (
+            <div 
+              className={`absolute top-2 left-2 ${darkMode ? 'bg-gray-800/70' : 'bg-white/70'} 
+              p-1 rounded-full cursor-pointer hover:bg-[#FE90EA]/70 transition-colors z-30`}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleView();
+              }}
+              title={showImageView ? "Show details" : "Show image"}
+            >
+              <svg 
+                width="16" 
+                height="16" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                {showImageView ? (
+                  <>
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                  </>
+                ) : (
+                  <>
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </>
+                )}
+              </svg>
+            </div>
+          )}
+        </div>
+        
+        {/* Image type label */}
+        {/* {(isTallImage || isSquareImage) && !showImageView && (
           <div 
-            className={`absolute top-2 ${isDesignRelated ? 'left-14' : 'left-2'} text-xs font-medium px-1.5 py-0.5 rounded-full ${
+            className={`absolute top-2 ${isArtRelated ? 'left-14' : 'left-2'} text-xs font-medium px-1.5 py-0.5 rounded-full ${
               darkMode ? 'bg-purple-600 text-white' : 'bg-purple-100 text-purple-800'
             }`}
             style={{ zIndex: 25 }}
           >
             {isTallImage ? 'Tall' : 'Square'}
           </div>
-          )}
-          {/* Overlay description - only visible when in hover mode AND not showing standard description on hover */}
-          {shouldShowAsHover && !showStandardOnHover && (
-            <div
-              style={{
-                position: 'absolute',
-                bottom: '8px',
-                left: '8px',
-                right: '8px',
-                zIndex: 20,
-                backgroundColor: darkMode ? 'rgba(26, 32, 44, 0.85)' : 'rgba(255, 255, 255, 0.85)',
-                padding: '8px',
-                borderRadius: '6px',
-                backdropFilter: 'blur(2px)',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-              }}
-            >
-              <div className="flex justify-between items-start mb-1">
-                <h3 className={`font-medium text-sm ${darkMode ? 'text-white' : 'text-gray-800'} line-clamp-1 max-w-[70%]`}>
-                  {product.name}
-                </h3>
-                
-                {/* Score tag in hover mode */}
-                {/* {product.score !== undefined && (
-                  <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-red-600 text-white text-xs font-medium">
-                    {typeof product.score === 'number' ? product.score.toFixed(4) : product.score}
-                  </span>
-                )} */}
-              </div>
+        )} */}
+        
+        {/* Overlay description - only in image view mode */}
+        {showImageView && (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '8px',
+              left: '8px',
+              right: '8px',
+              zIndex: 20,
+              backgroundColor: darkMode ? 'rgba(26, 32, 44, 0.85)' : 'rgba(255, 255, 255, 0.85)',
+              padding: '8px',
+              borderRadius: '6px',
+              backdropFilter: 'blur(2px)',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+            }}
+          >
+            <div className="flex justify-between items-start mb-1">
+              <h3 className={`font-medium text-sm ${darkMode ? 'text-white' : 'text-gray-800'} line-clamp-1 max-w-[70%]`}>
+                {product.name}
+              </h3>
               
-              <div className="flex items-center mb-1">
-                {product.ratings_score !== undefined && (
-                  <>
-                    <div className="flex text-yellow-400">
-                      {[...Array(5)].map((_, i) => (
-                        <span key={i} className="text-xs">
-                          {i < Math.floor(product.ratings_score) ? "★" : "☆"}
-                        </span>
-                      ))}
-                    </div>
-                    <span className={`ml-1 text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                      {product.ratings_score} {product.ratings_count > 0 ? `(${product.ratings_count})` : ''}
-                    </span>
-                  </>
-                )}
-              </div>
-              <div className="flex items-center justify-between mt-1">
-                <SellerInfo />
-                
-                {product.price_cents !== undefined && (
-                  <span className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'} mr-2`}>
-                    ${(product.price_cents / 100).toFixed(2)}
-                  </span>
-                )}
-                
-                <a 
-                  href={product.url || "#"} 
-                  target="#"
-                  className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  View details
-                </a>
-              </div>
+              {/* Score tag in hover mode */}
+              {/* {product.score !== undefined && (
+                <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-red-600 text-white text-xs font-medium">
+                  {getDisplayScore()}
+                </span>
+              )} */}
             </div>
-          )}
-          
-          {/* Price tag - always visible when not in hover mode OR when showing standard description on hover */}
-          {product.price_cents !== undefined && (!shouldShowAsHover || showStandardOnHover) && (
-            <div className="absolute rounded-md top-3 right-3 flex items-center" style={{ zIndex: 30 }}>
-              <div className="relative rounded-md bg-[#FE90EA] text-black font-medium py-0 px-1 text-base border border-t-transparent border-l-black border-r-transparent border-b-black">
-                ${(product.price_cents / 100).toFixed(2)}
-                <div className="absolute -right-[4px] -top-[1px] w-0 h-0 border-t-[8px] border-b-[7px] border-l-[5px] border-t-transparent border-b-transparent border-l-black"></div>
-                <div className="absolute -right-[4px] bottom-[1px] w-0 h-0 border-t-[7px] border-b-[7px] border-l-[5px] border-t-transparent border-b-transparent border-l-[#FE90EA]"></div>
-              </div>
-            </div>
-          )}
-          
-          {/* Design related label - only visible for design products when not hovered */}
-          {isDesignRelated && !isHovered && (
-            <div 
-              className={`absolute top-2 left-2 text-xs font-medium px-1.5 py-0.5 rounded-full ${
-                darkMode ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800'
-              }`}
-              style={{ zIndex: 25 }}
-            >
-              Design
-            </div>
-          )}
-          
-          {/* Score tag - always visible when not in hover mode */}
-          {/* {product.score !== undefined && !shouldShowAsHover && (
-            <div 
-              className="absolute top-2 left-2 text-xs font-medium px-1.5 py-0.5 rounded-full bg-red-600 text-white"
-              style={{ 
-                zIndex: 25,
-                left: isDesignRelated ? '60px' : '10px' // Position to the right of Design tag if present
-              }}
-            >
-              Score: {typeof product.score === 'number' ? product.score.toFixed(2) : product.score}
-            </div>
-          )} */}
-          
-          {/* Standard details section - visible when not in hover mode OR when showing standard description on hover */}
-          {(showDetails && !shouldShowAsHover) || (showStandardOnHover && isHovered) ? (
-            <div 
-              style={{ 
-                padding: '0.75rem',
-                opacity: isHovered && showStandardOnHover ? 0.9 : 1,
-                backgroundColor: isHovered && showStandardOnHover ? (darkMode ? 'rgba(26, 32, 44, 0.9)' : 'rgba(255, 255, 255, 0.9)') : 'transparent',
-                position: isHovered && showStandardOnHover ? 'absolute' : 'relative',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                zIndex: isHovered && showStandardOnHover ? 20 : 1,
-                backdropFilter: isHovered && showStandardOnHover ? 'blur(2px)' : 'none',
-              }}
-            >
-              <h3 className={`font-medium text-sm ${darkMode ? 'text-gray-100' : 'text-gray-800'} mb-1 line-clamp-1`}>{product.name}</h3>
-              
-              {/* Rating display with stars */}
-              { product.ratings_count > 0 && product.ratings_score !== undefined && (
-                <div className="flex items-center mb-1">
+            
+            <div className="flex items-center mb-1">
+              {product.ratings_score !== undefined && (
+                <>
                   <div className="flex text-yellow-400">
                     {[...Array(5)].map((_, i) => (
                       <span key={i} className="text-xs">
@@ -617,27 +600,115 @@ const shouldShowAsHover = !isMobile && (
                   <span className={`ml-1 text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                     {product.ratings_score} {product.ratings_count > 0 ? `(${product.ratings_count})` : ''}
                   </span>
-                </div>
+                </>
+              )}
+            </div>
+            <div className="flex items-center justify-between mt-1">
+              <SellerInfo />
+              
+              {product.price_cents !== undefined && (
+                <span className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'} mr-2`}>
+                  ${(product.price_cents / 100).toFixed(2)}
+                </span>
               )}
               
-              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} text-xs mb-2 line-clamp-2`}>
-                {product.description || "No description available."}
-              </p>
-              
-              <div className="flex items-center justify-between mt-auto pt-1 border-t border-gray-100">
-                {/* Replace score with seller info */}
-                <SellerInfo />
-                
-                <a 
-                  href={product.url || "#"} 
-                  target="#"
-                  className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
-                >
-                  View details
-                </a>
-              </div>
+              <a 
+                href={product.url || "#"} 
+                target="#"
+                className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
+                onClick={(e) => e.stopPropagation()}
+              >
+                View details
+              </a>
             </div>
-          ) : null}
+          </div>
+        )}
+        
+        {/* Price tag - visible in standard mode */}
+        {product.price_cents !== undefined && !showImageView && (
+          <div className="absolute rounded-md top-3 right-3 flex items-center" style={{ zIndex: 30 }}>
+            <div className="relative rounded-md bg-[#FE90EA] text-black font-medium py-0 px-1 text-base border border-t-transparent border-l-black border-r-transparent border-b-black">
+              ${(product.price_cents / 100).toFixed(2)}
+              <div className="absolute -right-[4px] -top-[1px] w-0 h-0 border-t-[8px] border-b-[7px] border-l-[5px] border-t-transparent border-b-transparent border-l-black"></div>
+              <div className="absolute -right-[4px] bottom-[1px] w-0 h-0 border-t-[7px] border-b-[7px] border-l-[5px] border-t-transparent border-b-transparent border-l-[#FE90EA]"></div>
+            </div>
+          </div>
+        )}
+        
+        {/* Art/Design related label */}
+        {/* {isArtRelated && !showImageView && (
+          <div 
+            className={`absolute top-2 left-2 text-xs font-medium px-1.5 py-0.5 rounded-full ${
+              darkMode ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800'
+            }`}
+            style={{ zIndex: 25 }}
+          >
+            Art
+          </div>
+        )} */}
+        
+        {/* Score tag */}
+        {/* {product.score !== undefined && !showImageView && (
+          <div 
+            className="absolute top-2 left-2 text-xs font-medium px-1.5 py-0.5 rounded-full bg-red-600 text-white"
+            style={{ 
+              zIndex: 25,
+              left: isArtRelated ? '60px' : '10px'
+            }}
+          >
+            {getDisplayScore()}
+          </div>
+        )} */}
+        
+        {/* Standard details section - visible in standard mode */}
+        {!showImageView && (
+          <div 
+            style={{ 
+              padding: '0.75rem',
+              position: 'relative',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              zIndex: 1,
+            }}
+          >
+            <h3 className={`font-medium text-sm ${darkMode ? 'text-gray-100' : 'text-gray-800'} mb-1 line-clamp-1`}>
+              {product.name}
+            </h3>
+            
+            {/* Rating display with stars */}
+            {product.ratings_count > 0 && product.ratings_score !== undefined && (
+              <div className="flex items-center mb-1">
+                <div className="flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-xs">
+                      {i < Math.floor(product.ratings_score) ? "★" : "☆"}
+                    </span>
+                  ))}
+                </div>
+                <span className={`ml-1 text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  {product.ratings_score} {product.ratings_count > 0 ? `(${product.ratings_count})` : ''}
+                </span>
+              </div>
+            )}
+            
+            <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} text-xs mb-2 line-clamp-2`}>
+              {product.description || "No description available."}
+            </p>
+            
+            <div className="flex items-center justify-between mt-auto pt-1 border-t border-gray-100">
+              <SellerInfo />
+              
+              <a 
+                href={product.url || "#"} 
+                target="#"
+                className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-black bg-[#FE90EA] rounded-md hover:bg-[#ff9eef] focus:outline-none focus:ring-1 focus:ring-[#FE90EA] border border-black"
+              >
+                View details
+              </a>
+            </div>
+          </div>
+        )}
       </div>
       
       {/* Fullscreen image view */}
@@ -668,7 +739,7 @@ const shouldShowAsHover = !isMobile && (
               onError={handleImageError}
             />
                   
-            <div className="absolute bottom-4 left-0 right-0 text-center text-white bg-black bg-opacity-50 py-2 px-4">
+            <div className="absolute bottom-4 left-0 right-0 text-center text-white bg-black bg-opacity-30 py-2 px-4">
               <h3 className="font-bold text-base">{product.name}</h3>
               <div className="flex items-center justify-center mt-1">
                 {product.seller_name && (
@@ -690,7 +761,7 @@ const shouldShowAsHover = !isMobile && (
                   </div>
                 )}
                 <p className="text-sm opacity-90">
-                  {product.price_cents ? `$${(product.price_cents / 100).toFixed(2)}` : 'Free'}
+                  {product.price_cents ? `${(product.price_cents / 100).toFixed(2)}` : 'Free'}
                 </p>
               </div>
             </div>

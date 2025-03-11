@@ -1,36 +1,37 @@
-# Dockerfile.api
+# Use a single-stage build for simplicity
 FROM python:3.9-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy requirements
+# Copy requirements.txt first to leverage Docker cache
 COPY requirements.txt .
 
+# Install dependencies with upgraded packages
+RUN pip install --no-cache-dir --upgrade pip && \
+    # Upgrade NumPy to 2.0 explicitly
+    pip install --no-cache-dir 'numpy>=2.0' && \
+    # Upgrade other key packages to versions compatible with NumPy 2.0
+    pip install --no-cache-dir --upgrade \
+        'transformers>=4.34.0' \
+        'huggingface_hub>=0.18.0' \
+        'torch>=2.1.0' \
+        'numba>=0.58.0' \
+        'scipy>=1.11.0' \
+        'pillow>=10.0.0' && \
+    # Then install the rest of the requirements
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir "elasticsearch[async]"
 
-RUN pip install --upgrade pip
-
-RUN pip install "elasticsearch[async]"
-
-# Install Python dependencies
-RUN pip install -r requirements.txt
-
-# Install additional libraries for model downloading
-RUN pip install \
-    huggingface_hub \
-    transformers \
-    torch \
-    pillow
-
-# Copy application code
+# Copy the rest of the application
 COPY . .
 
-# Set environment variables for model caching
+# Set environment variables
 ENV TRANSFORMERS_CACHE=/app/.cache/huggingface
 ENV HF_HOME=/app/.cache/huggingface
 ENV PYTHONUNBUFFERED=1
 
-# Create necessary directories for model downloads
+# Create necessary directories
 RUN mkdir -p /app/.cache/huggingface \
     && mkdir -p /app/recommendation/models/clip \
     && mkdir -p /app/recommendation/models/colbert \
@@ -40,3 +41,6 @@ RUN mkdir -p /app/.cache/huggingface \
 # Health check
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
+
+# Command to run when container starts
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

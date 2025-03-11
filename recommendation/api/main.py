@@ -16,6 +16,7 @@ import time
 import pathlib
 import sys
 import math
+import requests
 
 import asyncio
 from functools import lru_cache
@@ -34,10 +35,6 @@ from core.colbert_embeddings import ColBERTEmbedding
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-from nltk.corpus import stopwords
-
-stopwords_set = set(stopwords.words('english')) 
-
 '''
     HI! I don't expect this to run in production, the code here meant to be quick and dirty. Hence the words "prototype".
     Given the right amount of time i'll clean up, setup up tests, modularize and compartementalize the hell out it.
@@ -51,6 +48,10 @@ class AppState:
         self.colbert_embed = None
 
 app_state = AppState()
+
+
+stopwords_list = requests.get("https://gist.githubusercontent.com/rg089/35e00abf8941d72d419224cfd5b5925d/raw/12d899b70156fd0041fa9778d657330b024b959c/stopwords.txt").content
+stopwords_set = set(stopwords_list.decode().splitlines()) 
 
 # Lifecycle management
 @asynccontextmanager
@@ -1176,6 +1177,8 @@ async def get_embedding_async(query_text, embedding_service):
         raise
 
 
+
+
 @app.post("/two_phase_unnative_optimized", response_model=SearchResponse)
 async def two_phase_unnative_optimized(
     query: SearchQuery,
@@ -1186,7 +1189,8 @@ async def two_phase_unnative_optimized(
     start_time = time.time()
     
     try:
-        # Reduce _source fields to only what's needed and include embeddings in first query
+        query_split = query.query.split()
+
         bm25_query = {
             "_source": ["name", "description", "thumbnail_url", "id", 
                       "ratings.count", "ratings.average", "price_cents", "url", 
@@ -1194,14 +1198,85 @@ async def two_phase_unnative_optimized(
             "query": {
                 "bool": {
                     "should": [
-                        {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "OR"}},
-                        {"fuzzy": {"name": {"value": query.query, "fuzziness": get_fuzziness(query.query), "boost": 1.0}}}
+                        {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "AND", "boost": 1.5}},
+                        {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "OR", "boost": 1.2}},
+                        {"fuzzy": {"name": {"value": query.query, "fuzziness": get_fuzziness(query.query), "boost": 1}}}
                     ]
                 }
             },
             "size": min(100, query.num_candidates)
         }
-        
+        # bm25_query = {
+        #     "_source": ["name", "description", "thumbnail_url", "id", 
+        #             "ratings.count", "ratings.average", "price_cents", "url", 
+        #             "seller.id", "seller.name", "seller.avatar_url", "description_embedding"],
+        #     "query": {
+        #         "bool": {
+        #             "should": [
+        #                 # Exact phrase matching for best precision
+        #                 {"match_phrase": {
+        #                     "name": {
+        #                         "query": query.query, 
+        #                         "boost": 1
+        #                     }
+        #                 }},
+        #                 {"combined_fields": {
+        #                         "query": query.query, 
+        #                         "fields": ["name^3", "description"], 
+        #                         "operator": "AND",
+        #                         "boost": 0.4
+        #                     }},
+        #                 {"combined_fields": {
+        #                     "query": query.query, 
+        #                     "fields": ["name^5", "description"], 
+        #                     "operator": "OR",
+        #                     "boost": 0.3
+        #                 }},
+        #                 # This ensures all multi-term query results include subset matches
+        #                 # {"dis_max": {
+        #                 #     "queries": [
+        #                 #         # Full query matching
+        #                 #         {"combined_fields": {
+        #                 #             "query": query.query, 
+        #                 #             "fields": ["name^3", "description"], 
+        #                 #             "operator": "OR",
+        #                 #             "boost": 0.3
+        #                 #         }},
+                                
+        #                 #         # Individual term matching to ensure single-term results appear
+        #                 #         {"bool": {
+        #                 #             "should": [
+        #                 #                 {"match": {"name": {"query": term, "boost": (len(query_split) - idx)/len(query_split)}}}
+        #                 #                 for idx, term in enumerate(query_split)
+        #                 #             ],
+        #                 #             "boost": 0.2  # Lower boost for individual terms
+        #                 #         }}
+        #                 #     ],
+        #                 # }},
+                        
+        #                 # # Fuzzy matching for typos
+        #                 # {"fuzzy": {
+        #                 #     "name": {
+        #                 #         "value": query.query if len(query.query) < 20 else query_split[0],
+        #                 #         "fuzziness": get_fuzziness(query.query),
+        #                 #         "prefix_length": 2,
+        #                 #         "boost": 1.0
+        #                 #     }
+        #                 # }},
+                        
+        #                 # Seller matching for brand searches
+        #                 {"match": {
+        #                     "seller.name": {
+        #                         "query": query.query,
+        #                         "boost": 1.0
+        #                     }
+        #                 }}
+        #             ]
+        #         }
+        #     },
+        #     "size": min(100, query.num_candidates)
+        # }
+     
         # Execute BM25 search and embedding computation in parallel with timeout
         query_embedding_task = asyncio.create_task(get_embedding_async(query.query, embedding_service))
         bm25_response_task = asyncio.create_task(es_client.search(index='products', body=bm25_query))
@@ -1262,9 +1337,10 @@ async def two_phase_unnative_optimized(
                     similarity_scores[doc_id] = float(np.dot(doc_vector, query_vector_array))
         
         # Determine if this is a multi-term query
-        is_multi_term = len([t for t in query.query.split() if len(t) > 2 and t not in stopwords]) > 1
-        bm25_weight = 0.30 if is_multi_term else 0.7
-        colbert_weight = 0.70 if is_multi_term else 0.30
+        is_multi_term = len([t for t in query.query.split() if len(t) > 3 and t not in stopwords_set]) > 1
+
+        bm25_weight = 0.35 if is_multi_term else 0.65
+        colbert_weight = 1 - bm25_weight
         
         # Process results using simple, reliable code
         reranked_results = []
