@@ -290,6 +290,9 @@ function App() {
   const [selectedSeller, setSelectedSeller] = useState(null);
   const [sellerGroups, setSellerGroups] = useState({});
 
+
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
   const loadingTimerRef = useRef(null);
   const similarProductsRef = useRef(null);
   const searchInputRef = useRef(null);
@@ -865,6 +868,28 @@ const lastQueryRef = useRef({ text: '', timestamp: 0 });
     }
   }, [darkMode]);
 
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowBackToTop(true);
+      } else {
+        setShowBackToTop(false);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+
   // Group products by seller whenever search results change
   useEffect(() => {
     if (searchResults && searchResults.length > 0) {
@@ -1202,6 +1227,19 @@ const lastQueryRef = useRef({ text: '', timestamp: 0 });
             )}
           </div>
         </div>
+      )}
+      {/* Back to top button */}
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className={`fixed bottom-6 right-6 p-3 rounded-full shadow-lg z-50 text-black bg-[#FE90EA] hover:bg-[#ff9eef] border-2 border-black focus:outline-none`}
+          aria-label="Back to top"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+        </button>
       )}
     </div>
   );

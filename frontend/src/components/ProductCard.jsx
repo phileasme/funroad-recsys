@@ -407,8 +407,12 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={(e) => {
-            if (isMobile && isArtRelated) {
-              handleImageClick(e);
+            if (isMobile) {
+              // For mobile, clicking the card will now just navigate to product URL
+              // The image section handles the magnify click functionality
+              if (!e.defaultPrevented) {
+                window.open(product.url || "#", "_blank");
+              }
             } else if (!(mouseOverImage && showImageView) && !e.defaultPrevented) {
               window.open(product.url || "#", "_blank");
             }
@@ -428,12 +432,12 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
             display: 'flex',
             alignItems: showImageView ? 'flex-start' : 'center',
             justifyContent: 'center',
-            cursor: showImageView && mouseOverImage ? 'zoom-in' : 'pointer',
+            cursor: 'zoom-in', // Changed to always show zoom-in cursor
             backgroundColor: darkMode ? '#2D3748' : '#F7FAFC',
           }}
           onMouseEnter={handleImageMouseEnter}
           onMouseLeave={handleImageMouseLeave}
-          onClick={showImageView && mouseOverImage ? handleImageClick : undefined}
+          onClick={handleImageClick} // Always open full image on click
         >
           {/* Loading indicator */}
           {!imageLoaded && !imageError && (
@@ -468,41 +472,39 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
             }}
           />
           
-          {/* Magnifier icon for image view */}
-          {showImageView && mouseOverImage && (
-            <div 
-              style={{
-                position: 'absolute',
-                top: '16px',
-                right: '16px',
-                backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)',
-                borderRadius: '50%',
-                width: '32px',
-                height: '32px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backdropFilter: 'blur(2px)',
-                boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
-              }}
+          {/* Magnifier icon - ALWAYS visible now */}
+          <div 
+            style={{
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)',
+              borderRadius: '50%',
+              width: '32px',
+              height: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backdropFilter: 'blur(2px)',
+              boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+            }}
+          >
+            <svg 
+              width="20"
+              height="20"
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke={darkMode ? "white" : "black"} 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
             >
-              <svg 
-                width="20"
-                height="20"
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke={darkMode ? "white" : "black"} 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                <line x1="11" y1="8" x2="11" y2="14"></line>
-                <line x1="8" y1="11" x2="14" y2="11"></line>
-              </svg>
-            </div>
-          )}
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </div>
           
           {/* Toggle view button */}
           {!isMobile && (isArtRelated || isTallImage || isSquareImage) &&  (
@@ -546,18 +548,6 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
           )}
         </div>
         
-        {/* Image type label */}
-        {/* {(isTallImage || isSquareImage) && !showImageView && (
-          <div 
-            className={`absolute top-2 ${isArtRelated ? 'left-14' : 'left-2'} text-xs font-medium px-1.5 py-0.5 rounded-full ${
-              darkMode ? 'bg-purple-600 text-white' : 'bg-purple-100 text-purple-800'
-            }`}
-            style={{ zIndex: 25 }}
-          >
-            {isTallImage ? 'Tall' : 'Square'}
-          </div>
-        )} */}
-        
         {/* Overlay description - only in image view mode */}
         {showImageView && (
           <div
@@ -578,13 +568,6 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
               <h3 className={`font-medium text-sm ${darkMode ? 'text-white' : 'text-gray-800'} line-clamp-1 max-w-[70%]`}>
                 {product.name}
               </h3>
-              
-              {/* Score tag in hover mode */}
-              {/* {product.score !== undefined && (
-                <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-red-600 text-white text-xs font-medium">
-                  {getDisplayScore()}
-                </span>
-              )} */}
             </div>
             
             <div className="flex items-center mb-1">
@@ -606,12 +589,6 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
             <div className="flex items-center justify-between mt-1">
               <SellerInfo />
               
-              {product.price_cents !== undefined && (
-                <span className={`text-xs font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'} mr-2`}>
-                  ${(product.price_cents / 100).toFixed(2)}
-                </span>
-              )}
-              
               <a 
                 href={product.url || "#"} 
                 target="#"
@@ -625,7 +602,7 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
         )}
         
         {/* Price tag - visible in standard mode */}
-        {product.price_cents !== undefined && !showImageView && (
+        {product.price_cents !== undefined && (
           <div className="absolute rounded-md top-3 right-3 flex items-center" style={{ zIndex: 30 }}>
             <div className="relative rounded-md bg-[#FE90EA] text-black font-medium py-0 px-1 text-base border border-t-transparent border-l-black border-r-transparent border-b-black">
               ${(product.price_cents / 100).toFixed(2)}
@@ -634,31 +611,6 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
             </div>
           </div>
         )}
-        
-        {/* Art/Design related label */}
-        {/* {isArtRelated && !showImageView && (
-          <div 
-            className={`absolute top-2 left-2 text-xs font-medium px-1.5 py-0.5 rounded-full ${
-              darkMode ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800'
-            }`}
-            style={{ zIndex: 25 }}
-          >
-            Art
-          </div>
-        )} */}
-        
-        {/* Score tag */}
-        {/* {product.score !== undefined && !showImageView && (
-          <div 
-            className="absolute top-2 left-2 text-xs font-medium px-1.5 py-0.5 rounded-full bg-red-600 text-white"
-            style={{ 
-              zIndex: 25,
-              left: isArtRelated ? '60px' : '10px'
-            }}
-          >
-            {getDisplayScore()}
-          </div>
-        )} */}
         
         {/* Standard details section - visible in standard mode */}
         {!showImageView && (
@@ -760,9 +712,6 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
                     <span className="text-sm opacity-90">{product.seller_name}</span>
                   </div>
                 )}
-                <p className="text-sm opacity-90">
-                  {product.price_cents ? `${(product.price_cents / 100).toFixed(2)}` : 'Free'}
-                </p>
               </div>
             </div>
           </div>
@@ -770,6 +719,6 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
       )}
     </>
   );
-})
+});
 
 export default ProductCard;
