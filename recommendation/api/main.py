@@ -538,6 +538,7 @@ async def exact_match(
                     "thumbnail_url",
                     "id",
                     "ratings",
+                    "seller.name",
                     "price_cents",
                     "url",
                 ],
@@ -547,6 +548,7 @@ async def exact_match(
                     "bool": {
                         "should": [
                             {"match": {"name": {"query": query.query, "boost": 2.0}}},
+                            {"match": {"seller.name": {"query": query.query, "boost": 2.0}}},
                             {"match": {"description": query.query}},
                         ],
                         "minimum_should_match": 1,
@@ -1730,13 +1732,14 @@ async def two_phase_optimized(
         # PHASE 1: BM25 Search - Do this first before any embedding calculations
         bm25_query = {
             "_source": ["name", "description", "thumbnail_url", "id", 
-                      "ratings", "price_cents", "url", "seller", "description_embedding"],
+                      "ratings", "price_cents", "url", "seller", "seller.name", "description_embedding"],
             "query": {
                 "bool": {
                     "should": [
                         {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "AND", "boost": 1.5}},
                         {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "OR", "boost": 1.2}},
-                        {"fuzzy": {"name": {"value": query.query, "fuzziness": get_fuzziness(query.query), "boost": 1}}}
+                        {"fuzzy": {"name": {"value": query.query, "fuzziness": get_fuzziness(query.query), "boost": 1}}},
+                        {"match": {"seller.name": {"query": query.query, "boost": 1.0}}}
                     ]
                 }
             },

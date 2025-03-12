@@ -501,10 +501,16 @@ const lastQueryRef = useRef({ text: '', timestamp: 0 });
 
 
 
-  const handleSearch = async (e) => {
-    if (e) e.preventDefault();
-    performSearch(query);
-  };
+const handleSearch = async (e) => {
+  if (e) e.preventDefault();
+  
+  // Close the keyboard by blurring the input field
+  if (searchInputRef.current) {
+    searchInputRef.current.blur();
+  }
+  
+  performSearch(query);
+};
   
   const performSearch = async (searchQuery) => {
     if (!searchQuery.trim()) return;
