@@ -255,6 +255,7 @@ const searchProfiles = [
   {id: 'search_combined_v0_8', name: 'Combine with ratings', version: "(v0.8)" },
   {id: 'two_phase_unnative_optimized', name: "2phase jit", version: "(v0.10)"},
   {id: 'elasticsearch_vector_optimized', name: "2phase es", version: "(v0.11)"},
+  {id: 'two_phase_optimized', name: "2phase fallback", version: "(v0.12)"}
 
 ];
 
@@ -271,7 +272,7 @@ searchProfiles.reverse().forEach(profile => {
 function App() {
   const [previewProduct, setPreviewProduct] = useState(null);
   const [query, setQuery] = useState('');
-  const [searchProfile, setSearchProfile] = useState('two_phase_unnative_optimized');
+  const [searchProfile, setSearchProfile] = useState('two_phase_optimized');
   const [searchResults, setSearchResults] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [hoveredProduct, setHoveredProduct] = useState(null);

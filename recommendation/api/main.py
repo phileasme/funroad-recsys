@@ -1206,77 +1206,7 @@ async def two_phase_unnative_optimized(
             },
             "size": min(100, query.num_candidates)
         }
-        # bm25_query = {
-        #     "_source": ["name", "description", "thumbnail_url", "id", 
-        #             "ratings.count", "ratings.average", "price_cents", "url", 
-        #             "seller.id", "seller.name", "seller.avatar_url", "description_embedding"],
-        #     "query": {
-        #         "bool": {
-        #             "should": [
-        #                 # Exact phrase matching for best precision
-        #                 {"match_phrase": {
-        #                     "name": {
-        #                         "query": query.query, 
-        #                         "boost": 1
-        #                     }
-        #                 }},
-        #                 {"combined_fields": {
-        #                         "query": query.query, 
-        #                         "fields": ["name^3", "description"], 
-        #                         "operator": "AND",
-        #                         "boost": 0.4
-        #                     }},
-        #                 {"combined_fields": {
-        #                     "query": query.query, 
-        #                     "fields": ["name^5", "description"], 
-        #                     "operator": "OR",
-        #                     "boost": 0.3
-        #                 }},
-        #                 # This ensures all multi-term query results include subset matches
-        #                 # {"dis_max": {
-        #                 #     "queries": [
-        #                 #         # Full query matching
-        #                 #         {"combined_fields": {
-        #                 #             "query": query.query, 
-        #                 #             "fields": ["name^3", "description"], 
-        #                 #             "operator": "OR",
-        #                 #             "boost": 0.3
-        #                 #         }},
-                                
-        #                 #         # Individual term matching to ensure single-term results appear
-        #                 #         {"bool": {
-        #                 #             "should": [
-        #                 #                 {"match": {"name": {"query": term, "boost": (len(query_split) - idx)/len(query_split)}}}
-        #                 #                 for idx, term in enumerate(query_split)
-        #                 #             ],
-        #                 #             "boost": 0.2  # Lower boost for individual terms
-        #                 #         }}
-        #                 #     ],
-        #                 # }},
-                        
-        #                 # # Fuzzy matching for typos
-        #                 # {"fuzzy": {
-        #                 #     "name": {
-        #                 #         "value": query.query if len(query.query) < 20 else query_split[0],
-        #                 #         "fuzziness": get_fuzziness(query.query),
-        #                 #         "prefix_length": 2,
-        #                 #         "boost": 1.0
-        #                 #     }
-        #                 # }},
-                        
-        #                 # Seller matching for brand searches
-        #                 {"match": {
-        #                     "seller.name": {
-        #                         "query": query.query,
-        #                         "boost": 1.0
-        #                     }
-        #                 }}
-        #             ]
-        #         }
-        #     },
-        #     "size": min(100, query.num_candidates)
-        # }
-     
+
         # Execute BM25 search and embedding computation in parallel with timeout
         query_embedding_task = asyncio.create_task(get_embedding_async(query.query, embedding_service))
         bm25_response_task = asyncio.create_task(es_client.search(index='products', body=bm25_query))
@@ -1622,75 +1552,472 @@ async def elasticsearch_vector_optimized(
         logger.error(f"Error in search: {str(e)}", exc_info=True)
         return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
     
-@app.post("/search_fallback", response_model=SearchResponse)
-async def search_fallback(
+
+@app.post("/two_phase_unnative_optimized", response_model=SearchResponse)
+async def two_phase_unnative_optimized(
     query: SearchQuery,
-    es_client: Elasticsearch = Depends(get_es_client)
+    es_client: Elasticsearch = Depends(get_es_client),
+    colbert = Depends(get_colbert),
+    embedding_service = Depends(get_async_cached_embedding_service)
 ):
-    """
-    Fallback search that doesn't rely on vector embeddings at all - 
-    pure text search with BM25 and fuzzy matching
-    """
     start_time = time.time()
     
     try:
-        # Perform text-only search
+        query_split = query.query.split()
+
+        bm25_query = {
+            "_source": ["name", "description", "thumbnail_url", "id", 
+                      "ratings.count", "ratings.average", "price_cents", "url", 
+                      "seller.id", "seller.name", "seller.avatar_url", "description_embedding"],
+            "query": {
+                "bool": {
+                    "should": [
+                        {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "AND", "boost": 1.5}},
+                        {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "OR", "boost": 1.2}},
+                        {"fuzzy": {"name": {"value": query.query, "fuzziness": get_fuzziness(query.query), "boost": 1}}}
+                    ]
+                }
+            },
+            "size": min(100, query.num_candidates)
+        }
+
+        # Execute BM25 search and embedding computation in parallel with timeout
+        query_embedding_task = asyncio.create_task(get_embedding_async(query.query, embedding_service))
+        bm25_response_task = asyncio.create_task(es_client.search(index='products', body=bm25_query))
+        
+        # Add a timeout to avoid hanging forever
+        try:
+            done, pending = await asyncio.wait(
+                [query_embedding_task, bm25_response_task], 
+                timeout=10.0,
+                return_when=asyncio.ALL_COMPLETED
+            )
+            
+            # Cancel any pending tasks
+            for task in pending:
+                task.cancel()
+            
+            # Check if all tasks completed
+            if len(done) < 2:
+                raise TimeoutError("Some tasks did not complete in time")
+            
+            # Get results
+            query_vector = await query_embedding_task
+            bm25_response = await bm25_response_task
+            
+        except TimeoutError:
+            logger.warning("Timeout occurred while waiting for tasks")
+            # If BM25 completed but not embeddings, we can still return results
+            if bm25_response_task.done() and not query_embedding_task.done():
+                bm25_response = await bm25_response_task
+                query_vector = None
+            else:
+                # If BM25 didn't complete, we can't proceed
+                return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
+        
+        candidates = bm25_response['hits']['hits']
+        
+        if not candidates:
+            return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
+        
+        # Get candidate IDs for processing
+        candidate_ids = [hit['_id'] for hit in candidates]
+        
+        # Create mapping for document data
+        doc_data = {hit['_id']: hit for hit in candidates}
+        
+        # Process document embeddings and calculate similarities directly
+        similarity_scores = {}
+        if query_vector is not None:
+            query_vector_array = np.array(query_vector, dtype=np.float32)
+            
+            # Extract embeddings and calculate similarities in one pass
+            for hit in candidates:
+                doc_id = hit['_id']
+                embedding = hit['_source'].get('description_embedding')
+                if embedding:
+                    # Calculate similarity directly
+                    doc_vector = np.array(embedding, dtype=np.float32)
+                    similarity_scores[doc_id] = float(np.dot(doc_vector, query_vector_array))
+        
+        # Determine if this is a multi-term query
+        is_multi_term = len([t for t in query.query.split() if len(t) > 3 and t not in stopwords_set]) > 1
+
+        bm25_weight = 0.35 if is_multi_term else 0.65
+        colbert_weight = 1 - bm25_weight
+        
+        # Process results using simple, reliable code
+        reranked_results = []
+        for doc_id in candidate_ids:
+            hit = doc_data[doc_id]
+            
+            # # Get ratings data
+            ratings = hit['_source'].get('ratings', {})
+            ratings_count = ratings.get('count', 0) if isinstance(ratings, dict) else 0
+            ratings_score = ratings.get('average', -1.0) if isinstance(ratings, dict) else -1.0
+            
+            # Normalize BM25 score
+            bm25_score = hit.get('_score', 0)
+            normalized_bm25 = 1 - 2 / (1 + bm25_score)
+            
+            # Get colbert similarity score
+            colbert_score = similarity_scores.get(doc_id, 0)
+
+            combined_score = (normalized_bm25 * bm25_weight) + (colbert_score * colbert_weight)
+            
+            
+            # Get seller data
+            seller = hit['_source'].get('seller', {})
+            seller_id = seller.get('id', '') if isinstance(seller, dict) else ''
+            seller_name = seller.get('name', '') if isinstance(seller, dict) else ''
+            seller_avatar = seller.get('avatar_url', '') if isinstance(seller, dict) else ''
+            
+            # Create result
+            reranked_results.append(SearchResult(
+                score=float(combined_score),
+                base_score=float(normalized_bm25),
+                other_score=float(colbert_score),
+                score_origin="hybrid",
+                name=hit['_source'].get('name', ''),
+                description=hit['_source'].get('description', ''),
+                thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                ratings_count=int(ratings_count),
+                ratings_score=float(ratings_score),
+                price_cents=hit['_source'].get('price_cents', 0),
+                url=hit['_source'].get('url', ''),
+                id=doc_id,
+                seller_id=seller_id,
+                seller_name=seller_name,
+                seller_thumbnail=seller_avatar
+            ))
+        
+        # Sort by score
+        reranked_results.sort(key=lambda x: x.score, reverse=True)
+
+        counter = 0
+        for x in reranked_results[::-1]:
+            print(x.ratings_count, x.ratings_score, x.base_score, x.other_score, x.score, counter, x.name)
+            counter += 1
+        
+        # Calculate query time
+        query_time = (time.time() - start_time) * 1000
+        
+        return SearchResponse(results=reranked_results[:query.k], query_time_ms=query_time)
+        
+    except Exception as e:
+        # Log the error and return an empty response
+        logger.error(f"Error in search: {str(e)}", exc_info=True)
+        return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
+            
+@app.post("/two_phase_optimized", response_model=SearchResponse)
+async def two_phase_optimized(
+    query: SearchQuery,
+    es_client: Elasticsearch = Depends(get_es_client),
+    clip: CLIPEmbedding = Depends(get_clip),
+    colbert: ColBERTEmbedding = Depends(get_colbert)
+):
+    """
+    Two-phase optimized search with vision fallback.
+    - Uses BM25 for initial retrieval
+    - Attempts to rerank BM25 results using ColBERT embeddings 
+    - Falls back to CLIP vision search if needed
+    """
+    start_time = time.time()
+    min_results = query.k  # Minimum number of results we want
+    colbert_vector = None
+    
+    try:
+        # PHASE 1: BM25 Search - Do this first before any embedding calculations
+        bm25_query = {
+            "_source": ["name", "description", "thumbnail_url", "id", 
+                      "ratings", "price_cents", "url", "seller", "description_embedding"],
+            "query": {
+                "bool": {
+                    "should": [
+                        {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "AND", "boost": 1.5}},
+                        {"combined_fields": {"query": query.query, "fields": ["name^3", "description"], "operator": "OR", "boost": 1.2}},
+                        {"fuzzy": {"name": {"value": query.query, "fuzziness": get_fuzziness(query.query), "boost": 1}}}
+                    ]
+                }
+            },
+            "size": min(100, query.num_candidates)
+        }
+        
+        # Execute BM25 search first - this is fast
+        bm25_response = await es_client.search(index='products', body=bm25_query)
+        candidates = bm25_response['hits']['hits']
+        
+        # If no BM25 results, use vision search directly
+        if not candidates:
+            return await vision_search_fallback(query, es_client, clip, start_time)
+        
+        # Try to get ColBERT embedding for reranking
+        try:
+            # Since we're in an async function, use a thread to avoid blocking
+            loop = asyncio.get_running_loop()
+            with ThreadPoolExecutor(max_workers=1) as executor:
+                colbert_vector = await loop.run_in_executor(
+                    executor, 
+                    lambda: colbert.get_colbert_sentence_embedding(query.query).embedding.tolist()[0]
+                )
+        except Exception as e:
+            logger.warning(f"Error getting ColBERT embedding: {str(e)}", exc_info=True)
+            colbert_vector = None
+        
+        # Use the colbert vector we may have calculated
+        query_vector = colbert_vector
+        
+        # Rerank BM25 results with hybrid scoring
+        seen_ids = set()
+        
+        # Get candidate IDs for processing
+        candidate_ids = [hit['_id'] for hit in candidates]
+        
+        # Create mapping for document data
+        doc_data = {hit['_id']: hit for hit in candidates}
+        
+        # Process document embeddings and calculate similarities directly
+        similarity_scores = {}
+        if query_vector is not None:
+            query_vector_array = np.array(query_vector, dtype=np.float32)
+            
+            # Extract embeddings and calculate similarities in one pass
+            for hit in candidates:
+                doc_id = hit['_id']
+                embedding = hit['_source'].get('description_embedding')
+                if embedding:
+                    try:
+                        # Calculate similarity directly
+                        doc_vector = np.array(embedding, dtype=np.float32)
+                        similarity_scores[doc_id] = float(np.dot(doc_vector, query_vector_array))
+                    except Exception as e:
+                        logger.warning(f"Error calculating similarity for doc {doc_id}: {str(e)}")
+                        similarity_scores[doc_id] = 0.0
+        
+        # Determine if this is a multi-term query
+        is_multi_term = len([t for t in query.query.split() if len(t) > 3 and t not in stopwords_set]) > 1
+
+        bm25_weight = 0.35 if is_multi_term else 0.65
+        colbert_weight = 1 - bm25_weight
+        
+        # Process results using simple, reliable code
+        reranked_results = []
+        for doc_id in candidate_ids:
+            hit = doc_data[doc_id]
+            seen_ids.add(doc_id)
+            
+            # Get ratings data
+            ratings = hit['_source'].get('ratings', {})
+            ratings_count = ratings.get('count', 0) if isinstance(ratings, dict) else 0
+            ratings_score = ratings.get('average', -1.0) if isinstance(ratings, dict) else -1.0
+            
+            # Normalize BM25 score
+            bm25_score = hit.get('_score', 0)
+            normalized_bm25 = 1 - 2 / (1 + bm25_score)
+            
+            # Get colbert similarity score
+            colbert_score = similarity_scores.get(doc_id, 0)
+
+            # If no colbert vector was calculated, only use BM25 score
+            if query_vector is None:
+                combined_score = normalized_bm25
+            else:
+                combined_score = (normalized_bm25 * bm25_weight) + (colbert_score * colbert_weight)
+            
+            # Get seller data
+            seller = hit['_source'].get('seller', {})
+            seller_id = seller.get('id', '') if isinstance(seller, dict) else ''
+            seller_name = seller.get('name', '') if isinstance(seller, dict) else ''
+            seller_avatar = seller.get('avatar_url', '') if isinstance(seller, dict) else ''
+            
+            # Create result
+            reranked_results.append(SearchResult(
+                score=float(combined_score),
+                base_score=float(normalized_bm25),
+                other_score=float(colbert_score) if query_vector is not None else 0.0,
+                score_origin="hybrid" if query_vector is not None else "bm25",
+                name=hit['_source'].get('name', ''),
+                description=hit['_source'].get('description', ''),
+                thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                ratings_count=int(ratings_count),
+                ratings_score=float(ratings_score),
+                price_cents=hit['_source'].get('price_cents', 0),
+                url=hit['_source'].get('url', ''),
+                id=doc_id,
+                seller_id=seller_id,
+                seller_name=seller_name,
+                seller_thumbnail=seller_avatar
+            ))
+        
+        # Sort by score
+        reranked_results.sort(key=lambda x: x.score, reverse=True)
+        
+        # Check if we have enough results or need fallbacks
+        if len(reranked_results) < min_results:
+            # Not enough results, try vision search as fallback
+            vision_results = await vision_search_fallback_with_exclusions(query, es_client, clip, seen_ids, start_time)
+            
+            # Combine results
+            all_results = reranked_results + vision_results
+            all_results.sort(key=lambda x: x.score, reverse=True)
+            
+            query_time = (time.time() - start_time) * 1000
+            return SearchResponse(results=all_results[:query.k], query_time_ms=query_time)
+            
+        # We have enough results, return them
+        query_time = (time.time() - start_time) * 1000
+        return SearchResponse(results=reranked_results[:query.k], query_time_ms=query_time)
+        
+    except Exception as e:
+        # Log the error and return an empty response
+        logger.error(f"Error in two_phase_optimized: {str(e)}", exc_info=True)
+        return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
+
+async def vision_search_fallback(query, es_client, clip, start_time):
+    """
+    Perform vision search fallback - this is a simpler version that uses
+    the proven search_vision functionality
+    """
+    try:
+        # Calculate CLIP embedding
+        embedding_result = clip.get_text_embedding(query.query)
+        query_embedding = embedding_result.embedding
+        
+        # Perform search
         response = await es_client.search(
             index='products',
             body={
                 "_source": [
-                    "seller","description", "name", "thumbnail_url", "id","ratings", "price_cents", "url"],
-                "query": {
-                    "bool": {
-                        "should": [
-                            {
-                                "multi_match": {
-                                    "query": query.query,
-                                    "fields": ["name^3", "description"],
-                                    "type": "best_fields",
-                                    "fuzziness": "AUTO",
-                                    "prefix_length": 2,
-                                    "max_expansions": 50,
-                                    "fuzzy_transpositions": True,
-                                    "tie_breaker": 0.3
-                                }
-                            },
-                            {
-                                "match_phrase": {
-                                    "name": {
-                                        "query": query.query,
-                                        "boost": 2.0
-                                    }
-                                }
-                            }
-                        ],
-                        "minimum_should_match": 1
-                    }
-                },
-                "size": query.k
+                    "seller",
+                    "description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"],
+                "knn": {
+                    "field": "image_embedding",
+                    "query_vector": query_embedding.tolist()[0],
+                    "k": query.k,
+                    "num_candidates": query.num_candidates
+                }
             }
         )
         
         # Process results
         results = []
-        for hit in response['hits']['hits']:
-            results.append(SearchResult(
-                score=hit['_score'],
-                name=hit['_source'].get('name', ''),
-                description=hit['_source'].get('description', ''),
-                thumbnail_url=hit['_source'].get('thumbnail_url', ''),
-                seller_id=hit['_source'].get("seller", {}).get("id", ""),
-                seller_name=hit['_source'].get("seller", {}).get("name", ""),
-                seller_thumbnail=hit['_source'].get("seller", {}).get("avatar_url", "")
-            ))
+        if response and 'hits' in response and 'hits' in response['hits']:
+            for hit in response['hits']['hits']:
+                # Get ratings data
+                ratings_count = hit['_source'].get("ratings", {}).get("count", 0)
+                ratings_score = hit['_source'].get("ratings", {}).get("average", -1.0)
+                
+                # Get seller data
+                seller = hit['_source'].get('seller', {})
+                seller_id = seller.get('id', '') if isinstance(seller, dict) else ''
+                seller_name = seller.get('name', '') if isinstance(seller, dict) else ''
+                seller_avatar = seller.get('avatar_url', '') if isinstance(seller, dict) else ''
+                
+                results.append(SearchResult(
+                    score=hit['_score'],
+                    base_score=hit['_score'],
+                    other_score=0.0,
+                    score_origin="clip",
+                    name=hit['_source'].get('name', ''),
+                    description=hit['_source'].get('description', ''),
+                    thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                    ratings_count=ratings_count,
+                    ratings_score=ratings_score,
+                    price_cents=hit['_source'].get("price_cents", 0),
+                    url=hit['_source'].get("url", ""),
+                    id=hit.get('_id', ''),
+                    seller_id=seller_id,
+                    seller_name=seller_name,
+                    seller_thumbnail=seller_avatar
+                ))
         
         query_time = (time.time() - start_time) * 1000
         return SearchResponse(results=results, query_time_ms=query_time)
         
     except Exception as e:
-        logger.error(f"Fallback search error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-    
+        logger.error(f"Vision search fallback error: {str(e)}", exc_info=True)
+        return SearchResponse(results=[], query_time_ms=(time.time() - start_time) * 1000)
+
+async def vision_search_fallback_with_exclusions(query, es_client, clip, exclusion_ids, start_time):
+    """
+    Perform vision search fallback but exclude IDs we've already seen
+    """
+    try:
+        # Calculate CLIP embedding
+        embedding_result = clip.get_text_embedding(query.query)
+        query_embedding = embedding_result.embedding
+        
+        # Build search query with exclusions
+        search_body = {
+            "_source": [
+                "seller", "description", "name", "thumbnail_url", "id", "ratings", "price_cents", "url"],
+            "knn": {
+                "field": "image_embedding",
+                "query_vector": query_embedding.tolist()[0],
+                "k": query.k * 2,  # Get more candidates since we'll be filtering
+                "num_candidates": query.num_candidates * 2
+            }
+        }
+        
+        # Add exclusion filter if needed
+        if exclusion_ids:
+            search_body["query"] = {
+                "bool": {
+                    "must_not": [
+                        {"ids": {"values": list(exclusion_ids)}}
+                    ]
+                }
+            }
+        
+        # Perform search
+        response = await es_client.search(
+            index='products',
+            body=search_body
+        )
+        
+        # Process results
+        results = []
+        if response and 'hits' in response and 'hits' in response['hits']:
+            for hit in response['hits']['hits']:
+                doc_id = hit.get('_id', '')
+                if doc_id not in exclusion_ids:
+                    # Get ratings data
+                    ratings_count = hit['_source'].get("ratings", {}).get("count", 0)
+                    ratings_score = hit['_source'].get("ratings", {}).get("average", -1.0)
+                    
+                    # Normalize score to be in the same range as BM25
+                    clip_score = hit.get('_score', 0)
+                    normalized_score = 0.8 * (1 - 2 / (1 + clip_score)) if clip_score > 0 else 0
+                    
+                    # Get seller data
+                    seller = hit['_source'].get('seller', {})
+                    seller_id = seller.get('id', '') if isinstance(seller, dict) else ''
+                    seller_name = seller.get('name', '') if isinstance(seller, dict) else ''
+                    seller_avatar = seller.get('avatar_url', '') if isinstance(seller, dict) else ''
+                    
+                    results.append(SearchResult(
+                        score=normalized_score,
+                        base_score=clip_score,
+                        other_score=0.0,
+                        score_origin="clip",
+                        name=hit['_source'].get('name', ''),
+                        description=hit['_source'].get('description', ''),
+                        thumbnail_url=hit['_source'].get('thumbnail_url', ''),
+                        ratings_count=ratings_count,
+                        ratings_score=ratings_score,
+                        price_cents=hit['_source'].get("price_cents", 0),
+                        url=hit['_source'].get("url", ""),
+                        id=doc_id,
+                        seller_id=seller_id,
+                        seller_name=seller_name,
+                        seller_thumbnail=seller_avatar
+                    ))
+        
+        return results
+        
+    except Exception as e:
+        logger.error(f"Vision search fallback error: {str(e)}", exc_info=True)
+        return []
 # Health check endpoint
 @app.get("/health", response_model=HealthStatus)
 async def health_check(

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef, Suspense } from 'react';
 import { ChevronDown, ChevronUp, Filter, Users, Grid, List, Search } from 'lucide-react';
+import { useInView } from 'react-intersection-observer';
 import { FixedSizeGrid as FGrid } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import memoize from 'memoize-one';
-import { useInView } from 'react-intersection-observer';
 
 
 // Utility functions for reuse
@@ -37,6 +37,62 @@ const prioritizeValidImages = (products) => {
   });
   return sortedProducts;
 };
+
+const OptimizedLoadMore = React.memo(({ onLoadMore, hasMore, isLoading, darkMode }) => {
+  // Use intersection observer with specific thresholds
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    rootMargin: '200px 0px',
+    triggerOnce: false
+  });
+
+  // Track the last time we loaded more to prevent rapid firing
+  const lastLoadRef = useRef(Date.now());
+  
+  // Effect to trigger load more when element comes into view
+  useEffect(() => {
+    if (inView && hasMore && !isLoading) {
+      const now = Date.now();
+      // Prevent loading more than once every 500ms
+      if (now - lastLoadRef.current > 500) {
+        lastLoadRef.current = now;
+        onLoadMore();
+      }
+    }
+  }, [inView, hasMore, isLoading, onLoadMore]);
+
+  // Only render the loader when we have more items to load
+  if (!hasMore && !isLoading) return null;
+
+  return (
+    <div 
+      ref={ref} 
+      className="w-full py-4 flex justify-center items-center"
+      aria-live="polite"
+      aria-busy={isLoading}
+    >
+      {isLoading ? (
+        <div className="flex flex-col items-center">
+          <div aria-hidden="true" className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#FE90EA]" />
+          <p className={`mt-2 text-sm ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
+            Loading more...
+          </p>
+        </div>
+      ) : (
+        <button
+          onClick={onLoadMore}
+          className={`px-4 py-2 rounded-md ${
+            darkMode 
+              ? "bg-gray-700 hover:bg-gray-600 text-gray-200" 
+              : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+          } transition-colors focus:outline-none focus:ring-2 focus:ring-[#FE90EA]`}
+        >
+          Load more
+        </button>
+      )}
+    </div>
+  );
+});
 
 // EmptySearchResults component
 const EmptySearchResults = React.memo(({ query, darkMode }) => {
@@ -1070,212 +1126,194 @@ const calculateNDCG = (products) => {
 };
 
 /**
- * This is a modified version of the unifiedResultsWithNDCG function with improved
- * scoring that better balances relevance vs ratings and adjusts for query relevance.
+ *Balancing relevance vs ratings and adjusts for query relevance like an animal.
  */
 const unifiedResultsWithNDCG = useMemo(() => {
   if (!searchResults || searchResults.length === 0) {
     return [];
   }
 
-
+  // Start execution timer
+  const startTime = performance.now();
+  
   // Extract the first word of the query for special title matching
-const firstQueryWord = query.toLowerCase().split(/\s+/)[0];
-const firstQueryWordImportant = firstQueryWord && firstQueryWord.length > 2;
+  const firstQueryWord = query.toLowerCase().split(/\s+/)[0];
+  const firstQueryWordImportant = firstQueryWord && firstQueryWord.length > 2;
   
-  console.log(`%c Creating unified results with NDCG for sorting`, 'background: #333; color: #FE90EA; padding: 2px 5px; border-radius: 3px;');
+  console.log(`Creating unified results with NDCG for sorting`);
   
-  // When groupBySeller is false OR a seller is selected - we use individual products
-  if (!groupBySeller || selectedSeller) {
-    return filteredResults.map(product => {
-
-      console.log(`Product ${product.id} price: ${product.price_cents}`);
-      // Ensure score is numeric
-      const numericScore = parseFloat(product.score || 0);
-      
-      // Calculate rating boost as before
-      const ratingBoost = product.ratings_score 
-        ? (product.ratings_score / 5) * Math.min(0.1, (product.ratings_count || 0) / 50)
-        : 0;
-      
-      // Add title match boost when there are no ratings
-      let titleMatchBoost = 0;
-      if (!product.ratings_score && firstQueryWordImportant) {
-        // Check if product title contains the first word of query
-        const productTitle = (product.name || '').toLowerCase();
-        if (productTitle.includes(firstQueryWord)) {
-          // Apply a significant boost when first word matches and no ratings
-          titleMatchBoost = 0.10; // Adjust this value to control the boost amount
+  try {
+    let results;
+    
+    // Group by seller logic
+    if (!groupBySeller || selectedSeller) {
+      // Process individual products
+      results = filteredResults.map(product => {
+        // Ensure score is numeric
+        const numericScore = parseFloat(product.score || 0);
+        
+        // Calculate rating boost - use a more efficient calculation
+        const ratingBoost = (product.ratings_score && product.ratings_count) 
+          ? (product.ratings_score / 5) * Math.min(0.1, product.ratings_count / 50)
+          : 0;
+        
+        // Title match boost - only calculate when needed
+        let titleMatchBoost = 0;
+        if (!product.ratings_score && firstQueryWordImportant && 
+            (product.name || '').toLowerCase().includes(firstQueryWord)) {
+          titleMatchBoost = 0.10;
         }
-      }
-      
-      // Calculate the final balanced score with all boosts
-      const balancedScore = Math.min(numericScore + ratingBoost + titleMatchBoost, 1.0);
-      
-      return {
-        type: 'product',
-        product: {
-          ...product,
-          numericScore,
-          originalScore: numericScore,
-          ratingBoost,
-          titleMatchBoost, // Store for debugging
-          // Add a label to indicate this is a product score
-          scoreLabel: 'Product'
-        },
-        score: balancedScore,
-        rating: product.ratings_score || 0,
-        ratingCount: product.ratings_count || 0,
-        price: product.price_cents || 0,
-        originalIndex: searchResults.indexOf(product)
-      };
-    });
-  }
-  
-  // When groupBySeller is true - calculate enhanced scores with NDCG
-  const combinedResults = [];
-  
-  // Extract query terms for relevance evaluation
-  const queryTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 2);
-  
-  // First, enhance seller groups with NDCG scores
-  const enhancedSellerGroups = sellerGroups.map(seller => {
-    if (!seller.products || seller.products.length === 0) {
-      return seller;
-    }
-    
-    // Calculate query relevance for seller's products
-    // This helps prioritize sellers whose products are more relevant to the search query
-    let queryRelevanceScore = 0;
-    if (queryTerms.length > 0) {
-      // Calculate how many products from this seller match the query terms in name/description
-      const productsWithQueryTerms = seller.products.filter(product => {
-        const productText = `${product.name || ''} ${product.description || ''}`.toLowerCase();
-        return queryTerms.some(term => productText.includes(term));
-      });
-      
-      // Ratio of query-relevant products to total products
-      queryRelevanceScore = productsWithQueryTerms.length / seller.products.length;
-    }
-    
-    // Calculate basic metrics
-    const validScores = seller.products.filter(p => p.score != null);
-    const avgScore = validScores.length > 0 
-      ? validScores.reduce((acc, p) => acc + parseFloat(p.score || 0), 0) / validScores.length 
-      : 0;
-    
-    // Calculate NDCG score
-    const ndcgScore = calculateNDCG(seller.products);
-    
-    // Product count bonus - logarithmic to prevent too much weight for large catalogs
-    // Reduced the impact of this bonus
-    const productCountBonus = Math.log10(1 + seller.products.length) * 0.05;
-    
-    // Calculate rating factor if available - reduce weight for ratings
-    const ratingFactor = seller.avgRating 
-      ? (seller.avgRating / 5) * (Math.min(0.5, seller.totalRatingsCount / 50)) * 0.15
-      : 0;
-    
-    // Combine all factors for a balanced score
-    // Weights: 60% avg score, 20% NDCG, 10% query relevance, 5% product count, 5% ratings
-    const enhancedScore = (avgScore * 0.6) 
-    // + 
-                          // (ndcgScore * 0.02) + 
-                          // (queryRelevanceScore * 0.1) +
-                          // (productCountBonus * 0.40)
-                          //  + (ratingFactor * 0.001);
-    
-    return {
-      ...seller,
-      ndcgScore,
-      enhancedScore,
-      avgScore,
-      queryRelevanceScore
-    };
-  });
-  
-  // Find max scores to normalize everything to the same scale
-  let maxProductScore = 0;
-  let maxSellerScore = 0;
-  
-  // Find max product score
-  filteredResults.forEach(product => {
-    const score = parseFloat(product.score || 0);
-    if (score > maxProductScore) maxProductScore = score;
-  });
-  
-  // Find max seller score
-  enhancedSellerGroups.forEach(seller => {
-    if (seller.enhancedScore > maxSellerScore) maxSellerScore = seller.enhancedScore;
-  });
-  
-  // Now process the enhanced seller groups with normalized scores
-  enhancedSellerGroups.forEach((seller, index) => {
-    if (seller.products && seller.products.length > 0) {
-      // IMPORTANT CHANGE: We normalize seller scores but with a scaling factor
-      // that prevents sellers from completely dominating products
-      // This means a seller will only rank higher than products if they're truly relevant
-      
-      // Normalize seller scores to be comparable to product scores
-      let normalizedScore = seller.enhancedScore;
-      
-      // If the seller score is higher than the highest product score,
-      // // scale it down proportionally, but still preserve its rank
-      // if (maxSellerScore > maxProductScore && maxSellerScore > 0) {
-      //   // Scale factor - 0.9 means the best seller will be 90% of the best product
-      //   const scaleFactor = 0.9;
         
-      //   // Apply the scaling only to the portion that exceeds product scores
-      //   const excessScorePortion = seller.enhancedScore / maxSellerScore;
-      //   normalizedScore = maxProductScore * (scaleFactor * excessScorePortion);
-      // }
+        // Final score calculation
+        const balancedScore = Math.min(numericScore + ratingBoost + titleMatchBoost, 1.0);
         
-      if (seller.products.length === 1 && renderProductCard) {
-        // For sellers with only one product, add as a product
-        const product = seller.products[0];
-        
-        combinedResults.push({
+        return {
           type: 'product',
           product: {
             ...product,
-            // Use normalized score
-            displayScore: normalizedScore.toFixed(4),
-            numericScore: normalizedScore || parseFloat(product.score || 0),
-            // Add a label to indicate this is a product score from a seller
+            numericScore,
+            originalScore: numericScore,
+            ratingBoost,
+            titleMatchBoost,
             scoreLabel: 'Product'
           },
-          score: normalizedScore || parseFloat(product.score || 0),
-          rating: seller.avgRating || (product.ratings_score || 0),
-          ratingCount: seller.totalRatingsCount || (product.ratings_count || 0),
-          price: product.price_cents || Infinity,
-          originalIndex: index
-        });
-      } else {
-        // For sellers with multiple products, add as a seller with normalized score
-        combinedResults.push({
-          type: 'seller',
-          seller: {
-            ...seller,
-            // Use normalized score for display
-            displayScore: normalizedScore.toFixed(4),
-            ndcgDisplay: seller.ndcgScore.toFixed(4),
-            avgScoreDisplay: seller.avgScore.toFixed(4),
-            // Add label to indicate this is a seller score
-            scoreLabel: 'Seller'
-          },
-          score: normalizedScore || 0,
-          rating: seller.avgRating || 0,
-          ratingCount: seller.totalRatingsCount || 0,
-          price: seller.avgPrice || Infinity,
-          productCount: seller.products.length,
-          originalIndex: index
-        });
-      }
+          score: balancedScore,
+          rating: product.ratings_score || 0,
+          ratingCount: product.ratings_count || 0,
+          price: product.price_cents || 0,
+          originalIndex: searchResults.indexOf(product)
+        };
+      });
+    } else {
+      // Process sellers by grouping them
+      const combinedResults = [];
+      
+      // Extract query terms for relevance evaluation
+      const queryTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 2);
+      
+      // First, enhance seller groups with NDCG scores
+      const enhancedSellerGroups = sellerGroups.map(seller => {
+        if (!seller.products || seller.products.length === 0) {
+          return seller;
+        }
+        
+        // Calculate query relevance for seller's products
+        let queryRelevanceScore = 0;
+        if (queryTerms.length > 0) {
+          // Calculate how many products from this seller match the query terms in name/description
+          const productsWithQueryTerms = seller.products.filter(product => {
+            const productText = `${product.name || ''} ${product.description || ''}`.toLowerCase();
+            return queryTerms.some(term => productText.includes(term));
+          });
+          
+          // Ratio of query-relevant products to total products
+          queryRelevanceScore = productsWithQueryTerms.length / seller.products.length;
+        }
+        
+        // Calculate basic metrics
+        const validScores = seller.products.filter(p => p.score != null);
+        const avgScore = validScores.length > 0 
+          ? validScores.reduce((acc, p) => acc + parseFloat(p.score || 0), 0) / validScores.length 
+          : 0;
+        
+        // Product count bonus - logarithmic to prevent too much weight for large catalogs
+        const productCountBonus = Math.log10(1 + seller.products.length) * 0.05;
+        
+        // Calculate rating factor if available
+        const ratingFactor = seller.avgRating 
+          ? (seller.avgRating / 5) * (Math.min(0.5, seller.totalRatingsCount / 50)) * 0.15
+          : 0;
+        
+        // Combine all factors for a balanced score
+        // Weights: 60% avg score, 10% query relevance, 5% product count, 5% ratings
+        const enhancedScore = (avgScore * 0.4) + 
+                              (queryRelevanceScore * 0.1) +
+                              (productCountBonus * 0.2) + 
+                              (ratingFactor * 0.3);
+        
+        return {
+          ...seller,
+          enhancedScore,
+          avgScore,
+          queryRelevanceScore
+        };
+      });
+      
+      // Find max scores to normalize
+      let maxProductScore = 0;
+      let maxSellerScore = 0;
+      
+      // Find max product score
+      filteredResults.forEach(product => {
+        const score = parseFloat(product.score || 0);
+        if (score > maxProductScore) maxProductScore = score;
+      });
+      
+      // Find max seller score
+      enhancedSellerGroups.forEach(seller => {
+        if (seller.enhancedScore > maxSellerScore) maxSellerScore = seller.enhancedScore;
+      });
+      
+      // Process the enhanced seller groups with normalized scores
+      enhancedSellerGroups.forEach((seller, index) => {
+        if (seller.products && seller.products.length > 0) {
+          // Normalize seller scores with scaling factor
+          let normalizedScore = seller.enhancedScore;
+          
+          if (seller.products.length === 1 && renderProductCard) {
+            // For sellers with only one product, add as a product
+            const product = seller.products[0];
+            
+            combinedResults.push({
+              type: 'product',
+              product: {
+                ...product,
+                displayScore: normalizedScore.toFixed(4),
+                numericScore: normalizedScore || parseFloat(product.score || 0),
+                scoreLabel: 'Product'
+              },
+              score: normalizedScore || parseFloat(product.score || 0),
+              rating: seller.avgRating || (product.ratings_score || 0),
+              ratingCount: seller.totalRatingsCount || (product.ratings_count || 0),
+              price: product.price_cents || Infinity,
+              originalIndex: index
+            });
+          } else {
+            // For sellers with multiple products, add as a seller with normalized score
+            combinedResults.push({
+              type: 'seller',
+              seller: {
+                ...seller,
+                displayScore: normalizedScore.toFixed(4),
+                avgScoreDisplay: seller.avgScore.toFixed(4),
+                scoreLabel: 'Seller'
+              },
+              score: normalizedScore || 0,
+              rating: seller.avgRating || 0,
+              ratingCount: seller.totalRatingsCount || 0,
+              price: seller.avgPrice || Infinity,
+              productCount: seller.products.length,
+              originalIndex: index
+            });
+          }
+        }
+      });
+      
+      results = combinedResults;
     }
-  });
-  
-  return combinedResults;
-}, [filteredResults, groupBySeller, selectedSeller, sellerGroups, searchResults, renderProductCard, query]);
+    
+    // Log performance
+    const endTime = performance.now();
+    console.log(`Generated ${results ? results.length : 0} unified results in ${(endTime - startTime).toFixed(1)}ms`);
+    
+    return results || [];
+  } catch (error) {
+    console.error('Error generating unified results:', error);
+    return [];
+  }
+}, [filteredResults, groupBySeller, selectedSeller, sellerGroups, searchResults, query, renderProductCard]);
+
+
 
 const debugScoreLogger = (sortedResults) => {
   console.log("\n======= SORTED SCORES DEBUG OUTPUT =======");
@@ -1409,49 +1447,42 @@ const paginatedUnifiedResultsWithNDCG = useMemo(() => {
 
 // Rendering function for the NDCG-enhanced results
 const renderUnifiedWithNDCG = () => {
+  // Early return with empty state message if no results
   if (paginatedUnifiedResultsWithNDCG.length === 0) {
     return (
       <EmptySearchResults query={query} darkMode={darkMode} />
     );
   }
   
+  // Determine component to render based on view mode
   return (
     <div className={showGridView ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" : "space-y-4"}>
-      {paginatedUnifiedResultsWithNDCG.map((item, index) => {
-        if (item.type === 'product') {
-          // Add the NDCG-based score to the product for display
-          const enhancedProduct = {
-            ...item.product,
-            // This ensures the ProductCard shows the right score
-            displayScore: item.score.toFixed(4)
-          };
-          
-          return (
-            <div key={`product-${enhancedProduct.id || index}`} className={showGridView ? "" : "w-full"}>
-              {renderProductCard(enhancedProduct, index, showGridView ? 'grid' : 'list')}
+      {/* Use React.Fragment grouping with key to improve reconciliation */}
+      {paginatedUnifiedResultsWithNDCG.map((item, index) => (
+        <React.Fragment key={`${item.type}-${item.type === 'product' ? item.product.id || index : item.seller.id || index}`}>
+          {item.type === 'product' ? (
+            // Product rendering with memoization hint
+            <div className={showGridView ? "" : "w-full"}>
+              {renderProductCard({
+                ...item.product,
+                displayScore: item.score.toFixed(4)
+              }, index, showGridView ? 'grid' : 'list')}
             </div>
-          );
-        } else if (item.type === 'seller') {
-          // Add the NDCG-based score to the seller for display
-          const enhancedSeller = {
-            ...item.seller,
-            // This ensures the SellerCard shows the right score
-            displayScore: item.score.toFixed(4)
-          };
-          
-          return (
+          ) : (
+            // Seller card rendering
             <SellerCard
-              key={`seller-${enhancedSeller.id || index}`}
-              seller={enhancedSeller}
+              seller={{
+                ...item.seller,
+                displayScore: item.score.toFixed(4)
+              }}
               darkMode={darkMode}
               handleSellerClick={handleSellerClick}
               onHover={onHover}
               onLeave={onLeave}
             />
-          );
-        }
-        return null;
-      })}
+          )}
+        </React.Fragment>
+      ))}
     </div>
   );
 };
@@ -1504,6 +1535,7 @@ const renderUnifiedWithNDCG = () => {
       </div>
     );
   });
+  
   
   // Empty state
   if (isLoading && (!searchResults || searchResults.length === 0)) {
@@ -1628,7 +1660,7 @@ const renderUnifiedWithNDCG = () => {
     {renderUnifiedWithNDCG()}
     
     {/* Load more trigger and indicator */}
-    <LoadMore 
+    <OptimizedLoadMore 
       onLoadMore={handleLoadMore}
       hasMore={paginatedUnifiedResultsWithNDCG.length < sortedUnifiedResultsWithNDCG.length}
       isLoading={isLoadingMore}
