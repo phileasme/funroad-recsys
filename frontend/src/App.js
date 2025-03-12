@@ -298,6 +298,10 @@ function App() {
   const searchInputRef = useRef(null);
 
 
+const [displayedQuery, setDisplayedQuery] = useState('');
+
+
+
   useEffect(() => {
     if (searchResults.length > 0) {
       // Extract image URLs
@@ -602,6 +606,7 @@ const lastQueryRef = useRef({ text: '', timestamp: 0 });
         loadingTimerRef.current = null;
       }
       
+      setDisplayedQuery(searchQuery);
       // If search completed before spinner showed, don't show it at all
       setShowLoadingSpinner(false);
       setIsLoading(false);
@@ -1043,6 +1048,7 @@ const lastQueryRef = useRef({ text: '', timestamp: 0 });
                 darkMode={darkMode}
                 isLoading={isLoading}
                 query={query}
+                displayedQuery={displayedQuery} 
                 onHover={handleProductHover}
                 onLeave={handleProductMouseLeave}
                 renderProductCard={(product, index) => (

@@ -454,8 +454,8 @@ const ProductCard = React.memo(({ product, index, darkMode, onHover, onLeave }) 
           
           {/* The image */}
           <img
-            loading="lazy"
-            fetchPriority="high"
+            loading={index < 6 ? "eager" : "lazy"} // First 6 products load eagerly
+            fetchpriority={index < 3 ? "high" : "auto"} // First 3 with highest priority
             ref={imageRef}
             src={imageError ? fallbackUrl : imageUrl}
             alt={product.name}

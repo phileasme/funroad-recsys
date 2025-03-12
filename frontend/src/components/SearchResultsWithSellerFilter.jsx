@@ -590,7 +590,8 @@ const SearchResultsWithSellerFilter = ({
   query,
   renderProductCard,
   onHover,
-  onLeave
+  onLeave,
+  displayedQuery
 }) => {
   // Start performance measurement
   const renderStartTime = useRef(performance.now());
@@ -1549,7 +1550,7 @@ const renderUnifiedWithNDCG = () => {
             : `Search Results (${filteredResults.length})`}
         </h2>
         <span className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-          related to "{query}"
+          related to "{displayedQuery}"
         </span>
       </div>
 
