@@ -3,10 +3,13 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Search, BarChart as BarChartIcon, PieChart, Layers, Settings, TrendingUp, Sun, Moon, TrendingUpDown } from 'lucide-react';
 import { searchProducts, getSimilarProducts } from './services/api';
-import { processProductImages } from './services/imageService';
+import { processProductImages, prioritizeTopImages } from './services/imageService';
 import SearchProfileSelector from './components/SearchProfileSelector';
 import ProductCard from './components/ProductCard';
 import { debounce } from 'lodash';
+
+
+import { refreshProductCardObserver } from './services/imageQueue';
 const SearchResultsWithSellerFilter = React.lazy(() => import('./components/SearchResultsWithSellerFilter'));
 
 
@@ -50,6 +53,21 @@ const AppStyles = `
     transform: rotate(360deg);
   }
 }
+
+
+.image-loaded {
+  transition: opacity 0.3s ease-in;
+}
+
+img[data-src] {
+  background-color: #f0f0f0;
+}
+
+.dark-mode img[data-src] {
+  background-color: #2d3748;
+}
+
+
 `;
 
 // Dark mode styles - keeping this section as is
@@ -297,20 +315,33 @@ function App() {
   const similarProductsRef = useRef(null);
   const searchInputRef = useRef(null);
 
-
   useEffect(() => {
     if (searchResults.length > 0) {
-      // Extract image URLs
+      // Extract image URLs, ensuring we prioritize by keeping the original order
       const imageUrls = searchResults
-        .map(product => product.thumbnail_url)
+        .map(product => product.thumbnail_url || product.proxied_thumbnail_url)
         .filter(Boolean);
       
-      // Preload images in the background
-      import('./services/imageService').then(({ preloadImages }) => {
-        preloadImages(imageUrls);
-      });
+      if (imageUrls.length > 0) {
+        // Log start of image preloading
+        console.log(`Starting prioritized preloading of ${imageUrls.length} search result images`);
+        
+        // Use dynamic import to avoid loading the module unnecessarily
+        import('./services/imageService').then(({ preloadImages }) => {
+          // Start preloading with prioritization - first batch will load immediately
+          preloadImages(imageUrls)
+            .then(firstBatchResults => {
+              console.log(`First batch of search result images loaded: ${firstBatchResults.filter(r => r.status === 'fulfilled' && r.value.success).length} successful`);
+            })
+            .catch(error => {
+              console.warn('Error during prioritized image preloading:', error);
+            });
+        });
+      }
+      setTimeout(refreshProductCardObserver, 100); // Small delay to ensure DOM is updated
     }
   }, [searchResults]);
+  
 
   // Check for mobile viewport on mount and resize
   useEffect(() => {
@@ -553,20 +584,35 @@ const lastQueryRef = useRef({ text: '', timestamp: 0 });
         ? processProductImages(data.results) 
         : [];
       
-      // Make sure we're setting an array even if data.results is undefined
-      setSearchResults(processedResults);
+        setSearchResults(processedResults);
+        prioritizeTopImages(processedResults);
   
-      // Update search history
-      if (!isFirstSearch && data.results){
-        setSearchHistory(prev => [
-          { query: searchQuery, timestamp: new Date().toLocaleTimeString(), results: data.results.length || 0, queryTime: data.query_time_ms },
-          ...prev.slice(0, 9)
-        ]);
-      }
-    } catch (error) {
-      console.error('Search error:', error);
-      // In case of error, set empty results instead of keeping old results
-      setSearchResults([]);
+        // NEW CODE - Start preloading top images immediately
+        if (processedResults.length > 0) {
+          const topProductUrls = processedResults
+            .slice(0, 10) // Get top 10 products
+            .map(product => product.proxied_thumbnail_url || product.thumbnail_url)
+            .filter(Boolean);
+            
+          if (topProductUrls.length > 0) {
+            console.log(`Immediately preloading ${topProductUrls.length} top product images`);
+            import('./services/imageService').then(({ preloadImages }) => {
+              preloadImages(topProductUrls, true);
+            });
+          }
+        }
+        
+        // Update search history
+        if (!isFirstSearch && data.results){
+          setSearchHistory(prev => [
+            { query: searchQuery, timestamp: new Date().toLocaleTimeString(), results: data.results.length || 0, queryTime: data.query_time_ms },
+            ...prev.slice(0, 9)
+          ]);
+        }
+      } catch (error) {
+        console.error('Search error:', error);
+        // In case of error, set empty results instead of keeping old results
+        setSearchResults([]);
       
       // Fallback to mock data after a delay to simulate network request
       setTimeout(() => {

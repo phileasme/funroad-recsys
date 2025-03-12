@@ -2,7 +2,6 @@
 import axios from 'axios';
 import { processProductImages, preloadImages } from './imageService';
 
-
 const isProduction = window.location.hostname === 'gumroad.phileas.me';
 
 // Set the API base URL based on hostname, not NODE_ENV
@@ -13,9 +12,6 @@ const API_BASE_URL = isProduction
 console.log('Hostname:', window.location.hostname);
 console.log('Using API URL:', API_BASE_URL);
 
-
-// Get the API base URL from environment or use default
-// const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 // Create axios instance with defaults
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -24,7 +20,6 @@ const apiClient = axios.create({
   },
   timeout: 30000, // 30 second timeout
 });
-
 
 // Add this function to test connectivity
 export const testApiConnection = async () => {
@@ -38,15 +33,12 @@ export const testApiConnection = async () => {
   }
 };
 
-
-// In your api.js file
+// Enhanced searchProducts with optimized image loading
 export const searchProducts = async (profile, query, k = 100, numCandidates = 100, shouldPreload = true) => {
   console.log(`Calling ${profile} with query: ${query}`);
   
   try {
     const endpoint = profile;
-
-
     console.log('Making request to:', `${API_BASE_URL}/${endpoint}`);
     
     const payload = {
@@ -64,7 +56,36 @@ export const searchProducts = async (profile, query, k = 100, numCandidates = 10
     
     console.log('Search response:', response.data);
     
-    // Process the results as before...
+    // Process the results to add proxied image URLs
+    if (response.data && response.data.results && Array.isArray(response.data.results)) {
+      try {
+        // Process URLs safely
+        const processedResults = processProductImages(response.data.results);
+        
+        // Update the response data
+        response.data.results = processedResults;
+        
+        // Preload images in the background with priority for top results
+        if (shouldPreload) {
+          const imageUrls = processedResults
+            .filter(product => product.proxied_thumbnail_url)
+            .map(product => product.proxied_thumbnail_url);
+          
+          // Preload in the background without awaiting
+          if (imageUrls.length > 0) {
+            console.log(`Starting prioritized preloading of ${imageUrls.length} images`);
+            preloadImages(imageUrls)
+              .then(results => {
+                console.log(`First batch of images preloaded: ${results.length} loaded`);
+              })
+              .catch(error => console.warn('Image preloading error:', error));
+          }
+        }
+      } catch (processingError) {
+        console.error('Error processing product images:', processingError);
+      }
+    }
+    
     return response.data;
   } catch (error) {
     // Better error handling
@@ -77,11 +98,10 @@ export const searchProducts = async (profile, query, k = 100, numCandidates = 10
     // Return empty results instead of throwing
     return { results: [], query_time_ms: 0 };
   }
-
 };
 
 /**
- * Get similar products based on a product
+ * Get similar products based on a product with optimized image loading
  * @param {string} description - Product description
  * @param {string} name - Product name
  * @param {string} id - Product ID for getting embeddings
@@ -122,15 +142,19 @@ export const getSimilarProducts = async (description, name, id, k = 10) => {
         // Update the response data
         response.data.results = processedResults;
         
-        // Preload images in the background
+        // Preload images in the background with priority for top results
         const imageUrls = processedResults
           .filter(product => product.proxied_thumbnail_url)
           .map(product => product.proxied_thumbnail_url);
         
         // Preload in the background without awaiting
         if (imageUrls.length > 0) {
+          console.log(`Starting prioritized preloading for similar products: ${imageUrls.length} images`);
           preloadImages(imageUrls)
-            .catch(error => console.warn('Image preloading error:', error));
+            .then(results => {
+              console.log(`First batch of similar product images preloaded: ${results.length}`);
+            })
+            .catch(error => console.warn('Similar products image preloading error:', error));
         }
       } catch (processingError) {
         // If processing fails, log error but return original results
