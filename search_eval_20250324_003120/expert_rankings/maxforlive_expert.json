@@ -1,0 +1,197 @@
+{
+  "query": "maxforlive",
+  "timestamp": "2025-03-24T00:59:08.683515",
+  "total_products_considered": 33,
+  "ranked_product_ids": [
+    "sCwOu-5EFUAZblFpygXAxg==",
+    "CeyUbOSCv7mIWD3SAgebKg==",
+    "MphxUOhagW3Dl2a0-RiFOQ==",
+    "3pCt3flco5SvPuRsf172nw==",
+    "jpGtY17bbjJatdWWnq0ahg==",
+    "MrkVxHQ7TT2AHHd-aL6AfQ==",
+    "w-GGoDRSwGEsAVW7k60FFw==",
+    "RuUDIAaaRN1dx30f20sJNA==",
+    "y0XeDgXNBU65NP9wCzRDag==",
+    "eU75ii85J8JX613KCgEIFA=="
+  ],
+  "ranked_products": [
+    {
+      "gumroad_rank": 11,
+      "id": "sCwOu-5EFUAZblFpygXAxg==",
+      "name": "Foot Control for Ableton Live with Nektar Pacer - Max for Live device  ",
+      "description": "This Max for Live device lets you set up advanced and flexible control for the Nektar Pacer with ...",
+      "thumbnail_url": "https://public-files.gumroad.com/72l1b32lh5388fvryrt8p22c84vq",
+      "price_cents": 1500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://abletonkurse.gumroad.com/l/nektar-pacer-with-Ableton-Live?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "CeyUbOSCv7mIWD3SAgebKg==",
+      "name": "Fixed Clip Length for Ableton Live - 4 Max for Live devices",
+      "description": "This pack consists of 4 Max for Live devices to (pre)set a fixed clip length when recording and l...",
+      "thumbnail_url": "https://public-files.gumroad.com/dr130afwcj3r645n99o5mfr72y7x",
+      "price_cents": 1200,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://abletonkurse.gumroad.com/l/fixedlengthrecordingableton?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 19,
+      "id": "MphxUOhagW3Dl2a0-RiFOQ==",
+      "name": "Note To MIDI CC Collection - 5 Max for Live device ",
+      "description": "5 Max for Live devices for creating MIDI CC values MIDI via MIDI notes. Notes created via your ex...",
+      "thumbnail_url": "https://public-files.gumroad.com/wvldz37kp1fegaqp12pkdaqev3q2",
+      "price_cents": 1500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://abletonkurse.gumroad.com/l/NoteToMidiCC?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "3pCt3flco5SvPuRsf172nw==",
+      "name": "Swatches | Max for Live Device",
+      "description": "Make your Live sets beautiful.Swatches offers one-of-a-kind tools for managing the colors of your...",
+      "thumbnail_url": "https://public-files.gumroad.com/a48ppvj1kyc29g6yq0w8su7rag9s",
+      "price_cents": 800,
+      "ratings_count": 32,
+      "ratings_score": 4.3,
+      "seller_name": "pATCHES",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 2,
+      "id": "jpGtY17bbjJatdWWnq0ahg==",
+      "name": "Equation",
+      "description": "Equation is a Max For Live dynamic EQ (M4L devices only work inside Ableton Live).Besides standar...",
+      "thumbnail_url": "https://public-files.gumroad.com/rm3ll27j8dwftyrcvvnntehelh0j",
+      "price_cents": 2700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://incandescent.gumroad.com/l/Equation?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 17,
+      "id": "MrkVxHQ7TT2AHHd-aL6AfQ==",
+      "name": "Web4Live - sample or procrastinate the web in Live",
+      "description": "Web4Live is a web browser (called Thief) featuring audio output embedded into a M4L device.You ca...",
+      "thumbnail_url": "https://public-files.gumroad.com/z3vgcjg1453456y3k4vol5261if2",
+      "price_cents": 0,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://valiumdupeuple.gumroad.com/l/tbahzp?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "w-GGoDRSwGEsAVW7k60FFw==",
+      "name": "Knob Studio",
+      "description": "Hello, welcome to Knob Studio! Teaser: https://youtu.be/nanpp0rhG_IWalkthrough: https://youtu.be/...",
+      "thumbnail_url": "https://public-files.gumroad.com/0j73cr884dq7vn3yvc8vw03ijiil",
+      "price_cents": 2000,
+      "ratings_count": 8,
+      "ratings_score": 4.9,
+      "seller_name": "aylesim devices",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 18,
+      "id": "RuUDIAaaRN1dx30f20sJNA==",
+      "name": "Transient Shaper",
+      "description": "Having a good and musical sounding transient shaper directly available inside of Live is one of t...",
+      "thumbnail_url": "https://public-files.gumroad.com/1t0z8ey22d6c32v82r2y3n1mt424",
+      "price_cents": 1400,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://liveworkflowtools.gumroad.com/l/transientshaper?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 16,
+      "id": "y0XeDgXNBU65NP9wCzRDag==",
+      "name": "grump tools mix bundle",
+      "description": "all grump mixing tools in 1, brian!you get:-bone doctor-juicebox-muffins-soupcan-toothpaste- hell...",
+      "thumbnail_url": "https://public-files.gumroad.com/kjshc0zw27w653u9b86moj4jsfxl",
+      "price_cents": 3000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://kinggrump.gumroad.com/l/toolsbundle?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "eU75ii85J8JX613KCgEIFA==",
+      "name": "CoreUI Icons Pro - 3000+ Icons SVG, Png, Webfont",
+      "description": "Premium designed icon set with marks in SVG, Webfont and raster formats. CoreUI Icons are beautif...",
+      "thumbnail_url": "https://public-files.gumroad.com/txe1dz10bxxm2my2n87icguurm4t",
+      "price_cents": 9900,
+      "ratings_count": 10,
+      "ratings_score": 4.6,
+      "seller_name": "CoreUI",
+      "_source": "endpoint"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 7,
+    "endpoint_count": 3,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "gumroad"
+      },
+      {
+        "position": 2,
+        "source": "gumroad"
+      },
+      {
+        "position": 3,
+        "source": "gumroad"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "endpoint"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "endpoint"
+      }
+    ]
+  }
+}

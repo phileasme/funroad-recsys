@@ -1,0 +1,188 @@
+{
+  "query": "web design",
+  "timestamp": "2025-03-24T00:42:03.177193",
+  "total_products_considered": 40,
+  "ranked_product_ids": [
+    "HedyEHCdKEcbnVtdanhXIw==",
+    "XNJ29n32-mjYDsNjbf-pKw==",
+    "beHct_-12kz_nB8yjmkgdQ==",
+    "LuDOy2kGB4jUhthC9K1rZw==",
+    "4j8vjbaJTfDM0CeHj-N1Rw==",
+    "MrkVxHQ7TT2AHHd-aL6AfQ==",
+    "vyJ-Y_5Ad-YjYPVllTVzSg==",
+    "kVdo2ZzaLbmO2KJ5syM5QQ==",
+    "mE6mwltclssgInWAwBU0hw==",
+    "0MgaeET18gUSK05on8mepQ=="
+  ],
+  "ranked_products": [
+    {
+      "id": "HedyEHCdKEcbnVtdanhXIw==",
+      "name": "Complete Web Design Bundle",
+      "description": "Everyone uses the web yet most don't know how to design for it.Change it and boost your company o...",
+      "thumbnail_url": "https://public-files.gumroad.com/y135xuv2but4y9q3vytxpeg8y5js",
+      "price_cents": 9900,
+      "ratings_count": 10,
+      "ratings_score": 4.9,
+      "seller_name": "Web Masterclass",
+      "_source": "endpoint"
+    },
+    {
+      "id": "XNJ29n32-mjYDsNjbf-pKw==",
+      "name": "The Ultimate Guide to Web Design (Landing Page UI Kit + Free Bonuses)",
+      "description": "Learn how to become an ultimate web designer - from running a freelance business to learning desi...",
+      "thumbnail_url": "https://public-files.gumroad.com/3g88sixw2l8u6kadccj4ilj53cpf",
+      "price_cents": 4900,
+      "ratings_count": 163,
+      "ratings_score": 5.0,
+      "seller_name": "uiadrian",
+      "_source": "endpoint"
+    },
+    {
+      "id": "beHct_-12kz_nB8yjmkgdQ==",
+      "name": "Web Design Course 2 - Landing Pages",
+      "description": "Join over 3417 others and get this bundle to:\u2705 Design beautiful landing pages\u2705 Learn the unique t...",
+      "thumbnail_url": "https://public-files.gumroad.com/6imyn0vqd1ul2l5nlaul8diq73i8",
+      "price_cents": 4900,
+      "ratings_count": 21,
+      "ratings_score": 4.9,
+      "seller_name": "Web Masterclass",
+      "_source": "endpoint"
+    },
+    {
+      "id": "LuDOy2kGB4jUhthC9K1rZw==",
+      "name": "iPhone MacBook Pro | Velvet Collection",
+      "description": "Premium MacBook Pro mockup for showcasing your branding, illustration and web design projects. Th...",
+      "thumbnail_url": "https://public-files.gumroad.com/9aqj8ulq35lqgoi3s5sc8z7jo3ss",
+      "price_cents": 1200,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "GRAFIK STASH",
+      "_source": "endpoint"
+    },
+    {
+      "id": "4j8vjbaJTfDM0CeHj-N1Rw==",
+      "name": "Kaftan Serif - Desktop&Web License Pack",
+      "description": "A font dedicated to branding, editorial and bold graphic design with personality.See more images ...",
+      "thumbnail_url": "https://public-files.gumroad.com/vxklnq70is4tasmzk3psbnlzokqo",
+      "price_cents": 10000,
+      "ratings_count": 16,
+      "ratings_score": 5.0,
+      "seller_name": "Victor Bartis",
+      "_source": "endpoint"
+    },
+    {
+      "id": "MrkVxHQ7TT2AHHd-aL6AfQ==",
+      "name": "Web4Live - sample or procrastinate the web in Live",
+      "description": "Web4Live is a web browser (called Thief) featuring audio output embedded into a M4L device.You ca...",
+      "thumbnail_url": "https://public-files.gumroad.com/z3vgcjg1453456y3k4vol5261if2",
+      "price_cents": 0,
+      "ratings_count": 6,
+      "ratings_score": 4.2,
+      "seller_name": "Valiumdupeuple - Useful, solid and unique M4L devices (quite ugly, though)",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 4,
+      "id": "vyJ-Y_5Ad-YjYPVllTVzSg==",
+      "name": "SubMachine - Subscription",
+      "description": "SubMachine: The Engaging, and Customisable Subtitling Solution for Adobe Premiere ProNow includes...",
+      "thumbnail_url": "https://public-files.gumroad.com/8qd7qul57tqkixq8zvpynxkev4fk",
+      "price_cents": 800,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://cwsproducts.gumroad.com/l/axpoe?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 1,
+      "id": "kVdo2ZzaLbmO2KJ5syM5QQ==",
+      "name": "Wraith",
+      "description": "Introducing Wraith.With over 10 months of work dedicated to a single project, this is my most amb...",
+      "thumbnail_url": "https://public-files.gumroad.com/9z608ijpctscdjvyyc7uydzcewoe",
+      "price_cents": 2500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://meechu.gumroad.com/l/Wraith?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 6,
+      "id": "mE6mwltclssgInWAwBU0hw==",
+      "name": "CNC Discord Membership (3 month)",
+      "description": "Chess Not Checkers Community (CnC)Ready to take your wealth-building skills to a whole new level?...",
+      "thumbnail_url": "https://public-files.gumroad.com/peq5lvljfzzae0as0ad2nxp4uori",
+      "price_cents": 19700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://tallguytycoon.gumroad.com/l/wdwifo?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "0MgaeET18gUSK05on8mepQ==",
+      "name": "BY DAWN I WIN! 1OZ 999 FINE SILVER COIN 10+1  CNT (2024 LTD ED) ",
+      "description": "**NO REFUNDS OR EXCHANGES**Prices will fluctuate with the price of silver.**Pre-sale prices will ...",
+      "thumbnail_url": "https://public-files.gumroad.com/dnkhlvmflul6rg13he60xlnmbe68",
+      "price_cents": 75000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://allpatriots.gumroad.com/l/bydawnten?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 4,
+    "endpoint_count": 6,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "endpoint"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

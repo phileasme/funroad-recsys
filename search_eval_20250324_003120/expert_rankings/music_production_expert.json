@@ -1,0 +1,197 @@
+{
+  "query": "music production",
+  "timestamp": "2025-03-24T00:45:48.971774",
+  "total_products_considered": 39,
+  "ranked_product_ids": [
+    "h8v-LmE4p3gINjPLYMJRbg==",
+    "vJjYbiaKT2kguoJMdnhuhA==",
+    "UvW4OGdgAHrO1rOFrT2CdA==",
+    "jel4fCFRGfa_OZWXtAhe3g==",
+    "KYkqAuP43ATKQsePl8Mu_w==",
+    "T5x_OUnpb-1nTwlHKW0i4A==",
+    "b76gHcfYL7NdM4bXztT7eg==",
+    "Kd3ubQ3PGqlIcYmpeARDKQ==",
+    "UdJAaGlrNFzr-lH1P1jK1A==",
+    "AjIPfyBhz5tIBkIvZFoX8g=="
+  ],
+  "ranked_products": [
+    {
+      "id": "h8v-LmE4p3gINjPLYMJRbg==",
+      "name": "MJ Flips (Deluxe) AG Music & Marques Murrey",
+      "description": "A-G Music and Marques Murrey Collab to create the Deluxe version of there classic \"This Is It\" M....",
+      "thumbnail_url": "https://public-files.gumroad.com/k5ksn4zdu2dx7qiio0o7mob4eg4v",
+      "price_cents": 400,
+      "ratings_count": 14,
+      "ratings_score": 4.8,
+      "seller_name": "Marques Murrey Productions",
+      "_source": "endpoint"
+    },
+    {
+      "id": "vJjYbiaKT2kguoJMdnhuhA==",
+      "name": "Chordwatch",
+      "description": "Are you a musician, producer, teacher or otherwise music tinkerer? Chordwatch makes the headache ...",
+      "thumbnail_url": "https://public-files.gumroad.com/5vltf54k1yxabuot7zhk5o6z6aj2",
+      "price_cents": 2500,
+      "ratings_count": 40,
+      "ratings_score": 4.9,
+      "seller_name": "Moonstop Software Ltd",
+      "_source": "endpoint"
+    },
+    {
+      "id": "UvW4OGdgAHrO1rOFrT2CdA==",
+      "name": "The Rewiring Tinnitus Relief Project",
+      "description": "The Tinnitus Relief Project is an album of brainwave training audio tracks originally created to ...",
+      "thumbnail_url": "https://public-files.gumroad.com/8a2iomd05fuitzfcca7bqtx6y6os",
+      "price_cents": 5900,
+      "ratings_count": 37,
+      "ratings_score": 4.8,
+      "seller_name": "Vitality Mind Music",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 14,
+      "id": "jel4fCFRGfa_OZWXtAhe3g==",
+      "name": "Mosh-Pro",
+      "description": "Upgrade your Glitching with Mosh-Pro. Unlimited realtime effects for image and video.One-time pur...",
+      "thumbnail_url": "https://public-files.gumroad.com/3pmjclbggydty1mpltpqubnteabo",
+      "price_cents": 4900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://airtight.gumroad.com/l/kqeYS?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 18,
+      "id": "KYkqAuP43ATKQsePl8Mu_w==",
+      "name": "Create, Publish, Profit: 10X Your X in 30 Days (May 1st)",
+      "description": "Get Direct Access to a Mentorship That Teaches You Everything You Ever Wanted to Know About Build...",
+      "thumbnail_url": "https://public-files.gumroad.com/5bcgqhjg4tjpk1i1iq0lxbpia363",
+      "price_cents": 99900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://creation247.gumroad.com/l/10xtwitter?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 7,
+      "id": "T5x_OUnpb-1nTwlHKW0i4A==",
+      "name": "Production-Ready Serverless (Jan 2025, single payment)",
+      "description": "Join 20+ AWS Heroes &amp; Community Builders and 1000+ happy students in levelling up your server...",
+      "thumbnail_url": "https://public-files.gumroad.com/xodjivrs0ehnzmygxuu68z53hu0l",
+      "price_cents": 110000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://theburningmonk.gumroad.com/l/prsls-jan-2025?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 15,
+      "id": "b76gHcfYL7NdM4bXztT7eg==",
+      "name": "iam program",
+      "description": "After being overwhelmed with demand and coming up with a solution...A few months ago,I decided to...",
+      "thumbnail_url": "https://public-files.gumroad.com/wixgaawk0ea71iehb95b74ezxs68",
+      "price_cents": 100000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://dr22.gumroad.com/l/iamprograms?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 16,
+      "id": "Kd3ubQ3PGqlIcYmpeARDKQ==",
+      "name": "Tokyo Back Alleys collection",
+      "description": "This bundle includes 250+ items: 4 Fully rigged CROWD characters (Provided with 70 preset poses a...",
+      "thumbnail_url": "https://public-files.gumroad.com/4gcjbmrfptr3ayn447wpgqgigps8",
+      "price_cents": 25000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://jamajurabaev.gumroad.com/l/usolov?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 13,
+      "id": "UdJAaGlrNFzr-lH1P1jK1A==",
+      "name": "($35 ON PAYHIP)\ud83d\udd3a NAGA - THE SERPENT \ud83d\udd3a ( PC / QUEST / VRCFT / OPTI / APARTMENT / GOGO ) \ud83d\udd3a",
+      "description": "INCREASED PRICE ON GUMROAD DUE TO RISING GUMROAD COSTS. GET HIM ON PAYHIP FOR THE ACTUAL PRICE ($...",
+      "thumbnail_url": "https://public-files.gumroad.com/4jrja9hf09ru1yht4t6xcahtmomi",
+      "price_cents": 4500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://gmsbox.gumroad.com/l/NAGA?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 4,
+      "id": "AjIPfyBhz5tIBkIvZFoX8g==",
+      "name": "Rexouium Avatar",
+      "description": "Rexouium is a made up species and the name meaning Rex\uff1dking and ouium\uff1dCare taker\u2024 They are the ki...",
+      "thumbnail_url": "https://public-files.gumroad.com/yt7jefqf0tda9lv77vjjwr4rjuzz",
+      "price_cents": 4500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://rezilloryker.gumroad.com/l/MYutV?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 7,
+    "endpoint_count": 3,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "gumroad"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

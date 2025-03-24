@@ -1,0 +1,188 @@
+{
+  "query": "space",
+  "timestamp": "2025-03-24T00:54:01.419905",
+  "total_products_considered": 40,
+  "ranked_product_ids": [
+    "PxrNZebHZXZo53INYsgEJg==",
+    "9nd-MvwNhuCL4d5df1fLcA==",
+    "JoKChWv109xfwpcBrECNJA==",
+    "LU-zKVdOpSWKHWYgF5fFEA==",
+    "CPj0qRRxytRJ5Fs-DwbHAQ==",
+    "AB1R8JdunseIdcQbc_C-TA==",
+    "NUt-pZdjaU6bA8cwlKpJMg==",
+    "C4gf5awOOa8dOkGkLy8AyA==",
+    "q6PKx7SjjZjshbQWECrBwA==",
+    "1_LXnj993n1wvxR9sCIvhQ=="
+  ],
+  "ranked_products": [
+    {
+      "id": "PxrNZebHZXZo53INYsgEJg==",
+      "name": "Speed | After Effects Panel",
+      "description": "An After Effects panel to control the speed of anything.Control time and space.Speed up or slow d...",
+      "thumbnail_url": "https://public-files.gumroad.com/c6vbmf9qtlknumqrfo8y8r31vcve",
+      "price_cents": 3900,
+      "ratings_count": 6,
+      "ratings_score": 5.0,
+      "seller_name": "AE Screens",
+      "_source": "endpoint"
+    },
+    {
+      "id": "9nd-MvwNhuCL4d5df1fLcA==",
+      "name": "Pearelax | After Effects Panel",
+      "description": "Move and resize layers in 3d space while retaining their optical size.Quickly set up 3d scenes an...",
+      "thumbnail_url": "https://public-files.gumroad.com/f6rcxa3rjndjbbd7xnipd70esayp",
+      "price_cents": 2900,
+      "ratings_count": 7,
+      "ratings_score": 4.4,
+      "seller_name": "AE Screens",
+      "_source": "endpoint"
+    },
+    {
+      "id": "JoKChWv109xfwpcBrECNJA==",
+      "name": "[P.0.E] - Armada Uniform",
+      "description": "Our Armada Uniform comes with a lightly-armored sci-fi jacket and pants, perfect for space pilots...",
+      "thumbnail_url": "https://public-files.gumroad.com/xigusjprnd02qot8wvb8slkrm8el",
+      "price_cents": 1500,
+      "ratings_count": 3,
+      "ratings_score": 3.7,
+      "seller_name": "Process of Elimination",
+      "_source": "endpoint"
+    },
+    {
+      "id": "LU-zKVdOpSWKHWYgF5fFEA==",
+      "name": "Texturaizer",
+      "description": "Harnessing AI for Design Intent with TexturaizerTexturaizer is a powerful Blender addon that seam...",
+      "thumbnail_url": "https://public-files.gumroad.com/ve9gfpok81cjq0hyyvele8an53gp",
+      "price_cents": 3600,
+      "ratings_count": 2,
+      "ratings_score": 5.0,
+      "seller_name": "Latent Space Directive",
+      "_source": "endpoint"
+    },
+    {
+      "id": "CPj0qRRxytRJ5Fs-DwbHAQ==",
+      "name": "Minimal Laptop Mockup Bundle",
+      "description": "Boost Your Website Designs with This Minimalistic MacBook Mockup Bundle.Elevate your website desi...",
+      "thumbnail_url": "https://public-files.gumroad.com/a5pay8kxl8zh5atzngjrdo8xdx2q",
+      "price_cents": 2500,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "BLANK SPACE STUDIO",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 7,
+      "id": "AB1R8JdunseIdcQbc_C-TA==",
+      "name": "nvk_THEME - A Modern Theme for Reaper",
+      "description": "nvk_THEME is a premium Reaper theme in the style of the nvk.tools suite of scripts. It was design...",
+      "thumbnail_url": "https://public-files.gumroad.com/ckr3x23ke1pe71qopq65db50a0kq",
+      "price_cents": 1900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://nvktools.gumroad.com/l/nvk_THEME?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 10,
+      "id": "NUt-pZdjaU6bA8cwlKpJMg==",
+      "name": "Data Governance Program Map & Template",
+      "description": "\ud83d\udd4a Introducing the Data Governance Program MapThe topic of Data Governance is hard to dive into. R...",
+      "thumbnail_url": "https://public-files.gumroad.com/higrygsv1efigp0n4l55jpk4wc7z",
+      "price_cents": 0,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://barakov.gumroad.com/l/DataGovernanceMap?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 16,
+      "id": "C4gf5awOOa8dOkGkLy8AyA==",
+      "name": "Production-Ready Serverless (Jan 2025, instalments plan)",
+      "description": "Join 20+ AWS Heroes &amp; Community Builders and 1000+ happy students in levelling up your server...",
+      "thumbnail_url": "https://public-files.gumroad.com/y1ojjvlo53n38l776qnpk240zera",
+      "price_cents": 24000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://theburningmonk.gumroad.com/l/prsls-jan-2025-instalments?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "q6PKx7SjjZjshbQWECrBwA==",
+      "name": "The Treasures and Tragedies of Elysian Park",
+      "description": "If you asked a random sampling of Angelenos to name a mountainous municipal green space, most wou...",
+      "thumbnail_url": "https://public-files.gumroad.com/zepjohf1co094jhdt7oof6o5ugb4",
+      "price_cents": 500,
+      "ratings_count": 1,
+      "ratings_score": 2.0,
+      "seller_name": "Esotouric's Secret Los Angeles",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 13,
+      "id": "1_LXnj993n1wvxR9sCIvhQ==",
+      "name": "ETERNAL BLOCKAGE REMOVER/ BOOSTER",
+      "description": "ETERNAL BLOCKAGE REMOVER/ BOOSTEREternal Alchemy: The Apex of Liberation and Manifestation The ET...",
+      "thumbnail_url": "https://public-files.gumroad.com/opdrdldebm5bzmfqlwsjd9g2tuk6",
+      "price_cents": 15500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://eternalfields.gumroad.com/l/upgjy?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 4,
+    "endpoint_count": 6,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "endpoint"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

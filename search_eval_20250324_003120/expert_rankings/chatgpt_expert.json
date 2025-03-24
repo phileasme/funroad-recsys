@@ -1,0 +1,200 @@
+{
+  "query": "chatgpt",
+  "timestamp": "2025-03-24T00:56:14.097187",
+  "total_products_considered": 38,
+  "ranked_product_ids": [
+    "aTJao45hePf8yXk37LsEqw==",
+    "PeGiseQ6iC19Zz4XWHPwgw==",
+    "DZGNMmnySXr5XSeaACyQcQ==",
+    "mNwPIhc87VDpiHOmMTtLag==",
+    "_jXjeSD0hIC2OsuVfnYN_w==",
+    "1JSChoKE0jbyGVHpUy9APw==",
+    "PiSiw0vQeIOY_qsQ52Bk-A==",
+    "M-HVAtLuFSbJQJcLkfvo3Q==",
+    "0aL1vUO1o-B6BXFdLXqtZw==",
+    "au4sR5Ootht6yzEAeEw_qA=="
+  ],
+  "ranked_products": [
+    {
+      "id": "aTJao45hePf8yXk37LsEqw==",
+      "name": "Ultimate Advanced ChatGPT Mastery Course",
+      "description": "Ultimate Advanced ChatGPT Mastery CourseGPT-4 is the most advanced language model yet, and it has...",
+      "thumbnail_url": "https://public-files.gumroad.com/l74no65mxgzkh2c2iljkwnvh94e4",
+      "price_cents": 0,
+      "ratings_count": 506,
+      "ratings_score": 4.9,
+      "seller_name": "Hasan",
+      "_source": "endpoint"
+    },
+    {
+      "id": "PeGiseQ6iC19Zz4XWHPwgw==",
+      "name": "The Genesis ChatGPT Mastery 101",
+      "description": "The Only ChatGPT Guide You'll Ever Need to 10x Your ChatGPT Skills \ud83d\udd25Get Instant Access To \ud83d\udc471500+ ...",
+      "thumbnail_url": "https://public-files.gumroad.com/konwily0lbggtuv1j5jzzt6xre9m",
+      "price_cents": 2500,
+      "ratings_count": 9,
+      "ratings_score": 5.0,
+      "seller_name": "AI GENESIS",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 10,
+      "id": "DZGNMmnySXr5XSeaACyQcQ==",
+      "name": "A Pattern Language for Large Reasoning AI: Long Horizon Thinking with ChatGPT O1-Pro",
+      "description": "Don't Miss Out: Leveraging Large Reasoning Models to Supercharge Your ThinkingImagine holding in ...",
+      "thumbnail_url": "https://public-files.gumroad.com/c8a44zzc12wamo177ffdq4cxk1qd",
+      "price_cents": 5000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://intuitionmachine.gumroad.com/l/o1?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 15,
+      "id": "mNwPIhc87VDpiHOmMTtLag==",
+      "name": "250+ ChatGPT Prompts for Essay, Dissertation or Thesis Writing",
+      "description": "Explore a valuable resource for students: 200+ ChatGPT Academic Writing Prompts. This collection ...",
+      "thumbnail_url": "https://public-files.gumroad.com/yimezu05w4lc3kxzy4nc3ct11fg2",
+      "price_cents": 2500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://thepagedoctor.gumroad.com/l/chatgptprompts?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 1,
+      "id": "_jXjeSD0hIC2OsuVfnYN_w==",
+      "name": "AI Acceleration Workshop",
+      "description": "Brad Costanzo, Chief AI Officer and Head of Strategy at Accelerated Intelligence taught a private...",
+      "thumbnail_url": "https://public-files.gumroad.com/2ckkw74i2uy9jse6pobcqu8sxo2n",
+      "price_cents": 129700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://bjc.gumroad.com/l/ai?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 5,
+      "id": "1JSChoKE0jbyGVHpUy9APw==",
+      "name": "LangChain, LangGraph and AI Agents Class Workshop",
+      "description": "From dabbling to competency this live workshop is designed to teach you how to build real-world w...",
+      "thumbnail_url": "https://public-files.gumroad.com/2uoy4j2yi0gg8zclx6d59obh4qlg",
+      "price_cents": 35000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://jscraft.gumroad.com/l/LangChain-LangGraph-AIAgents-workshop?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 18,
+      "id": "PiSiw0vQeIOY_qsQ52Bk-A==",
+      "name": "\ud83d\udcb0 AI Business Playbook Vault | 30+ Playbooks | Instant Access | Future Playbooks Free | Worth $310+ ",
+      "description": "\ud83d\udc4b Hey Kyle here,Do you want to get your hands on 30+ different AI Business Playbooks worth $310+?...",
+      "thumbnail_url": "https://public-files.gumroad.com/yt6a1v7xfobn20orfsnuqtwhmmgk",
+      "price_cents": 31000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://kdgbalmer.gumroad.com/l/total?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 16,
+      "id": "M-HVAtLuFSbJQJcLkfvo3Q==",
+      "name": "The IG Creator Blueprint",
+      "description": "Grow Your Instagram Audience Faster Than Ever BeforeMonetize your audience like a proBuild a 5-6 ...",
+      "thumbnail_url": "https://public-files.gumroad.com/10ingh475yz7j2gixnawfiw50hwi",
+      "price_cents": 9700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://ajaykaja.gumroad.com/l/kavln?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 17,
+      "id": "0aL1vUO1o-B6BXFdLXqtZw==",
+      "name": "La Landing Secreta (c\u00f3mo escribir una landing de SERVICIO que venda para ti las 24 horas del d\u00eda)",
+      "description": "AL PRECIO DE LA CLASE GUMROAD LE VA A SUMAR EL IVA (de tu pa\u00eds) (y mira que a veces te muestra el...",
+      "thumbnail_url": "https://public-files.gumroad.com/6g0tb1p6e5htib5bcf2zd32xnpwa",
+      "price_cents": 5000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://8973696273465.gumroad.com/l/afdju?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 4,
+      "id": "au4sR5Ootht6yzEAeEw_qA==",
+      "name": "Veriye Dayal\u0131 \u00dcr\u00fcn Tasar\u0131m\u0131: UX Ara\u015ft\u0131rma E\u011fitimi",
+      "description": "Bu e\u011fitim sana ne katacak?Bu e\u011fitimde, kullan\u0131c\u0131 deneyimi ara\u015ft\u0131rmas\u0131n\u0131n tasar\u0131m s\u00fcrecine \u00f6nerdi\u011f...",
+      "thumbnail_url": "https://public-files.gumroad.com/dfne8apsfhhyme2iqnso2n3i0pib",
+      "price_cents": 22500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://uxrplayground.gumroad.com/l/veriyedayaliuruntasarimi?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 8,
+    "endpoint_count": 2,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "gumroad"
+      },
+      {
+        "position": 4,
+        "source": "gumroad"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

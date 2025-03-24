@@ -1,0 +1,200 @@
+{
+  "query": "kdp cover design",
+  "timestamp": "2025-03-24T00:44:08.251169",
+  "total_products_considered": 40,
+  "ranked_product_ids": [
+    "-FLU1Xbpl8PWop_tiVb_9Q==",
+    "JcobruYLWBpXiFYcRR1yGA==",
+    "A2lFNLgfzlRlp72G3grnQA==",
+    "7N8J1VSmXyxm8P8u9T3FaQ==",
+    "EhEUiRH7_LaCDITsMEiAIw==",
+    "qimEqgOhT9xpqSOZF5Ga-g==",
+    "hP3pqR_YGXHrliJamELsXA==",
+    "I1Tq8pf0pTm2gujhfVbG6Q==",
+    "8eQZzNzvY9i-NhdCMHBmEw==",
+    "XUfQnIfPyZdKauE2MSS2Pg=="
+  ],
+  "ranked_products": [
+    {
+      "id": "-FLU1Xbpl8PWop_tiVb_9Q==",
+      "name": "Learn to Draw Cute Stuff | Kdp Interiors and Cover Book for SELF-PUBLISHING with Commercial License - Editable Canva",
+      "description": "Learn to Draw Cute Stuff | Kdp Interiors and Cover Book for SELF-PUBLISHING with Commercial Licen...",
+      "thumbnail_url": "https://public-files.gumroad.com/690he9jgzm9k27cyprt5a5l741v8",
+      "price_cents": 649,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "AvarStudio - KDP INTERIORS - Ready to sell anywhere | Templates Self-Publishing",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 3,
+      "id": "JcobruYLWBpXiFYcRR1yGA==",
+      "name": "100+ Editable Canva Templates | KDP 2025",
+      "description": "Expand Your Amazon KDP Business with a hundred Fully Editable Canva Templates!Transform your KDP ...",
+      "thumbnail_url": "https://public-files.gumroad.com/cpczrr9cztra4xj2ex80w6vv5vp7",
+      "price_cents": 799,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://joyfulcuts.gumroad.com/l/CanvaTemplates?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 4,
+      "id": "A2lFNLgfzlRlp72G3grnQA==",
+      "name": "Coloring Book Covers Midjourney Guide",
+      "description": "Say hello to \"Coloring Book Covers Midjourney Guide,\" your friendly sidekick in the world of cove...",
+      "thumbnail_url": "https://public-files.gumroad.com/4run1vr61m3pyyk0ct81gzuamr0d",
+      "price_cents": 1400,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://fairladiesprintables.gumroad.com/l/coloringbookcoversmidjourneyguide?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "7N8J1VSmXyxm8P8u9T3FaQ==",
+      "name": "KDP (Kindle Direct Publishing) Low Content Books Starter Package",
+      "description": "Ever wondered how you can further use design assets to increase your revenue using print on deman...",
+      "thumbnail_url": "https://public-files.gumroad.com/dnxuh4yvrs7r8muff1llihagtsmq",
+      "price_cents": 1000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://bowespublishing.gumroad.com/l/AJpU?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 5,
+      "id": "EhEUiRH7_LaCDITsMEiAIw==",
+      "name": "Coloring Book Creator - Software package for KDP Coloring Books",
+      "description": "Have you always wanted to create your own coloring books or start your own coloring book business...",
+      "thumbnail_url": "https://public-files.gumroad.com/zelht5qkmphzj63bvruv5bnwgz69",
+      "price_cents": 6700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://emoore.gumroad.com/l/CBC?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 20,
+      "id": "qimEqgOhT9xpqSOZF5Ga-g==",
+      "name": "Bulletproof KDP: Practical, Popular, and Perpetually Profitable Publishing Ideas",
+      "description": "Imagine having a daily guide to help you turn trending and evergreen ideas into low-content and n...",
+      "thumbnail_url": "https://public-files.gumroad.com/rp3o6vntl301u7kbkh9hov13e4bm",
+      "price_cents": 10000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://designmomentum.gumroad.com/l/kfvzt?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 17,
+      "id": "hP3pqR_YGXHrliJamELsXA==",
+      "name": "Coloring Book Masterclass",
+      "description": "During December 2021 I was making on average $500 per day from 1 coloring book.In this eBook I'll...",
+      "thumbnail_url": "https://public-files.gumroad.com/a6oapakhcpvvlsu4hahw71innfzx",
+      "price_cents": 999,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://thatkdpguy.gumroad.com/l/ByYxL?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 18,
+      "id": "I1Tq8pf0pTm2gujhfVbG6Q==",
+      "name": "Self-Publishing Made Easy",
+      "description": "Have you written your book but now you're stuck on the publishing part? Self-publishing is not ha...",
+      "thumbnail_url": "https://public-files.gumroad.com/bfs1i27dejtx7weppwsd8t6lw7wd",
+      "price_cents": 2900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://barbaragrassey.gumroad.com/l/wwpik?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 1,
+      "id": "8eQZzNzvY9i-NhdCMHBmEw==",
+      "name": "Lined Journal Interiors for KDP - 120 pages in PDF format 6 x 9 and 8.5 x 11 inches ",
+      "description": "Have you ever wanted to sell books on KDP (Kindle Direct Publishing), Amazon's Print-On-Demand se...",
+      "thumbnail_url": "https://public-files.gumroad.com/vat0pi9rr3p36dlz8no44j7l72n7",
+      "price_cents": 500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://kdppublishing.gumroad.com/l/OSbae?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "XUfQnIfPyZdKauE2MSS2Pg==",
+      "name": "Chocolate Cover Mockup",
+      "description": "Chocolate Cover Mockup modeled in blender 4.3 and rendered in cycles.Useful for product visualiza...",
+      "thumbnail_url": "https://public-files.gumroad.com/sk26f357t9q47yi75qc755rt0nqz",
+      "price_cents": 99900,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "SANDEEP CHOUDHARY",
+      "_source": "endpoint"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 8,
+    "endpoint_count": 2,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "gumroad"
+      },
+      {
+        "position": 3,
+        "source": "gumroad"
+      },
+      {
+        "position": 4,
+        "source": "gumroad"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "endpoint"
+      }
+    ]
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "query": "oil painting",
+  "timestamp": "2025-03-24T01:01:04.351823",
+  "total_products_considered": 37,
+  "ranked_product_ids": [
+    "Ig8yh7TO_S4sQRlRfDAd0A==",
+    "Y8vOrfr2G6aICBMRaAwnvQ==",
+    "8DVpg58tPcatEILd5uMPSg==",
+    "Q8JYYg-fUjJ9H21vBqRAmA==",
+    "agdliiVN38j0lgYflRRfqw==",
+    "CxO2rjKEWsN727t1UFbkIA==",
+    "pf3xHPbL3q31UNRjtHy2rw==",
+    "EX2oJCG1hR5dRa7BHlaCCw==",
+    "MoPGbNEOUH9dLVdp6Ao5Zw==",
+    "vJjYbiaKT2kguoJMdnhuhA=="
+  ],
+  "ranked_products": [
+    {
+      "id": "Ig8yh7TO_S4sQRlRfDAd0A==",
+      "name": "TRIADS: Painting with Three Colors",
+      "description": "Painting with just three colors plus white opens up exciting horizons for both beginning and expe...",
+      "thumbnail_url": "https://public-files.gumroad.com/f5myn5lh5ng193hia8f4w6jvx5k0",
+      "price_cents": 1798,
+      "ratings_count": 83,
+      "ratings_score": 4.8,
+      "seller_name": "James Gurney",
+      "_source": "endpoint"
+    },
+    {
+      "id": "Y8vOrfr2G6aICBMRaAwnvQ==",
+      "name": "Combining Mediums-Acrylic and Oils Part 2 - Oil Overpaint",
+      "description": "This clip is a preview of my new painting tutorial, Combining Mediums - Acrylic and Oils Part 2 /...",
+      "thumbnail_url": "https://public-files.gumroad.com/ed26pv269oo2bhhcw110dvujfcit",
+      "price_cents": 2500,
+      "ratings_count": 3,
+      "ratings_score": 5.0,
+      "seller_name": "Marc R. Hanson",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 16,
+      "id": "8DVpg58tPcatEILd5uMPSg==",
+      "name": "Special BUNDLE - MA-BRUSHES + The Ultimate Digital Painting Course (2 Tutorials - FULL)",
+      "description": "\u2013 The Ultimate Digital Landscape Painting Course \u2013THIS IS THE FULL COURSETOGETHER WITH THE MA-BRU...",
+      "thumbnail_url": "https://public-files.gumroad.com/yn7omg5g39ziysfe3xa7b8ekb02g",
+      "price_cents": 4300,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://michaeladamidis.gumroad.com/l/tmWTx?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "Q8JYYg-fUjJ9H21vBqRAmA==",
+      "name": "The Painting Brush Pack",
+      "description": "YOU GET:350+ Painting &amp; Illustration BrushesIncludes Mixer Brushes, Watercolor, Gouache, Spec...",
+      "thumbnail_url": "https://public-files.gumroad.com/gcpw7c5q8d5bh3wn6ky86oazg745",
+      "price_cents": 2200,
+      "ratings_count": 5,
+      "ratings_score": 5.0,
+      "seller_name": "Lane.Draws",
+      "_source": "endpoint"
+    },
+    {
+      "id": "agdliiVN38j0lgYflRRfqw==",
+      "name": "\ud835\udc0c\ud835\udc32\ud835\udc2c\ud835\udc2d\ud835\udc22\ud835\udc1c \ud835\udc05\ud835\udc25\ud835\udc28\ud835\udc30\u30fb12 Unique Lettering/Painting Procreate Brushes & Templates + Apple GlowBrush",
+      "description": "Mystic Flow \u2013 Unique Freestyle brushes. Create unique abstract lettering/painting using this bund...",
+      "thumbnail_url": "https://public-files.gumroad.com/zy498swqvujjph698hv09ocgt1zd",
+      "price_cents": 2500,
+      "ratings_count": 16,
+      "ratings_score": 5.0,
+      "seller_name": "\ud835\udc6d\ud835\udc82\ud835\udc9b\ud835\udc85\ud835\udc86\ud835\udc94",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 11,
+      "id": "CxO2rjKEWsN727t1UFbkIA==",
+      "name": "Stayf Procreate Impressionism Brushes",
+      "description": "The Stayf Procreate Impressionism Brushes are custom made for the drawing app Procreate 5. Paint ...",
+      "thumbnail_url": "https://public-files.gumroad.com/tjs0ke4qvd1jatz9zlul418ekwin",
+      "price_cents": 1500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://stayfdraws.gumroad.com/l/impressionismprocreate?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 6,
+      "id": "pf3xHPbL3q31UNRjtHy2rw==",
+      "name": "Convi\u00e9rtete en Storyteller de Youtube Nivel: God",
+      "description": "Con este curso dominar\u00e1s las t\u00e9cnicas narrativas que llevo utilizando en mis v\u00eddeos en los \u00faltimo...",
+      "thumbnail_url": "https://public-files.gumroad.com/e8qhbz7dwd6khzm6c8dt788ylpkh",
+      "price_cents": 29900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://storylord.gumroad.com/l/youtube?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 17,
+      "id": "EX2oJCG1hR5dRa7BHlaCCw==",
+      "name": "Mentorship + Ebooks",
+      "description": "Sign ups are currently open for November!Want to improve your art? With this mentorship, you will...",
+      "thumbnail_url": "https://public-files.gumroad.com/gvvnpf8dyj6fpjjdbxxjammfss4u",
+      "price_cents": 100000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://devinkorwin.gumroad.com/l/YUuEd?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 4,
+      "id": "MoPGbNEOUH9dLVdp6Ao5Zw==",
+      "name": "Ryuu [FT | PC]",
+      "description": "IntroductionAfter Holo success, it motivated me to make another avatar of the same style. Close t...",
+      "thumbnail_url": "https://public-files.gumroad.com/iytwzsys6uzm2c6g5lgqyqy1cbw7",
+      "price_cents": 3000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://holoexe.gumroad.com/l/Ryuux?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 3,
+      "id": "vJjYbiaKT2kguoJMdnhuhA==",
+      "name": "Chordwatch",
+      "description": "Are you a musician, producer, teacher or otherwise music tinkerer? Chordwatch makes the headache ...",
+      "thumbnail_url": "https://public-files.gumroad.com/5vltf54k1yxabuot7zhk5o6z6aj2",
+      "price_cents": 2500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://chordwatch.gumroad.com/l/midi?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 6,
+    "endpoint_count": 4,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "gumroad"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

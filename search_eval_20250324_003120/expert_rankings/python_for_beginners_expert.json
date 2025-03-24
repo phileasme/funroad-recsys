@@ -1,0 +1,188 @@
+{
+  "query": "python for beginners",
+  "timestamp": "2025-03-24T00:54:54.450605",
+  "total_products_considered": 40,
+  "ranked_product_ids": [
+    "YTYqVCgGm8Ll_Aud7jUu-Q==",
+    "ThjF0DjVfN_Hg7RKHnOf9Q==",
+    "oSVyjlz8JRTThhGZys6p0A==",
+    "b-0aQY4F3rAo1je72fsXpg==",
+    "HUuBmz6oeji7sPD5W4sJNQ==",
+    "oiIcIJywrUSlXelIFMZKZw==",
+    "rS7gSD0HH4dRnYrlzIQHkg==",
+    "mE6mwltclssgInWAwBU0hw==",
+    "Te6ttt3fkB8anblYVQZSHQ==",
+    "xRA6Naxv3qKlyH6shuzYww=="
+  ],
+  "ranked_products": [
+    {
+      "id": "YTYqVCgGm8Ll_Aud7jUu-Q==",
+      "name": "50 Days of Data Analysis with Python: The Ultimate Challenge Book for Beginners",
+      "description": "Master Data Analysis with Python: The Ultimate 50-Day Challenge BookAre you an aspiring data anal...",
+      "thumbnail_url": "https://public-files.gumroad.com/8e0sptgtnpcc7n9nie3emtd8qu0p",
+      "price_cents": 2099,
+      "ratings_count": 23,
+      "ratings_score": 4.9,
+      "seller_name": "Benjamin Bennett Alexander",
+      "_source": "endpoint"
+    },
+    {
+      "id": "ThjF0DjVfN_Hg7RKHnOf9Q==",
+      "name": "Master Python Fundamentals - The Ultimate Python Course for Beginners",
+      "description": "Master Python Fundamentals: The Ultimate Python Course for BeginnersIf you are trying to master t...",
+      "thumbnail_url": "https://public-files.gumroad.com/w8y7omv6rdvl2p66g6j7rt54jfpf",
+      "price_cents": 4999,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "Benjamin Bennett Alexander",
+      "_source": "endpoint"
+    },
+    {
+      "id": "oSVyjlz8JRTThhGZys6p0A==",
+      "name": "3 Book Bundle: Django for Beginners/APIs/Professionals",
+      "description": "These books are a hands-on guide to the Django Web Framework. They are suitable for total beginne...",
+      "thumbnail_url": "https://public-files.gumroad.com/xrqcwi1s94uoeyel4gjilqekboid",
+      "price_cents": 10800,
+      "ratings_count": 65,
+      "ratings_score": 4.8,
+      "seller_name": "William S. Vincent",
+      "_source": "endpoint"
+    },
+    {
+      "id": "b-0aQY4F3rAo1je72fsXpg==",
+      "name": "Everything Bundle (14 books)",
+      "description": "Python Concurrency Everything BundleLearn All of Python ConcurrencyGet everything you need to kno...",
+      "thumbnail_url": "https://public-files.gumroad.com/w42b730k7ehwo9r7o5282sks5pa1",
+      "price_cents": 16700,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Super Fast Python",
+      "_source": "endpoint"
+    },
+    {
+      "id": "HUuBmz6oeji7sPD5W4sJNQ==",
+      "name": "Python States for Houdini TDs",
+      "description": "READMEThis course is provided as personal online only Google Drive &amp; Google Slides based mate...",
+      "thumbnail_url": "https://public-files.gumroad.com/ffv4kxzdc1sgy5j920rlt4vh0ryd",
+      "price_cents": 25000,
+      "ratings_count": 6,
+      "ratings_score": 5.0,
+      "seller_name": "Bismuth Consultancy B.V.",
+      "_source": "endpoint"
+    },
+    {
+      "id": "oiIcIJywrUSlXelIFMZKZw==",
+      "name": "Smart Layer v0.9, Beta (Python Script for Maya) ",
+      "description": "Smart Layer is a game-changing script for adjusting animation in Autodesk Maya. It allows to do i...",
+      "thumbnail_url": "https://public-files.gumroad.com/jte6dzx09ncnnju994dgxhueny06",
+      "price_cents": 6500,
+      "ratings_count": 17,
+      "ratings_score": 5.0,
+      "seller_name": "Slava Baravik",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 6,
+      "id": "rS7gSD0HH4dRnYrlzIQHkg==",
+      "name": "Headquarters Notion Second Brain Template",
+      "description": "Simplify Your Life and Accomplish More with the Ultimate Productivity SystemHeadquarters is the P...",
+      "thumbnail_url": "https://public-files.gumroad.com/is6vgaqryrkmflop7enll9wr6chw",
+      "price_cents": 7900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://productivesetups.gumroad.com/l/headquarters?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 15,
+      "id": "mE6mwltclssgInWAwBU0hw==",
+      "name": "CNC Discord Membership (3 month)",
+      "description": "Chess Not Checkers Community (CnC)Ready to take your wealth-building skills to a whole new level?...",
+      "thumbnail_url": "https://public-files.gumroad.com/peq5lvljfzzae0as0ad2nxp4uori",
+      "price_cents": 19700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://tallguytycoon.gumroad.com/l/wdwifo?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 19,
+      "id": "Te6ttt3fkB8anblYVQZSHQ==",
+      "name": "Card Bending (VRCHAT + Quest)",
+      "description": "Please rate this item if you buy it, this will vastly help me out by getting seen more, and will ...",
+      "thumbnail_url": "https://public-files.gumroad.com/ckqnxldecauc45q7my15rg8zoe3o",
+      "price_cents": 1700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://liindy.gumroad.com/l/CardBending?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 2,
+      "id": "xRA6Naxv3qKlyH6shuzYww==",
+      "name": "Viwi [VRChat Avatar]",
+      "description": "Meet the ViwiViwis are friendly and approachable.Viwis are versatile creatures adapted to diverse...",
+      "thumbnail_url": "https://public-files.gumroad.com/4qrhxubtuenyibw0nxii3s79b7f4",
+      "price_cents": 5000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://mmmos.gumroad.com/l/Viwi?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 4,
+    "endpoint_count": 6,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "endpoint"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

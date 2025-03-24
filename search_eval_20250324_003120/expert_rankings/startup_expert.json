@@ -1,0 +1,200 @@
+{
+  "query": "startup",
+  "timestamp": "2025-03-24T01:02:25.757818",
+  "total_products_considered": 36,
+  "ranked_product_ids": [
+    "X7SmT25GY2VhuLzxajtypA==",
+    "IcSwcp0BzYGcNMf7NTxVLw==",
+    "95LTF8eNsqcAnhO5CZWotA==",
+    "iOauBGmWvJhtwdIpgX0r8g==",
+    "5_q7V-xXhfiHC3PeFZvI2A==",
+    "jn66A-3wF0lpvczLNbbLHw==",
+    "rvCQ4mEYhBWQw5o8rqxZ9Q==",
+    "ND-WoQbTx1d9m1phJKOT9Q==",
+    "tnZibhWk5EPppw8rU6SdXQ==",
+    "FZ9rceytWGgXbYVBztS-yQ=="
+  ],
+  "ranked_products": [
+    {
+      "gumroad_rank": 15,
+      "id": "X7SmT25GY2VhuLzxajtypA==",
+      "name": "Doing Culture Right: 10 x Playbooks For Startup People Leaders",
+      "description": "10 x Essential Culture Playbooks For Startup People LeadersSave yourself 100's of hours of prepar...",
+      "thumbnail_url": "https://public-files.gumroad.com/gaw80jxg496u5kh09j9iwy0s2jp7",
+      "price_cents": 19900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://openorg.gumroad.com/l/doingculturerightplaybooks?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "IcSwcp0BzYGcNMf7NTxVLw==",
+      "name": "Boringlaunch: Submit Your Startup to 60+ Platforms",
+      "description": "\ud83c\udf0d Website: http://boringlaunch.comBoost Your SEO and Sales:We will submit your startup to 60+ Pla...",
+      "thumbnail_url": "https://public-files.gumroad.com/s2jmow7yxyk09e5d773a29x0ncm2",
+      "price_cents": 14900,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "Shivam",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 12,
+      "id": "95LTF8eNsqcAnhO5CZWotA==",
+      "name": "The Office of the CEO Playbook, 1st Edition (Free, Enter $0)",
+      "description": "Welcome to the Office of the CEO Playbook, 1st Edition. This go-to reference guide spans 62 pages...",
+      "thumbnail_url": "https://public-files.gumroad.com/6hhr7x10lrewfhirykikd5qod3fw",
+      "price_cents": 0,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://cedarchief.gumroad.com/l/oceo-playbook?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 7,
+      "id": "iOauBGmWvJhtwdIpgX0r8g==",
+      "name": "Business Class, a Ruby on Rails SaaS Starter Kit",
+      "description": "Watch the new 2.0 demo: https://youtu.be/XYD_1w2v2fM?si=3ZjhslnZglIilvNQNot ready to buy? Subscri...",
+      "thumbnail_url": "https://public-files.gumroad.com/1vybw2mbg1z7bvw2jidwxg01qrby",
+      "price_cents": 16900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://strzibny.gumroad.com/l/businessclass?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 13,
+      "id": "5_q7V-xXhfiHC3PeFZvI2A==",
+      "name": "13,000+ Investors email database",
+      "description": "This package contains a database of more than 13,000 investors' email and LinkedIn Profile Welcom...",
+      "thumbnail_url": "https://public-files.gumroad.com/lgmb0wmupsyjwffougqlxzoz8qa9",
+      "price_cents": 8900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://vchub.gumroad.com/l/13000_investors_database?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 17,
+      "id": "jn66A-3wF0lpvczLNbbLHw==",
+      "name": "cONference 2024 by Operations Nation - Event Recordings",
+      "description": "Rewatch the talks from Operations Nation's cONference 2024 - Europe's largest conference for oper...",
+      "thumbnail_url": "https://public-files.gumroad.com/to6ceu5trlqbkv3gvxq0yjw0tmc5",
+      "price_cents": 4999,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://operationsnation.gumroad.com/l/conference2024?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 3,
+      "id": "rvCQ4mEYhBWQw5o8rqxZ9Q==",
+      "name": "Complete Notion ISMS (ISO 27001:2022)",
+      "description": "Our Notion ISMS is your all-in-one solution for efficient Information Security Management accordi...",
+      "thumbnail_url": "https://public-files.gumroad.com/a3sc0uiqs35qzo8yywe00veb77k1",
+      "price_cents": 39900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://byght.gumroad.com/l/qqkfpn?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "ND-WoQbTx1d9m1phJKOT9Q==",
+      "name": "Obsidian Starter Kit and community",
+      "description": "Who is this for? You are just getting started with note-taking or you've recently switched to Obs...",
+      "thumbnail_url": "https://public-files.gumroad.com/j4x9mgidfiy0f2qnzkf030dhpbnf",
+      "price_cents": 3700,
+      "ratings_count": 42,
+      "ratings_score": 4.8,
+      "seller_name": "S\u00e9bastien Dubois",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 11,
+      "id": "tnZibhWk5EPppw8rU6SdXQ==",
+      "name": "CRACKING THE JAVA INTERVIEWS WITH SUMIT",
+      "description": "Welcome to \"Cracking The Java Interviews with Sumit\", a comprehensive guide designed to help Java...",
+      "thumbnail_url": "https://public-files.gumroad.com/p9taotpquh23wcjvb5tk1dxa07ec",
+      "price_cents": 750,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://msumit.gumroad.com/l/qturr?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 6,
+      "id": "FZ9rceytWGgXbYVBztS-yQ==",
+      "name": "Altcoin Investing Course",
+      "description": "The Altcoin Investing Course is a 9-module course taught by Cryptocurrency analyst and trader Rek...",
+      "thumbnail_url": "https://public-files.gumroad.com/02j3sthtpcvpjkgbrsg0sfp9twgh",
+      "price_cents": 29700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://rektcapital.gumroad.com/l/altcoininvesting?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 8,
+    "endpoint_count": 2,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "gumroad"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "gumroad"
+      },
+      {
+        "position": 4,
+        "source": "gumroad"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "endpoint"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

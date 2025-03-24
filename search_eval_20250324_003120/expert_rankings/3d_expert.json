@@ -1,0 +1,191 @@
+{
+  "query": "3d",
+  "timestamp": "2025-03-24T00:44:35.644527",
+  "total_products_considered": 39,
+  "ranked_product_ids": [
+    "VakKSMKMJKy0-CeRNHmTzQ==",
+    "CpTNEyDKnt8eAH85PsaSzA==",
+    "eibohoTuOUpM-UiEgbYYlw==",
+    "JF9zHlDimtLuQqeOmAQT3g==",
+    "Ox7gLMqdb1C7rrE_I3-BEw==",
+    "vdCEYmnKi-kCr5Zf2Oe6_g==",
+    "gVEINyn135H2ly_b82wF2g==",
+    "xRA6Naxv3qKlyH6shuzYww==",
+    "Te6ttt3fkB8anblYVQZSHQ==",
+    "wYO4Y4AaPpv2zOQPrWJ_Fw=="
+  ],
+  "ranked_products": [
+    {
+      "id": "VakKSMKMJKy0-CeRNHmTzQ==",
+      "name": "3D 360 Hoodie Mockup",
+      "description": "Features:360 perfect looping animationWind effectUltra realistic closeupsFully customisableCustom...",
+      "thumbnail_url": "https://public-files.gumroad.com/ns20x9dp438y428q2zu71czzubkd",
+      "price_cents": 1499,
+      "ratings_count": 8,
+      "ratings_score": 3.8,
+      "seller_name": "VirtualThreads - 3D Animated Mockups",
+      "_source": "endpoint"
+    },
+    {
+      "id": "CpTNEyDKnt8eAH85PsaSzA==",
+      "name": "Mercedes W222 2014",
+      "description": "3D model of the Mercedes W222 2014. A detailed 3D model, perfect for games, animation, or 3D proj...",
+      "thumbnail_url": "https://public-files.gumroad.com/ies6jqvmj0a4b55i38o3dmuuq27w",
+      "price_cents": 2000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Franc Dider",
+      "_source": "endpoint"
+    },
+    {
+      "id": "eibohoTuOUpM-UiEgbYYlw==",
+      "name": "Mercedes-Benz EQE",
+      "description": "3D model of the Mercedes-Benz EQE. A detailed 3D model, perfect for games, animation, or 3D proje...",
+      "thumbnail_url": "https://public-files.gumroad.com/q59wx7y238ozd4xn57gbx23mk8p6",
+      "price_cents": 2000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Franc Dider",
+      "_source": "endpoint"
+    },
+    {
+      "id": "JF9zHlDimtLuQqeOmAQT3g==",
+      "name": "Mercedes EQC AMG 2020",
+      "description": "3D model of the Mercedes EQC AMG 2020. A detailed 3D model, perfect for games, animation, or 3D p...",
+      "thumbnail_url": "https://public-files.gumroad.com/mhgquj199lyxb1dikd10o566j55p",
+      "price_cents": 2000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Franc Dider",
+      "_source": "endpoint"
+    },
+    {
+      "id": "Ox7gLMqdb1C7rrE_I3-BEw==",
+      "name": "Mercedes Benz GLE 2020 v3",
+      "description": "3D model of the Mercedes Benz GLE 2020 v3. A detailed 3D model, perfect for games, animation, or ...",
+      "thumbnail_url": "https://public-files.gumroad.com/3curzaookp5nr562ufcbr533jwsh",
+      "price_cents": 2000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Franc Dider",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 1,
+      "id": "vdCEYmnKi-kCr5Zf2Oe6_g==",
+      "name": "Industrial Zone Collection",
+      "description": "This bundle includes 150+ items:2 Fully rigged HERO characters (Provided with 21 preset poses and...",
+      "thumbnail_url": "https://public-files.gumroad.com/3kp8dvdpbl36uoxpxpdo625rwi4j",
+      "price_cents": 25000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://jamajurabaev.gumroad.com/l/ngujya?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "gVEINyn135H2ly_b82wF2g==",
+      "name": "Redshift Masterclass: Your Complete Guide to Redshift for Cinema 4d",
+      "description": "Welcome to our new course:Redshift Masterclass: Your Complete Guide to Redshift for Cinema 4dThis...",
+      "thumbnail_url": "https://public-files.gumroad.com/zyllgsmsqz4npxnye5djx79esxio",
+      "price_cents": 15900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://mographplus.gumroad.com/l/zawas?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 15,
+      "id": "xRA6Naxv3qKlyH6shuzYww==",
+      "name": "Viwi [VRChat Avatar]",
+      "description": "Meet the ViwiViwis are friendly and approachable.Viwis are versatile creatures adapted to diverse...",
+      "thumbnail_url": "https://public-files.gumroad.com/4qrhxubtuenyibw0nxii3s79b7f4",
+      "price_cents": 5000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://mmmos.gumroad.com/l/Viwi?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 16,
+      "id": "Te6ttt3fkB8anblYVQZSHQ==",
+      "name": "Card Bending (VRCHAT + Quest)",
+      "description": "Please rate this item if you buy it, this will vastly help me out by getting seen more, and will ...",
+      "thumbnail_url": "https://public-files.gumroad.com/ckqnxldecauc45q7my15rg8zoe3o",
+      "price_cents": 1700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://liindy.gumroad.com/l/CardBending?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 4,
+      "id": "wYO4Y4AaPpv2zOQPrWJ_Fw==",
+      "name": "Motion Bro Bundle for After Effects - 5000 Transitions",
+      "description": "Ultimate Transitions Package by the Motion Bro teamThis bundle is designed for After Effects and ...",
+      "thumbnail_url": "https://public-files.gumroad.com/fqoduj4r80bapwjqmahxyax7l5lc",
+      "price_cents": 5500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://videolancer.gumroad.com/l/bundleae?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 5,
+    "endpoint_count": 5,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

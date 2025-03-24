@@ -1,0 +1,188 @@
+{
+  "query": "ios14",
+  "timestamp": "2025-03-24T00:45:26.280866",
+  "total_products_considered": 40,
+  "ranked_product_ids": [
+    "ABrAPRSHQ-irOfBMQ9SCzg==",
+    "4htZ-BlmtD3YW-3WYVQaLA==",
+    "CT8Qo-S-NufXljaj9KoD6g==",
+    "wZoz_Cjz1QTJqco8tjpcNg==",
+    "LrQFO6orQMWcc0WAPl_8dA==",
+    "ZgN3HwkDtgrlPL65XjfeEQ==",
+    "GX_BgMzKChBkD1TV9Ss8sA==",
+    "zg5xkFpzZPTYQa2LQWeGww==",
+    "LQ3Hti9yZzm_alGvDq0xiA==",
+    "_1Pksh2ce17yRBKV2DvGcw=="
+  ],
+  "ranked_products": [
+    {
+      "id": "ABrAPRSHQ-irOfBMQ9SCzg==",
+      "name": "iOS 14 Axure Widget Library",
+      "description": "The iOS 14 Axure widget library has arrived. Pixel perfect widgets built to spec using Apple's Hu...",
+      "thumbnail_url": "https://public-files.gumroad.com/fx24bnvgoug6y0jpm9acyss1b42c",
+      "price_cents": 5900,
+      "ratings_count": 2,
+      "ratings_score": 5.0,
+      "seller_name": "Axure Themes",
+      "_source": "endpoint"
+    },
+    {
+      "id": "4htZ-BlmtD3YW-3WYVQaLA==",
+      "name": "Black iOS 14 Icons (110 icons)",
+      "description": "Simple and gorgeous set of 110 black app icons created for iOS 14. One digital download with inst...",
+      "thumbnail_url": "https://public-files.gumroad.com/axywyq1aaihyu0hz39gs67yixlfa",
+      "price_cents": 2600,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "XO Art & Design",
+      "_source": "endpoint"
+    },
+    {
+      "id": "CT8Qo-S-NufXljaj9KoD6g==",
+      "name": "iOS 14 Icon Minimal Matte Black/White 280x Icons (Updated!)",
+      "description": "Get 10% off our custom designed app icons for the iOS 14 \ud83d\udcf1 with the code MATTE2020! They are a be...",
+      "thumbnail_url": "https://public-files.gumroad.com/cmkr9mlp2se0tek7md8pu0ysu0c7",
+      "price_cents": 1000,
+      "ratings_count": 2,
+      "ratings_score": 4.5,
+      "seller_name": "Robert Mak",
+      "_source": "endpoint"
+    },
+    {
+      "id": "wZoz_Cjz1QTJqco8tjpcNg==",
+      "name": "Among Them (Among Us Style) - iOS 14 Icon Set, Aesthetic",
+      "description": "Introducing\u2026 Among Them. An 'Among Us' style icon set made for iOS 14.Follow my twitter: @slick_p...",
+      "thumbnail_url": "https://public-files.gumroad.com/i9baim3u7qt3dn196lgl2vne486k",
+      "price_cents": 1000,
+      "ratings_count": 12,
+      "ratings_score": 4.2,
+      "seller_name": "Slick Pixel",
+      "_source": "endpoint"
+    },
+    {
+      "id": "LrQFO6orQMWcc0WAPl_8dA==",
+      "name": "Sursei (iOS Icon Theme)",
+      "description": "This is for non-jailbroken devices.How to apply custom icons on iOS 14Written Tutorial from MacRu...",
+      "thumbnail_url": "https://public-files.gumroad.com/5vd687awbqrbwxefhb36mgb7a48q",
+      "price_cents": 299,
+      "ratings_count": 17,
+      "ratings_score": 5.0,
+      "seller_name": "Polyphian",
+      "_source": "endpoint"
+    },
+    {
+      "id": "ZgN3HwkDtgrlPL65XjfeEQ==",
+      "name": "Depths (iOS Icon Theme)",
+      "description": "Give your iOS icons some depth, while retaining a stock-like appearance.Stock iOS 14+. (No jailbr...",
+      "thumbnail_url": "https://public-files.gumroad.com/x2dkfkd09swdfph8ya8ycphxa004",
+      "price_cents": 999,
+      "ratings_count": 237,
+      "ratings_score": 4.8,
+      "seller_name": "Polyphian",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 5,
+      "id": "GX_BgMzKChBkD1TV9Ss8sA==",
+      "name": "Armorsmith Designer",
+      "description": "Armorsmith Designer is a tool for creating and constructing costumes with ease. With Armorsmith, ...",
+      "thumbnail_url": "https://public-files.gumroad.com/9x43czhpl4rfxur2jdx7mugisujk",
+      "price_cents": 4000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://thearmoredgarage.gumroad.com/l/LMdGL?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 6,
+      "id": "zg5xkFpzZPTYQa2LQWeGww==",
+      "name": "\ud83c\udfaf Secret Society Basic Subscription",
+      "description": "Exclusive Secret Society MembershipGain Access to the coveted Secret Society Discord Server &amp;...",
+      "thumbnail_url": "https://public-files.gumroad.com/767yh80axd7b5kqyxhf77aafd3x5",
+      "price_cents": 2300,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://thezherkaofficial.gumroad.com/l/DateIQBasic?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 15,
+      "id": "LQ3Hti9yZzm_alGvDq0xiA==",
+      "name": "Cryptocurrency Master Course  ",
+      "description": "\u2014 Learn tools that I use to make huge returns in the crypto currency markets.\u2014 Implement while st...",
+      "thumbnail_url": "https://public-files.gumroad.com/zxuack6igd243enwrxzd93aainv8",
+      "price_cents": 33300,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://jamescryptoguru.gumroad.com/l/CryptocurrencyMasterCourse?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 20,
+      "id": "_1Pksh2ce17yRBKV2DvGcw==",
+      "name": "All Vendors Bundle + Resell Guide",
+      "description": "Once purchase you\u2019ll receive a telegram contact Or whatsapp contact depending on which VendorCont...",
+      "thumbnail_url": "https://public-files.gumroad.com/4xq39fd4ejri7vn2ai28x9eiqns5",
+      "price_cents": 3500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://realdealreselling.gumroad.com/l/ulgvj?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 4,
+    "endpoint_count": 6,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "endpoint"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

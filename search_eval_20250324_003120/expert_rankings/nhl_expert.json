@@ -1,0 +1,191 @@
+{
+  "query": "nhl",
+  "timestamp": "2025-03-24T01:00:10.637574",
+  "total_products_considered": 36,
+  "ranked_product_ids": [
+    "7WaBpdldhVPWdJgPZcDNRw==",
+    "GxA3FeUPQVmSGIfBxyZhcQ==",
+    "0pXuUCw95rXNnMnmkAc_bA==",
+    "QmYbI3t67XAhaxBNzxwhZw==",
+    "USIc53UrOdR2HAL9Spl7LA==",
+    "hwsdZLU5NwUZV1JrzXpZmw==",
+    "kH6N55iQ3qgT1IG6JcUxDQ==",
+    "QE6WbKNKnxQuRh4auLW2-g==",
+    "j8QqRaBTlXhwBguVfK_HiA==",
+    "GVkyIyY8n1CJ0MtEULlAfA=="
+  ],
+  "ranked_products": [
+    {
+      "id": "7WaBpdldhVPWdJgPZcDNRw==",
+      "name": "Hockey Tactics 2023",
+      "description": "Understand the systems of all 32 NHL teams for the 2022-23 seasonEver wondered what schemes and p...",
+      "thumbnail_url": "https://public-files.gumroad.com/g6mnxipwwpmkf4k02m5ifhxrmpsn",
+      "price_cents": 2000,
+      "ratings_count": 55,
+      "ratings_score": 5.0,
+      "seller_name": "Jack Han",
+      "_source": "endpoint"
+    },
+    {
+      "id": "GxA3FeUPQVmSGIfBxyZhcQ==",
+      "name": "MaizePicks Premium Plays 1/24/23",
+      "description": "12 NBA 5 NHL and 6 Australian Open tennis plays today to cash onNBA has been hitting at a high ra...",
+      "thumbnail_url": "https://public-files.gumroad.com/5zyatg9hp1v9jhpdicrdclfuj5er",
+      "price_cents": 1000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Maize Picks",
+      "_source": "endpoint"
+    },
+    {
+      "id": "0pXuUCw95rXNnMnmkAc_bA==",
+      "name": "Total Hockey Training 2",
+      "description": "Welcome to Total Hockey Training 2. Unlike the original book, Total Hockey Training, this book wi...",
+      "thumbnail_url": "https://public-files.gumroad.com/wq0zmejpdy5xz2g1zcjrco8i7rle",
+      "price_cents": 2000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Sean Skahan",
+      "_source": "endpoint"
+    },
+    {
+      "id": "QmYbI3t67XAhaxBNzxwhZw==",
+      "name": "Subscription to HockeySkytte",
+      "description": "- eBook: Introduction to Advanced Hockey Statistics- eBook: Guide: NHL 2023/2024- Visualizations:...",
+      "thumbnail_url": "https://public-files.gumroad.com/ryndmx47x38bl3nzghcvcwyd93w9",
+      "price_cents": 1000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Lars Skytte",
+      "_source": "endpoint"
+    },
+    {
+      "id": "USIc53UrOdR2HAL9Spl7LA==",
+      "name": "11/2 10U\ud83d\udca3 NHL play",
+      "description": "10U\ud83d\udca3 NHL PROP PLAY! 9-0 RUN!",
+      "thumbnail_url": "https://public-files.gumroad.com/dysqg046kspa0jihcor9niymah67",
+      "price_cents": 2500,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Caleb Picks",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 18,
+      "id": "hwsdZLU5NwUZV1JrzXpZmw==",
+      "name": "Ricky Witt - Sport Cinema Video LUT",
+      "description": "DESIGNED FOR SPORT CREATIVES BY SPORT CREATIVESCineSport - Achieve a striking cinematic look effo...",
+      "thumbnail_url": "https://public-files.gumroad.com/y9s842ebeqkzkktrxfg08ql9hokd",
+      "price_cents": 2500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://rickywitt.gumroad.com/l/SportCinema?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 3,
+      "id": "kH6N55iQ3qgT1IG6JcUxDQ==",
+      "name": "Performance Playbook: Mindset and Mental Skills ",
+      "description": "Maximize Potential and Achieve Your Goals. Our Performance Playbook is made for athletes, coaches...",
+      "thumbnail_url": "https://public-files.gumroad.com/m552ndepotvll1qqhfd00z2w2lj0",
+      "price_cents": 7500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://motoathletic.gumroad.com/l/performanceplaybook?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 10,
+      "id": "QE6WbKNKnxQuRh4auLW2-g==",
+      "name": "MaizePicks Premium Plays 2/11/23",
+      "description": "THE ROAD TO +200U MOVES CLOSER AND CLOSER EACH DAY!!! \ud83d\udcb0I don't want to jinx it, but this heat str...",
+      "thumbnail_url": "https://public-files.gumroad.com/iqqvpa2fev2ltbq7a3dz8ci0cgbd",
+      "price_cents": 1000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://maizepicks.gumroad.com/l/230211?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "j8QqRaBTlXhwBguVfK_HiA==",
+      "name": "MaizePicks Premium Plays 3/03/23",
+      "description": "Had a great day in tennis plays last night, and feeling even more confident about these plays tod...",
+      "thumbnail_url": "https://public-files.gumroad.com/bfw2qcjysi1s97w7g7msp9ni0hf9",
+      "price_cents": 1000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://maizepicks.gumroad.com/l/230303?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 6,
+      "id": "GVkyIyY8n1CJ0MtEULlAfA==",
+      "name": "1/7/23 Premium Plays",
+      "description": "The best of the best plays for the beginning of the end of the final weekend of the NFL regular s...",
+      "thumbnail_url": null,
+      "price_cents": 1000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://maizepicks.gumroad.com/l/230107?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 5,
+    "endpoint_count": 5,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

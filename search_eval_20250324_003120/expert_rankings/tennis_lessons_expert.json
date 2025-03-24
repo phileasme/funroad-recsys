@@ -1,0 +1,197 @@
+{
+  "query": "tennis lessons",
+  "timestamp": "2025-03-24T00:44:58.378788",
+  "total_products_considered": 35,
+  "ranked_product_ids": [
+    "bfWuCpsen7b99J4m8L3_XQ==",
+    "l1gocStOMviqKK9pRPG9NA==",
+    "9e4SeTaSdiO94q-VhEZYiQ==",
+    "aVG3PBBbMEnxPLg6FbNICQ==",
+    "uXRCv9x2YJ4W76o5UP9Bgw==",
+    "g6gVzhFQlSN5vdsal8AuVw==",
+    "WrIe1jm3ysKJD0rW8WHwYw==",
+    "i-T8VmLnudLPrCfH9WNi9A==",
+    "m18bbDKpi-N9uRWkYOUmEQ==",
+    "QXfylTfEf0FSU18F-jcB1g=="
+  ],
+  "ranked_products": [
+    {
+      "id": "bfWuCpsen7b99J4m8L3_XQ==",
+      "name": "Personal Tennis Mentoring",
+      "description": "\ud83c\udfbe Transform Your Game with Personalized Tennis Mentoring! \ud83c\udfc6Are you ready to take your tennis skil...",
+      "thumbnail_url": "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?ixid=M3wzMDQ2Njh8MHwxfHNlYXJjaHwxMnx8dGVubmlzfGVufDB8fHx8MTcwMDk5NzY4NHww&ixlib=rb-4.0.3&h=600&w=600&fit=crop",
+      "price_cents": 45000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Mitko",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 3,
+      "id": "l1gocStOMviqKK9pRPG9NA==",
+      "name": "BEST TENNIS DRILLS AND GAMES FOR KIDS",
+      "description": "The Kids Are Loving Your Tennis Lessons! They're Calling Them \"FUN\" Tennis.Tennis is one of the m...",
+      "thumbnail_url": "https://public-files.gumroad.com/u1qjbd6wciku7blc1b7uchl2vdj0",
+      "price_cents": 999,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://cosminwebtennis24.gumroad.com/l/best-tennis-drills-for-teaching-kids?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 5,
+      "id": "9e4SeTaSdiO94q-VhEZYiQ==",
+      "name": "HOW TO TEACH TENNIS / 10 LESSON PLANS - A Complete Course for Tennis Coaches",
+      "description": "Teaching Tennis Is Easy. You Now Have the Skills to Help Develop Future Tennis Stars.A first-time...",
+      "thumbnail_url": "https://public-files.gumroad.com/zvd9c8xk0t7es56a8f0lmupmihfn",
+      "price_cents": 9700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://cosminwebtennis24.gumroad.com/l/how-to-teach-tennis-to-beginner-players?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 2,
+      "id": "aVG3PBBbMEnxPLg6FbNICQ==",
+      "name": "ULTIMATE TENNIS FOREHAND - Lessons, Drills and Tips to Master the Forehand Groundstroke",
+      "description": "You Have a New and Powerful Forehand. Use It to Win More Matches!There is no doubt that the foreh...",
+      "thumbnail_url": "https://public-files.gumroad.com/lxchsw8dme6o01q88jj5oiy3t023",
+      "price_cents": 999,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://cosminwebtennis24.gumroad.com/l/ultimate-tennis-forehand?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 4,
+      "id": "uXRCv9x2YJ4W76o5UP9Bgw==",
+      "name": "BEST BALL MACHINE TENNIS DRILLS - Technique, Strokes Consistency and Accuracy",
+      "description": "Unleash the Power of Your Ball Machine: Fun, Challenging Drills You Can Do Solo!Struggling to fin...",
+      "thumbnail_url": "https://public-files.gumroad.com/go4tkninh3wwhrq2uw11gr0sk1uh",
+      "price_cents": 6700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://cosminwebtennis24.gumroad.com/l/best-ball-machine-tennis-drills?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "g6gVzhFQlSN5vdsal8AuVw==",
+      "name": "8/1 10U\ud83d\udca3 MAX tennis play",
+      "description": "10U\ud83d\udca3 MAX TENNIS PLAY",
+      "thumbnail_url": "https://public-files.gumroad.com/4hlp23zrktntvr0h7gk6zrfjwmj3",
+      "price_cents": 2500,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Caleb Picks",
+      "_source": "endpoint"
+    },
+    {
+      "id": "WrIe1jm3ysKJD0rW8WHwYw==",
+      "name": "2/7 10U\ud83d\udca3 MAX tennis play",
+      "description": "10U\ud83d\udca3 MAX TENNIS PLAY",
+      "thumbnail_url": "https://public-files.gumroad.com/zvumz7v26iuf83kzrlcaiqn3zqlq",
+      "price_cents": 2500,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Caleb Picks",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 8,
+      "id": "i-T8VmLnudLPrCfH9WNi9A==",
+      "name": "How To Start Playing Better Doubles In 2 Months or Less!!",
+      "description": "Listen.\"If you want to start playing better singles and start winning more matches, start play mo...",
+      "thumbnail_url": "https://public-files.gumroad.com/pt9viehezigs3r880j41b51qxfio",
+      "price_cents": 2500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://ptrguy.gumroad.com/l/pRrbn?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 11,
+      "id": "m18bbDKpi-N9uRWkYOUmEQ==",
+      "name": "Ultimate Guide to Midjourney 2024: Master AI Art Creation NEW",
+      "description": "Turn your creativity into profits with AIImagine, Create, Profit - With AI Art\ud83d\udcb0 \ud83d\ude80 Buy Once, Lifet...",
+      "thumbnail_url": "https://public-files.gumroad.com/xnol6eaqrxpaj0wyrpli3mbvh171",
+      "price_cents": 600,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://thebudgetpurse.gumroad.com/l/nfvnk?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 13,
+      "id": "QXfylTfEf0FSU18F-jcB1g==",
+      "name": "AI Fundamentals - Crash Course",
+      "description": "Who is this for?You want to learn what AI is, how it works, and what are the most popular use cas...",
+      "thumbnail_url": "https://public-files.gumroad.com/n4v43t5e4o5vo43lkq6i5kq6q1u8",
+      "price_cents": 35000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://nocodeai.gumroad.com/l/AI-Fundamentals?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 7,
+    "endpoint_count": 3,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "gumroad"
+      },
+      {
+        "position": 3,
+        "source": "gumroad"
+      },
+      {
+        "position": 4,
+        "source": "gumroad"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "endpoint"
+      },
+      {
+        "position": 7,
+        "source": "endpoint"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

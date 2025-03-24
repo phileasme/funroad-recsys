@@ -1,0 +1,185 @@
+{
+  "query": "ui",
+  "timestamp": "2025-03-24T01:02:47.496543",
+  "total_products_considered": 40,
+  "ranked_product_ids": [
+    "1-sdSvpYGFtbbQr1q5Tpiw==",
+    "yrR0VjqkDdWenCDnCLEnvw==",
+    "cr9GKt88nYUVrzKWmrgz_w==",
+    "3ayzy2cVs_jhj129TZPjLA==",
+    "M7Pe_-XAZkn1JQHOKq6Hwg==",
+    "-bwNklKVK76I8asbX-A0JA==",
+    "nWibiXnkWOnM-CHIamgAnA==",
+    "nuUPsO8Dti_eRVUdPcNA0w==",
+    "jel4fCFRGfa_OZWXtAhe3g==",
+    "PryPbfz24PNncKkolk2FKA=="
+  ],
+  "ranked_products": [
+    {
+      "id": "1-sdSvpYGFtbbQr1q5Tpiw==",
+      "name": "Stratis UI kit for Figma",
+      "description": "A Figma UI kit and design systemStratis UI is the one of the largest Figma UI kits and design sys...",
+      "thumbnail_url": "https://public-files.gumroad.com/k1xvjkvjdlwzku7uim2o5uzbz02r",
+      "price_cents": 7000,
+      "ratings_count": 32,
+      "ratings_score": 4.9,
+      "seller_name": "Stratis UI",
+      "_source": "endpoint"
+    },
+    {
+      "id": "yrR0VjqkDdWenCDnCLEnvw==",
+      "name": "Glow UI 1.6 \u2013 Figma UI Kit and Design System",
+      "description": "Power up your design flow and save thousands of hours with with the most advanced design system f...",
+      "thumbnail_url": "https://public-files.gumroad.com/s1qpdnuf7kgyqw0riwbtystpuvlp",
+      "price_cents": 6900,
+      "ratings_count": 4,
+      "ratings_score": 5.0,
+      "seller_name": "Glow UI",
+      "_source": "endpoint"
+    },
+    {
+      "id": "cr9GKt88nYUVrzKWmrgz_w==",
+      "name": "Nucleus UI PRO \u2013 Figma UI Kit and Design System (Mobile and Web)",
+      "description": "Supercharge your design workflow, kick-start your projects faster, and elevate your process\u2713 Suit...",
+      "thumbnail_url": "https://public-files.gumroad.com/of1ji5mikhva35prk21rvoknb5x1",
+      "price_cents": 9900,
+      "ratings_count": 56,
+      "ratings_score": 4.9,
+      "seller_name": "Nucleus UI \u2013 UI Kit & Design Systems for Figma",
+      "_source": "endpoint"
+    },
+    {
+      "id": "3ayzy2cVs_jhj129TZPjLA==",
+      "name": "Dazzle UI Icon library - 1,800+ for Figma",
+      "description": "Dazzle-UI icon free is designed to make your interfaces and presentations beautiful. With pixel-p...",
+      "thumbnail_url": "https://public-files.gumroad.com/wwzvkg122nqxkq24gddty1xxebak",
+      "price_cents": 0,
+      "ratings_count": 343,
+      "ratings_score": 4.9,
+      "seller_name": "Dazzle UI",
+      "_source": "endpoint"
+    },
+    {
+      "id": "M7Pe_-XAZkn1JQHOKq6Hwg==",
+      "name": "UI Design Systems Mastery ",
+      "description": "New Chapter 7. What's inside:\u2139\ufe0f What are Variables?\ud83d\udca1 Types of Variables &amp; Tokens\ud83d\udee0 Organizing ...",
+      "thumbnail_url": "https://public-files.gumroad.com/orhpbflt73eplzo9weybetlegoxc",
+      "price_cents": 6490,
+      "ratings_count": 82,
+      "ratings_score": 5.0,
+      "seller_name": "Marina Budarina",
+      "_source": "endpoint"
+    },
+    {
+      "id": "-bwNklKVK76I8asbX-A0JA==",
+      "name": "Master Gorgeous UI Design Course",
+      "description": "Master Gorgeous UI Design Improve Your Visual Design Skills with Pablo StanleyUnlock your creativ...",
+      "thumbnail_url": "https://public-files.gumroad.com/s19gyyp4iwne6ud976i5lm7ob32e",
+      "price_cents": 14999,
+      "ratings_count": 34,
+      "ratings_score": 4.3,
+      "seller_name": "Pablo Stanley and Team",
+      "_source": "endpoint"
+    },
+    {
+      "id": "nWibiXnkWOnM-CHIamgAnA==",
+      "name": "FlutterShop - Premium E-commerce UI kit for Flutter",
+      "description": "Chrome or Brave browser recommended for previewLive previewFlutterShop is a premium E-commerce UI...",
+      "thumbnail_url": "https://public-files.gumroad.com/hq7nbru30p3jvdsu50d3478blue8",
+      "price_cents": 0,
+      "ratings_count": 53,
+      "ratings_score": 4.5,
+      "seller_name": "The Flutter Way",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 12,
+      "id": "nuUPsO8Dti_eRVUdPcNA0w==",
+      "name": "PhotoSolve PRO - Scan & Solve",
+      "description": "The most efficient way to finish assignments. Scan and answer questions effortlessly with PhotoSo...",
+      "thumbnail_url": "https://public-files.gumroad.com/suijvzdctm26opre7fntx0f3lk34",
+      "price_cents": 6000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://photosolve.gumroad.com/l/photosolve?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 14,
+      "id": "jel4fCFRGfa_OZWXtAhe3g==",
+      "name": "Mosh-Pro",
+      "description": "Upgrade your Glitching with Mosh-Pro. Unlimited realtime effects for image and video.One-time pur...",
+      "thumbnail_url": "https://public-files.gumroad.com/3pmjclbggydty1mpltpqubnteabo",
+      "price_cents": 4900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://airtight.gumroad.com/l/kqeYS?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 1,
+      "id": "PryPbfz24PNncKkolk2FKA==",
+      "name": "on my knees",
+      "description": "Just for you daddyy",
+      "thumbnail_url": null,
+      "price_cents": 100000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://mintyjess.gumroad.com/l/1?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 3,
+    "endpoint_count": 7,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "endpoint"
+      },
+      {
+        "position": 7,
+        "source": "endpoint"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

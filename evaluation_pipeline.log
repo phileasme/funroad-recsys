@@ -1,0 +1,1675 @@
+2025-03-24 00:14:27,226 - INFO - Direct imports failed, trying alternate paths
+2025-03-24 00:14:27,226 - ERROR - Failed to import modules: Module directory /Users/Phil/Documents/GitHub/gumroad/eval-pipeline/eval-pipeline doesn't exist
+2025-03-24 00:14:27,226 - ERROR - Please make sure you're running this script from the correct directory
+2025-03-24 00:29:56,689 - INFO - NumExpr defaulting to 8 threads.
+2025-03-24 00:29:59,103 - ERROR - Failed to import modules: module 'calculate_metrics' has no attribute 'run_evaluation_pipeline'
+2025-03-24 00:29:59,103 - ERROR - Please check file names and make sure required modules are available
+2025-03-24 00:31:17,802 - INFO - NumExpr defaulting to 8 threads.
+2025-03-24 00:31:20,066 - INFO - Successfully imported modules using dynamic import
+2025-03-24 00:31:20,068 - INFO - Created directory: search_eval_20250324_003120
+2025-03-24 00:31:20,068 - INFO - Created directory: search_eval_20250324_003120/gumroad_processed
+2025-03-24 00:31:20,069 - INFO - Created directory: search_eval_20250324_003120/endpoint_results
+2025-03-24 00:31:20,070 - INFO - Created directory: search_eval_20250324_003120/expert_rankings
+2025-03-24 00:31:20,070 - INFO - Created directory: search_eval_20250324_003120/evaluation_results
+2025-03-24 00:31:20,070 - INFO - Step 1: Processing Gumroad data...
+2025-03-24 00:31:20,073 - INFO - Found 261 search directories
+2025-03-24 00:31:20,073 - INFO - Processing query: 'sample pack'
+2025-03-24 00:31:20,075 - INFO - Found 9 products in 1738357616__products_search.json
+2025-03-24 00:31:20,076 - INFO - Found 9 products in 1738357598__products_search.json
+2025-03-24 00:31:20,076 - INFO - Found 9 products in 1738357606__products_search.json
+2025-03-24 00:31:20,077 - INFO - Found 9 products in 1738357610__products_search.json
+2025-03-24 00:31:20,077 - INFO - Found 9 products in 1738357603__products_search.json
+2025-03-24 00:31:20,078 - INFO - Found 9 products in 1738357613__products_search.json
+2025-03-24 00:31:20,078 - INFO - Stored 54 products for query 'sample pack'
+2025-03-24 00:31:20,078 - INFO - Processing query: 'betting system'
+2025-03-24 00:31:20,095 - INFO - Found 9 products in 1738359913__products_search.json
+2025-03-24 00:31:20,096 - INFO - Found 9 products in 1737779160__products_search.json
+2025-03-24 00:31:20,097 - INFO - Found 9 products in 1738359907__products_search.json
+2025-03-24 00:31:20,099 - INFO - Found 9 products in 1737779172__products_search.json
+2025-03-24 00:31:20,100 - INFO - Found 9 products in 1738359917__products_search.json
+2025-03-24 00:31:20,102 - INFO - Found 9 products in 1737779166__products_search.json
+2025-03-24 00:31:20,103 - INFO - Found 9 products in 1738359903__products_search.json
+2025-03-24 00:31:20,103 - INFO - Found 9 products in 1738359920__products_search.json
+2025-03-24 00:31:20,105 - INFO - Found 9 products in 1737779169__products_search.json
+2025-03-24 00:31:20,106 - INFO - Found 9 products in 1737779163__products_search.json
+2025-03-24 00:31:20,107 - INFO - Found 9 products in 1738359910__products_search.json
+2025-03-24 00:31:20,108 - INFO - Found 9 products in 1738359916__products_search.json
+2025-03-24 00:31:20,108 - INFO - Found 9 products in 1737779173__products_search.json
+2025-03-24 00:31:20,109 - INFO - Found 9 products in 1738359902__products_search.json
+2025-03-24 00:31:20,110 - INFO - Found 9 products in 1738359914__products_search.json
+2025-03-24 00:31:20,110 - INFO - Found 9 products in 1737779155__products_search.json
+2025-03-24 00:31:20,110 - INFO - Stored 144 products for query 'betting system'
+2025-03-24 00:31:20,111 - INFO - Processing query: 'phone wallpaper'
+2025-03-24 00:31:20,114 - INFO - Found 9 products in 1738357075__products_search.json
+2025-03-24 00:31:20,115 - INFO - Found 9 products in 1738357085__products_search.json
+2025-03-24 00:31:20,115 - INFO - Found 9 products in 1738357079__products_search.json
+2025-03-24 00:31:20,116 - INFO - Found 9 products in 1738357082__products_search.json
+2025-03-24 00:31:20,116 - INFO - Found 9 products in 1738357076__products_search.json
+2025-03-24 00:31:20,117 - INFO - Found 9 products in 1738357088__products_search.json
+2025-03-24 00:31:20,117 - INFO - Stored 54 products for query 'phone wallpaper'
+2025-03-24 00:31:20,117 - INFO - Processing query: 'design system'
+2025-03-24 00:31:20,119 - INFO - Found 9 products in 1738359143__products_search.json
+2025-03-24 00:31:20,121 - INFO - Found 9 products in 1737777179__products_search.json
+2025-03-24 00:31:20,124 - INFO - Found 9 products in 1737777161__products_search.json
+2025-03-24 00:31:20,126 - INFO - Found 9 products in 1737777169__products_search.json
+2025-03-24 00:31:20,132 - INFO - Found 9 products in 1737777175__products_search.json
+2025-03-24 00:31:20,152 - INFO - Found 9 products in 1738359135__products_search.json
+2025-03-24 00:31:20,154 - INFO - Found 9 products in 1738359153__products_search.json
+2025-03-24 00:31:20,161 - INFO - Found 9 products in 1737777172__products_search.json
+2025-03-24 00:31:20,163 - INFO - Found 9 products in 1737777166__products_search.json
+2025-03-24 00:31:20,165 - INFO - Found 9 products in 1737777178__products_search.json
+2025-03-24 00:31:20,167 - INFO - Found 9 products in 1738359140__products_search.json
+2025-03-24 00:31:20,168 - INFO - Found 9 products in 1738359146__products_search.json
+2025-03-24 00:31:20,171 - INFO - Found 9 products in 1738359150__products_search.json
+2025-03-24 00:31:20,178 - INFO - Found 9 products in 1737777176__products_search.json
+2025-03-24 00:31:20,178 - INFO - Stored 126 products for query 'design system'
+2025-03-24 00:31:20,179 - INFO - Processing query: 'kdp cover design'
+2025-03-24 00:31:20,198 - INFO - Found 9 products in 1738360841__products_search.json
+2025-03-24 00:31:20,202 - INFO - Found 9 products in 1738360839__products_search.json
+2025-03-24 00:31:20,203 - INFO - Found 9 products in 1737777911__products_search.json
+2025-03-24 00:31:20,204 - INFO - Found 9 products in 1737777923__products_search.json
+2025-03-24 00:31:20,209 - INFO - Found 9 products in 1737777929__products_search.json
+2025-03-24 00:31:20,211 - INFO - Found 9 products in 1738360833__products_search.json
+2025-03-24 00:31:20,212 - INFO - Found 9 products in 1738360845__products_search.json
+2025-03-24 00:31:20,213 - INFO - Found 9 products in 1738360847__products_search.json
+2025-03-24 00:31:20,214 - INFO - Found 9 products in 1738360851__products_search.json
+2025-03-24 00:31:20,215 - INFO - Found 9 products in 1738360848__products_search.json
+2025-03-24 00:31:20,216 - INFO - Found 9 products in 1738360838__products_search.json
+2025-03-24 00:31:20,217 - INFO - Found 9 products in 1737777920__products_search.json
+2025-03-24 00:31:20,218 - INFO - Found 9 products in 1738360842__products_search.json
+2025-03-24 00:31:20,218 - INFO - Found 9 products in 1738360844__products_search.json
+2025-03-24 00:31:20,219 - INFO - Found 9 products in 1738360834__products_search.json
+2025-03-24 00:31:20,220 - INFO - Found 9 products in 1737777926__products_search.json
+2025-03-24 00:31:20,225 - INFO - Found 9 products in 1737777916__products_search.json
+2025-03-24 00:31:20,226 - INFO - Found 9 products in 1738360850__products_search.json
+2025-03-24 00:31:20,227 - INFO - Stored 162 products for query 'kdp cover design'
+2025-03-24 00:31:20,227 - INFO - Processing query: 'hud'
+2025-03-24 00:31:20,228 - INFO - Found 9 products in 1737777836__products_search.json
+2025-03-24 00:31:20,229 - INFO - Found 9 products in 1737777842__products_search.json
+2025-03-24 00:31:20,231 - INFO - Found 9 products in 1737777848__products_search.json
+2025-03-24 00:31:20,232 - INFO - Found 9 products in 1737777845__products_search.json
+2025-03-24 00:31:20,234 - INFO - Found 9 products in 1737777839__products_search.json
+2025-03-24 00:31:20,234 - INFO - Stored 45 products for query 'hud'
+2025-03-24 00:31:20,235 - INFO - Processing query: '3d'
+2025-03-24 00:31:20,242 - INFO - Found 9 products in 1737778572__products_search.json
+2025-03-24 00:31:20,244 - INFO - Found 9 products in 1737778564__products_search.json
+2025-03-24 00:31:20,245 - INFO - Found 9 products in 1737778582__products_search.json
+2025-03-24 00:31:20,246 - INFO - Found 9 products in 1737778576__products_search.json
+2025-03-24 00:31:20,247 - INFO - Found 9 products in 1737778579__products_search.json
+2025-03-24 00:31:20,248 - INFO - Found 9 products in 1737778583__products_search.json
+2025-03-24 00:31:20,249 - INFO - Found 9 products in 1737778569__products_search.json
+2025-03-24 00:31:20,249 - INFO - Stored 63 products for query '3d'
+2025-03-24 00:31:20,249 - INFO - Processing query: 'tennis lessons'
+2025-03-24 00:31:20,252 - INFO - Found 9 products in 1738360405__products_search.json
+2025-03-24 00:31:20,254 - INFO - Found 9 products in 1738360399__products_search.json
+2025-03-24 00:31:20,259 - INFO - Found 4 products in 1738360408__products_search.json
+2025-03-24 00:31:20,260 - INFO - Found 9 products in 1738360402__products_search.json
+2025-03-24 00:31:20,261 - INFO - Found 9 products in 1738360394__products_search.json
+2025-03-24 00:31:20,261 - INFO - Stored 40 products for query 'tennis lessons'
+2025-03-24 00:31:20,261 - INFO - Processing query: 'printable'
+2025-03-24 00:31:20,263 - INFO - Found 9 products in 1738357238__products_search.json
+2025-03-24 00:31:20,263 - INFO - Found 9 products in 1738357248__products_search.json
+2025-03-24 00:31:20,264 - INFO - Found 9 products in 1738357244__products_search.json
+2025-03-24 00:31:20,265 - INFO - Found 9 products in 1738357241__products_search.json
+2025-03-24 00:31:20,266 - INFO - Found 9 products in 1738357233__products_search.json
+2025-03-24 00:31:20,267 - INFO - Found 9 products in 1738357251__products_search.json
+2025-03-24 00:31:20,267 - INFO - Stored 54 products for query 'printable'
+2025-03-24 00:31:20,267 - INFO - Processing query: 'poker online'
+2025-03-24 00:31:20,278 - INFO - Found 9 products in 1738356694__products_search.json
+2025-03-24 00:31:20,278 - INFO - Found 9 products in 1737757468__products_search.json
+2025-03-24 00:31:20,279 - INFO - Found 9 products in 1738356680__products_search.json
+2025-03-24 00:31:20,279 - INFO - Found 9 products in 1738356688__products_search.json
+2025-03-24 00:31:20,280 - INFO - Found 9 products in 1737775172__products_search.json
+2025-03-24 00:31:20,281 - INFO - Found 9 products in 1738356686__products_search.json
+2025-03-24 00:31:20,282 - INFO - Found 9 products in 1737775178__products_search.json
+2025-03-24 00:31:20,282 - INFO - Found 9 products in 1737757453__products_search.json
+2025-03-24 00:31:20,283 - INFO - Found 9 products in 1737775169__products_search.json
+2025-03-24 00:31:20,283 - INFO - Found 9 products in 1737775161__products_search.json
+2025-03-24 00:31:20,284 - INFO - Found 9 products in 1737757461__products_search.json
+2025-03-24 00:31:20,284 - INFO - Found 9 products in 1738356697__products_search.json
+2025-03-24 00:31:20,285 - INFO - Found 9 products in 1737775175__products_search.json
+2025-03-24 00:31:20,286 - INFO - Found 9 products in 1737757459__products_search.json
+2025-03-24 00:31:20,287 - INFO - Found 9 products in 1738356691__products_search.json
+2025-03-24 00:31:20,288 - INFO - Found 9 products in 1737757465__products_search.json
+2025-03-24 00:31:20,290 - INFO - Found 9 products in 1737757471__products_search.json
+2025-03-24 00:31:20,291 - INFO - Found 9 products in 1737775167__products_search.json
+2025-03-24 00:31:20,291 - INFO - Stored 162 products for query 'poker online'
+2025-03-24 00:31:20,292 - INFO - Processing query: 'preset pack'
+2025-03-24 00:31:20,293 - INFO - Found 9 products in 1738357120__products_search.json
+2025-03-24 00:31:20,294 - INFO - Found 9 products in 1737777673__products_search.json
+2025-03-24 00:31:20,294 - INFO - Found 9 products in 1737777685__products_search.json
+2025-03-24 00:31:20,296 - INFO - Found 9 products in 1738357126__products_search.json
+2025-03-24 00:31:20,297 - INFO - Found 9 products in 1738357130__products_search.json
+2025-03-24 00:31:20,297 - INFO - Found 9 products in 1737777679__products_search.json
+2025-03-24 00:31:20,298 - INFO - Found 9 products in 1737777676__products_search.json
+2025-03-24 00:31:20,298 - INFO - Found 9 products in 1737777682__products_search.json
+2025-03-24 00:31:20,299 - INFO - Found 9 products in 1738357129__products_search.json
+2025-03-24 00:31:20,300 - INFO - Found 9 products in 1738357123__products_search.json
+2025-03-24 00:31:20,300 - INFO - Found 9 products in 1738357117__products_search.json
+2025-03-24 00:31:20,301 - INFO - Found 9 products in 1737777672__products_search.json
+2025-03-24 00:31:20,301 - INFO - Stored 108 products for query 'preset pack'
+2025-03-24 00:31:20,301 - INFO - Processing query: 'chatgpt'
+2025-03-24 00:31:20,303 - INFO - Found 9 products in 1737775940__products_search.json
+2025-03-24 00:31:20,304 - INFO - Found 9 products in 1737775934__products_search.json
+2025-03-24 00:31:20,305 - INFO - Found 9 products in 1737775928__products_search.json
+2025-03-24 00:31:20,307 - INFO - Found 9 products in 1737775931__products_search.json
+2025-03-24 00:31:20,308 - INFO - Found 9 products in 1737775923__products_search.json
+2025-03-24 00:31:20,309 - INFO - Found 9 products in 1737775937__products_search.json
+2025-03-24 00:31:20,309 - INFO - Stored 54 products for query 'chatgpt'
+2025-03-24 00:31:20,309 - INFO - Processing query: 'python for beginners'
+2025-03-24 00:31:20,310 - INFO - Found 9 products in 1738372445__products_search.json
+2025-03-24 00:31:20,311 - INFO - Found 9 products in 1738372439__products_search.json
+2025-03-24 00:31:20,312 - INFO - Found 9 products in 1738372452__products_search.json
+2025-03-24 00:31:20,313 - INFO - Found 9 products in 1738372448__products_search.json
+2025-03-24 00:31:20,314 - INFO - Found 9 products in 1738372442__products_search.json
+2025-03-24 00:31:20,314 - INFO - Stored 45 products for query 'python for beginners'
+2025-03-24 00:31:20,314 - INFO - Processing query: 'soccer'
+2025-03-24 00:31:20,315 - INFO - Found 9 products in 1738357815__products_search.json
+2025-03-24 00:31:20,316 - INFO - Found 9 products in 1738357827__products_search.json
+2025-03-24 00:31:20,317 - INFO - Found 9 products in 1738357821__products_search.json
+2025-03-24 00:31:20,317 - INFO - Found 9 products in 1738357824__products_search.json
+2025-03-24 00:31:20,318 - INFO - Found 9 products in 1738357810__products_search.json
+2025-03-24 00:31:20,319 - INFO - Found 9 products in 1738357818__products_search.json
+2025-03-24 00:31:20,319 - INFO - Found 9 products in 1738357828__products_search.json
+2025-03-24 00:31:20,320 - INFO - Stored 63 products for query 'soccer'
+2025-03-24 00:31:20,320 - INFO - Processing query: 'tennis course'
+2025-03-24 00:31:20,323 - INFO - Found 9 products in 1738360873__products_search.json
+2025-03-24 00:31:20,325 - INFO - Found 9 products in 1738360867__products_search.json
+2025-03-24 00:31:20,326 - INFO - Found 9 products in 1738360871__products_search.json
+2025-03-24 00:31:20,327 - INFO - Found 9 products in 1738360877__products_search.json
+2025-03-24 00:31:20,328 - INFO - Found 9 products in 1737777444__products_search.json
+2025-03-24 00:31:20,329 - INFO - Found 9 products in 1737777452__products_search.json
+2025-03-24 00:31:20,329 - INFO - Found 9 products in 1737777436__products_search.json
+2025-03-24 00:31:20,330 - INFO - Found 9 products in 1738360859__products_search.json
+2025-03-24 00:31:20,331 - INFO - Found 9 products in 1737777446__products_search.json
+2025-03-24 00:31:20,331 - INFO - Found 9 products in 1737777450__products_search.json
+2025-03-24 00:31:20,332 - INFO - Found 9 products in 1738360864__products_search.json
+2025-03-24 00:31:20,332 - INFO - Found 9 products in 1737777441__products_search.json
+2025-03-24 00:31:20,333 - INFO - Found 9 products in 1738360870__products_search.json
+2025-03-24 00:31:20,333 - INFO - Found 9 products in 1737777443__products_search.json
+2025-03-24 00:31:20,334 - INFO - Found 9 products in 1737777453__products_search.json
+2025-03-24 00:31:20,335 - INFO - Found 9 products in 1738360868__products_search.json
+2025-03-24 00:31:20,335 - INFO - Found 9 products in 1738360876__products_search.json
+2025-03-24 00:31:20,336 - INFO - Found 9 products in 1738360860__products_search.json
+2025-03-24 00:31:20,337 - INFO - Found 9 products in 1737777447__products_search.json
+2025-03-24 00:31:20,339 - INFO - Found 9 products in 1738360874__products_search.json
+2025-03-24 00:31:20,340 - INFO - Stored 180 products for query 'tennis course'
+2025-03-24 00:31:20,340 - INFO - Processing query: 'pbr'
+2025-03-24 00:31:20,341 - INFO - Found 9 products in 1737778741__products_search.json
+2025-03-24 00:31:20,342 - INFO - Found 9 products in 1737778731__products_search.json
+2025-03-24 00:31:20,343 - INFO - Found 9 products in 1737778744__products_search.json
+2025-03-24 00:31:20,343 - INFO - Found 9 products in 1737778734__products_search.json
+2025-03-24 00:31:20,344 - INFO - Found 9 products in 1737778726__products_search.json
+2025-03-24 00:31:20,345 - INFO - Found 9 products in 1737778738__products_search.json
+2025-03-24 00:31:20,345 - INFO - Stored 54 products for query 'pbr'
+2025-03-24 00:31:20,345 - INFO - Processing query: 'windows'
+2025-03-24 00:31:20,346 - INFO - Found 9 products in 1738357405__products_search.json
+2025-03-24 00:31:20,347 - INFO - Found 9 products in 1738357399__products_search.json
+2025-03-24 00:31:20,347 - INFO - Found 9 products in 1738357391__products_search.json
+2025-03-24 00:31:20,348 - INFO - Found 9 products in 1738357409__products_search.json
+2025-03-24 00:31:20,349 - INFO - Found 9 products in 1738357396__products_search.json
+2025-03-24 00:31:20,350 - INFO - Found 9 products in 1738357402__products_search.json
+2025-03-24 00:31:20,350 - INFO - Stored 54 products for query 'windows'
+2025-03-24 00:31:20,350 - INFO - Processing query: 'ai brushes'
+2025-03-24 00:31:20,352 - INFO - Found 9 products in 1738358581__products_search.json
+2025-03-24 00:31:20,352 - INFO - Found 9 products in 1738358585__products_search.json
+2025-03-24 00:31:20,353 - INFO - Found 9 products in 1738358591__products_search.json
+2025-03-24 00:31:20,356 - INFO - Found 9 products in 1738358588__products_search.json
+2025-03-24 00:31:20,358 - INFO - Found 9 products in 1738358582__products_search.json
+2025-03-24 00:31:20,360 - INFO - Found 9 products in 1738358578__products_search.json
+2025-03-24 00:31:20,360 - INFO - Stored 54 products for query 'ai brushes'
+2025-03-24 00:31:20,360 - INFO - Processing query: 'cetogénica'
+2025-03-24 00:31:20,361 - INFO - Found 9 products in 1738357096__products_search.json
+2025-03-24 00:31:20,361 - INFO - Stored 9 products for query 'cetogénica'
+2025-03-24 00:31:20,361 - INFO - Processing query: 'lightroom bundle'
+2025-03-24 00:31:20,365 - INFO - Found 9 products in 1737778294__products_search.json
+2025-03-24 00:31:20,366 - INFO - Found 9 products in 1737778305__products_search.json
+2025-03-24 00:31:20,367 - INFO - Found 9 products in 1738358939__products_search.json
+2025-03-24 00:31:20,368 - INFO - Found 9 products in 1738358925__products_search.json
+2025-03-24 00:31:20,369 - INFO - Found 9 products in 1737778309__products_search.json
+2025-03-24 00:31:20,378 - INFO - Found 9 products in 1738358929__products_search.json
+2025-03-24 00:31:20,380 - INFO - Found 9 products in 1738358921__products_search.json
+2025-03-24 00:31:20,381 - INFO - Found 9 products in 1737778312__products_search.json
+2025-03-24 00:31:20,381 - INFO - Found 9 products in 1738358926__products_search.json
+2025-03-24 00:31:20,382 - INFO - Found 9 products in 1738358932__products_search.json
+2025-03-24 00:31:20,383 - INFO - Found 9 products in 1737778308__products_search.json
+2025-03-24 00:31:20,387 - INFO - Found 9 products in 1737778299__products_search.json
+2025-03-24 00:31:20,391 - INFO - Found 9 products in 1738358936__products_search.json
+2025-03-24 00:31:20,392 - INFO - Found 9 products in 1738358920__products_search.json
+2025-03-24 00:31:20,393 - INFO - Found 9 products in 1737778302__products_search.json
+2025-03-24 00:31:20,393 - INFO - Stored 135 products for query 'lightroom bundle'
+2025-03-24 00:31:20,393 - INFO - Processing query: 'sports'
+2025-03-24 00:31:20,394 - INFO - Found 9 products in 1737775885__products_search.json
+2025-03-24 00:31:20,395 - INFO - Found 9 products in 1737775879__products_search.json
+2025-03-24 00:31:20,395 - INFO - Found 9 products in 1737775875__products_search.json
+2025-03-24 00:31:20,396 - INFO - Found 9 products in 1737775878__products_search.json
+2025-03-24 00:31:20,396 - INFO - Found 9 products in 1737775888__products_search.json
+2025-03-24 00:31:20,397 - INFO - Found 9 products in 1737775882__products_search.json
+2025-03-24 00:31:20,397 - INFO - Found 9 products in 1737775876__products_search.json
+2025-03-24 00:31:20,397 - INFO - Stored 63 products for query 'sports'
+2025-03-24 00:31:20,397 - INFO - Processing query: 'ui'
+2025-03-24 00:31:20,398 - INFO - Found 9 products in 1738357580__products_search.json
+2025-03-24 00:31:20,399 - INFO - Found 9 products in 1738357590__products_search.json
+2025-03-24 00:31:20,400 - INFO - Found 9 products in 1738357583__products_search.json
+2025-03-24 00:31:20,400 - INFO - Found 9 products in 1738357577__products_search.json
+2025-03-24 00:31:20,401 - INFO - Found 9 products in 1738357587__products_search.json
+2025-03-24 00:31:20,401 - INFO - Stored 45 products for query 'ui'
+2025-03-24 00:31:20,401 - INFO - Processing query: 'startup'
+2025-03-24 00:31:20,402 - INFO - Found 9 products in 1738357343__products_search.json
+2025-03-24 00:31:20,403 - INFO - Found 9 products in 1738357357__products_search.json
+2025-03-24 00:31:20,404 - INFO - Found 9 products in 1738357353__products_search.json
+2025-03-24 00:31:20,407 - INFO - Found 9 products in 1738357338__products_search.json
+2025-03-24 00:31:20,408 - INFO - Found 9 products in 1738357346__products_search.json
+2025-03-24 00:31:20,409 - INFO - Found 9 products in 1738357350__products_search.json
+2025-03-24 00:31:20,409 - INFO - Stored 54 products for query 'startup'
+2025-03-24 00:31:20,410 - INFO - Processing query: 'fishing logo'
+2025-03-24 00:31:20,411 - INFO - Found 9 products in 1738360469__products_search.json
+2025-03-24 00:31:20,412 - INFO - Found 9 products in 1738360477__products_search.json
+2025-03-24 00:31:20,413 - INFO - Found 9 products in 1738360483__products_search.json
+2025-03-24 00:31:20,414 - INFO - Found 9 products in 1738360487__products_search.json
+2025-03-24 00:31:20,414 - INFO - Found 9 products in 1738360480__products_search.json
+2025-03-24 00:31:20,415 - INFO - Found 9 products in 1738360474__products_search.json
+2025-03-24 00:31:20,415 - INFO - Found 9 products in 1738360478__products_search.json
+2025-03-24 00:31:20,416 - INFO - Found 9 products in 1738360484__products_search.json
+2025-03-24 00:31:20,416 - INFO - Found 9 products in 1738360486__products_search.json
+2025-03-24 00:31:20,417 - INFO - Stored 81 products for query 'fishing logo'
+2025-03-24 00:31:20,417 - INFO - Processing query: 'maxforlive'
+2025-03-24 00:31:20,418 - INFO - Found 9 products in 1738357757__products_search.json
+2025-03-24 00:31:20,420 - INFO - Found 9 products in 1738357765__products_search.json
+2025-03-24 00:31:20,421 - INFO - Found 9 products in 1738357771__products_search.json
+2025-03-24 00:31:20,423 - INFO - Found 9 products in 1738357775__products_search.json
+2025-03-24 00:31:20,424 - INFO - Found 9 products in 1738357768__products_search.json
+2025-03-24 00:31:20,425 - INFO - Found 9 products in 1738357762__products_search.json
+2025-03-24 00:31:20,425 - INFO - Stored 54 products for query 'maxforlive'
+2025-03-24 00:31:20,425 - INFO - Processing query: 'instagram marketing'
+2025-03-24 00:31:20,426 - INFO - Found 9 products in 1738357908__products_search.json
+2025-03-24 00:31:20,428 - INFO - Found 9 products in 1738357895__products_search.json
+2025-03-24 00:31:20,428 - INFO - Found 9 products in 1738357904__products_search.json
+2025-03-24 00:31:20,429 - INFO - Found 9 products in 1738357898__products_search.json
+2025-03-24 00:31:20,429 - INFO - Found 9 products in 1738357901__products_search.json
+2025-03-24 00:31:20,430 - INFO - Stored 45 products for query 'instagram marketing'
+2025-03-24 00:31:20,430 - INFO - Processing query: 'macbook air mockup'
+2025-03-24 00:31:20,431 - INFO - Found 9 products in 1738357506__products_search.json
+2025-03-24 00:31:20,431 - INFO - Found 9 products in 1738357497__products_search.json
+2025-03-24 00:31:20,432 - INFO - Found 9 products in 1738357500__products_search.json
+2025-03-24 00:31:20,432 - INFO - Found 9 products in 1738357503__products_search.json
+2025-03-24 00:31:20,433 - INFO - Found 9 products in 1738357492__products_search.json
+2025-03-24 00:31:20,433 - INFO - Found 9 products in 1738357509__products_search.json
+2025-03-24 00:31:20,434 - INFO - Stored 54 products for query 'macbook air mockup'
+2025-03-24 00:31:20,434 - INFO - Processing query: 'blender'
+2025-03-24 00:31:20,435 - INFO - Found 9 products in 1737758654__products_search.json
+2025-03-24 00:31:20,436 - INFO - Found 9 products in 1737758650__products_search.json
+2025-03-24 00:31:20,438 - INFO - Found 9 products in 1737758644__products_search.json
+2025-03-24 00:31:20,441 - INFO - Found 9 products in 1737758641__products_search.json
+2025-03-24 00:31:20,442 - INFO - Found 9 products in 1737758647__products_search.json
+2025-03-24 00:31:20,443 - INFO - Stored 45 products for query 'blender'
+2025-03-24 00:31:20,443 - INFO - Processing query: 'space'
+2025-03-24 00:31:20,444 - INFO - Found 9 products in 1737776257__products_search.json
+2025-03-24 00:31:20,445 - INFO - Found 9 products in 1737776267__products_search.json
+2025-03-24 00:31:20,446 - INFO - Found 9 products in 1737776253__products_search.json
+2025-03-24 00:31:20,447 - INFO - Found 9 products in 1737776261__products_search.json
+2025-03-24 00:31:20,448 - INFO - Found 9 products in 1737776264__products_search.json
+2025-03-24 00:31:20,448 - INFO - Found 9 products in 1737776270__products_search.json
+2025-03-24 00:31:20,449 - INFO - Found 9 products in 1737776252__products_search.json
+2025-03-24 00:31:20,449 - INFO - Found 9 products in 1737776258__products_search.json
+2025-03-24 00:31:20,450 - INFO - Stored 72 products for query 'space'
+2025-03-24 00:31:20,450 - INFO - Processing query: 'illustration'
+2025-03-24 00:31:20,451 - INFO - Found 9 products in 1737777304__products_search.json
+2025-03-24 00:31:20,452 - INFO - Found 9 products in 1737777295__products_search.json
+2025-03-24 00:31:20,453 - INFO - Found 9 products in 1737777307__products_search.json
+2025-03-24 00:31:20,453 - INFO - Found 9 products in 1737777298__products_search.json
+2025-03-24 00:31:20,455 - INFO - Found 9 products in 1737777301__products_search.json
+2025-03-24 00:31:20,457 - INFO - Found 9 products in 1737777290__products_search.json
+2025-03-24 00:31:20,458 - INFO - Stored 54 products for query 'illustration'
+2025-03-24 00:31:20,458 - INFO - Processing query: 'business'
+2025-03-24 00:31:20,463 - INFO - Found 9 products in 1737775387__products_search.json
+2025-03-24 00:31:20,465 - INFO - Found 9 products in 1737775391__products_search.json
+2025-03-24 00:31:20,465 - INFO - Found 9 products in 1737775385__products_search.json
+2025-03-24 00:31:20,466 - INFO - Found 9 products in 1737775379__products_search.json
+2025-03-24 00:31:20,467 - INFO - Found 9 products in 1737775397__products_search.json
+2025-03-24 00:31:20,467 - INFO - Found 9 products in 1737775384__products_search.json
+2025-03-24 00:31:20,468 - INFO - Found 9 products in 1737775394__products_search.json
+2025-03-24 00:31:20,469 - INFO - Found 9 products in 1737775380__products_search.json
+2025-03-24 00:31:20,470 - INFO - Found 9 products in 1737775388__products_search.json
+2025-03-24 00:31:20,470 - INFO - Stored 81 products for query 'business'
+2025-03-24 00:31:20,470 - INFO - Processing query: 'anime'
+2025-03-24 00:31:20,474 - INFO - Found 9 products in 1737758329__products_search.json
+2025-03-24 00:31:20,475 - INFO - Found 9 products in 1737758323__products_search.json
+2025-03-24 00:31:20,476 - INFO - Found 9 products in 1737758332__products_search.json
+2025-03-24 00:31:20,477 - INFO - Found 9 products in 1737758326__products_search.json
+2025-03-24 00:31:20,477 - INFO - Found 9 products in 1737758336__products_search.json
+2025-03-24 00:31:20,478 - INFO - Stored 45 products for query 'anime'
+2025-03-24 00:31:20,478 - INFO - Processing query: 'ios14'
+2025-03-24 00:31:20,479 - INFO - Found 9 products in 1737777894__products_search.json
+2025-03-24 00:31:20,479 - INFO - Found 9 products in 1737777890__products_search.json
+2025-03-24 00:31:20,480 - INFO - Found 9 products in 1737777897__products_search.json
+2025-03-24 00:31:20,480 - INFO - Found 9 products in 1737777904__products_search.json
+2025-03-24 00:31:20,481 - INFO - Found 9 products in 1737777900__products_search.json
+2025-03-24 00:31:20,482 - INFO - Found 9 products in 1737777891__products_search.json
+2025-03-24 00:31:20,482 - INFO - Stored 54 products for query 'ios14'
+2025-03-24 00:31:20,482 - INFO - Processing query: 'template'
+2025-03-24 00:31:20,484 - INFO - Found 9 products in 1737775594__products_search.json
+2025-03-24 00:31:20,486 - INFO - Found 9 products in 1737775600__products_search.json
+2025-03-24 00:31:20,486 - INFO - Found 9 products in 1737775586__products_search.json
+2025-03-24 00:31:20,487 - INFO - Found 9 products in 1737775603__products_search.json
+2025-03-24 00:31:20,489 - INFO - Found 9 products in 1737775597__products_search.json
+2025-03-24 00:31:20,490 - INFO - Found 9 products in 1737775591__products_search.json
+2025-03-24 00:31:20,490 - INFO - Stored 54 products for query 'template'
+2025-03-24 00:31:20,491 - INFO - Processing query: 'oil painting'
+2025-03-24 00:31:20,493 - INFO - Found 9 products in 1737758544__products_search.json
+2025-03-24 00:31:20,494 - INFO - Found 9 products in 1737777607__products_search.json
+2025-03-24 00:31:20,494 - INFO - Found 9 products in 1738360799__products_search.json
+2025-03-24 00:31:20,495 - INFO - Found 9 products in 1737758534__products_search.json
+2025-03-24 00:31:20,496 - INFO - Found 9 products in 1737775497__products_search.json
+2025-03-24 00:31:20,496 - INFO - Found 9 products in 1737775500__products_search.json
+2025-03-24 00:31:20,497 - INFO - Found 9 products in 1738360795__products_search.json
+2025-03-24 00:31:20,498 - INFO - Found 9 products in 1737758540__products_search.json
+2025-03-24 00:31:20,498 - INFO - Found 9 products in 1737775487__products_search.json
+2025-03-24 00:31:20,499 - INFO - Found 9 products in 1738360781__products_search.json
+2025-03-24 00:31:20,499 - INFO - Found 9 products in 1737777595__products_search.json
+2025-03-24 00:31:20,500 - INFO - Found 9 products in 1738360789__products_search.json
+2025-03-24 00:31:20,501 - INFO - Found 9 products in 1737777601__products_search.json
+2025-03-24 00:31:20,501 - INFO - Found 9 products in 1738360786__products_search.json
+2025-03-24 00:31:20,502 - INFO - Found 9 products in 1738360798__products_search.json
+2025-03-24 00:31:20,502 - INFO - Found 9 products in 1737775494__products_search.json
+2025-03-24 00:31:20,503 - INFO - Found 9 products in 1737775482__products_search.json
+2025-03-24 00:31:20,504 - INFO - Found 9 products in 1738360792__products_search.json
+2025-03-24 00:31:20,505 - INFO - Found 9 products in 1737758537__products_search.json
+2025-03-24 00:31:20,506 - INFO - Found 9 products in 1737777590__products_search.json
+2025-03-24 00:31:20,507 - INFO - Found 9 products in 1737775496__products_search.json
+2025-03-24 00:31:20,508 - INFO - Found 9 products in 1737758547__products_search.json
+2025-03-24 00:31:20,509 - INFO - Found 9 products in 1737777604__products_search.json
+2025-03-24 00:31:20,510 - INFO - Found 9 products in 1737777598__products_search.json
+2025-03-24 00:31:20,510 - INFO - Found 9 products in 1737775490__products_search.json
+2025-03-24 00:31:20,511 - INFO - Found 9 products in 1737758543__products_search.json
+2025-03-24 00:31:20,511 - INFO - Stored 234 products for query 'oil painting'
+2025-03-24 00:31:20,511 - INFO - Processing query: 'gambling'
+2025-03-24 00:31:20,513 - INFO - Found 9 products in 1737757551__products_search.json
+2025-03-24 00:31:20,513 - INFO - Found 9 products in 1737757545__products_search.json
+2025-03-24 00:31:20,514 - INFO - Found 9 products in 1737757541__products_search.json
+2025-03-24 00:31:20,514 - INFO - Found 9 products in 1737757548__products_search.json
+2025-03-24 00:31:20,515 - INFO - Found 9 products in 1737757538__products_search.json
+2025-03-24 00:31:20,515 - INFO - Stored 45 products for query 'gambling'
+2025-03-24 00:31:20,515 - INFO - Processing query: 'lightroom'
+2025-03-24 00:31:20,517 - INFO - Found 9 products in 1737778976__products_search.json
+2025-03-24 00:31:20,517 - INFO - Found 9 products in 1737778982__products_search.json
+2025-03-24 00:31:20,518 - INFO - Found 9 products in 1737778986__products_search.json
+2025-03-24 00:31:20,518 - INFO - Found 9 products in 1737778989__products_search.json
+2025-03-24 00:31:20,519 - INFO - Found 9 products in 1737778985__products_search.json
+2025-03-24 00:31:20,520 - INFO - Found 9 products in 1737778979__products_search.json
+2025-03-24 00:31:20,520 - INFO - Stored 54 products for query 'lightroom'
+2025-03-24 00:31:20,520 - INFO - Processing query: 'base'
+2025-03-24 00:31:20,523 - INFO - Found 9 products in 1737777945__products_search.json
+2025-03-24 00:31:20,524 - INFO - Found 9 products in 1737777951__products_search.json
+2025-03-24 00:31:20,525 - INFO - Found 9 products in 1737777958__products_search.json
+2025-03-24 00:31:20,536 - INFO - Found 9 products in 1737777948__products_search.json
+2025-03-24 00:31:20,559 - INFO - Found 9 products in 1737777954__products_search.json
+2025-03-24 00:31:20,559 - INFO - Stored 45 products for query 'base'
+2025-03-24 00:31:20,559 - INFO - Processing query: 'wallpapers'
+2025-03-24 00:31:20,562 - INFO - Found 9 products in 1737776304__products_search.json
+2025-03-24 00:31:20,565 - INFO - Found 9 products in 1737776312__products_search.json
+2025-03-24 00:31:20,567 - INFO - Found 9 products in 1737776318__products_search.json
+2025-03-24 00:31:20,568 - INFO - Found 9 products in 1737776309__products_search.json
+2025-03-24 00:31:20,576 - INFO - Found 9 products in 1737776315__products_search.json
+2025-03-24 00:31:20,584 - INFO - Found 9 products in 1737776321__products_search.json
+2025-03-24 00:31:20,584 - INFO - Stored 54 products for query 'wallpapers'
+2025-03-24 00:31:20,584 - INFO - Processing query: 'notion template'
+2025-03-24 00:31:20,591 - INFO - Found 9 products in 1737758405__products_search.json
+2025-03-24 00:31:20,593 - INFO - Found 9 products in 1737775445__products_search.json
+2025-03-24 00:31:20,594 - INFO - Found 9 products in 1738357286__products_search.json
+2025-03-24 00:31:20,595 - INFO - Found 9 products in 1737758411__products_search.json
+2025-03-24 00:31:20,596 - INFO - Found 9 products in 1738357294__products_search.json
+2025-03-24 00:31:20,603 - INFO - Found 9 products in 1737758397__products_search.json
+2025-03-24 00:31:20,641 - INFO - Found 9 products in 1737775439__products_search.json
+2025-03-24 00:31:20,644 - INFO - Found 9 products in 1737775431__products_search.json
+2025-03-24 00:31:20,645 - INFO - Found 9 products in 1737758415__products_search.json
+2025-03-24 00:31:20,646 - INFO - Found 9 products in 1738357291__products_search.json
+2025-03-24 00:31:20,647 - INFO - Found 9 products in 1738357300__products_search.json
+2025-03-24 00:31:20,648 - INFO - Found 9 products in 1737775436__products_search.json
+2025-03-24 00:31:20,655 - INFO - Found 9 products in 1738357304__products_search.json
+2025-03-24 00:31:20,661 - INFO - Found 9 products in 1737775448__products_search.json
+2025-03-24 00:31:20,662 - INFO - Found 9 products in 1737758408__products_search.json
+2025-03-24 00:31:20,663 - INFO - Found 9 products in 1737758414__products_search.json
+2025-03-24 00:31:20,665 - INFO - Found 9 products in 1737758402__products_search.json
+2025-03-24 00:31:20,670 - INFO - Found 9 products in 1738357297__products_search.json
+2025-03-24 00:31:20,680 - INFO - Found 9 products in 1737775442__products_search.json
+2025-03-24 00:31:20,680 - INFO - Stored 171 products for query 'notion template'
+2025-03-24 00:31:20,681 - INFO - Processing query: 'casino'
+2025-03-24 00:31:20,696 - INFO - Found 9 products in 1737757417__products_search.json
+2025-03-24 00:31:20,697 - INFO - Stored 9 products for query 'casino'
+2025-03-24 00:31:20,698 - INFO - Processing query: 'nhl'
+2025-03-24 00:31:20,703 - INFO - Found 9 products in 1738359090__products_search.json
+2025-03-24 00:31:20,712 - INFO - Found 9 products in 1738359086__products_search.json
+2025-03-24 00:31:20,713 - INFO - Found 9 products in 1738359092__products_search.json
+2025-03-24 00:31:20,714 - INFO - Found 9 products in 1738359096__products_search.json
+2025-03-24 00:31:20,715 - INFO - Found 9 products in 1738359099__products_search.json
+2025-03-24 00:31:20,715 - INFO - Found 9 products in 1738359093__products_search.json
+2025-03-24 00:31:20,716 - INFO - Found 9 products in 1738359089__products_search.json
+2025-03-24 00:31:20,717 - INFO - Found 9 products in 1738359081__products_search.json
+2025-03-24 00:31:20,717 - INFO - Stored 72 products for query 'nhl'
+2025-03-24 00:31:20,720 - INFO - Processing query: 'instagram'
+2025-03-24 00:31:20,721 - INFO - Found 9 products in 1738372755__products_search.json
+2025-03-24 00:31:20,722 - INFO - Found 9 products in 1738372767__products_search.json
+2025-03-24 00:31:20,723 - INFO - Found 9 products in 1738372761__products_search.json
+2025-03-24 00:31:20,724 - INFO - Found 9 products in 1738372764__products_search.json
+2025-03-24 00:31:20,725 - INFO - Found 9 products in 1738372758__products_search.json
+2025-03-24 00:31:20,725 - INFO - Stored 45 products for query 'instagram'
+2025-03-24 00:31:20,725 - INFO - Processing query: 'prompt engineering'
+2025-03-24 00:31:20,726 - INFO - Found 9 products in 1737778674__products_search.json
+2025-03-24 00:31:20,727 - INFO - Found 9 products in 1737778688__products_search.json
+2025-03-24 00:31:20,727 - INFO - Found 9 products in 1737778682__products_search.json
+2025-03-24 00:31:20,728 - INFO - Found 9 products in 1738356895__products_search.json
+2025-03-24 00:31:20,729 - INFO - Found 9 products in 1738356902__products_search.json
+2025-03-24 00:31:20,729 - INFO - Found 9 products in 1737778692__products_search.json
+2025-03-24 00:31:20,730 - INFO - Found 9 products in 1738356908__products_search.json
+2025-03-24 00:31:20,730 - INFO - Found 9 products in 1738356905__products_search.json
+2025-03-24 00:31:20,731 - INFO - Found 9 products in 1737778685__products_search.json
+2025-03-24 00:31:20,732 - INFO - Found 9 products in 1737778679__products_search.json
+2025-03-24 00:31:20,733 - INFO - Found 9 products in 1738356890__products_search.json
+2025-03-24 00:31:20,734 - INFO - Found 9 products in 1738356898__products_search.json
+2025-03-24 00:31:20,734 - INFO - Stored 108 products for query 'prompt engineering'
+2025-03-24 00:31:20,734 - INFO - Processing query: 'ios 14 icons'
+2025-03-24 00:31:20,808 - INFO - Found 9 products in 1737779089__products_search.json
+2025-03-24 00:31:20,809 - INFO - Found 9 products in 1737776392__products_search.json
+2025-03-24 00:31:20,810 - INFO - Found 9 products in 1738358716__products_search.json
+2025-03-24 00:31:20,810 - INFO - Found 9 products in 1737776386__products_search.json
+2025-03-24 00:31:20,811 - INFO - Found 9 products in 1738358726__products_search.json
+2025-03-24 00:31:20,812 - INFO - Found 9 products in 1737776398__products_search.json
+2025-03-24 00:31:20,812 - INFO - Found 9 products in 1737779083__products_search.json
+2025-03-24 00:31:20,813 - INFO - Found 9 products in 1738358712__products_search.json
+2025-03-24 00:31:20,814 - INFO - Found 9 products in 1737779093__products_search.json
+2025-03-24 00:31:20,814 - INFO - Found 9 products in 1737776388__products_search.json
+2025-03-24 00:31:20,815 - INFO - Found 9 products in 1737776380__products_search.json
+2025-03-24 00:31:20,815 - INFO - Found 9 products in 1738358722__products_search.json
+2025-03-24 00:31:20,816 - INFO - Found 9 products in 1737779080__products_search.json
+2025-03-24 00:31:20,817 - INFO - Found 9 products in 1738358725__products_search.json
+2025-03-24 00:31:20,817 - INFO - Found 9 products in 1738358715__products_search.json
+2025-03-24 00:31:20,818 - INFO - Found 9 products in 1737776391__products_search.json
+2025-03-24 00:31:20,819 - INFO - Found 9 products in 1738358713__products_search.json
+2025-03-24 00:31:20,819 - INFO - Found 9 products in 1737776395__products_search.json
+2025-03-24 00:31:20,820 - INFO - Found 9 products in 1738358719__products_search.json
+2025-03-24 00:31:20,821 - INFO - Found 9 products in 1738358707__products_search.json
+2025-03-24 00:31:20,822 - INFO - Found 9 products in 1737779086__products_search.json
+2025-03-24 00:31:20,822 - INFO - Stored 189 products for query 'ios 14 icons'
+2025-03-24 00:31:20,822 - INFO - Processing query: 'music production'
+2025-03-24 00:31:20,823 - INFO - Found 9 products in 1738359171__products_search.json
+2025-03-24 00:31:20,824 - INFO - Found 9 products in 1738359181__products_search.json
+2025-03-24 00:31:20,824 - INFO - Found 9 products in 1738359175__products_search.json
+2025-03-24 00:31:20,825 - INFO - Found 9 products in 1738359177__products_search.json
+2025-03-24 00:31:20,826 - INFO - Found 9 products in 1738359174__products_search.json
+2025-03-24 00:31:20,826 - INFO - Found 9 products in 1738359168__products_search.json
+2025-03-24 00:31:20,826 - INFO - Stored 54 products for query 'music production'
+2025-03-24 00:31:20,826 - INFO - Processing query: 'web design'
+2025-03-24 00:31:20,828 - INFO - Found 9 products in 1738357841__products_search.json
+2025-03-24 00:31:20,829 - INFO - Found 9 products in 1738357845__products_search.json
+2025-03-24 00:31:20,830 - INFO - Found 9 products in 1738357847__products_search.json
+2025-03-24 00:31:20,831 - INFO - Found 9 products in 1738357851__products_search.json
+2025-03-24 00:31:20,831 - INFO - Found 9 products in 1738357848__products_search.json
+2025-03-24 00:31:20,832 - INFO - Found 9 products in 1738357854__products_search.json
+2025-03-24 00:31:20,832 - INFO - Found 9 products in 1738357844__products_search.json
+2025-03-24 00:31:20,832 - INFO - Stored 63 products for query 'web design'
+2025-03-24 00:31:20,833 - INFO - Processing query: 'icon set'
+2025-03-24 00:31:20,834 - INFO - Found 9 products in 1738360582__products_search.json
+2025-03-24 00:31:20,835 - INFO - Found 9 products in 1738360588__products_search.json
+2025-03-24 00:31:20,837 - INFO - Found 9 products in 1738360574__products_search.json
+2025-03-24 00:31:20,839 - INFO - Found 9 products in 1737778413__products_search.json
+2025-03-24 00:31:20,839 - INFO - Found 9 products in 1737778407__products_search.json
+2025-03-24 00:31:20,840 - INFO - Found 9 products in 1737778419__products_search.json
+2025-03-24 00:31:20,841 - INFO - Found 9 products in 1738360578__products_search.json
+2025-03-24 00:31:20,841 - INFO - Found 9 products in 1737778416__products_search.json
+2025-03-24 00:31:20,842 - INFO - Found 9 products in 1737778402__products_search.json
+2025-03-24 00:31:20,842 - INFO - Found 9 products in 1738360581__products_search.json
+2025-03-24 00:31:20,843 - INFO - Found 9 products in 1738360591__products_search.json
+2025-03-24 00:31:20,844 - INFO - Found 9 products in 1738360573__products_search.json
+2025-03-24 00:31:20,844 - INFO - Found 9 products in 1738360579__products_search.json
+2025-03-24 00:31:20,845 - INFO - Found 9 products in 1737778410__products_search.json
+2025-03-24 00:31:20,846 - INFO - Found 9 products in 1738360585__products_search.json
+2025-03-24 00:31:20,846 - INFO - Stored 135 products for query 'icon set'
+2025-03-24 00:31:20,846 - INFO - Processing query: 'football'
+2025-03-24 00:31:20,847 - INFO - Found 9 products in 1737778003__products_search.json
+2025-03-24 00:31:20,848 - INFO - Found 9 products in 1737778007__products_search.json
+2025-03-24 00:31:20,849 - INFO - Found 9 products in 1737778013__products_search.json
+2025-03-24 00:31:20,851 - INFO - Found 9 products in 1737778000__products_search.json
+2025-03-24 00:31:20,851 - INFO - Found 9 products in 1737778010__products_search.json
+2025-03-24 00:31:20,851 - INFO - Stored 45 products for query 'football'
+2025-03-24 00:31:20,852 - INFO - Processing query: 'procreate brush pack'
+2025-03-24 00:31:20,853 - INFO - Found 9 products in 1737778359__products_search.json
+2025-03-24 00:31:20,854 - INFO - Found 9 products in 1738359959__products_search.json
+2025-03-24 00:31:20,855 - INFO - Found 9 products in 1737778347__products_search.json
+2025-03-24 00:31:20,855 - INFO - Found 9 products in 1737778353__products_search.json
+2025-03-24 00:31:20,856 - INFO - Found 9 products in 1738359971__products_search.json
+2025-03-24 00:31:20,857 - INFO - Found 9 products in 1737778365__products_search.json
+2025-03-24 00:31:20,857 - INFO - Found 9 products in 1738359962__products_search.json
+2025-03-24 00:31:20,858 - INFO - Found 9 products in 1737778362__products_search.json
+2025-03-24 00:31:20,858 - INFO - Found 9 products in 1738359954__products_search.json
+2025-03-24 00:31:20,859 - INFO - Found 9 products in 1738359970__products_search.json
+2025-03-24 00:31:20,860 - INFO - Found 9 products in 1738359972__products_search.json
+2025-03-24 00:31:20,860 - INFO - Found 9 products in 1737778356__products_search.json
+2025-03-24 00:31:20,860 - INFO - Stored 108 products for query 'procreate brush pack'
+2025-03-24 00:31:20,860 - INFO - Processed 50 queries in total
+2025-03-24 00:31:20,862 - INFO - Saved 54 products for query 'sample pack' to search_eval_20250324_003120/gumroad_processed/sample_pack_gumroad.json
+2025-03-24 00:31:20,866 - INFO - Saved 144 products for query 'betting system' to search_eval_20250324_003120/gumroad_processed/betting_system_gumroad.json
+2025-03-24 00:31:20,868 - INFO - Saved 54 products for query 'phone wallpaper' to search_eval_20250324_003120/gumroad_processed/phone_wallpaper_gumroad.json
+2025-03-24 00:31:20,872 - INFO - Saved 126 products for query 'design system' to search_eval_20250324_003120/gumroad_processed/design_system_gumroad.json
+2025-03-24 00:31:20,877 - INFO - Saved 162 products for query 'kdp cover design' to search_eval_20250324_003120/gumroad_processed/kdp_cover_design_gumroad.json
+2025-03-24 00:31:20,879 - INFO - Saved 45 products for query 'hud' to search_eval_20250324_003120/gumroad_processed/hud_gumroad.json
+2025-03-24 00:31:20,880 - INFO - Saved 63 products for query '3d' to search_eval_20250324_003120/gumroad_processed/3d_gumroad.json
+2025-03-24 00:31:20,882 - INFO - Saved 40 products for query 'tennis lessons' to search_eval_20250324_003120/gumroad_processed/tennis_lessons_gumroad.json
+2025-03-24 00:31:20,884 - INFO - Saved 54 products for query 'printable' to search_eval_20250324_003120/gumroad_processed/printable_gumroad.json
+2025-03-24 00:31:20,888 - INFO - Saved 162 products for query 'poker online' to search_eval_20250324_003120/gumroad_processed/poker_online_gumroad.json
+2025-03-24 00:31:20,891 - INFO - Saved 108 products for query 'preset pack' to search_eval_20250324_003120/gumroad_processed/preset_pack_gumroad.json
+2025-03-24 00:31:20,893 - INFO - Saved 54 products for query 'chatgpt' to search_eval_20250324_003120/gumroad_processed/chatgpt_gumroad.json
+2025-03-24 00:31:20,895 - INFO - Saved 45 products for query 'python for beginners' to search_eval_20250324_003120/gumroad_processed/python_for_beginners_gumroad.json
+2025-03-24 00:31:20,898 - INFO - Saved 63 products for query 'soccer' to search_eval_20250324_003120/gumroad_processed/soccer_gumroad.json
+2025-03-24 00:31:20,905 - INFO - Saved 180 products for query 'tennis course' to search_eval_20250324_003120/gumroad_processed/tennis_course_gumroad.json
+2025-03-24 00:31:20,909 - INFO - Saved 54 products for query 'pbr' to search_eval_20250324_003120/gumroad_processed/pbr_gumroad.json
+2025-03-24 00:31:20,914 - INFO - Saved 54 products for query 'windows' to search_eval_20250324_003120/gumroad_processed/windows_gumroad.json
+2025-03-24 00:31:20,916 - INFO - Saved 54 products for query 'ai brushes' to search_eval_20250324_003120/gumroad_processed/ai_brushes_gumroad.json
+2025-03-24 00:31:20,917 - INFO - Saved 9 products for query 'cetogénica' to search_eval_20250324_003120/gumroad_processed/cetogénica_gumroad.json
+2025-03-24 00:31:20,923 - INFO - Saved 135 products for query 'lightroom bundle' to search_eval_20250324_003120/gumroad_processed/lightroom_bundle_gumroad.json
+2025-03-24 00:31:20,926 - INFO - Saved 63 products for query 'sports' to search_eval_20250324_003120/gumroad_processed/sports_gumroad.json
+2025-03-24 00:31:20,928 - INFO - Saved 45 products for query 'ui' to search_eval_20250324_003120/gumroad_processed/ui_gumroad.json
+2025-03-24 00:31:20,930 - INFO - Saved 54 products for query 'startup' to search_eval_20250324_003120/gumroad_processed/startup_gumroad.json
+2025-03-24 00:31:20,933 - INFO - Saved 81 products for query 'fishing logo' to search_eval_20250324_003120/gumroad_processed/fishing_logo_gumroad.json
+2025-03-24 00:31:20,936 - INFO - Saved 54 products for query 'maxforlive' to search_eval_20250324_003120/gumroad_processed/maxforlive_gumroad.json
+2025-03-24 00:31:20,939 - INFO - Saved 45 products for query 'instagram marketing' to search_eval_20250324_003120/gumroad_processed/instagram_marketing_gumroad.json
+2025-03-24 00:31:20,942 - INFO - Saved 54 products for query 'macbook air mockup' to search_eval_20250324_003120/gumroad_processed/macbook_air_mockup_gumroad.json
+2025-03-24 00:31:20,944 - INFO - Saved 45 products for query 'blender' to search_eval_20250324_003120/gumroad_processed/blender_gumroad.json
+2025-03-24 00:31:20,950 - INFO - Saved 72 products for query 'space' to search_eval_20250324_003120/gumroad_processed/space_gumroad.json
+2025-03-24 00:31:20,953 - INFO - Saved 54 products for query 'illustration' to search_eval_20250324_003120/gumroad_processed/illustration_gumroad.json
+2025-03-24 00:31:20,958 - INFO - Saved 81 products for query 'business' to search_eval_20250324_003120/gumroad_processed/business_gumroad.json
+2025-03-24 00:31:20,961 - INFO - Saved 45 products for query 'anime' to search_eval_20250324_003120/gumroad_processed/anime_gumroad.json
+2025-03-24 00:31:20,965 - INFO - Saved 54 products for query 'ios14' to search_eval_20250324_003120/gumroad_processed/ios14_gumroad.json
+2025-03-24 00:31:20,969 - INFO - Saved 54 products for query 'template' to search_eval_20250324_003120/gumroad_processed/template_gumroad.json
+2025-03-24 00:31:20,981 - INFO - Saved 234 products for query 'oil painting' to search_eval_20250324_003120/gumroad_processed/oil_painting_gumroad.json
+2025-03-24 00:31:20,984 - INFO - Saved 45 products for query 'gambling' to search_eval_20250324_003120/gumroad_processed/gambling_gumroad.json
+2025-03-24 00:31:20,987 - INFO - Saved 54 products for query 'lightroom' to search_eval_20250324_003120/gumroad_processed/lightroom_gumroad.json
+2025-03-24 00:31:20,990 - INFO - Saved 45 products for query 'base' to search_eval_20250324_003120/gumroad_processed/base_gumroad.json
+2025-03-24 00:31:20,992 - INFO - Saved 54 products for query 'wallpapers' to search_eval_20250324_003120/gumroad_processed/wallpapers_gumroad.json
+2025-03-24 00:31:20,997 - INFO - Saved 171 products for query 'notion template' to search_eval_20250324_003120/gumroad_processed/notion_template_gumroad.json
+2025-03-24 00:31:20,998 - INFO - Saved 9 products for query 'casino' to search_eval_20250324_003120/gumroad_processed/casino_gumroad.json
+2025-03-24 00:31:21,000 - INFO - Saved 72 products for query 'nhl' to search_eval_20250324_003120/gumroad_processed/nhl_gumroad.json
+2025-03-24 00:31:21,002 - INFO - Saved 45 products for query 'instagram' to search_eval_20250324_003120/gumroad_processed/instagram_gumroad.json
+2025-03-24 00:31:21,006 - INFO - Saved 108 products for query 'prompt engineering' to search_eval_20250324_003120/gumroad_processed/prompt_engineering_gumroad.json
+2025-03-24 00:31:21,010 - INFO - Saved 189 products for query 'ios 14 icons' to search_eval_20250324_003120/gumroad_processed/ios_14_icons_gumroad.json
+2025-03-24 00:31:21,013 - INFO - Saved 54 products for query 'music production' to search_eval_20250324_003120/gumroad_processed/music_production_gumroad.json
+2025-03-24 00:31:21,016 - INFO - Saved 63 products for query 'web design' to search_eval_20250324_003120/gumroad_processed/web_design_gumroad.json
+2025-03-24 00:31:21,021 - INFO - Saved 135 products for query 'icon set' to search_eval_20250324_003120/gumroad_processed/icon_set_gumroad.json
+2025-03-24 00:31:21,023 - INFO - Saved 45 products for query 'football' to search_eval_20250324_003120/gumroad_processed/football_gumroad.json
+2025-03-24 00:31:21,027 - INFO - Saved 108 products for query 'procreate brush pack' to search_eval_20250324_003120/gumroad_processed/procreate_brush_pack_gumroad.json
+2025-03-24 00:31:21,027 - INFO - All results saved to search_eval_20250324_003120/gumroad_processed
+2025-03-24 00:31:21,028 - INFO - Step 2: Querying search endpoint...
+2025-03-24 00:31:21,028 - INFO - Found 50 Gumroad result files to process
+2025-03-24 00:31:21,065 - INFO - Extracted 50 unique queries
+2025-03-24 00:31:21,066 - INFO - Processing query: 'web design'
+2025-03-24 00:31:21,067 - INFO - Processing query: 'preset pack'
+2025-03-24 00:31:21,069 - INFO - Processing query: 'notion template'
+2025-03-24 00:31:21,073 - INFO - Processing query: 'illustration'
+2025-03-24 00:31:21,073 - INFO - Processing query: 'prompt engineering'
+2025-03-24 00:31:27,559 - INFO - Query: 'web design' - Got 50 results in 6.49s
+2025-03-24 00:31:27,568 - INFO - Saved endpoint results for query 'web design' to search_eval_20250324_003120/endpoint_results/web_design_endpoint.json
+2025-03-24 00:31:27,568 - INFO - Processing query: 'kdp cover design'
+2025-03-24 00:31:27,617 - INFO - Query: 'notion template' - Got 50 results in 6.55s
+2025-03-24 00:31:27,623 - INFO - Saved endpoint results for query 'notion template' to search_eval_20250324_003120/endpoint_results/notion_template_endpoint.json
+2025-03-24 00:31:27,624 - INFO - Processing query: '3d'
+2025-03-24 00:31:27,668 - INFO - Query: 'preset pack' - Got 50 results in 6.60s
+2025-03-24 00:31:27,681 - INFO - Saved endpoint results for query 'preset pack' to search_eval_20250324_003120/endpoint_results/preset_pack_endpoint.json
+2025-03-24 00:31:27,681 - INFO - Processing query: 'tennis lessons'
+2025-03-24 00:31:31,636 - INFO - Query: 'illustration' - Got 50 results in 10.56s
+2025-03-24 00:31:31,646 - INFO - Saved endpoint results for query 'illustration' to search_eval_20250324_003120/endpoint_results/illustration_endpoint.json
+2025-03-24 00:31:31,646 - INFO - Processing query: 'ios14'
+2025-03-24 00:31:32,874 - INFO - Query: 'prompt engineering' - Got 44 results in 11.80s
+2025-03-24 00:31:32,879 - INFO - Saved endpoint results for query 'prompt engineering' to search_eval_20250324_003120/endpoint_results/prompt_engineering_endpoint.json
+2025-03-24 00:31:32,879 - INFO - Processing query: 'music production'
+2025-03-24 00:31:35,160 - INFO - Query: 'kdp cover design' - Got 50 results in 7.59s
+2025-03-24 00:31:35,165 - INFO - Saved endpoint results for query 'kdp cover design' to search_eval_20250324_003120/endpoint_results/kdp_cover_design_endpoint.json
+2025-03-24 00:31:35,166 - INFO - Processing query: 'pbr'
+2025-03-24 00:31:35,334 - INFO - Query: '3d' - Got 50 results in 7.71s
+2025-03-24 00:31:35,338 - INFO - Saved endpoint results for query '3d' to search_eval_20250324_003120/endpoint_results/3d_endpoint.json
+2025-03-24 00:31:35,338 - INFO - Processing query: 'betting system'
+2025-03-24 00:31:35,426 - INFO - Query: 'ios14' - Got 50 results in 3.78s
+2025-03-24 00:31:35,433 - INFO - Saved endpoint results for query 'ios14' to search_eval_20250324_003120/endpoint_results/ios14_endpoint.json
+2025-03-24 00:31:35,433 - INFO - Processing query: 'phone wallpaper'
+2025-03-24 00:31:35,537 - INFO - Query: 'tennis lessons' - Got 50 results in 7.85s
+2025-03-24 00:31:35,544 - INFO - Saved endpoint results for query 'tennis lessons' to search_eval_20250324_003120/endpoint_results/tennis_lessons_endpoint.json
+2025-03-24 00:31:35,544 - INFO - Processing query: 'business'
+2025-03-24 00:31:36,498 - INFO - Query: 'music production' - Got 41 results in 3.62s
+2025-03-24 00:31:36,505 - INFO - Saved endpoint results for query 'music production' to search_eval_20250324_003120/endpoint_results/music_production_endpoint.json
+2025-03-24 00:31:36,505 - INFO - Processing query: 'instagram marketing'
+2025-03-24 00:31:38,190 - INFO - Query: 'pbr' - Got 18 results in 3.02s
+2025-03-24 00:31:38,214 - INFO - Saved endpoint results for query 'pbr' to search_eval_20250324_003120/endpoint_results/pbr_endpoint.json
+2025-03-24 00:31:38,234 - INFO - Processing query: 'blender'
+2025-03-24 00:31:38,614 - INFO - Query: 'betting system' - Got 50 results in 3.27s
+2025-03-24 00:31:38,619 - INFO - Saved endpoint results for query 'betting system' to search_eval_20250324_003120/endpoint_results/betting_system_endpoint.json
+2025-03-24 00:31:38,620 - INFO - Processing query: 'anime'
+2025-03-24 00:31:38,723 - INFO - Query: 'phone wallpaper' - Got 50 results in 3.29s
+2025-03-24 00:31:38,731 - INFO - Saved endpoint results for query 'phone wallpaper' to search_eval_20250324_003120/endpoint_results/phone_wallpaper_endpoint.json
+2025-03-24 00:31:38,732 - INFO - Processing query: 'ai brushes'
+2025-03-24 00:31:38,926 - INFO - Query: 'business' - Got 50 results in 3.38s
+2025-03-24 00:31:38,933 - INFO - Saved endpoint results for query 'business' to search_eval_20250324_003120/endpoint_results/business_endpoint.json
+2025-03-24 00:31:38,933 - INFO - Processing query: 'template'
+2025-03-24 00:31:39,669 - INFO - Query: 'instagram marketing' - Got 50 results in 3.16s
+2025-03-24 00:31:39,676 - INFO - Saved endpoint results for query 'instagram marketing' to search_eval_20250324_003120/endpoint_results/instagram_marketing_endpoint.json
+2025-03-24 00:31:39,676 - INFO - Processing query: 'poker online'
+2025-03-24 00:31:41,842 - INFO - Query: 'ai brushes' - Got 50 results in 3.11s
+2025-03-24 00:31:41,849 - INFO - Saved endpoint results for query 'ai brushes' to search_eval_20250324_003120/endpoint_results/ai_brushes_endpoint.json
+2025-03-24 00:31:41,849 - INFO - Processing query: 'gambling'
+2025-03-24 00:31:41,872 - INFO - Query: 'blender' - Got 50 results in 3.64s
+2025-03-24 00:31:41,878 - INFO - Saved endpoint results for query 'blender' to search_eval_20250324_003120/endpoint_results/blender_endpoint.json
+2025-03-24 00:31:41,879 - INFO - Processing query: 'design system'
+2025-03-24 00:31:41,943 - INFO - Query: 'template' - Got 50 results in 3.01s
+2025-03-24 00:31:41,949 - INFO - Saved endpoint results for query 'template' to search_eval_20250324_003120/endpoint_results/template_endpoint.json
+2025-03-24 00:31:41,950 - INFO - Processing query: 'windows'
+2025-03-24 00:31:41,987 - INFO - Query: 'anime' - Got 19 results in 3.37s
+2025-03-24 00:31:41,990 - INFO - Saved endpoint results for query 'anime' to search_eval_20250324_003120/endpoint_results/anime_endpoint.json
+2025-03-24 00:31:41,991 - INFO - Processing query: 'football'
+2025-03-24 00:31:42,471 - INFO - Query: 'poker online' - Got 50 results in 2.79s
+2025-03-24 00:31:42,476 - INFO - Saved endpoint results for query 'poker online' to search_eval_20250324_003120/endpoint_results/poker_online_endpoint.json
+2025-03-24 00:31:42,477 - INFO - Processing query: 'lightroom bundle'
+2025-03-24 00:31:45,341 - INFO - Query: 'gambling' - Got 17 results in 3.49s
+2025-03-24 00:31:45,345 - INFO - Saved endpoint results for query 'gambling' to search_eval_20250324_003120/endpoint_results/gambling_endpoint.json
+2025-03-24 00:31:45,345 - INFO - Processing query: 'icon set'
+2025-03-24 00:31:45,469 - INFO - Query: 'football' - Got 50 results in 3.48s
+2025-03-24 00:31:45,474 - INFO - Saved endpoint results for query 'football' to search_eval_20250324_003120/endpoint_results/football_endpoint.json
+2025-03-24 00:31:45,474 - INFO - Processing query: 'lightroom'
+2025-03-24 00:31:45,559 - INFO - Query: 'windows' - Got 50 results in 3.61s
+2025-03-24 00:31:45,566 - INFO - Saved endpoint results for query 'windows' to search_eval_20250324_003120/endpoint_results/windows_endpoint.json
+2025-03-24 00:31:45,566 - INFO - Processing query: 'printable'
+2025-03-24 00:31:45,603 - INFO - Query: 'design system' - Got 50 results in 3.72s
+2025-03-24 00:31:45,610 - INFO - Saved endpoint results for query 'design system' to search_eval_20250324_003120/endpoint_results/design_system_endpoint.json
+2025-03-24 00:31:45,611 - INFO - Processing query: 'ios 14 icons'
+2025-03-24 00:31:45,653 - INFO - Query: 'lightroom bundle' - Got 50 results in 3.17s
+2025-03-24 00:31:45,660 - INFO - Saved endpoint results for query 'lightroom bundle' to search_eval_20250324_003120/endpoint_results/lightroom_bundle_endpoint.json
+2025-03-24 00:31:45,660 - INFO - Processing query: 'space'
+2025-03-24 00:31:48,086 - INFO - Query: 'icon set' - Got 50 results in 2.74s
+2025-03-24 00:31:48,093 - INFO - Saved endpoint results for query 'icon set' to search_eval_20250324_003120/endpoint_results/icon_set_endpoint.json
+2025-03-24 00:31:48,093 - INFO - Processing query: 'procreate brush pack'
+2025-03-24 00:31:48,158 - INFO - Query: 'lightroom' - Got 50 results in 2.68s
+2025-03-24 00:31:48,166 - INFO - Saved endpoint results for query 'lightroom' to search_eval_20250324_003120/endpoint_results/lightroom_endpoint.json
+2025-03-24 00:31:48,167 - INFO - Processing query: 'python for beginners'
+2025-03-24 00:31:48,467 - INFO - Query: 'ios 14 icons' - Got 50 results in 2.85s
+2025-03-24 00:31:48,472 - INFO - Saved endpoint results for query 'ios 14 icons' to search_eval_20250324_003120/endpoint_results/ios_14_icons_endpoint.json
+2025-03-24 00:31:48,473 - INFO - Processing query: 'cetogénica'
+2025-03-24 00:31:48,479 - INFO - Query: 'space' - Got 33 results in 2.82s
+2025-03-24 00:31:48,484 - INFO - Saved endpoint results for query 'space' to search_eval_20250324_003120/endpoint_results/space_endpoint.json
+2025-03-24 00:31:48,485 - INFO - Processing query: 'sample pack'
+2025-03-24 00:31:48,692 - INFO - Query: 'printable' - Got 47 results in 3.12s
+2025-03-24 00:31:48,701 - INFO - Saved endpoint results for query 'printable' to search_eval_20250324_003120/endpoint_results/printable_endpoint.json
+2025-03-24 00:31:48,701 - INFO - Processing query: 'chatgpt'
+2025-03-24 00:31:51,393 - INFO - Query: 'procreate brush pack' - Got 50 results in 3.30s
+2025-03-24 00:31:51,401 - INFO - Saved endpoint results for query 'procreate brush pack' to search_eval_20250324_003120/endpoint_results/procreate_brush_pack_endpoint.json
+2025-03-24 00:31:51,401 - INFO - Processing query: 'wallpapers'
+2025-03-24 00:31:51,762 - INFO - Query: 'python for beginners' - Got 50 results in 3.59s
+2025-03-24 00:31:51,769 - INFO - Saved endpoint results for query 'python for beginners' to search_eval_20250324_003120/endpoint_results/python_for_beginners_endpoint.json
+2025-03-24 00:31:51,769 - INFO - Processing query: 'macbook air mockup'
+2025-03-24 00:31:51,793 - INFO - Query: 'sample pack' - Got 50 results in 3.31s
+2025-03-24 00:31:51,804 - INFO - Saved endpoint results for query 'sample pack' to search_eval_20250324_003120/endpoint_results/sample_pack_endpoint.json
+2025-03-24 00:31:51,806 - INFO - Processing query: 'base'
+2025-03-24 00:31:51,824 - INFO - Query: 'chatgpt' - Got 50 results in 3.12s
+2025-03-24 00:31:51,835 - INFO - Saved endpoint results for query 'chatgpt' to search_eval_20250324_003120/endpoint_results/chatgpt_endpoint.json
+2025-03-24 00:31:51,836 - INFO - Processing query: 'soccer'
+2025-03-24 00:31:51,837 - INFO - Query: 'cetogénica' - Got 11 results in 3.36s
+2025-03-24 00:31:51,850 - INFO - Saved endpoint results for query 'cetogénica' to search_eval_20250324_003120/endpoint_results/cetogénica_endpoint.json
+2025-03-24 00:31:51,851 - INFO - Processing query: 'tennis course'
+2025-03-24 00:31:54,539 - INFO - Query: 'soccer' - Got 50 results in 2.70s
+2025-03-24 00:31:54,545 - INFO - Saved endpoint results for query 'soccer' to search_eval_20250324_003120/endpoint_results/soccer_endpoint.json
+2025-03-24 00:31:54,546 - INFO - Processing query: 'sports'
+2025-03-24 00:31:54,730 - INFO - Query: 'wallpapers' - Got 50 results in 3.33s
+2025-03-24 00:31:54,736 - INFO - Saved endpoint results for query 'wallpapers' to search_eval_20250324_003120/endpoint_results/wallpapers_endpoint.json
+2025-03-24 00:31:54,737 - INFO - Processing query: 'maxforlive'
+2025-03-24 00:31:54,818 - INFO - Query: 'tennis course' - Got 50 results in 2.96s
+2025-03-24 00:31:54,826 - INFO - Saved endpoint results for query 'tennis course' to search_eval_20250324_003120/endpoint_results/tennis_course_endpoint.json
+2025-03-24 00:31:54,827 - INFO - Processing query: 'hud'
+2025-03-24 00:31:54,868 - INFO - Query: 'macbook air mockup' - Got 50 results in 3.10s
+2025-03-24 00:31:54,886 - INFO - Saved endpoint results for query 'macbook air mockup' to search_eval_20250324_003120/endpoint_results/macbook_air_mockup_endpoint.json
+2025-03-24 00:31:54,887 - INFO - Processing query: 'nhl'
+2025-03-24 00:31:55,153 - INFO - Query: 'base' - Got 50 results in 3.35s
+2025-03-24 00:31:55,160 - INFO - Saved endpoint results for query 'base' to search_eval_20250324_003120/endpoint_results/base_endpoint.json
+2025-03-24 00:31:55,160 - INFO - Processing query: 'instagram'
+2025-03-24 00:31:57,767 - INFO - Query: 'sports' - Got 50 results in 3.22s
+2025-03-24 00:31:57,775 - INFO - Saved endpoint results for query 'sports' to search_eval_20250324_003120/endpoint_results/sports_endpoint.json
+2025-03-24 00:31:57,776 - INFO - Processing query: 'oil painting'
+2025-03-24 00:31:57,982 - INFO - Query: 'maxforlive' - Got 13 results in 3.24s
+2025-03-24 00:31:57,985 - INFO - Saved endpoint results for query 'maxforlive' to search_eval_20250324_003120/endpoint_results/maxforlive_endpoint.json
+2025-03-24 00:31:57,986 - INFO - Processing query: 'fishing logo'
+2025-03-24 00:31:58,101 - INFO - Query: 'hud' - Got 16 results in 3.27s
+2025-03-24 00:31:58,104 - INFO - Saved endpoint results for query 'hud' to search_eval_20250324_003120/endpoint_results/hud_endpoint.json
+2025-03-24 00:31:58,104 - INFO - Processing query: 'casino'
+2025-03-24 00:31:58,120 - INFO - Query: 'nhl' - Got 23 results in 3.23s
+2025-03-24 00:31:58,124 - INFO - Saved endpoint results for query 'nhl' to search_eval_20250324_003120/endpoint_results/nhl_endpoint.json
+2025-03-24 00:31:58,124 - INFO - Processing query: 'startup'
+2025-03-24 00:31:58,165 - INFO - Query: 'instagram' - Got 35 results in 3.00s
+2025-03-24 00:31:58,170 - INFO - Saved endpoint results for query 'instagram' to search_eval_20250324_003120/endpoint_results/instagram_endpoint.json
+2025-03-24 00:31:58,170 - INFO - Processing query: 'ui'
+2025-03-24 00:32:02,896 - INFO - Query: 'fishing logo' - Got 50 results in 4.91s
+2025-03-24 00:32:02,901 - INFO - Saved endpoint results for query 'fishing logo' to search_eval_20250324_003120/endpoint_results/fishing_logo_endpoint.json
+2025-03-24 00:32:02,904 - INFO - Query: 'oil painting' - Got 50 results in 5.13s
+2025-03-24 00:32:02,907 - INFO - Saved endpoint results for query 'oil painting' to search_eval_20250324_003120/endpoint_results/oil_painting_endpoint.json
+2025-03-24 00:32:02,928 - INFO - Query: 'ui' - Got 50 results in 4.76s
+2025-03-24 00:32:02,930 - INFO - Query: 'casino' - Got 15 results in 4.83s
+2025-03-24 00:32:02,937 - INFO - Saved endpoint results for query 'casino' to search_eval_20250324_003120/endpoint_results/casino_endpoint.json
+2025-03-24 00:32:02,939 - INFO - Saved endpoint results for query 'ui' to search_eval_20250324_003120/endpoint_results/ui_endpoint.json
+2025-03-24 00:32:02,977 - INFO - Query: 'startup' - Got 18 results in 4.85s
+2025-03-24 00:32:02,982 - INFO - Saved endpoint results for query 'startup' to search_eval_20250324_003120/endpoint_results/startup_endpoint.json
+2025-03-24 00:32:02,983 - INFO - Processed 50 queries: 50 successful, 0 failed
+2025-03-24 00:32:02,984 - INFO - Step 3: Generating expert rankings...
+2025-03-24 00:32:02,985 - INFO - Found 50 Gumroad result files
+2025-03-24 00:32:03,000 - INFO - Processing query: 'web design' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,005 - INFO - Processing query: 'preset pack' with 108 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,005 - INFO - Processing query: 'notion template' with 171 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,476 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,478 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,478 - WARNING - Failed to get expert ranking for 'notion template'
+2025-03-24 00:32:03,480 - INFO - Processing query: 'illustration' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,485 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,487 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,487 - WARNING - Failed to get expert ranking for 'web design'
+2025-03-24 00:32:03,489 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,490 - INFO - Processing query: 'prompt engineering' with 108 Gumroad products and 44 endpoint results
+2025-03-24 00:32:03,494 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,494 - WARNING - Failed to get expert ranking for 'preset pack'
+2025-03-24 00:32:03,500 - INFO - Processing query: 'kdp cover design' with 162 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,579 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,580 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,580 - WARNING - Failed to get expert ranking for 'illustration'
+2025-03-24 00:32:03,584 - INFO - Processing query: '3d' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,586 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,590 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,591 - WARNING - Failed to get expert ranking for 'prompt engineering'
+2025-03-24 00:32:03,593 - INFO - Processing query: 'tennis lessons' with 40 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,599 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,601 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,601 - WARNING - Failed to get expert ranking for 'kdp cover design'
+2025-03-24 00:32:03,603 - INFO - Processing query: 'ios14' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,684 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,685 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,685 - WARNING - Failed to get expert ranking for '3d'
+2025-03-24 00:32:03,689 - INFO - Processing query: 'music production' with 54 Gumroad products and 41 endpoint results
+2025-03-24 00:32:03,696 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,698 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,699 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,699 - WARNING - Failed to get expert ranking for 'tennis lessons'
+2025-03-24 00:32:03,700 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,701 - WARNING - Failed to get expert ranking for 'ios14'
+2025-03-24 00:32:03,703 - INFO - Processing query: 'pbr' with 54 Gumroad products and 18 endpoint results
+2025-03-24 00:32:03,707 - INFO - Processing query: 'betting system' with 144 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,785 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,785 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,786 - WARNING - Failed to get expert ranking for 'music production'
+2025-03-24 00:32:03,789 - INFO - Processing query: 'phone wallpaper' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,805 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,806 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,806 - WARNING - Failed to get expert ranking for 'pbr'
+2025-03-24 00:32:03,808 - INFO - Processing query: 'business' with 81 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,814 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,815 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,815 - WARNING - Failed to get expert ranking for 'betting system'
+2025-03-24 00:32:03,818 - INFO - Processing query: 'instagram marketing' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,886 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,887 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,887 - WARNING - Failed to get expert ranking for 'phone wallpaper'
+2025-03-24 00:32:03,890 - INFO - Processing query: 'blender' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:32:03,908 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:03,909 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:03,909 - WARNING - Failed to get expert ranking for 'business'
+2025-03-24 00:32:03,939 - INFO - Processing query: 'anime' with 45 Gumroad products and 19 endpoint results
+2025-03-24 00:32:04,040 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,046 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,047 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,048 - WARNING - Failed to get expert ranking for 'instagram marketing'
+2025-03-24 00:32:04,048 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,049 - WARNING - Failed to get expert ranking for 'blender'
+2025-03-24 00:32:04,052 - INFO - Processing query: 'ai brushes' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,052 - INFO - Processing query: 'template' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,142 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,145 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,145 - WARNING - Failed to get expert ranking for 'anime'
+2025-03-24 00:32:04,148 - INFO - Processing query: 'poker online' with 162 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,157 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,158 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,159 - WARNING - Failed to get expert ranking for 'ai brushes'
+2025-03-24 00:32:04,163 - INFO - Processing query: 'gambling' with 45 Gumroad products and 17 endpoint results
+2025-03-24 00:32:04,171 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,174 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,174 - WARNING - Failed to get expert ranking for 'template'
+2025-03-24 00:32:04,177 - INFO - Processing query: 'design system' with 126 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,253 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,253 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,254 - WARNING - Failed to get expert ranking for 'poker online'
+2025-03-24 00:32:04,257 - INFO - Processing query: 'windows' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,261 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,262 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,262 - WARNING - Failed to get expert ranking for 'gambling'
+2025-03-24 00:32:04,265 - INFO - Processing query: 'football' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,271 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,272 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,273 - WARNING - Failed to get expert ranking for 'design system'
+2025-03-24 00:32:04,275 - INFO - Processing query: 'lightroom bundle' with 135 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,351 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,352 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,352 - WARNING - Failed to get expert ranking for 'windows'
+2025-03-24 00:32:04,354 - INFO - Processing query: 'icon set' with 135 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,361 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,362 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,362 - WARNING - Failed to get expert ranking for 'football'
+2025-03-24 00:32:04,364 - INFO - Processing query: 'lightroom' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,369 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,370 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,370 - WARNING - Failed to get expert ranking for 'lightroom bundle'
+2025-03-24 00:32:04,372 - INFO - Processing query: 'printable' with 54 Gumroad products and 47 endpoint results
+2025-03-24 00:32:04,459 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,460 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,460 - WARNING - Failed to get expert ranking for 'icon set'
+2025-03-24 00:32:04,464 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,465 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,466 - INFO - Processing query: 'ios 14 icons' with 189 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,466 - WARNING - Failed to get expert ranking for 'lightroom'
+2025-03-24 00:32:04,472 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,474 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,474 - WARNING - Failed to get expert ranking for 'printable'
+2025-03-24 00:32:04,475 - INFO - Processing query: 'space' with 72 Gumroad products and 33 endpoint results
+2025-03-24 00:32:04,482 - INFO - Processing query: 'procreate brush pack' with 108 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,576 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,577 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,577 - WARNING - Failed to get expert ranking for 'space'
+2025-03-24 00:32:04,581 - INFO - Processing query: 'python for beginners' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,581 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,586 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,587 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,587 - WARNING - Failed to get expert ranking for 'ios 14 icons'
+2025-03-24 00:32:04,588 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,588 - WARNING - Failed to get expert ranking for 'procreate brush pack'
+2025-03-24 00:32:04,590 - INFO - Processing query: 'cetogénica' with 9 Gumroad products and 11 endpoint results
+2025-03-24 00:32:04,595 - INFO - Processing query: 'sample pack' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,679 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,679 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,679 - WARNING - Failed to get expert ranking for 'python for beginners'
+2025-03-24 00:32:04,681 - INFO - Processing query: 'chatgpt' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,691 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,692 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,692 - WARNING - Failed to get expert ranking for 'cetogénica'
+2025-03-24 00:32:04,695 - INFO - Processing query: 'wallpapers' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,705 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,705 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,706 - WARNING - Failed to get expert ranking for 'sample pack'
+2025-03-24 00:32:04,707 - INFO - Processing query: 'macbook air mockup' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,786 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,787 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,787 - WARNING - Failed to get expert ranking for 'chatgpt'
+2025-03-24 00:32:04,788 - INFO - Processing query: 'base' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,792 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,794 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,794 - WARNING - Failed to get expert ranking for 'wallpapers'
+2025-03-24 00:32:04,797 - INFO - Processing query: 'soccer' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,802 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,803 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,804 - WARNING - Failed to get expert ranking for 'macbook air mockup'
+2025-03-24 00:32:04,806 - INFO - Processing query: 'tennis course' with 180 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,885 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,886 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,886 - WARNING - Failed to get expert ranking for 'base'
+2025-03-24 00:32:04,888 - INFO - Processing query: 'sports' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:32:04,892 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,893 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,893 - WARNING - Failed to get expert ranking for 'soccer'
+2025-03-24 00:32:04,895 - INFO - Processing query: 'maxforlive' with 54 Gumroad products and 13 endpoint results
+2025-03-24 00:32:04,901 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,901 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,902 - WARNING - Failed to get expert ranking for 'tennis course'
+2025-03-24 00:32:04,903 - INFO - Processing query: 'hud' with 45 Gumroad products and 16 endpoint results
+2025-03-24 00:32:04,983 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,983 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,983 - WARNING - Failed to get expert ranking for 'sports'
+2025-03-24 00:32:04,987 - INFO - Processing query: 'nhl' with 72 Gumroad products and 23 endpoint results
+2025-03-24 00:32:04,991 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:04,992 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:04,992 - WARNING - Failed to get expert ranking for 'maxforlive'
+2025-03-24 00:32:04,993 - INFO - Processing query: 'instagram' with 45 Gumroad products and 35 endpoint results
+2025-03-24 00:32:04,999 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:05,000 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:05,001 - WARNING - Failed to get expert ranking for 'hud'
+2025-03-24 00:32:05,004 - INFO - Processing query: 'oil painting' with 234 Gumroad products and 50 endpoint results
+2025-03-24 00:32:05,084 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:05,084 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:05,084 - WARNING - Failed to get expert ranking for 'nhl'
+2025-03-24 00:32:05,086 - INFO - Processing query: 'fishing logo' with 81 Gumroad products and 50 endpoint results
+2025-03-24 00:32:05,091 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:05,092 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:05,093 - WARNING - Failed to get expert ranking for 'instagram'
+2025-03-24 00:32:05,095 - INFO - Processing query: 'casino' with 9 Gumroad products and 15 endpoint results
+2025-03-24 00:32:05,102 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:05,103 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:05,103 - WARNING - Failed to get expert ranking for 'oil painting'
+2025-03-24 00:32:05,105 - INFO - Processing query: 'startup' with 54 Gumroad products and 18 endpoint results
+2025-03-24 00:32:05,185 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:05,186 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:05,186 - WARNING - Failed to get expert ranking for 'fishing logo'
+2025-03-24 00:32:05,187 - INFO - Processing query: 'ui' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:32:05,194 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:05,194 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:05,194 - WARNING - Failed to get expert ranking for 'casino'
+2025-03-24 00:32:05,197 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:05,198 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:05,198 - WARNING - Failed to get expert ranking for 'startup'
+2025-03-24 00:32:05,293 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:32:05,294 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:32:05,294 - WARNING - Failed to get expert ranking for 'ui'
+2025-03-24 00:32:05,295 - INFO - Processed 50 queries: 0 successful, 50 failed
+2025-03-24 00:32:05,295 - INFO - Step 4: Calculating evaluation metrics...
+2025-03-24 00:36:27,995 - INFO - NumExpr defaulting to 8 threads.
+2025-03-24 00:36:30,932 - INFO - Successfully imported modules using dynamic import
+2025-03-24 00:36:30,934 - INFO - Continuing previous run in search_eval_20250324_003120
+2025-03-24 00:36:30,935 - INFO - Using provided Anthropic API key
+2025-03-24 00:36:30,935 - INFO - Skipping Gumroad data processing step
+2025-03-24 00:36:30,935 - INFO - Skipping endpoint querying step
+2025-03-24 00:36:30,935 - INFO - Step 3: Generating expert rankings...
+2025-03-24 00:36:30,935 - INFO - Found 50 Gumroad result files
+2025-03-24 00:36:30,942 - INFO - Processing query: 'preset pack' with 108 Gumroad products and 50 endpoint results
+2025-03-24 00:36:30,943 - INFO - Processing query: 'notion template' with 171 Gumroad products and 50 endpoint results
+2025-03-24 00:36:30,943 - INFO - Processing query: 'web design' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,253 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,254 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,254 - WARNING - Failed to get expert ranking for 'notion template'
+2025-03-24 00:36:31,256 - INFO - Processing query: 'illustration' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,264 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,266 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,268 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,268 - WARNING - Failed to get expert ranking for 'preset pack'
+2025-03-24 00:36:31,268 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,269 - WARNING - Failed to get expert ranking for 'web design'
+2025-03-24 00:36:31,272 - INFO - Processing query: 'prompt engineering' with 108 Gumroad products and 44 endpoint results
+2025-03-24 00:36:31,277 - INFO - Processing query: 'kdp cover design' with 162 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,352 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,353 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,353 - WARNING - Failed to get expert ranking for 'illustration'
+2025-03-24 00:36:31,357 - INFO - Processing query: '3d' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,371 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,372 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,372 - WARNING - Failed to get expert ranking for 'prompt engineering'
+2025-03-24 00:36:31,377 - INFO - Processing query: 'tennis lessons' with 40 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,383 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,385 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,385 - WARNING - Failed to get expert ranking for 'kdp cover design'
+2025-03-24 00:36:31,388 - INFO - Processing query: 'ios14' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,460 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,461 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,461 - WARNING - Failed to get expert ranking for '3d'
+2025-03-24 00:36:31,462 - INFO - Processing query: 'music production' with 54 Gumroad products and 41 endpoint results
+2025-03-24 00:36:31,481 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,481 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,481 - WARNING - Failed to get expert ranking for 'tennis lessons'
+2025-03-24 00:36:31,483 - INFO - Processing query: 'pbr' with 54 Gumroad products and 18 endpoint results
+2025-03-24 00:36:31,486 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,487 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,487 - WARNING - Failed to get expert ranking for 'ios14'
+2025-03-24 00:36:31,489 - INFO - Processing query: 'betting system' with 144 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,557 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,558 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,558 - WARNING - Failed to get expert ranking for 'music production'
+2025-03-24 00:36:31,561 - INFO - Processing query: 'phone wallpaper' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,587 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,588 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,588 - WARNING - Failed to get expert ranking for 'betting system'
+2025-03-24 00:36:31,591 - INFO - Processing query: 'business' with 81 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,646 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,647 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,647 - WARNING - Failed to get expert ranking for 'pbr'
+2025-03-24 00:36:31,649 - INFO - Processing query: 'instagram marketing' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,656 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,657 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,658 - WARNING - Failed to get expert ranking for 'phone wallpaper'
+2025-03-24 00:36:31,660 - INFO - Processing query: 'blender' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,688 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,688 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,688 - WARNING - Failed to get expert ranking for 'business'
+2025-03-24 00:36:31,690 - INFO - Processing query: 'anime' with 45 Gumroad products and 19 endpoint results
+2025-03-24 00:36:31,741 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,742 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,742 - WARNING - Failed to get expert ranking for 'instagram marketing'
+2025-03-24 00:36:31,744 - INFO - Processing query: 'ai brushes' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,754 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,755 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,755 - WARNING - Failed to get expert ranking for 'blender'
+2025-03-24 00:36:31,757 - INFO - Processing query: 'template' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,785 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,786 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,786 - WARNING - Failed to get expert ranking for 'anime'
+2025-03-24 00:36:31,788 - INFO - Processing query: 'poker online' with 162 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,862 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,862 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,862 - WARNING - Failed to get expert ranking for 'ai brushes'
+2025-03-24 00:36:31,865 - INFO - Processing query: 'gambling' with 45 Gumroad products and 17 endpoint results
+2025-03-24 00:36:31,865 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,869 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,869 - WARNING - Failed to get expert ranking for 'template'
+2025-03-24 00:36:31,872 - INFO - Processing query: 'design system' with 126 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,882 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,883 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,883 - WARNING - Failed to get expert ranking for 'poker online'
+2025-03-24 00:36:31,885 - INFO - Processing query: 'windows' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,962 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,962 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,963 - WARNING - Failed to get expert ranking for 'gambling'
+2025-03-24 00:36:31,966 - INFO - Processing query: 'football' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,970 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,972 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,973 - WARNING - Failed to get expert ranking for 'design system'
+2025-03-24 00:36:31,977 - INFO - Processing query: 'lightroom bundle' with 135 Gumroad products and 50 endpoint results
+2025-03-24 00:36:31,982 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:31,984 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:31,984 - WARNING - Failed to get expert ranking for 'windows'
+2025-03-24 00:36:31,989 - INFO - Processing query: 'icon set' with 135 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,064 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,065 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,065 - WARNING - Failed to get expert ranking for 'football'
+2025-03-24 00:36:32,066 - INFO - Processing query: 'lightroom' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,073 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,073 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,074 - WARNING - Failed to get expert ranking for 'lightroom bundle'
+2025-03-24 00:36:32,075 - INFO - Processing query: 'printable' with 54 Gumroad products and 47 endpoint results
+2025-03-24 00:36:32,084 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,085 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,085 - WARNING - Failed to get expert ranking for 'icon set'
+2025-03-24 00:36:32,088 - INFO - Processing query: 'ios 14 icons' with 189 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,161 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,162 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,162 - WARNING - Failed to get expert ranking for 'lightroom'
+2025-03-24 00:36:32,167 - INFO - Processing query: 'space' with 72 Gumroad products and 33 endpoint results
+2025-03-24 00:36:32,175 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,176 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,176 - WARNING - Failed to get expert ranking for 'printable'
+2025-03-24 00:36:32,178 - INFO - Processing query: 'procreate brush pack' with 108 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,186 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,187 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,187 - WARNING - Failed to get expert ranking for 'ios 14 icons'
+2025-03-24 00:36:32,189 - INFO - Processing query: 'python for beginners' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,260 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,261 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,261 - WARNING - Failed to get expert ranking for 'space'
+2025-03-24 00:36:32,263 - INFO - Processing query: 'cetogénica' with 9 Gumroad products and 11 endpoint results
+2025-03-24 00:36:32,279 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,280 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,280 - WARNING - Failed to get expert ranking for 'procreate brush pack'
+2025-03-24 00:36:32,282 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,283 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,283 - WARNING - Failed to get expert ranking for 'python for beginners'
+2025-03-24 00:36:32,285 - INFO - Processing query: 'sample pack' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,288 - INFO - Processing query: 'chatgpt' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,364 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,365 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,365 - WARNING - Failed to get expert ranking for 'cetogénica'
+2025-03-24 00:36:32,367 - INFO - Processing query: 'wallpapers' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,384 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,385 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,385 - WARNING - Failed to get expert ranking for 'sample pack'
+2025-03-24 00:36:32,386 - INFO - Processing query: 'macbook air mockup' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,397 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,399 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,399 - WARNING - Failed to get expert ranking for 'chatgpt'
+2025-03-24 00:36:32,403 - INFO - Processing query: 'base' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,460 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,461 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,461 - WARNING - Failed to get expert ranking for 'wallpapers'
+2025-03-24 00:36:32,463 - INFO - Processing query: 'soccer' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,477 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,478 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,479 - WARNING - Failed to get expert ranking for 'macbook air mockup'
+2025-03-24 00:36:32,481 - INFO - Processing query: 'tennis course' with 180 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,496 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,497 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,497 - WARNING - Failed to get expert ranking for 'base'
+2025-03-24 00:36:32,499 - INFO - Processing query: 'sports' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,560 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,561 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,561 - WARNING - Failed to get expert ranking for 'soccer'
+2025-03-24 00:36:32,562 - INFO - Processing query: 'maxforlive' with 54 Gumroad products and 13 endpoint results
+2025-03-24 00:36:32,582 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,583 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,583 - WARNING - Failed to get expert ranking for 'tennis course'
+2025-03-24 00:36:32,584 - INFO - Processing query: 'hud' with 45 Gumroad products and 16 endpoint results
+2025-03-24 00:36:32,592 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,594 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,594 - WARNING - Failed to get expert ranking for 'sports'
+2025-03-24 00:36:32,597 - INFO - Processing query: 'nhl' with 72 Gumroad products and 23 endpoint results
+2025-03-24 00:36:32,656 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,657 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,657 - WARNING - Failed to get expert ranking for 'maxforlive'
+2025-03-24 00:36:32,659 - INFO - Processing query: 'instagram' with 45 Gumroad products and 35 endpoint results
+2025-03-24 00:36:32,678 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,679 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,679 - WARNING - Failed to get expert ranking for 'hud'
+2025-03-24 00:36:32,682 - INFO - Processing query: 'oil painting' with 234 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,694 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,695 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,695 - WARNING - Failed to get expert ranking for 'nhl'
+2025-03-24 00:36:32,697 - INFO - Processing query: 'fishing logo' with 81 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,751 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,752 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,752 - WARNING - Failed to get expert ranking for 'instagram'
+2025-03-24 00:36:32,754 - INFO - Processing query: 'casino' with 9 Gumroad products and 15 endpoint results
+2025-03-24 00:36:32,778 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,778 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,779 - WARNING - Failed to get expert ranking for 'oil painting'
+2025-03-24 00:36:32,780 - INFO - Processing query: 'startup' with 54 Gumroad products and 18 endpoint results
+2025-03-24 00:36:32,791 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,792 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,793 - WARNING - Failed to get expert ranking for 'fishing logo'
+2025-03-24 00:36:32,796 - INFO - Processing query: 'ui' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:36:32,855 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,856 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,856 - WARNING - Failed to get expert ranking for 'casino'
+2025-03-24 00:36:32,878 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,879 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,880 - WARNING - Failed to get expert ranking for 'startup'
+2025-03-24 00:36:32,889 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+2025-03-24 00:36:32,890 - ERROR - Error in Anthropic API call: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}}
+2025-03-24 00:36:32,890 - WARNING - Failed to get expert ranking for 'ui'
+2025-03-24 00:36:32,891 - INFO - Processed 50 queries: 0 successful, 50 failed
+2025-03-24 00:36:32,891 - INFO - Step 4: Calculating evaluation metrics...
+2025-03-24 00:39:05,551 - INFO - NumExpr defaulting to 8 threads.
+2025-03-24 00:39:08,017 - INFO - Successfully imported modules using dynamic import
+2025-03-24 00:40:11,587 - INFO - NumExpr defaulting to 8 threads.
+2025-03-24 00:40:14,049 - INFO - Successfully imported modules using dynamic import
+2025-03-24 00:41:44,432 - INFO - NumExpr defaulting to 8 threads.
+2025-03-24 00:41:46,479 - INFO - Successfully imported modules using dynamic import
+2025-03-24 00:41:46,481 - INFO - Continuing previous run in search_eval_20250324_003120
+2025-03-24 00:41:46,482 - INFO - Using provided Anthropic API key
+2025-03-24 00:41:46,482 - INFO - Skipping Gumroad data processing step
+2025-03-24 00:41:46,482 - INFO - Skipping endpoint querying step
+2025-03-24 00:41:46,483 - INFO - Step 3: Generating expert rankings...
+2025-03-24 00:41:46,483 - INFO - Found 50 Gumroad result files
+2025-03-24 00:41:46,490 - INFO - Processing query: 'web design' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:42:03,146 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:42:03,176 - INFO - Successfully ranked 10 products for query 'web design'
+2025-03-24 00:42:03,177 - INFO - Saved expert ranking for 'web design' to search_eval_20250324_003120/expert_rankings/web_design_expert.json
+2025-03-24 00:42:08,186 - INFO - Processing query: 'preset pack' with 108 Gumroad products and 50 endpoint results
+2025-03-24 00:42:30,245 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:42:30,246 - INFO - Successfully ranked 10 products for query 'preset pack'
+2025-03-24 00:42:30,247 - INFO - Saved expert ranking for 'preset pack' to search_eval_20250324_003120/expert_rankings/preset_pack_expert.json
+2025-03-24 00:42:35,254 - INFO - Processing query: 'notion template' with 171 Gumroad products and 50 endpoint results
+2025-03-24 00:42:57,510 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:42:57,513 - INFO - Successfully ranked 10 products for query 'notion template'
+2025-03-24 00:42:57,514 - INFO - Saved expert ranking for 'notion template' to search_eval_20250324_003120/expert_rankings/notion_template_expert.json
+2025-03-24 00:43:02,517 - INFO - Processing query: 'illustration' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:43:24,489 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:43:24,491 - INFO - Successfully ranked 10 products for query 'illustration'
+2025-03-24 00:43:24,492 - INFO - Saved expert ranking for 'illustration' to search_eval_20250324_003120/expert_rankings/illustration_expert.json
+2025-03-24 00:43:29,498 - INFO - Processing query: 'prompt engineering' with 108 Gumroad products and 44 endpoint results
+2025-03-24 00:43:49,120 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:43:49,121 - ERROR - Failed to parse JSON from response: Extra data: line 14 column 1 (char 305)
+2025-03-24 00:43:49,121 - ERROR - Failed to parse JSON even after cleanup
+2025-03-24 00:43:49,122 - WARNING - Failed to get expert ranking for 'prompt engineering'
+2025-03-24 00:43:49,126 - INFO - Processing query: 'kdp cover design' with 162 Gumroad products and 50 endpoint results
+2025-03-24 00:44:08,249 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:44:08,250 - INFO - Successfully ranked 10 products for query 'kdp cover design'
+2025-03-24 00:44:08,251 - INFO - Saved expert ranking for 'kdp cover design' to search_eval_20250324_003120/expert_rankings/kdp_cover_design_expert.json
+2025-03-24 00:44:13,253 - INFO - Processing query: '3d' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:44:35,639 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:44:35,644 - INFO - Successfully ranked 10 products for query '3d'
+2025-03-24 00:44:35,645 - INFO - Saved expert ranking for '3d' to search_eval_20250324_003120/expert_rankings/3d_expert.json
+2025-03-24 00:44:40,647 - INFO - Processing query: 'tennis lessons' with 40 Gumroad products and 50 endpoint results
+2025-03-24 00:44:58,374 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:44:58,377 - INFO - Successfully ranked 10 products for query 'tennis lessons'
+2025-03-24 00:44:58,380 - INFO - Saved expert ranking for 'tennis lessons' to search_eval_20250324_003120/expert_rankings/tennis_lessons_expert.json
+2025-03-24 00:45:03,393 - INFO - Processing query: 'ios14' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:45:26,202 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:45:26,273 - INFO - Successfully ranked 10 products for query 'ios14'
+2025-03-24 00:45:26,285 - INFO - Saved expert ranking for 'ios14' to search_eval_20250324_003120/expert_rankings/ios14_expert.json
+2025-03-24 00:45:31,297 - INFO - Processing query: 'music production' with 54 Gumroad products and 41 endpoint results
+2025-03-24 00:45:48,966 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:45:48,970 - INFO - Successfully ranked 10 products for query 'music production'
+2025-03-24 00:45:48,973 - INFO - Saved expert ranking for 'music production' to search_eval_20250324_003120/expert_rankings/music_production_expert.json
+2025-03-24 00:45:53,984 - INFO - Processing query: 'pbr' with 54 Gumroad products and 18 endpoint results
+2025-03-24 00:46:11,462 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:46:11,466 - INFO - Successfully ranked 10 products for query 'pbr'
+2025-03-24 00:46:11,467 - INFO - Saved expert ranking for 'pbr' to search_eval_20250324_003120/expert_rankings/pbr_expert.json
+2025-03-24 00:46:16,481 - INFO - Processing query: 'betting system' with 144 Gumroad products and 50 endpoint results
+2025-03-24 00:46:34,146 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:46:34,148 - INFO - Successfully ranked 10 products for query 'betting system'
+2025-03-24 00:46:34,151 - INFO - Saved expert ranking for 'betting system' to search_eval_20250324_003120/expert_rankings/betting_system_expert.json
+2025-03-24 00:46:39,157 - INFO - Processing query: 'phone wallpaper' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:46:57,377 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:46:57,382 - INFO - Successfully ranked 10 products for query 'phone wallpaper'
+2025-03-24 00:46:57,383 - INFO - Saved expert ranking for 'phone wallpaper' to search_eval_20250324_003120/expert_rankings/phone_wallpaper_expert.json
+2025-03-24 00:47:02,388 - INFO - Processing query: 'business' with 81 Gumroad products and 50 endpoint results
+2025-03-24 00:47:27,000 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:47:27,008 - ERROR - Failed to parse JSON from response: Extra data: line 14 column 1 (char 305)
+2025-03-24 00:47:27,009 - ERROR - Failed to parse JSON even after cleanup
+2025-03-24 00:47:27,009 - WARNING - Failed to get expert ranking for 'business'
+2025-03-24 00:47:27,013 - INFO - Processing query: 'instagram marketing' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:47:45,007 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:47:45,012 - INFO - Successfully ranked 10 products for query 'instagram marketing'
+2025-03-24 00:47:45,014 - INFO - Saved expert ranking for 'instagram marketing' to search_eval_20250324_003120/expert_rankings/instagram_marketing_expert.json
+2025-03-24 00:47:50,022 - INFO - Processing query: 'blender' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:48:08,213 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:48:08,221 - ERROR - Failed to parse JSON from response: Extra data: line 14 column 1 (char 305)
+2025-03-24 00:48:08,222 - ERROR - Failed to parse JSON even after cleanup
+2025-03-24 00:48:08,222 - WARNING - Failed to get expert ranking for 'blender'
+2025-03-24 00:48:08,225 - INFO - Processing query: 'anime' with 45 Gumroad products and 19 endpoint results
+2025-03-24 00:48:30,563 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:48:30,564 - INFO - Successfully ranked 10 products for query 'anime'
+2025-03-24 00:48:30,566 - INFO - Saved expert ranking for 'anime' to search_eval_20250324_003120/expert_rankings/anime_expert.json
+2025-03-24 00:48:35,570 - INFO - Processing query: 'ai brushes' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:48:55,236 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:48:55,238 - INFO - Successfully ranked 10 products for query 'ai brushes'
+2025-03-24 00:48:55,240 - INFO - Saved expert ranking for 'ai brushes' to search_eval_20250324_003120/expert_rankings/ai_brushes_expert.json
+2025-03-24 00:49:00,251 - INFO - Processing query: 'template' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:49:25,528 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:49:25,530 - INFO - Successfully ranked 10 products for query 'template'
+2025-03-24 00:49:25,531 - INFO - Saved expert ranking for 'template' to search_eval_20250324_003120/expert_rankings/template_expert.json
+2025-03-24 00:49:30,552 - INFO - Processing query: 'poker online' with 162 Gumroad products and 50 endpoint results
+2025-03-24 00:49:51,831 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:49:51,837 - INFO - Successfully ranked 10 products for query 'poker online'
+2025-03-24 00:49:51,839 - INFO - Saved expert ranking for 'poker online' to search_eval_20250324_003120/expert_rankings/poker_online_expert.json
+2025-03-24 00:49:56,848 - INFO - Processing query: 'gambling' with 45 Gumroad products and 17 endpoint results
+2025-03-24 00:50:17,939 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:50:17,944 - INFO - Successfully ranked 10 products for query 'gambling'
+2025-03-24 00:50:17,945 - INFO - Saved expert ranking for 'gambling' to search_eval_20250324_003120/expert_rankings/gambling_expert.json
+2025-03-24 00:50:22,953 - INFO - Processing query: 'design system' with 126 Gumroad products and 50 endpoint results
+2025-03-24 00:50:44,213 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:50:44,221 - INFO - Successfully ranked 10 products for query 'design system'
+2025-03-24 00:50:44,223 - INFO - Saved expert ranking for 'design system' to search_eval_20250324_003120/expert_rankings/design_system_expert.json
+2025-03-24 00:50:49,235 - INFO - Processing query: 'windows' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:51:08,894 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:51:08,896 - INFO - Successfully ranked 10 products for query 'windows'
+2025-03-24 00:51:08,897 - INFO - Saved expert ranking for 'windows' to search_eval_20250324_003120/expert_rankings/windows_expert.json
+2025-03-24 00:51:13,901 - INFO - Processing query: 'football' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:51:38,492 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:51:38,493 - INFO - Successfully ranked 10 products for query 'football'
+2025-03-24 00:51:38,494 - INFO - Saved expert ranking for 'football' to search_eval_20250324_003120/expert_rankings/football_expert.json
+2025-03-24 00:51:43,500 - INFO - Processing query: 'lightroom bundle' with 135 Gumroad products and 50 endpoint results
+2025-03-24 00:52:03,276 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:52:03,279 - INFO - Successfully ranked 10 products for query 'lightroom bundle'
+2025-03-24 00:52:03,280 - INFO - Saved expert ranking for 'lightroom bundle' to search_eval_20250324_003120/expert_rankings/lightroom_bundle_expert.json
+2025-03-24 00:52:08,283 - INFO - Processing query: 'icon set' with 135 Gumroad products and 50 endpoint results
+2025-03-24 00:52:29,599 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:52:29,603 - INFO - Successfully ranked 10 products for query 'icon set'
+2025-03-24 00:52:29,604 - INFO - Saved expert ranking for 'icon set' to search_eval_20250324_003120/expert_rankings/icon_set_expert.json
+2025-03-24 00:52:34,610 - INFO - Processing query: 'lightroom' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:52:51,206 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:52:51,217 - INFO - Successfully ranked 10 products for query 'lightroom'
+2025-03-24 00:52:51,218 - INFO - Saved expert ranking for 'lightroom' to search_eval_20250324_003120/expert_rankings/lightroom_expert.json
+2025-03-24 00:52:56,223 - INFO - Processing query: 'printable' with 54 Gumroad products and 47 endpoint results
+2025-03-24 00:53:14,681 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:53:14,687 - INFO - Successfully ranked 10 products for query 'printable'
+2025-03-24 00:53:14,688 - INFO - Saved expert ranking for 'printable' to search_eval_20250324_003120/expert_rankings/printable_expert.json
+2025-03-24 00:53:19,705 - INFO - Processing query: 'ios 14 icons' with 189 Gumroad products and 50 endpoint results
+2025-03-24 00:53:37,273 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:53:37,960 - INFO - Successfully ranked 10 products for query 'ios 14 icons'
+2025-03-24 00:53:37,960 - INFO - Saved expert ranking for 'ios 14 icons' to search_eval_20250324_003120/expert_rankings/ios_14_icons_expert.json
+2025-03-24 00:53:42,968 - INFO - Processing query: 'space' with 72 Gumroad products and 33 endpoint results
+2025-03-24 00:54:01,417 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:54:01,419 - INFO - Successfully ranked 10 products for query 'space'
+2025-03-24 00:54:01,420 - INFO - Saved expert ranking for 'space' to search_eval_20250324_003120/expert_rankings/space_expert.json
+2025-03-24 00:54:06,434 - INFO - Processing query: 'procreate brush pack' with 108 Gumroad products and 50 endpoint results
+2025-03-24 00:54:29,467 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:54:29,469 - INFO - Successfully ranked 10 products for query 'procreate brush pack'
+2025-03-24 00:54:29,470 - INFO - Saved expert ranking for 'procreate brush pack' to search_eval_20250324_003120/expert_rankings/procreate_brush_pack_expert.json
+2025-03-24 00:54:34,476 - INFO - Processing query: 'python for beginners' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:54:54,448 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:54:54,450 - INFO - Successfully ranked 10 products for query 'python for beginners'
+2025-03-24 00:54:54,451 - INFO - Saved expert ranking for 'python for beginners' to search_eval_20250324_003120/expert_rankings/python_for_beginners_expert.json
+2025-03-24 00:54:59,454 - INFO - Processing query: 'cetogénica' with 9 Gumroad products and 11 endpoint results
+2025-03-24 00:55:18,503 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:55:18,504 - INFO - Successfully ranked 10 products for query 'cetogénica'
+2025-03-24 00:55:18,505 - INFO - Saved expert ranking for 'cetogénica' to search_eval_20250324_003120/expert_rankings/cetogénica_expert.json
+2025-03-24 00:55:23,511 - INFO - Processing query: 'sample pack' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:55:45,082 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:55:45,083 - INFO - Successfully ranked 10 products for query 'sample pack'
+2025-03-24 00:55:45,084 - INFO - Saved expert ranking for 'sample pack' to search_eval_20250324_003120/expert_rankings/sample_pack_expert.json
+2025-03-24 00:55:50,091 - INFO - Processing query: 'chatgpt' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:56:14,094 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:56:14,096 - INFO - Successfully ranked 10 products for query 'chatgpt'
+2025-03-24 00:56:14,097 - INFO - Saved expert ranking for 'chatgpt' to search_eval_20250324_003120/expert_rankings/chatgpt_expert.json
+2025-03-24 00:56:19,105 - INFO - Processing query: 'wallpapers' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:56:36,280 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:56:36,283 - INFO - Successfully ranked 10 products for query 'wallpapers'
+2025-03-24 00:56:36,284 - INFO - Saved expert ranking for 'wallpapers' to search_eval_20250324_003120/expert_rankings/wallpapers_expert.json
+2025-03-24 00:56:41,295 - INFO - Processing query: 'macbook air mockup' with 54 Gumroad products and 50 endpoint results
+2025-03-24 00:57:00,919 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:57:00,922 - INFO - Successfully ranked 10 products for query 'macbook air mockup'
+2025-03-24 00:57:00,923 - INFO - Saved expert ranking for 'macbook air mockup' to search_eval_20250324_003120/expert_rankings/macbook_air_mockup_expert.json
+2025-03-24 00:57:05,927 - INFO - Processing query: 'base' with 45 Gumroad products and 50 endpoint results
+2025-03-24 00:57:24,719 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:57:24,731 - INFO - Successfully ranked 10 products for query 'base'
+2025-03-24 00:57:24,733 - INFO - Saved expert ranking for 'base' to search_eval_20250324_003120/expert_rankings/base_expert.json
+2025-03-24 00:57:29,740 - INFO - Processing query: 'soccer' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:57:50,677 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:57:50,679 - INFO - Successfully ranked 10 products for query 'soccer'
+2025-03-24 00:57:50,680 - INFO - Saved expert ranking for 'soccer' to search_eval_20250324_003120/expert_rankings/soccer_expert.json
+2025-03-24 00:57:55,690 - INFO - Processing query: 'tennis course' with 180 Gumroad products and 50 endpoint results
+2025-03-24 00:58:18,393 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:58:18,394 - INFO - Successfully ranked 10 products for query 'tennis course'
+2025-03-24 00:58:18,395 - INFO - Saved expert ranking for 'tennis course' to search_eval_20250324_003120/expert_rankings/tennis_course_expert.json
+2025-03-24 00:58:23,398 - INFO - Processing query: 'sports' with 63 Gumroad products and 50 endpoint results
+2025-03-24 00:58:44,180 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:58:44,182 - INFO - Successfully ranked 10 products for query 'sports'
+2025-03-24 00:58:44,182 - INFO - Saved expert ranking for 'sports' to search_eval_20250324_003120/expert_rankings/sports_expert.json
+2025-03-24 00:58:49,184 - INFO - Processing query: 'maxforlive' with 54 Gumroad products and 13 endpoint results
+2025-03-24 00:59:08,681 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:59:08,682 - INFO - Successfully ranked 10 products for query 'maxforlive'
+2025-03-24 00:59:08,684 - INFO - Saved expert ranking for 'maxforlive' to search_eval_20250324_003120/expert_rankings/maxforlive_expert.json
+2025-03-24 00:59:13,691 - INFO - Processing query: 'hud' with 45 Gumroad products and 16 endpoint results
+2025-03-24 00:59:38,958 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 00:59:38,961 - INFO - Successfully ranked 10 products for query 'hud'
+2025-03-24 00:59:38,962 - INFO - Saved expert ranking for 'hud' to search_eval_20250324_003120/expert_rankings/hud_expert.json
+2025-03-24 00:59:43,972 - INFO - Processing query: 'nhl' with 72 Gumroad products and 23 endpoint results
+2025-03-24 01:00:10,612 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 01:00:10,636 - INFO - Successfully ranked 10 products for query 'nhl'
+2025-03-24 01:00:10,638 - INFO - Saved expert ranking for 'nhl' to search_eval_20250324_003120/expert_rankings/nhl_expert.json
+2025-03-24 01:00:15,645 - INFO - Processing query: 'instagram' with 45 Gumroad products and 35 endpoint results
+2025-03-24 01:00:36,319 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 01:00:36,321 - INFO - Successfully ranked 10 products for query 'instagram'
+2025-03-24 01:00:36,322 - INFO - Saved expert ranking for 'instagram' to search_eval_20250324_003120/expert_rankings/instagram_expert.json
+2025-03-24 01:00:41,329 - INFO - Processing query: 'oil painting' with 234 Gumroad products and 50 endpoint results
+2025-03-24 01:01:04,349 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 01:01:04,351 - INFO - Successfully ranked 10 products for query 'oil painting'
+2025-03-24 01:01:04,357 - INFO - Saved expert ranking for 'oil painting' to search_eval_20250324_003120/expert_rankings/oil_painting_expert.json
+2025-03-24 01:01:09,372 - INFO - Processing query: 'fishing logo' with 81 Gumroad products and 50 endpoint results
+2025-03-24 01:01:29,413 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 01:01:29,415 - INFO - Successfully ranked 10 products for query 'fishing logo'
+2025-03-24 01:01:29,416 - INFO - Saved expert ranking for 'fishing logo' to search_eval_20250324_003120/expert_rankings/fishing_logo_expert.json
+2025-03-24 01:01:34,423 - INFO - Processing query: 'casino' with 9 Gumroad products and 15 endpoint results
+2025-03-24 01:01:58,926 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 01:01:58,928 - INFO - Successfully ranked 10 products for query 'casino'
+2025-03-24 01:01:58,928 - INFO - Saved expert ranking for 'casino' to search_eval_20250324_003120/expert_rankings/casino_expert.json
+2025-03-24 01:02:03,936 - INFO - Processing query: 'startup' with 54 Gumroad products and 18 endpoint results
+2025-03-24 01:02:25,755 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 01:02:25,756 - INFO - Successfully ranked 10 products for query 'startup'
+2025-03-24 01:02:25,760 - INFO - Saved expert ranking for 'startup' to search_eval_20250324_003120/expert_rankings/startup_expert.json
+2025-03-24 01:02:30,766 - INFO - Processing query: 'ui' with 45 Gumroad products and 50 endpoint results
+2025-03-24 01:02:47,495 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-03-24 01:02:47,496 - INFO - Successfully ranked 10 products for query 'ui'
+2025-03-24 01:02:47,497 - INFO - Saved expert ranking for 'ui' to search_eval_20250324_003120/expert_rankings/ui_expert.json
+2025-03-24 01:02:52,518 - INFO - Processed 50 queries: 47 successful, 3 failed
+2025-03-24 01:02:52,527 - INFO - Step 4: Calculating evaluation metrics...
+2025-03-24 01:02:52,531 - INFO - Loaded expert ranking for query 'ui' with 10 products
+2025-03-24 01:02:52,533 - INFO - Loaded expert ranking for query 'football' with 10 products
+2025-03-24 01:02:52,534 - INFO - Loaded expert ranking for query 'nhl' with 10 products
+2025-03-24 01:02:52,535 - INFO - Loaded expert ranking for query 'space' with 10 products
+2025-03-24 01:02:52,536 - INFO - Loaded expert ranking for query 'ios14' with 10 products
+2025-03-24 01:02:52,536 - INFO - Loaded expert ranking for query 'music production' with 10 products
+2025-03-24 01:02:52,537 - INFO - Loaded expert ranking for query 'sample pack' with 10 products
+2025-03-24 01:02:52,537 - INFO - Loaded expert ranking for query 'python for beginners' with 10 products
+2025-03-24 01:02:52,538 - INFO - Loaded expert ranking for query 'lightroom bundle' with 10 products
+2025-03-24 01:02:52,538 - INFO - Loaded expert ranking for query 'startup' with 10 products
+2025-03-24 01:02:52,540 - INFO - Loaded expert ranking for query 'ai brushes' with 10 products
+2025-03-24 01:02:52,541 - INFO - Loaded expert ranking for query '3d' with 10 products
+2025-03-24 01:02:52,542 - INFO - Loaded expert ranking for query 'base' with 10 products
+2025-03-24 01:02:52,543 - INFO - Loaded expert ranking for query 'wallpapers' with 10 products
+2025-03-24 01:02:52,543 - INFO - Loaded expert ranking for query 'tennis course' with 10 products
+2025-03-24 01:02:52,544 - INFO - Loaded expert ranking for query 'maxforlive' with 10 products
+2025-03-24 01:02:52,545 - INFO - Loaded expert ranking for query 'pbr' with 10 products
+2025-03-24 01:02:52,546 - INFO - Loaded expert ranking for query 'poker online' with 10 products
+2025-03-24 01:02:52,547 - INFO - Loaded expert ranking for query 'sports' with 10 products
+2025-03-24 01:02:52,549 - INFO - Loaded expert ranking for query 'oil painting' with 10 products
+2025-03-24 01:02:52,553 - INFO - Loaded expert ranking for query 'kdp cover design' with 10 products
+2025-03-24 01:02:52,554 - INFO - Loaded expert ranking for query 'web design' with 10 products
+2025-03-24 01:02:52,555 - INFO - Loaded expert ranking for query 'macbook air mockup' with 10 products
+2025-03-24 01:02:52,557 - INFO - Loaded expert ranking for query 'preset pack' with 10 products
+2025-03-24 01:02:52,558 - INFO - Loaded expert ranking for query 'cetogénica' with 10 products
+2025-03-24 01:02:52,558 - INFO - Loaded expert ranking for query 'windows' with 10 products
+2025-03-24 01:02:52,559 - INFO - Loaded expert ranking for query 'phone wallpaper' with 10 products
+2025-03-24 01:02:52,559 - INFO - Loaded expert ranking for query 'anime' with 10 products
+2025-03-24 01:02:52,560 - INFO - Loaded expert ranking for query 'chatgpt' with 10 products
+2025-03-24 01:02:52,561 - INFO - Loaded expert ranking for query 'hud' with 10 products
+2025-03-24 01:02:52,561 - INFO - Loaded expert ranking for query 'illustration' with 10 products
+2025-03-24 01:02:52,562 - INFO - Loaded expert ranking for query 'printable' with 10 products
+2025-03-24 01:02:52,567 - INFO - Loaded expert ranking for query 'design system' with 10 products
+2025-03-24 01:02:52,571 - INFO - Loaded expert ranking for query 'fishing logo' with 10 products
+2025-03-24 01:02:52,571 - INFO - Loaded expert ranking for query 'casino' with 10 products
+2025-03-24 01:02:52,572 - INFO - Loaded expert ranking for query 'instagram' with 10 products
+2025-03-24 01:02:52,573 - INFO - Loaded expert ranking for query 'soccer' with 10 products
+2025-03-24 01:02:52,573 - INFO - Loaded expert ranking for query 'template' with 10 products
+2025-03-24 01:02:52,574 - INFO - Loaded expert ranking for query 'betting system' with 10 products
+2025-03-24 01:02:52,575 - INFO - Loaded expert ranking for query 'procreate brush pack' with 10 products
+2025-03-24 01:02:52,575 - INFO - Loaded expert ranking for query 'notion template' with 10 products
+2025-03-24 01:02:52,576 - INFO - Loaded expert ranking for query 'gambling' with 10 products
+2025-03-24 01:02:52,577 - INFO - Loaded expert ranking for query 'instagram marketing' with 10 products
+2025-03-24 01:02:52,578 - INFO - Loaded expert ranking for query 'tennis lessons' with 10 products
+2025-03-24 01:02:52,579 - INFO - Loaded expert ranking for query 'lightroom' with 10 products
+2025-03-24 01:02:52,580 - INFO - Loaded expert ranking for query 'icon set' with 10 products
+2025-03-24 01:02:52,582 - INFO - Loaded expert ranking for query 'ios 14 icons' with 10 products
+2025-03-24 01:02:52,584 - INFO - Loaded Gumroad results for query 'web design' with 63 products
+2025-03-24 01:02:52,590 - INFO - Loaded Gumroad results for query 'preset pack' with 108 products
+2025-03-24 01:02:52,603 - INFO - Loaded Gumroad results for query 'notion template' with 171 products
+2025-03-24 01:02:52,604 - INFO - Loaded Gumroad results for query 'illustration' with 54 products
+2025-03-24 01:02:52,609 - INFO - Loaded Gumroad results for query 'kdp cover design' with 162 products
+2025-03-24 01:02:52,611 - INFO - Loaded Gumroad results for query '3d' with 63 products
+2025-03-24 01:02:52,613 - INFO - Loaded Gumroad results for query 'tennis lessons' with 40 products
+2025-03-24 01:02:52,616 - INFO - Loaded Gumroad results for query 'ios14' with 54 products
+2025-03-24 01:02:52,619 - INFO - Loaded Gumroad results for query 'music production' with 54 products
+2025-03-24 01:02:52,621 - INFO - Loaded Gumroad results for query 'pbr' with 54 products
+2025-03-24 01:02:52,623 - INFO - Loaded Gumroad results for query 'betting system' with 144 products
+2025-03-24 01:02:52,624 - INFO - Loaded Gumroad results for query 'phone wallpaper' with 54 products
+2025-03-24 01:02:52,627 - INFO - Loaded Gumroad results for query 'instagram marketing' with 45 products
+2025-03-24 01:02:52,628 - INFO - Loaded Gumroad results for query 'anime' with 45 products
+2025-03-24 01:02:52,630 - INFO - Loaded Gumroad results for query 'ai brushes' with 54 products
+2025-03-24 01:02:52,632 - INFO - Loaded Gumroad results for query 'template' with 54 products
+2025-03-24 01:02:52,633 - INFO - Loaded Gumroad results for query 'poker online' with 162 products
+2025-03-24 01:02:52,634 - INFO - Loaded Gumroad results for query 'gambling' with 45 products
+2025-03-24 01:02:52,636 - INFO - Loaded Gumroad results for query 'design system' with 126 products
+2025-03-24 01:02:52,636 - INFO - Loaded Gumroad results for query 'windows' with 54 products
+2025-03-24 01:02:52,637 - INFO - Loaded Gumroad results for query 'football' with 45 products
+2025-03-24 01:02:52,638 - INFO - Loaded Gumroad results for query 'lightroom bundle' with 135 products
+2025-03-24 01:02:52,641 - INFO - Loaded Gumroad results for query 'icon set' with 135 products
+2025-03-24 01:02:52,642 - INFO - Loaded Gumroad results for query 'lightroom' with 54 products
+2025-03-24 01:02:52,643 - INFO - Loaded Gumroad results for query 'printable' with 54 products
+2025-03-24 01:02:52,647 - INFO - Loaded Gumroad results for query 'ios 14 icons' with 189 products
+2025-03-24 01:02:52,650 - INFO - Loaded Gumroad results for query 'space' with 72 products
+2025-03-24 01:02:52,651 - INFO - Loaded Gumroad results for query 'procreate brush pack' with 108 products
+2025-03-24 01:02:52,651 - INFO - Loaded Gumroad results for query 'python for beginners' with 45 products
+2025-03-24 01:02:52,651 - INFO - Loaded Gumroad results for query 'cetogénica' with 9 products
+2025-03-24 01:02:52,652 - INFO - Loaded Gumroad results for query 'sample pack' with 54 products
+2025-03-24 01:02:52,653 - INFO - Loaded Gumroad results for query 'chatgpt' with 54 products
+2025-03-24 01:02:52,655 - INFO - Loaded Gumroad results for query 'wallpapers' with 54 products
+2025-03-24 01:02:52,656 - INFO - Loaded Gumroad results for query 'macbook air mockup' with 54 products
+2025-03-24 01:02:52,656 - INFO - Loaded Gumroad results for query 'base' with 45 products
+2025-03-24 01:02:52,657 - INFO - Loaded Gumroad results for query 'soccer' with 63 products
+2025-03-24 01:02:52,659 - INFO - Loaded Gumroad results for query 'tennis course' with 180 products
+2025-03-24 01:02:52,661 - INFO - Loaded Gumroad results for query 'sports' with 63 products
+2025-03-24 01:02:52,662 - INFO - Loaded Gumroad results for query 'maxforlive' with 54 products
+2025-03-24 01:02:52,663 - INFO - Loaded Gumroad results for query 'hud' with 45 products
+2025-03-24 01:02:52,663 - INFO - Loaded Gumroad results for query 'nhl' with 72 products
+2025-03-24 01:02:52,665 - INFO - Loaded Gumroad results for query 'instagram' with 45 products
+2025-03-24 01:02:52,666 - INFO - Loaded Gumroad results for query 'oil painting' with 234 products
+2025-03-24 01:02:52,668 - INFO - Loaded Gumroad results for query 'fishing logo' with 81 products
+2025-03-24 01:02:52,668 - INFO - Loaded Gumroad results for query 'casino' with 9 products
+2025-03-24 01:02:52,669 - INFO - Loaded Gumroad results for query 'startup' with 54 products
+2025-03-24 01:02:52,669 - INFO - Loaded Gumroad results for query 'ui' with 45 products
+2025-03-24 01:02:52,670 - INFO - Loaded endpoint results for query 'notion template' with 50 products
+2025-03-24 01:02:52,671 - INFO - Loaded endpoint results for query 'betting system' with 50 products
+2025-03-24 01:02:52,672 - INFO - Loaded endpoint results for query 'oil painting' with 50 products
+2025-03-24 01:02:52,673 - INFO - Loaded endpoint results for query 'ios14' with 50 products
+2025-03-24 01:02:52,675 - INFO - Loaded endpoint results for query '3d' with 50 products
+2025-03-24 01:02:52,675 - INFO - Loaded endpoint results for query 'sports' with 50 products
+2025-03-24 01:02:52,676 - INFO - Loaded endpoint results for query 'cetogénica' with 11 products
+2025-03-24 01:02:52,677 - INFO - Loaded endpoint results for query 'kdp cover design' with 50 products
+2025-03-24 01:02:52,678 - INFO - Loaded endpoint results for query 'icon set' with 50 products
+2025-03-24 01:02:52,680 - INFO - Loaded endpoint results for query 'startup' with 18 products
+2025-03-24 01:02:52,680 - INFO - Loaded endpoint results for query 'casino' with 15 products
+2025-03-24 01:02:52,682 - INFO - Loaded endpoint results for query 'anime' with 19 products
+2025-03-24 01:02:52,683 - INFO - Loaded endpoint results for query 'pbr' with 18 products
+2025-03-24 01:02:52,684 - INFO - Loaded endpoint results for query 'web design' with 50 products
+2025-03-24 01:02:52,684 - INFO - Loaded endpoint results for query 'soccer' with 50 products
+2025-03-24 01:02:52,685 - INFO - Loaded endpoint results for query 'instagram marketing' with 50 products
+2025-03-24 01:02:52,686 - INFO - Loaded endpoint results for query 'python for beginners' with 50 products
+2025-03-24 01:02:52,687 - INFO - Loaded endpoint results for query 'lightroom' with 50 products
+2025-03-24 01:02:52,687 - INFO - Loaded endpoint results for query 'tennis course' with 50 products
+2025-03-24 01:02:52,688 - INFO - Loaded endpoint results for query 'nhl' with 23 products
+2025-03-24 01:02:52,689 - INFO - Loaded endpoint results for query 'fishing logo' with 50 products
+2025-03-24 01:02:52,689 - INFO - Loaded endpoint results for query 'hud' with 16 products
+2025-03-24 01:02:52,690 - INFO - Loaded endpoint results for query 'ui' with 50 products
+2025-03-24 01:02:52,690 - INFO - Loaded endpoint results for query 'printable' with 47 products
+2025-03-24 01:02:52,691 - INFO - Loaded endpoint results for query 'football' with 50 products
+2025-03-24 01:02:52,694 - INFO - Loaded endpoint results for query 'ios 14 icons' with 50 products
+2025-03-24 01:02:52,695 - INFO - Loaded endpoint results for query 'music production' with 41 products
+2025-03-24 01:02:52,697 - INFO - Loaded endpoint results for query 'illustration' with 50 products
+2025-03-24 01:02:52,698 - INFO - Loaded endpoint results for query 'instagram' with 35 products
+2025-03-24 01:02:52,699 - INFO - Loaded endpoint results for query 'phone wallpaper' with 50 products
+2025-03-24 01:02:52,700 - INFO - Loaded endpoint results for query 'ai brushes' with 50 products
+2025-03-24 01:02:52,701 - INFO - Loaded endpoint results for query 'template' with 50 products
+2025-03-24 01:02:52,702 - INFO - Loaded endpoint results for query 'wallpapers' with 50 products
+2025-03-24 01:02:52,702 - INFO - Loaded endpoint results for query 'base' with 50 products
+2025-03-24 01:02:52,703 - INFO - Loaded endpoint results for query 'space' with 33 products
+2025-03-24 01:02:52,704 - INFO - Loaded endpoint results for query 'lightroom bundle' with 50 products
+2025-03-24 01:02:52,704 - INFO - Loaded endpoint results for query 'tennis lessons' with 50 products
+2025-03-24 01:02:52,706 - INFO - Loaded endpoint results for query 'windows' with 50 products
+2025-03-24 01:02:52,707 - INFO - Loaded endpoint results for query 'design system' with 50 products
+2025-03-24 01:02:52,708 - INFO - Loaded endpoint results for query 'poker online' with 50 products
+2025-03-24 01:02:52,711 - INFO - Loaded endpoint results for query 'preset pack' with 50 products
+2025-03-24 01:02:52,713 - INFO - Loaded endpoint results for query 'chatgpt' with 50 products
+2025-03-24 01:02:52,715 - INFO - Loaded endpoint results for query 'sample pack' with 50 products
+2025-03-24 01:02:52,718 - INFO - Loaded endpoint results for query 'procreate brush pack' with 50 products
+2025-03-24 01:02:52,722 - INFO - Loaded endpoint results for query 'maxforlive' with 13 products
+2025-03-24 01:02:52,723 - INFO - Loaded endpoint results for query 'gambling' with 17 products
+2025-03-24 01:02:52,724 - INFO - Loaded endpoint results for query 'macbook air mockup' with 50 products
+2025-03-24 01:03:59,813 - INFO - NumExpr defaulting to 8 threads.
+2025-03-24 01:04:02,979 - INFO - Successfully imported modules using dynamic import
+2025-03-24 01:04:02,980 - INFO - Continuing previous run in search_eval_20250324_003120
+2025-03-24 01:04:02,980 - INFO - Using provided Anthropic API key
+2025-03-24 01:04:02,981 - INFO - Skipping Gumroad data processing step
+2025-03-24 01:04:02,981 - INFO - Skipping endpoint querying step
+2025-03-24 01:04:02,981 - INFO - Skipping expert ranking generation step
+2025-03-24 01:04:02,981 - INFO - Step 4: Calculating evaluation metrics...
+2025-03-24 01:04:02,981 - INFO - Loaded expert ranking for query 'ui' with 10 products
+2025-03-24 01:04:02,982 - INFO - Loaded expert ranking for query 'football' with 10 products
+2025-03-24 01:04:02,982 - INFO - Loaded expert ranking for query 'nhl' with 10 products
+2025-03-24 01:04:02,983 - INFO - Loaded expert ranking for query 'space' with 10 products
+2025-03-24 01:04:02,983 - INFO - Loaded expert ranking for query 'ios14' with 10 products
+2025-03-24 01:04:02,983 - INFO - Loaded expert ranking for query 'music production' with 10 products
+2025-03-24 01:04:02,984 - INFO - Loaded expert ranking for query 'sample pack' with 10 products
+2025-03-24 01:04:02,984 - INFO - Loaded expert ranking for query 'python for beginners' with 10 products
+2025-03-24 01:04:02,985 - INFO - Loaded expert ranking for query 'lightroom bundle' with 10 products
+2025-03-24 01:04:02,986 - INFO - Loaded expert ranking for query 'startup' with 10 products
+2025-03-24 01:04:02,986 - INFO - Loaded expert ranking for query 'ai brushes' with 10 products
+2025-03-24 01:04:02,987 - INFO - Loaded expert ranking for query '3d' with 10 products
+2025-03-24 01:04:02,988 - INFO - Loaded expert ranking for query 'base' with 10 products
+2025-03-24 01:04:02,989 - INFO - Loaded expert ranking for query 'wallpapers' with 10 products
+2025-03-24 01:04:02,990 - INFO - Loaded expert ranking for query 'tennis course' with 10 products
+2025-03-24 01:04:02,990 - INFO - Loaded expert ranking for query 'maxforlive' with 10 products
+2025-03-24 01:04:02,991 - INFO - Loaded expert ranking for query 'pbr' with 10 products
+2025-03-24 01:04:02,992 - INFO - Loaded expert ranking for query 'poker online' with 10 products
+2025-03-24 01:04:02,994 - INFO - Loaded expert ranking for query 'sports' with 10 products
+2025-03-24 01:04:02,995 - INFO - Loaded expert ranking for query 'oil painting' with 10 products
+2025-03-24 01:04:02,996 - INFO - Loaded expert ranking for query 'kdp cover design' with 10 products
+2025-03-24 01:04:02,997 - INFO - Loaded expert ranking for query 'web design' with 10 products
+2025-03-24 01:04:02,997 - INFO - Loaded expert ranking for query 'macbook air mockup' with 10 products
+2025-03-24 01:04:02,998 - INFO - Loaded expert ranking for query 'preset pack' with 10 products
+2025-03-24 01:04:02,998 - INFO - Loaded expert ranking for query 'cetogénica' with 10 products
+2025-03-24 01:04:02,999 - INFO - Loaded expert ranking for query 'windows' with 10 products
+2025-03-24 01:04:02,999 - INFO - Loaded expert ranking for query 'phone wallpaper' with 10 products
+2025-03-24 01:04:03,000 - INFO - Loaded expert ranking for query 'anime' with 10 products
+2025-03-24 01:04:03,000 - INFO - Loaded expert ranking for query 'chatgpt' with 10 products
+2025-03-24 01:04:03,001 - INFO - Loaded expert ranking for query 'hud' with 10 products
+2025-03-24 01:04:03,002 - INFO - Loaded expert ranking for query 'illustration' with 10 products
+2025-03-24 01:04:03,002 - INFO - Loaded expert ranking for query 'printable' with 10 products
+2025-03-24 01:04:03,003 - INFO - Loaded expert ranking for query 'design system' with 10 products
+2025-03-24 01:04:03,003 - INFO - Loaded expert ranking for query 'fishing logo' with 10 products
+2025-03-24 01:04:03,004 - INFO - Loaded expert ranking for query 'casino' with 10 products
+2025-03-24 01:04:03,004 - INFO - Loaded expert ranking for query 'instagram' with 10 products
+2025-03-24 01:04:03,008 - INFO - Loaded expert ranking for query 'soccer' with 10 products
+2025-03-24 01:04:03,009 - INFO - Loaded expert ranking for query 'template' with 10 products
+2025-03-24 01:04:03,010 - INFO - Loaded expert ranking for query 'betting system' with 10 products
+2025-03-24 01:04:03,012 - INFO - Loaded expert ranking for query 'procreate brush pack' with 10 products
+2025-03-24 01:04:03,013 - INFO - Loaded expert ranking for query 'notion template' with 10 products
+2025-03-24 01:04:03,014 - INFO - Loaded expert ranking for query 'gambling' with 10 products
+2025-03-24 01:04:03,015 - INFO - Loaded expert ranking for query 'instagram marketing' with 10 products
+2025-03-24 01:04:03,016 - INFO - Loaded expert ranking for query 'tennis lessons' with 10 products
+2025-03-24 01:04:03,017 - INFO - Loaded expert ranking for query 'lightroom' with 10 products
+2025-03-24 01:04:03,017 - INFO - Loaded expert ranking for query 'icon set' with 10 products
+2025-03-24 01:04:03,018 - INFO - Loaded expert ranking for query 'ios 14 icons' with 10 products
+2025-03-24 01:04:03,019 - INFO - Loaded Gumroad results for query 'web design' with 63 products
+2025-03-24 01:04:03,020 - INFO - Loaded Gumroad results for query 'preset pack' with 108 products
+2025-03-24 01:04:03,025 - INFO - Loaded Gumroad results for query 'notion template' with 171 products
+2025-03-24 01:04:03,026 - INFO - Loaded Gumroad results for query 'illustration' with 54 products
+2025-03-24 01:04:03,029 - INFO - Loaded Gumroad results for query 'kdp cover design' with 162 products
+2025-03-24 01:04:03,030 - INFO - Loaded Gumroad results for query '3d' with 63 products
+2025-03-24 01:04:03,031 - INFO - Loaded Gumroad results for query 'tennis lessons' with 40 products
+2025-03-24 01:04:03,031 - INFO - Loaded Gumroad results for query 'ios14' with 54 products
+2025-03-24 01:04:03,032 - INFO - Loaded Gumroad results for query 'music production' with 54 products
+2025-03-24 01:04:03,033 - INFO - Loaded Gumroad results for query 'pbr' with 54 products
+2025-03-24 01:04:03,034 - INFO - Loaded Gumroad results for query 'betting system' with 144 products
+2025-03-24 01:04:03,034 - INFO - Loaded Gumroad results for query 'phone wallpaper' with 54 products
+2025-03-24 01:04:03,036 - INFO - Loaded Gumroad results for query 'instagram marketing' with 45 products
+2025-03-24 01:04:03,037 - INFO - Loaded Gumroad results for query 'anime' with 45 products
+2025-03-24 01:04:03,038 - INFO - Loaded Gumroad results for query 'ai brushes' with 54 products
+2025-03-24 01:04:03,040 - INFO - Loaded Gumroad results for query 'template' with 54 products
+2025-03-24 01:04:03,041 - INFO - Loaded Gumroad results for query 'poker online' with 162 products
+2025-03-24 01:04:03,042 - INFO - Loaded Gumroad results for query 'gambling' with 45 products
+2025-03-24 01:04:03,043 - INFO - Loaded Gumroad results for query 'design system' with 126 products
+2025-03-24 01:04:03,044 - INFO - Loaded Gumroad results for query 'windows' with 54 products
+2025-03-24 01:04:03,045 - INFO - Loaded Gumroad results for query 'football' with 45 products
+2025-03-24 01:04:03,046 - INFO - Loaded Gumroad results for query 'lightroom bundle' with 135 products
+2025-03-24 01:04:03,047 - INFO - Loaded Gumroad results for query 'icon set' with 135 products
+2025-03-24 01:04:03,047 - INFO - Loaded Gumroad results for query 'lightroom' with 54 products
+2025-03-24 01:04:03,048 - INFO - Loaded Gumroad results for query 'printable' with 54 products
+2025-03-24 01:04:03,050 - INFO - Loaded Gumroad results for query 'ios 14 icons' with 189 products
+2025-03-24 01:04:03,051 - INFO - Loaded Gumroad results for query 'space' with 72 products
+2025-03-24 01:04:03,052 - INFO - Loaded Gumroad results for query 'procreate brush pack' with 108 products
+2025-03-24 01:04:03,052 - INFO - Loaded Gumroad results for query 'python for beginners' with 45 products
+2025-03-24 01:04:03,053 - INFO - Loaded Gumroad results for query 'cetogénica' with 9 products
+2025-03-24 01:04:03,053 - INFO - Loaded Gumroad results for query 'sample pack' with 54 products
+2025-03-24 01:04:03,054 - INFO - Loaded Gumroad results for query 'chatgpt' with 54 products
+2025-03-24 01:04:03,055 - INFO - Loaded Gumroad results for query 'wallpapers' with 54 products
+2025-03-24 01:04:03,057 - INFO - Loaded Gumroad results for query 'macbook air mockup' with 54 products
+2025-03-24 01:04:03,058 - INFO - Loaded Gumroad results for query 'base' with 45 products
+2025-03-24 01:04:03,059 - INFO - Loaded Gumroad results for query 'soccer' with 63 products
+2025-03-24 01:04:03,061 - INFO - Loaded Gumroad results for query 'tennis course' with 180 products
+2025-03-24 01:04:03,063 - INFO - Loaded Gumroad results for query 'sports' with 63 products
+2025-03-24 01:04:03,064 - INFO - Loaded Gumroad results for query 'maxforlive' with 54 products
+2025-03-24 01:04:03,064 - INFO - Loaded Gumroad results for query 'hud' with 45 products
+2025-03-24 01:04:03,065 - INFO - Loaded Gumroad results for query 'nhl' with 72 products
+2025-03-24 01:04:03,066 - INFO - Loaded Gumroad results for query 'instagram' with 45 products
+2025-03-24 01:04:03,067 - INFO - Loaded Gumroad results for query 'oil painting' with 234 products
+2025-03-24 01:04:03,068 - INFO - Loaded Gumroad results for query 'fishing logo' with 81 products
+2025-03-24 01:04:03,068 - INFO - Loaded Gumroad results for query 'casino' with 9 products
+2025-03-24 01:04:03,069 - INFO - Loaded Gumroad results for query 'startup' with 54 products
+2025-03-24 01:04:03,070 - INFO - Loaded Gumroad results for query 'ui' with 45 products
+2025-03-24 01:04:03,080 - INFO - Loaded endpoint results for query 'notion template' with 50 products
+2025-03-24 01:04:03,082 - INFO - Loaded endpoint results for query 'betting system' with 50 products
+2025-03-24 01:04:03,084 - INFO - Loaded endpoint results for query 'oil painting' with 50 products
+2025-03-24 01:04:03,085 - INFO - Loaded endpoint results for query 'ios14' with 50 products
+2025-03-24 01:04:03,085 - INFO - Loaded endpoint results for query '3d' with 50 products
+2025-03-24 01:04:03,088 - INFO - Loaded endpoint results for query 'sports' with 50 products
+2025-03-24 01:04:03,089 - INFO - Loaded endpoint results for query 'cetogénica' with 11 products
+2025-03-24 01:04:03,090 - INFO - Loaded endpoint results for query 'kdp cover design' with 50 products
+2025-03-24 01:04:03,092 - INFO - Loaded endpoint results for query 'icon set' with 50 products
+2025-03-24 01:04:03,093 - INFO - Loaded endpoint results for query 'startup' with 18 products
+2025-03-24 01:04:03,095 - INFO - Loaded endpoint results for query 'casino' with 15 products
+2025-03-24 01:04:03,095 - INFO - Loaded endpoint results for query 'anime' with 19 products
+2025-03-24 01:04:03,096 - INFO - Loaded endpoint results for query 'pbr' with 18 products
+2025-03-24 01:04:03,097 - INFO - Loaded endpoint results for query 'web design' with 50 products
+2025-03-24 01:04:03,097 - INFO - Loaded endpoint results for query 'soccer' with 50 products
+2025-03-24 01:04:03,098 - INFO - Loaded endpoint results for query 'instagram marketing' with 50 products
+2025-03-24 01:04:03,099 - INFO - Loaded endpoint results for query 'python for beginners' with 50 products
+2025-03-24 01:04:03,100 - INFO - Loaded endpoint results for query 'lightroom' with 50 products
+2025-03-24 01:04:03,101 - INFO - Loaded endpoint results for query 'tennis course' with 50 products
+2025-03-24 01:04:03,101 - INFO - Loaded endpoint results for query 'nhl' with 23 products
+2025-03-24 01:04:03,102 - INFO - Loaded endpoint results for query 'fishing logo' with 50 products
+2025-03-24 01:04:03,103 - INFO - Loaded endpoint results for query 'hud' with 16 products
+2025-03-24 01:04:03,103 - INFO - Loaded endpoint results for query 'ui' with 50 products
+2025-03-24 01:04:03,104 - INFO - Loaded endpoint results for query 'printable' with 47 products
+2025-03-24 01:04:03,105 - INFO - Loaded endpoint results for query 'football' with 50 products
+2025-03-24 01:04:03,107 - INFO - Loaded endpoint results for query 'ios 14 icons' with 50 products
+2025-03-24 01:04:03,112 - INFO - Loaded endpoint results for query 'music production' with 41 products
+2025-03-24 01:04:03,114 - INFO - Loaded endpoint results for query 'illustration' with 50 products
+2025-03-24 01:04:03,115 - INFO - Loaded endpoint results for query 'instagram' with 35 products
+2025-03-24 01:04:03,116 - INFO - Loaded endpoint results for query 'phone wallpaper' with 50 products
+2025-03-24 01:04:03,116 - INFO - Loaded endpoint results for query 'ai brushes' with 50 products
+2025-03-24 01:04:03,117 - INFO - Loaded endpoint results for query 'template' with 50 products
+2025-03-24 01:04:03,118 - INFO - Loaded endpoint results for query 'wallpapers' with 50 products
+2025-03-24 01:04:03,119 - INFO - Loaded endpoint results for query 'base' with 50 products
+2025-03-24 01:04:03,119 - INFO - Loaded endpoint results for query 'space' with 33 products
+2025-03-24 01:04:03,120 - INFO - Loaded endpoint results for query 'lightroom bundle' with 50 products
+2025-03-24 01:04:03,121 - INFO - Loaded endpoint results for query 'tennis lessons' with 50 products
+2025-03-24 01:04:03,124 - INFO - Loaded endpoint results for query 'windows' with 50 products
+2025-03-24 01:04:03,125 - INFO - Loaded endpoint results for query 'design system' with 50 products
+2025-03-24 01:04:03,126 - INFO - Loaded endpoint results for query 'poker online' with 50 products
+2025-03-24 01:04:03,127 - INFO - Loaded endpoint results for query 'preset pack' with 50 products
+2025-03-24 01:04:03,128 - INFO - Loaded endpoint results for query 'chatgpt' with 50 products
+2025-03-24 01:04:03,129 - INFO - Loaded endpoint results for query 'sample pack' with 50 products
+2025-03-24 01:04:03,133 - INFO - Loaded endpoint results for query 'procreate brush pack' with 50 products
+2025-03-24 01:04:03,135 - INFO - Loaded endpoint results for query 'maxforlive' with 13 products
+2025-03-24 01:04:03,135 - INFO - Loaded endpoint results for query 'gambling' with 17 products
+2025-03-24 01:04:03,136 - INFO - Loaded endpoint results for query 'macbook air mockup' with 50 products

@@ -1,0 +1,194 @@
+{
+  "query": "wallpapers",
+  "timestamp": "2025-03-24T00:56:36.283789",
+  "total_products_considered": 39,
+  "ranked_product_ids": [
+    "RF0zgHzj6Kuow0OhGWyIYw==",
+    "KY5lrjH2amf7G9xSiTXSOw==",
+    "ip0wpCbDgdbJq80STrLvJg==",
+    "aQ-Rq8Cq_vnSH11LglBrSg==",
+    "HUSWN-81oe3qA1M2bSIHHQ==",
+    "Yiq2POifr-UU6HWv8sKriw==",
+    "7HE08nDONRBa-9kbq7CaXg==",
+    "pXSPBtOiay8RtzlkfgTx3A==",
+    "C-TZUryVVY0wfgdlGd6V9Q==",
+    "di8_m7hbO5liGsIewqAaFg=="
+  ],
+  "ranked_products": [
+    {
+      "id": "RF0zgHzj6Kuow0OhGWyIYw==",
+      "name": "My Digitally Painted Wallpapers 3",
+      "description": "Includes all the wallpapers I showed in my instagram reel!",
+      "thumbnail_url": "https://public-files.gumroad.com/octjw36251qn1xqzfyfnr9x02s5a",
+      "price_cents": 0,
+      "ratings_count": 46,
+      "ratings_score": 5.0,
+      "seller_name": "Archie Chrisanthou",
+      "_source": "endpoint"
+    },
+    {
+      "id": "KY5lrjH2amf7G9xSiTXSOw==",
+      "name": "Space Gradient Wallpaper Pack",
+      "description": "The Space Gradient wallpaper pack. Featuring 8 different mobile wallpapers. Each wallpaper has a ...",
+      "thumbnail_url": "https://public-files.gumroad.com/4xnctytkmraitdn95v1lhqsmgvb2",
+      "price_cents": 0,
+      "ratings_count": 246,
+      "ratings_score": 4.9,
+      "seller_name": "Matt | Digisentials",
+      "_source": "endpoint"
+    },
+    {
+      "id": "ip0wpCbDgdbJq80STrLvJg==",
+      "name": "Waves Wallpaper Pack by Shevon Salmon",
+      "description": "10 wavy wallpapers that were beautifully created for the summer vibes. These wallpapers are in va...",
+      "thumbnail_url": "https://public-files.gumroad.com/84ibnyqvonv7t1u6w6olg69tkl46",
+      "price_cents": 1000,
+      "ratings_count": 91,
+      "ratings_score": 4.7,
+      "seller_name": "Shevon Salmon",
+      "_source": "endpoint"
+    },
+    {
+      "id": "aQ-Rq8Cq_vnSH11LglBrSg==",
+      "name": "Chroma Wallpaper Pack",
+      "description": "The Chroma wallpaper pack. Featuring over 20 desktop and mobile wallpapers. Each wallpaper has a ...",
+      "thumbnail_url": "https://public-files.gumroad.com/842zn2f6x90zvhj9or9wew8vrsqv",
+      "price_cents": 1400,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "Oliur / UltraLinx",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 11,
+      "id": "HUSWN-81oe3qA1M2bSIHHQ==",
+      "name": "Flow Wallpaper Pack by Andrew Clare",
+      "description": "Flow is a pack of six clean, minimal wallpapers for iPhone. Each wallpaper has 9 different color ...",
+      "thumbnail_url": "https://public-files.gumroad.com/8m5nfkoo4hyumadjfuakgypg65jq",
+      "price_cents": 400,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://andrewjclare.gumroad.com/l/flow?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 7,
+      "id": "Yiq2POifr-UU6HWv8sKriw==",
+      "name": "Retro Wallpaper Pack",
+      "description": "A pack of 10 retro tech inspired wallpapers that support hiding the dock on devices running iOS 1...",
+      "thumbnail_url": "https://public-files.gumroad.com/wung4wtl0swhkz54ev8lohjt7z3y",
+      "price_cents": 699,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://sambeckman.gumroad.com/l/retro?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 20,
+      "id": "7HE08nDONRBa-9kbq7CaXg==",
+      "name": "DUNE Wallpaper + Widgy Pack",
+      "description": "DUNE Pack includes 2 high quality PNG wallpapers 2640x5736 pixels and 3 large Widgy widgets (ligh...",
+      "thumbnail_url": "https://public-files.gumroad.com/vize3bp0549thtlyhsswyzqovoqx",
+      "price_cents": 695,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://sergmykserus.gumroad.com/l/dune?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "pXSPBtOiay8RtzlkfgTx3A==",
+      "name": "PIXELDOT Wallpaper + Widgy pack",
+      "description": "PIXELDOT pack includes wallpapers adapted for all Iphone series and Widgy widgets.This product ha...",
+      "thumbnail_url": "https://public-files.gumroad.com/p7axex3tsis55t1smrxg8un0f1j7",
+      "price_cents": 395,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://sergmykserus.gumroad.com/l/zgkkql?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 14,
+      "id": "C-TZUryVVY0wfgdlGd6V9Q==",
+      "name": "All Wallpapers Bundle",
+      "description": "",
+      "thumbnail_url": "https://public-files.gumroad.com/9738nt0vvgwnigoyr3fi6e2l867d",
+      "price_cents": 1500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://digitalminimalist.gumroad.com/l/rntymh?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 19,
+      "id": "di8_m7hbO5liGsIewqAaFg==",
+      "name": "FPS: FIRST PERSON SHOOTER DOCUMENTARY (DIGITAL BUNDLE)",
+      "description": "Available to download and watch today: First Person Shooter is a four-hour-plus celebration of th...",
+      "thumbnail_url": "https://public-files.gumroad.com/4mz4r2kst4hzuopj0iaz49wei526",
+      "price_cents": 1799,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://creatorvc.gumroad.com/l/FPSDOC?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 6,
+    "endpoint_count": 4,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

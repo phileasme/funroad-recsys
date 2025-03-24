@@ -1,0 +1,194 @@
+{
+  "query": "soccer",
+  "timestamp": "2025-03-24T00:57:50.679986",
+  "total_products_considered": 38,
+  "ranked_product_ids": [
+    "8My454LpCwnBxI3bv27xxg==",
+    "WJSoZ9L6j9eGujef32raYw==",
+    "ZUyGMTHFP9d7ZTHJojM6WA==",
+    "1fNDmbdgulQysLgVBwlM-w==",
+    "U-eBxbu_cDc24-q4QiMHOg==",
+    "XM8CuAGZmpWZrG0l9wsDfA==",
+    "xZV8T-pwbGxDmkjKlZ-38w==",
+    "-3LR86Z_YWYnmIKbkgzR1A==",
+    "BIke5WpQB2JGxcZScbR-Vw==",
+    "QwNzksryKSztLtdd04YuXQ=="
+  ],
+  "ranked_products": [
+    {
+      "id": "8My454LpCwnBxI3bv27xxg==",
+      "name": "The Ultimate Guide to Soccer Development",
+      "description": "Master the Game with This Comprehensive Guide Take your soccer skills to the next level with the ...",
+      "thumbnail_url": "https://public-files.gumroad.com/w3laihm9nuv09dlbx6nzyxfohtht",
+      "price_cents": 499,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "TG Futbol",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 1,
+      "id": "WJSoZ9L6j9eGujef32raYw==",
+      "name": "Coaching the 4-3-3 Formation",
+      "description": "Unlock the Secrets of the 4-3-3 Formation: Transform Your Team's Game Today!Are you ready to take...",
+      "thumbnail_url": "https://public-files.gumroad.com/pmokhkghl04d3ktc2vpkuavzoph5",
+      "price_cents": 1000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://coachreese.gumroad.com/l/433formation?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "ZUyGMTHFP9d7ZTHJojM6WA==",
+      "name": "24 Week Conditioning Program for Field Sports",
+      "description": "This 24 Week Program is build to prepare Field Sport athletes (Soccer, Football, Lacrosse, etc......",
+      "thumbnail_url": "https://public-files.gumroad.com/s0q13xlurl6xdvwd05s22wzsewop",
+      "price_cents": 3000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Scott Leech, MS, MEd, CSCS",
+      "_source": "endpoint"
+    },
+    {
+      "id": "1fNDmbdgulQysLgVBwlM-w==",
+      "name": "Soccer Coaching - Google Sheet Bundle",
+      "description": "Take your coaching skills to another level with this Google Sheet bundle that includes:- Players ...",
+      "thumbnail_url": "https://public-files.gumroad.com/3rpowmlb0mhntn72ze3bvyyy6512",
+      "price_cents": 2900,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Clembo",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 16,
+      "id": "U-eBxbu_cDc24-q4QiMHOg==",
+      "name": "Attacking Principles - With exercises!",
+      "description": "Essential Attacking Principles for soccer coaching with video examples of exercises. Gain insight...",
+      "thumbnail_url": "https://public-files.gumroad.com/1fd3ozt60k1hbrj5rbwgjglt7y79",
+      "price_cents": 1000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://mattevolved.gumroad.com/l/uwsrd?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 8,
+      "id": "XM8CuAGZmpWZrG0l9wsDfA==",
+      "name": "Teach \"Your Game\": Coaching Course ",
+      "description": "\"A deep dive on the modern game.\" This is an inside look at how to teach your players the modern ...",
+      "thumbnail_url": "https://public-files.gumroad.com/dpt25qs4q3oeu94npscjtcyc528n",
+      "price_cents": 4000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://carlsonhp.gumroad.com/l/teach?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "xZV8T-pwbGxDmkjKlZ-38w==",
+      "name": "Men\u2019s Soccer Jersey Mockup V19",
+      "description": "Men\u2019s Soccer Jersey Mockup V19high quality mock-ups to present your work. Easy to use and full cu...",
+      "thumbnail_url": "https://public-files.gumroad.com/dflegi3pwjvwywzvwshl2oh8wl7b",
+      "price_cents": 2400,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "TRDesignme",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 14,
+      "id": "-3LR86Z_YWYnmIKbkgzR1A==",
+      "name": "Football Match Analysis Template",
+      "description": "Football analysis at your fingertips!Do you want to analyse your favourite football team? Or just...",
+      "thumbnail_url": "https://public-files.gumroad.com/yp6vcjm3zncgzz6jshxfzw4nc7wh",
+      "price_cents": 600,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://coachreese.gumroad.com/l/matchanalysis?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 7,
+      "id": "BIke5WpQB2JGxcZScbR-Vw==",
+      "name": "Remote Work Policies Toolkit",
+      "description": "Save time, empower your teams and effectively upgrade your processes with access to this practica...",
+      "thumbnail_url": "https://public-files.gumroad.com/di4qi4mp885sy9ndwwb9mnjw20d0",
+      "price_cents": 8997,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://artofservice.gumroad.com/l/Remote-Work-Policies-Toolkit?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 2,
+      "id": "QwNzksryKSztLtdd04YuXQ==",
+      "name": "Side Hustle Scripts: The Instant Income Playbook (PreOrder - Launching Jan 21)",
+      "description": "**THIS PROGRAM IS DESIGNED TO EXPOSE YOU TO DOZENS (12+) OF DIFFERENT SIDE HUSTLES YOU CAN START ...",
+      "thumbnail_url": "https://public-files.gumroad.com/37dtles08d636fidhafi2f2jcu89",
+      "price_cents": 9700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://thaddyofficial.gumroad.com/l/sidehustlescripts-playbook?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 6,
+    "endpoint_count": 4,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "gumroad"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "endpoint"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

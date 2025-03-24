@@ -1,0 +1,191 @@
+{
+  "query": "cetog\u00e9nica",
+  "timestamp": "2025-03-24T00:55:18.504923",
+  "total_products_considered": 17,
+  "ranked_product_ids": [
+    "q8Tf7_CPaGw4XCYcjvwgiA==",
+    "GU__Okg4TnzaEsPkcwSaOQ==",
+    "9ZR76z5lVCNpM8WazyASXQ==",
+    "sOxH0Mw834LQWBDTC1mkzA==",
+    "al5kFJAFUsRY1QP1cu64Zw==",
+    "52pJf7QklDYdXm_4sGdfKw==",
+    "1yYiyGsL9lmUFjhUpruzTg==",
+    "zXBQrbPEGbwfU6M4u4J3lQ==",
+    "sOAlPeuffToDT_4Y1sEg9Q==",
+    "BHpMNKyTNO5V3SdeW5wKOA=="
+  ],
+  "ranked_products": [
+    {
+      "id": "q8Tf7_CPaGw4XCYcjvwgiA==",
+      "name": "Mi Cocina Keto. \u00bfEst\u00e1n listos? ...Estos son los ingredientes. ",
+      "description": "\u00a1Hola a todos! Soy Manu y bienvenidos a un nuevo libro: Mi Cocina Keto.Si me conoces por mi canal...",
+      "thumbnail_url": "https://public-files.gumroad.com/x5tfp3psdd2iy8uxpgk2dmevvi53",
+      "price_cents": 1800,
+      "ratings_count": 67,
+      "ratings_score": 4.8,
+      "seller_name": "Manu Echeverri",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 1,
+      "id": "GU__Okg4TnzaEsPkcwSaOQ==",
+      "name": "Dieta Keto: un estilo de vida sostenible con Manu Echeverri",
+      "description": "+50 recetas perfectas para la Dieta KetoLa comida siempre ha sido una parte importante de mi vida...",
+      "thumbnail_url": "https://public-files.gumroad.com/50ad8puwdixrrcsjzd7ye8xf0pn2",
+      "price_cents": 1400,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://manuecheverri.gumroad.com/l/dietaketomanuecheverri?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 2,
+      "id": "9ZR76z5lVCNpM8WazyASXQ==",
+      "name": "Bienvenidos a la Dieta Keto: C\u00f3mo iniciar o reiniciar la Dieta Keto de manera informada y sostenible. ",
+      "description": "Este es mi primer libro te\u00f3rico y estoy tan feliz que quiero compartirlo contigo. Si tienes dudas...",
+      "thumbnail_url": "https://public-files.gumroad.com/jqu6ztkzho0pgjycdpznofjhz7wq",
+      "price_cents": 1700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://manuecheverri.gumroad.com/l/guiadietaketo?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 8,
+      "id": "sOxH0Mw834LQWBDTC1mkzA==",
+      "name": "\ud83e\udd51  Keto certero para empezar desde cero (o c\u00f3mo ahorrar tiempo y evitar frustraci\u00f3n, haci\u00e9ndolo bien desde el minuto uno)",
+      "description": "Si te dijera, exactamente y paso a paso, c\u00f3mo hacer (bien) la alimentaci\u00f3n cetog\u00e9nica, para empez...",
+      "thumbnail_url": "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?ixid=M3wzMDQ2Njh8MHwxfHNlYXJjaHw1MHx8aGFwcHl8ZW58MHx8fHwxNzA5NDg5OTY3fDA&ixlib=rb-4.0.3&h=600&w=600&fit=crop",
+      "price_cents": 2900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://ketoandme.gumroad.com/l/keto-certero?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 7,
+      "id": "al5kFJAFUsRY1QP1cu64Zw==",
+      "name": "Yo Vivo Keto",
+      "description": "Si aqu\u00ed y ahora te diera TODAS las instrucciones detalladas y paso a paso que he utilizado (y me ...",
+      "thumbnail_url": "https://public-files.gumroad.com/i9afdvirqpzhe3r7lc3svf4g5p9m",
+      "price_cents": 7900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://ketoandme.gumroad.com/l/yo-vivo-keto?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 6,
+      "id": "52pJf7QklDYdXm_4sGdfKw==",
+      "name": "Vu\u00e9lvete una m\u00e1quina de quemar grasa con la Dieta Carnivora",
+      "description": "La Dieta Carnivora es la mejor opci\u00f3n para bajar de peso porque te transforma en una verdadera m\u00e1...",
+      "thumbnail_url": "https://public-files.gumroad.com/9ul209tlvfh3kv21sjargpnq2geg",
+      "price_cents": 0,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://ayunoestoico.gumroad.com/l/quemagrasaconketo?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "1yYiyGsL9lmUFjhUpruzTg==",
+      "name": "DEJA QUE LA IA TRABAJE POR TI: transforma a ChatGPT en tu becario personal",
+      "description": "La era de la inteligencia artificial ha llegado, pero... \u00bfSientes que te lo est\u00e1s perdiendo? No e...",
+      "thumbnail_url": "https://public-files.gumroad.com/8fj7vvnels8qrn13k1gua2n202hi",
+      "price_cents": 4700,
+      "ratings_count": 25,
+      "ratings_score": 4.8,
+      "seller_name": "Javi Carnicero",
+      "_source": "endpoint"
+    },
+    {
+      "id": "zXBQrbPEGbwfU6M4u4J3lQ==",
+      "name": "Curso: Dominando Procreate desde 0 a PRO",
+      "description": "Si te encanta la ilustraci\u00f3n y quieres aprender un nuevo programa desde 0 con iPad, aqu\u00ed te ense\u00f1...",
+      "thumbnail_url": "https://public-files.gumroad.com/lyl8to0ufhuy9a1jz5cnng1cu353",
+      "price_cents": 2200,
+      "ratings_count": 5,
+      "ratings_score": 5.0,
+      "seller_name": "andreaga",
+      "_source": "endpoint"
+    },
+    {
+      "id": "sOAlPeuffToDT_4Y1sEg9Q==",
+      "name": "Curso: Dise\u00f1o Gr\u00e1fico para Principiantes (Dirigido a Iglesias)",
+      "description": "En este curso de 4 clases totalmente en vivo veremos el uso b\u00e1sico de las herramientas de Photosh...",
+      "thumbnail_url": "https://public-files.gumroad.com/hdo68qlduhq15v5vzllzg8w4gf5b",
+      "price_cents": 2000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "David Aguirre",
+      "_source": "endpoint"
+    },
+    {
+      "id": "BHpMNKyTNO5V3SdeW5wKOA==",
+      "name": "El Grosa Typeface + 50 Free Vector Illustration",
+      "description": "Hello, Introducing my new font called el grosa, this is an amazing work. Why? ... because this is...",
+      "thumbnail_url": "https://public-files.gumroad.com/0olsz42x4yxsd9i05095umtfx8d5",
+      "price_cents": 3000,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "fatehlab",
+      "_source": "endpoint"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 5,
+    "endpoint_count": 5,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "gumroad"
+      },
+      {
+        "position": 3,
+        "source": "gumroad"
+      },
+      {
+        "position": 4,
+        "source": "gumroad"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "endpoint"
+      },
+      {
+        "position": 8,
+        "source": "endpoint"
+      },
+      {
+        "position": 9,
+        "source": "endpoint"
+      },
+      {
+        "position": 10,
+        "source": "endpoint"
+      }
+    ]
+  }
+}

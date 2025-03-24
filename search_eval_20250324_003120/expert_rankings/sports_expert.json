@@ -1,0 +1,194 @@
+{
+  "query": "sports",
+  "timestamp": "2025-03-24T00:58:44.182469",
+  "total_products_considered": 40,
+  "ranked_product_ids": [
+    "ekeW1bEbWxG87o08nPEfxw==",
+    "Kouib2mOTPS65WiWATgU6A==",
+    "wodr95VkuhEC_KVtr45dQA==",
+    "SbzDMevSfiBQviXESTMTmQ==",
+    "LPEDoBsxM_KlF1IAVTb_QA==",
+    "zg5xkFpzZPTYQa2LQWeGww==",
+    "bSN-WyaqWs4KhvycTjY00w==",
+    "Te6ttt3fkB8anblYVQZSHQ==",
+    "ulpCSK6LyKcpWKB5NJOL1A==",
+    "PryPbfz24PNncKkolk2FKA=="
+  ],
+  "ranked_products": [
+    {
+      "id": "ekeW1bEbWxG87o08nPEfxw==",
+      "name": "SPORTS BETTING SKILLS MASTERY",
+      "description": "I WILL GIVE A COMPLETE SPORTS BETTING RUN DOWN!- ODDS HACKING- ANALYSIS- TEAM KNOWLEDGE- PLAYER K...",
+      "thumbnail_url": "https://public-files.gumroad.com/4o3gr5fgdyua3c6s3m22d19ydaxu",
+      "price_cents": 100000,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "THE LIVE TENNIS FACTORY",
+      "_source": "endpoint"
+    },
+    {
+      "id": "Kouib2mOTPS65WiWATgU6A==",
+      "name": "GOAT Sports Betting Chat",
+      "description": "This group chat will allow you to have access to daily sports picks. There will be giveaways ever...",
+      "thumbnail_url": "https://public-files.gumroad.com/0k0s2jz2eb20y0bq13dxr2ka3d6v",
+      "price_cents": 6000,
+      "ratings_count": 347,
+      "ratings_score": 4.2,
+      "seller_name": "Victor Madu",
+      "_source": "endpoint"
+    },
+    {
+      "id": "wodr95VkuhEC_KVtr45dQA==",
+      "name": "ONE OF NONE Sports Betting Chat",
+      "description": "ONE OF NONE is the most rewarding and eccentric group chat when it comes to the world of sports b...",
+      "thumbnail_url": "https://public-files.gumroad.com/0cgdt34xpwsfjw33wufjxa59ce08",
+      "price_cents": 3000,
+      "ratings_count": 2,
+      "ratings_score": 5.0,
+      "seller_name": "Isaac M",
+      "_source": "endpoint"
+    },
+    {
+      "id": "SbzDMevSfiBQviXESTMTmQ==",
+      "name": "Sports Betting Cookbook",
+      "description": "What the sporting bookmakers don't want you to know when sports bettingWelcome to our comprehensi...",
+      "thumbnail_url": "https://public-files.gumroad.com/xapybuel7h07c67k524vr4e5lkdj",
+      "price_cents": 1299,
+      "ratings_count": 2,
+      "ratings_score": 5.0,
+      "seller_name": "5719013811672",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "LPEDoBsxM_KlF1IAVTb_QA==",
+      "name": "100 MENTAL MODELS",
+      "description": "HOW TO THINK BETTERIn today's complex and interconnected world, making sound decisions requires m...",
+      "thumbnail_url": "https://public-files.gumroad.com/okyq4fsh8fdunncnski44z6zlhfq",
+      "price_cents": 7499,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://wisdomtheory.gumroad.com/l/100MM?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 15,
+      "id": "zg5xkFpzZPTYQa2LQWeGww==",
+      "name": "\ud83c\udfaf Secret Society Basic Subscription",
+      "description": "Exclusive Secret Society MembershipGain Access to the coveted Secret Society Discord Server &amp;...",
+      "thumbnail_url": "https://public-files.gumroad.com/767yh80axd7b5kqyxhf77aafd3x5",
+      "price_cents": 2300,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://thezherkaofficial.gumroad.com/l/DateIQBasic?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 18,
+      "id": "bSN-WyaqWs4KhvycTjY00w==",
+      "name": "Logo Package Express 3.0",
+      "description": "Spend your time designing logos, not exporting them. Packaging a logo is boring and complex. Firs...",
+      "thumbnail_url": "https://public-files.gumroad.com/n0l4nvwahkalpenodc3imdl7qiom",
+      "price_cents": 14900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://logopackage.gumroad.com/l/logoPackageExpress3?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 1,
+      "id": "Te6ttt3fkB8anblYVQZSHQ==",
+      "name": "Card Bending (VRCHAT + Quest)",
+      "description": "Please rate this item if you buy it, this will vastly help me out by getting seen more, and will ...",
+      "thumbnail_url": "https://public-files.gumroad.com/ckqnxldecauc45q7my15rg8zoe3o",
+      "price_cents": 1700,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://liindy.gumroad.com/l/CardBending?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 5,
+      "id": "ulpCSK6LyKcpWKB5NJOL1A==",
+      "name": "MAGADOR 1 OZ 999 SILVER COIN 10+1 COUNT (2024 LIMITED EDITION JUSTICE IS COMING)",
+      "description": "US CUSTOMERS ONLYThis +1 deal is limited, and will end Jan 1st 2025.ATTENTION: Before you press \u201c...",
+      "thumbnail_url": "https://public-files.gumroad.com/zi125qngijghjkxzk4u9luwus741",
+      "price_cents": 92000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://allpatriots.gumroad.com/l/2024magadorjusticeten?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 10,
+      "id": "PryPbfz24PNncKkolk2FKA==",
+      "name": "on my knees",
+      "description": "Just for you daddyy",
+      "thumbnail_url": null,
+      "price_cents": 100000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://mintyjess.gumroad.com/l/1?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 6,
+    "endpoint_count": 4,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

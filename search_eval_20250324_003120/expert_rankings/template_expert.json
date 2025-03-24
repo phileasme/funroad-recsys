@@ -1,0 +1,185 @@
+{
+  "query": "template",
+  "timestamp": "2025-03-24T00:49:25.531205",
+  "total_products_considered": 39,
+  "ranked_product_ids": [
+    "bnmq4qN5jmhIfQEmWW_kCw==",
+    "QHCEhJRqTKQ7s-iKYsXKHQ==",
+    "gRmkocrPpDA70SaIEC3kjg==",
+    "9LbtVzDKfKDvzjzQTGdL8A==",
+    "k-rpoX0bpTtblPLUagTlzQ==",
+    "YUFHKqAglJ_Ve0SdlaVMgg==",
+    "D8shsb8mSvZCbXr9FDc_5w==",
+    "zb4-ZrHrEaaQvXL_yEv_qA==",
+    "AjIPfyBhz5tIBkIvZFoX8g==",
+    "GZNjUm58ANqZiVPLwG6Bbw=="
+  ],
+  "ranked_products": [
+    {
+      "id": "bnmq4qN5jmhIfQEmWW_kCw==",
+      "name": "Brand Guidelines Template",
+      "description": "This Brand Guidelines set includes 55 fully customizable design templates available in Figma, Ado...",
+      "thumbnail_url": "https://public-files.gumroad.com/ei24j0rby2dkqgqj7kqfhq5ypo8c",
+      "price_cents": 2999,
+      "ratings_count": 4,
+      "ratings_score": 5.0,
+      "seller_name": "Akintayo",
+      "_source": "endpoint"
+    },
+    {
+      "id": "QHCEhJRqTKQ7s-iKYsXKHQ==",
+      "name": "Azura Figma Brand Template",
+      "description": "\ud83d\ude80 Design Your Brand Like a ProUnveiling the ultimate branding template\u2014straight from my Figma Fri...",
+      "thumbnail_url": "https://public-files.gumroad.com/fdka7h4iqy7c9j0eji6c7hq4gnfs",
+      "price_cents": 2900,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "Kevin Hipke",
+      "_source": "endpoint"
+    },
+    {
+      "id": "gRmkocrPpDA70SaIEC3kjg==",
+      "name": "TMS Planning (Figma Slides & Presentation Template)",
+      "description": "Introducing our comprehensive Planning Presentation Template, meticulously designed to optimize y...",
+      "thumbnail_url": "https://public-files.gumroad.com/h4itjsberkm14k2g2vtyuooiwf9x",
+      "price_cents": 3500,
+      "ratings_count": 2,
+      "ratings_score": 5.0,
+      "seller_name": "The Master Slides",
+      "_source": "endpoint"
+    },
+    {
+      "id": "9LbtVzDKfKDvzjzQTGdL8A==",
+      "name": "TMS Planning (PowerPoint Presentation Template)",
+      "description": "Introducing our comprehensive Planning Presentation Template, meticulously designed to optimize y...",
+      "thumbnail_url": "https://public-files.gumroad.com/u3uur6zxy8nh6b1f2ge88zn4ll2s",
+      "price_cents": 3500,
+      "ratings_count": 8,
+      "ratings_score": 4.5,
+      "seller_name": "The Master Slides",
+      "_source": "endpoint"
+    },
+    {
+      "id": "k-rpoX0bpTtblPLUagTlzQ==",
+      "name": "Video Production Template for Notion",
+      "description": "A Notion template designed to complement your video content creation workflow. The Video Producti...",
+      "thumbnail_url": "https://public-files.gumroad.com/sbj45p64ckl7b9ob55551wk3kv1d",
+      "price_cents": 2900,
+      "ratings_count": 22,
+      "ratings_score": 5.0,
+      "seller_name": "Matthew Encina",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "YUFHKqAglJ_Ve0SdlaVMgg==",
+      "name": "12 Week Year Planner",
+      "description": "Watch a video of how I use this template here.Take Control of Your Goals with the 12 Week Year No...",
+      "thumbnail_url": "https://public-files.gumroad.com/1ftu9jds4imtkwpedt2cr4kdt3yi",
+      "price_cents": 2000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://annalenkovska.gumroad.com/l/12weekyear?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "D8shsb8mSvZCbXr9FDc_5w==",
+      "name": "Novabeast Ref Sheet Template",
+      "description": "Novabeasts are a species made by Kittomatic!Here is a template for all of your Novabeast Ref Shee...",
+      "thumbnail_url": "https://public-files.gumroad.com/gk48i6ycmtntocx4tel6wrkc3y53",
+      "price_cents": 500,
+      "ratings_count": 26,
+      "ratings_score": 4.9,
+      "seller_name": "Royalty",
+      "_source": "endpoint"
+    },
+    {
+      "id": "zb4-ZrHrEaaQvXL_yEv_qA==",
+      "name": "Notion Template: Cross Stitch Swap and SAL Planner.",
+      "description": "This Notion template is a simple but powerful planner for crafters and designers. It can be used ...",
+      "thumbnail_url": "https://public-files.gumroad.com/g676o2dc1syerbeu3zzrqsxxrbv5",
+      "price_cents": 500,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "Stitchy Nati",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 20,
+      "id": "AjIPfyBhz5tIBkIvZFoX8g==",
+      "name": "Rexouium Avatar",
+      "description": "Rexouium is a made up species and the name meaning Rex\uff1dking and ouium\uff1dCare taker\u2024 They are the ki...",
+      "thumbnail_url": "https://public-files.gumroad.com/yt7jefqf0tda9lv77vjjwr4rjuzz",
+      "price_cents": 4500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://rezilloryker.gumroad.com/l/MYutV?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 13,
+      "id": "GZNjUm58ANqZiVPLwG6Bbw==",
+      "name": "Chibi Avatar Base [VRChat]",
+      "description": "\ud83d\udc96 \u2728 \ud83d\udc3e Be who YOU want to be with this ultra-customizable chibi mega base \ud83d\udc3e \u2728 \ud83d\udc96This is a HUGE base...",
+      "thumbnail_url": "https://public-files.gumroad.com/i2p9x01ookek1ee0syb8j6k02d56",
+      "price_cents": 4500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://skip4d.gumroad.com/l/chibi?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 3,
+    "endpoint_count": 7,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "endpoint"
+      },
+      {
+        "position": 8,
+        "source": "endpoint"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

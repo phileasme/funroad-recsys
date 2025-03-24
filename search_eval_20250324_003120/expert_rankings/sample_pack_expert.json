@@ -1,0 +1,188 @@
+{
+  "query": "sample pack",
+  "timestamp": "2025-03-24T00:55:45.084029",
+  "total_products_considered": 34,
+  "ranked_product_ids": [
+    "WVHWzOWCypPk7sHhOPGOvA==",
+    "pNdPvhJp1Zjpt-qYtUoHdQ==",
+    "3b5KrCf16TCAYYaBc_s5ZQ==",
+    "ETlkl3ffORTQeMDRn6H-HA==",
+    "KNb0iC_B5LqG1NFGQ9yFtg==",
+    "uHtW1Ya2i0U3eF9w_5HE-g==",
+    "KDfZcvdEuVCInCU0FYrPuA==",
+    "weg80QSPcWjS2l4AG3r8HQ==",
+    "WHZL9C5hTY3E08A-BAUKqw==",
+    "WYwjBWCB0-9t2ZiLViGAgg=="
+  ],
+  "ranked_products": [
+    {
+      "id": "WVHWzOWCypPk7sHhOPGOvA==",
+      "name": "Shadows - 140 Jungle Sample Pack",
+      "description": "Ghost Syndicate presents SHADOWS, a free loop pack inspired by 140BPM Jungle. It includes 63 samp...",
+      "thumbnail_url": "https://public-files.gumroad.com/75f32aapwwwmlaovytc6kgxxxcae",
+      "price_cents": 0,
+      "ratings_count": 29,
+      "ratings_score": 5.0,
+      "seller_name": "Ghost Syndicate Audio",
+      "_source": "endpoint"
+    },
+    {
+      "id": "pNdPvhJp1Zjpt-qYtUoHdQ==",
+      "name": "196 Samples - From Dusk Till Dawn",
+      "description": "From Dusk Till Dawn is a complete sample pack containing 196 samples for any sampler like Digitak...",
+      "thumbnail_url": "https://public-files.gumroad.com/yu73mwyppg87656zwfsgj7j8m78m",
+      "price_cents": 2100,
+      "ratings_count": 17,
+      "ratings_score": 5.0,
+      "seller_name": "Dave Mech",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 7,
+      "id": "3b5KrCf16TCAYYaBc_s5ZQ==",
+      "name": "Amplify - Garage Sample Pack",
+      "description": "Get ready to crank up the volume with AMPLIFY from Ghost Syndicate - our most explosive garage sa...",
+      "thumbnail_url": "https://public-files.gumroad.com/4346xni4o5mu98mjr0ldeivyhdpj",
+      "price_cents": 2995,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://ghostsyndicate.gumroad.com/l/amplify-garage-sample-pack?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "ETlkl3ffORTQeMDRn6H-HA==",
+      "name": "Arcane - Drum & Bass Sample Pack",
+      "description": "Ghost Syndicate is proud to present ARCANE: a creative toolset of straight-up drum &amp; bass son...",
+      "thumbnail_url": "https://public-files.gumroad.com/xfig9df7gb3sjfbxxjym6f3am1ls",
+      "price_cents": 1995,
+      "ratings_count": 7,
+      "ratings_score": 5.0,
+      "seller_name": "Ghost Syndicate Audio",
+      "_source": "endpoint"
+    },
+    {
+      "id": "KNb0iC_B5LqG1NFGQ9yFtg==",
+      "name": "Uncanny Dreams: Ambient Sample Pack",
+      "description": "Over 100+ samples for use in dreamlike dance music, sound-tracks, scoring, &amp; wherever your mi...",
+      "thumbnail_url": "https://public-files.gumroad.com/bqndbhg9aq5easx4auzlht6fhuz1",
+      "price_cents": 599,
+      "ratings_count": 40,
+      "ratings_score": 5.0,
+      "seller_name": "Thought-Forms",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 3,
+      "id": "uHtW1Ya2i0U3eF9w_5HE-g==",
+      "name": "Brighter Days - Future Bass Sample Pack",
+      "description": "The Ultimate Sample Pack for Emotional Future Bass with over 400+ High-Quality Samples and 150+ S...",
+      "thumbnail_url": "https://public-files.gumroad.com/nv2mzro20mchzbo3l4d01epu7p96",
+      "price_cents": 2999,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://lonelysounds.gumroad.com/l/UPDYA?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "KDfZcvdEuVCInCU0FYrPuA==",
+      "name": "Jilax Sample Pack Vol. 5",
+      "description": "Preview: https://soundcloud.com/jilaxofficial/samplepackvol5This Pack includes:Bass:- 20 Layer Mu...",
+      "thumbnail_url": "https://public-files.gumroad.com/5py0eaa8jji1ijzdjfvjf8xl8844",
+      "price_cents": 2500,
+      "ratings_count": 4,
+      "ratings_score": 5.0,
+      "seller_name": "Jilax",
+      "_source": "endpoint"
+    },
+    {
+      "id": "weg80QSPcWjS2l4AG3r8HQ==",
+      "name": "Brushed Drum Sample Pack",
+      "description": "Get a huge discount on this pack and all my other packs with the Everything PackGet all the Mark ...",
+      "thumbnail_url": "https://public-files.gumroad.com/8st2xkbis87ktqa35krqbd26xx9n",
+      "price_cents": 299,
+      "ratings_count": 45,
+      "ratings_score": 4.9,
+      "seller_name": "ben_burnes\ud83c\udfa7",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 2,
+      "id": "WHZL9C5hTY3E08A-BAUKqw==",
+      "name": "Chord Snacks SHA",
+      "description": "Chord Snacks are compact sample packs focussed on a specific hardware synth.The PackChord pads &a...",
+      "thumbnail_url": "https://public-files.gumroad.com/u5vydi6n1vkptbu0f1rfphkdtagj",
+      "price_cents": 500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://meatbeats.gumroad.com/l/chord-snacks-sha?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 1,
+      "id": "WYwjBWCB0-9t2ZiLViGAgg==",
+      "name": "Low Poly Shooter Pack for Unreal Engine",
+      "description": "ResourcesDemo (Windows 64-bit)Version 6.0 Update Showcase Video / Animation Showcase / Discord Se...",
+      "thumbnail_url": "https://public-files.gumroad.com/zzb1xl2n5ik1wctx2jcjh6jkf9o2",
+      "price_cents": 17900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://infimagames.gumroad.com/l/low-poly-shooter-pack?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 4,
+    "endpoint_count": 6,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "gumroad"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "endpoint"
+      },
+      {
+        "position": 8,
+        "source": "endpoint"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

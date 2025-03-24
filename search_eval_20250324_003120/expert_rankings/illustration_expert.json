@@ -1,0 +1,194 @@
+{
+  "query": "illustration",
+  "timestamp": "2025-03-24T00:43:24.492095",
+  "total_products_considered": 40,
+  "ranked_product_ids": [
+    "Op1_D2xRfM34g91YxRrwaA==",
+    "BHpMNKyTNO5V3SdeW5wKOA==",
+    "wVllAicTS_LDneUKPT6Prw==",
+    "avZfcfMqmMyE2KGOVL3_tA==",
+    "C77pWA2UCeylOMyRiUs4qw==",
+    "D6cvuPDpakW14CoohxR0oA==",
+    "Dl_aZ_jlyrHlX1Ie2UD6AQ==",
+    "hgKBIxWzTLO6O_FGR6Ls3w==",
+    "Y9ylXdFlvcjkl53wmmo_tg==",
+    "Q0Ifly1Nif5zsdDZgaR1uA=="
+  ],
+  "ranked_products": [
+    {
+      "id": "Op1_D2xRfM34g91YxRrwaA==",
+      "name": "Nallow Illustration \u2014 Bundle",
+      "description": "A huge pack of 822 elements (260 illustrations, 12 categories &amp; 2 style) handmade, vector, an...",
+      "thumbnail_url": "https://public-files.gumroad.com/5xfyhvw0g5n551yod834guxrkh97",
+      "price_cents": 4900,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Kawalan Studio",
+      "_source": "endpoint"
+    },
+    {
+      "id": "BHpMNKyTNO5V3SdeW5wKOA==",
+      "name": "El Grosa Typeface + 50 Free Vector Illustration",
+      "description": "Hello, Introducing my new font called el grosa, this is an amazing work. Why? ... because this is...",
+      "thumbnail_url": "https://public-files.gumroad.com/0olsz42x4yxsd9i05095umtfx8d5",
+      "price_cents": 3000,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "fatehlab",
+      "_source": "endpoint"
+    },
+    {
+      "id": "wVllAicTS_LDneUKPT6Prw==",
+      "name": "Adventure 1 Illustration Pack",
+      "description": "Our Adventure Illustrations are designed to take your visitors on an unforgettable journey\u2013 one t...",
+      "thumbnail_url": "https://public-files.gumroad.com/o3bk42ixdmfmdn3dbx4rcqjb3bzg",
+      "price_cents": 499,
+      "ratings_count": 2,
+      "ratings_score": 4.5,
+      "seller_name": "Pixel True Designs",
+      "_source": "endpoint"
+    },
+    {
+      "id": "avZfcfMqmMyE2KGOVL3_tA==",
+      "name": "Lined 1 Illustration Pack",
+      "description": "We\u2019ve also included circles for this style! Seriously, these lines and circles will add personali...",
+      "thumbnail_url": "https://public-files.gumroad.com/y0ua36d0taspct3ires0t2u4rj02",
+      "price_cents": 2900,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Pixel True Designs",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 18,
+      "id": "C77pWA2UCeylOMyRiUs4qw==",
+      "name": "Illustrating a Stylized Character - 7 hour real-time walk through",
+      "description": "From short IG tips and tricks to this long-form walkthroughThis is a real-time walk-through fille...",
+      "thumbnail_url": "https://public-files.gumroad.com/g603bnaso38lpv39qf7qsgmv3oaa",
+      "price_cents": 499,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://beneblen.gumroad.com/l/stylizedCharacterWalkthrough?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 4,
+      "id": "D6cvuPDpakW14CoohxR0oA==",
+      "name": "Fubuki Pack - PSD, Tutorials, Brushes + Bonuses",
+      "description": "Learn the details of what goes on inside my illustrations, as well as the brushes I use and how t...",
+      "thumbnail_url": "https://public-files.gumroad.com/ngkvt3r6sbdegeonssipypwp6tw9",
+      "price_cents": 2999,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://oridays.gumroad.com/l/fubukipack?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 6,
+      "id": "Dl_aZ_jlyrHlX1Ie2UD6AQ==",
+      "name": "Photoshop - Essentials Brush Set",
+      "description": "This is my latest brush pack containing 60 brushes that I use to create all my personal and profe...",
+      "thumbnail_url": "https://public-files.gumroad.com/rb2iqf6rbkc0qywx838izv8uzl01",
+      "price_cents": 1100,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://philipsue.gumroad.com/l/dycco?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 10,
+      "id": "hgKBIxWzTLO6O_FGR6Ls3w==",
+      "name": "Design Fundamentals",
+      "description": "Learn the fundamentals of design in less than 6 weeksA no-fluff course for developers to learn de...",
+      "thumbnail_url": "https://public-files.gumroad.com/yvp4pt0c1crpu5iefrfo6rgzgiln",
+      "price_cents": 29900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://lauraelizabeth.gumroad.com/l/design-fundamentals?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 2,
+      "id": "Y9ylXdFlvcjkl53wmmo_tg==",
+      "name": "Midjourney SREF Code Bundle (Part 1-7): 300+ SREF Codes",
+      "description": "Save by purchasing these 7 SREF collections as a bundle!This bundle contains SEVEN pdf files whic...",
+      "thumbnail_url": "https://public-files.gumroad.com/jafs87nk5c6nu6n943259bteonvy",
+      "price_cents": 2500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://woollyfern.gumroad.com/l/midjourney_sref_bundle1?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 7,
+      "id": "Q0Ifly1Nif5zsdDZgaR1uA==",
+      "name": "Nebula Nights Collection (120+ 4k Wallpapers)",
+      "description": "We invite you to embark on a cosmic voyage through the universe, celebrating the mesmerizing myst...",
+      "thumbnail_url": "https://public-files.gumroad.com/6ifpzei78hfz2t73eittns5fl6aw",
+      "price_cents": 999,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://backdrops.gumroad.com/l/nebulanights?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 6,
+    "endpoint_count": 4,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

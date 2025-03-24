@@ -1,0 +1,191 @@
+{
+  "query": "pbr",
+  "timestamp": "2025-03-24T00:46:11.467323",
+  "total_products_considered": 35,
+  "ranked_product_ids": [
+    "4QIp97igYJoLIW35bhoitg==",
+    "L-sKxfpOlFFlukXnI39yGQ==",
+    "wy6574X1Cik1n2_E1GVgew==",
+    "j6QY0R8BtkTj4S6SzFJlKQ==",
+    "FMGUVlfl2s2OFAPQixEhLQ==",
+    "XuyfVXgCp_gOAs4gauzpQg==",
+    "nlbeTV3kQNXvo0FV_cm7wQ==",
+    "SVnJnsKTUsENgkAQca8HHA==",
+    "5FPz_k-tcLJXH3NUWelFnA==",
+    "Te6ttt3fkB8anblYVQZSHQ=="
+  ],
+  "ranked_products": [
+    {
+      "id": "4QIp97igYJoLIW35bhoitg==",
+      "name": "PBR Mega Bundle 1 & 2",
+      "description": "What do you get?PBR Mega Bundle 1 &amp; 2 features 73 collections from Physical Volumes 1 to 10. ...",
+      "thumbnail_url": "https://public-files.gumroad.com/80yprnm3o51lt3h7a1x1pljs6tex",
+      "price_cents": 8900,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "CGAxis",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 5,
+      "id": "L-sKxfpOlFFlukXnI39yGQ==",
+      "name": "PBR Mega Bundle 1 & 2 ",
+      "description": "What do you get?PBR Mega Bundle 1 &amp; 2 features 73 collections from Physical Volumes 1 to 10. ...",
+      "thumbnail_url": "https://public-files.gumroad.com/ip11l4mm4krd6bzhwmyfqrfg457b",
+      "price_cents": 8900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://cgaxis.gumroad.com/l/mega_bundle_1_2_flash?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "wy6574X1Cik1n2_E1GVgew==",
+      "name": "PBR Color Reference List & Color Calibration for PBR Materials guide - by Grzegorz Baran",
+      "description": "This product contains full access to fully functional 'PBR Color Reference List' (in editable exc...",
+      "thumbnail_url": "https://public-files.gumroad.com/hwg7jsbeh8fhp89jgb4sl5je3ijx",
+      "price_cents": 2499,
+      "ratings_count": 9,
+      "ratings_score": 5.0,
+      "seller_name": "gbaran",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 6,
+      "id": "j6QY0R8BtkTj4S6SzFJlKQ==",
+      "name": "Stylized Smart Material 2.0 - Substance 3D Painter ",
+      "description": "You get the following:_Stylized Smart Material 2.0 for Substance 3D Painter( needs Version 2021 7...",
+      "thumbnail_url": "https://public-files.gumroad.com/vx2um5ewosfvgd4zpw4ceew3t482",
+      "price_cents": 999,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://3dex.gumroad.com/l/StylizedV2?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "FMGUVlfl2s2OFAPQixEhLQ==",
+      "name": "Condensation shader",
+      "description": "An easy way to set up a condensation effect on any surface you want with a few simple clicks!",
+      "thumbnail_url": "https://public-files.gumroad.com/iunqf4z06x8bq7p614tigjvfy2jp",
+      "price_cents": 149,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://blenderisms.gumroad.com/l/gcpjqv?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 11,
+      "id": "XuyfVXgCp_gOAs4gauzpQg==",
+      "name": "MARI Extension Pack 6",
+      "description": "About MARI Extension Pack (for Mari 6.x, 7.x and above)MARI Extension Pack is the industry standa...",
+      "thumbnail_url": "https://public-files.gumroad.com/6fjhjjt8z6mkqwncq5x0df1ogglc",
+      "price_cents": 6900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://jenskafitz.gumroad.com/l/MariExtensionPack6?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "nlbeTV3kQNXvo0FV_cm7wQ==",
+      "name": "High Maintenance  420 set",
+      "description": "\ud83c\udf43HAPPY 4/20\ud83c\udf43\u2606 scratch assets designed by me\u2606 rigged to Venus V2 base \u2606 4k PBR texturesstash jar +...",
+      "thumbnail_url": "https://public-files.gumroad.com/1o1jyoef1n96v92dh0408x7lzrsf",
+      "price_cents": 420,
+      "ratings_count": 26,
+      "ratings_score": 5.0,
+      "seller_name": "\u2606LPB\u2606",
+      "_source": "endpoint"
+    },
+    {
+      "id": "SVnJnsKTUsENgkAQca8HHA==",
+      "name": "Aurora Wolf Furry Vrchat PC+Quest Physbones 3.0",
+      "description": "\ud83d\udc3a Aurora the wolf is here! \ud83d\udc3aThis avatar comes with a casual wear version, a cyberpunk version, an...",
+      "thumbnail_url": "https://public-files.gumroad.com/gf8i6s3ywu7txyw9fpznsgu23onm",
+      "price_cents": 3500,
+      "ratings_count": 513,
+      "ratings_score": 5.0,
+      "seller_name": "FoxiPaws",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 20,
+      "id": "5FPz_k-tcLJXH3NUWelFnA==",
+      "name": "Hidden Blades [VRC/PC/Quest/VRCFury]",
+      "description": "\u2b50 Please leave a rating and share this page with everyone. This helps my work get seen and lets m...",
+      "thumbnail_url": "https://public-files.gumroad.com/2lb7c1ka230im4ra0pebbhp9u2b4",
+      "price_cents": 800,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://yergoddamnright.gumroad.com/l/hiddenblade?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "Te6ttt3fkB8anblYVQZSHQ==",
+      "name": "Card Bending (VRCHAT + Quest)",
+      "description": "Please rate this item if you buy it, this will vastly help me out by getting seen more, and will ...",
+      "thumbnail_url": "https://public-files.gumroad.com/ckqnxldecauc45q7my15rg8zoe3o",
+      "price_cents": 1700,
+      "ratings_count": 226,
+      "ratings_score": 5.0,
+      "seller_name": "Liindy",
+      "_source": "endpoint"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 5,
+    "endpoint_count": 5,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "gumroad"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "gumroad"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "endpoint"
+      },
+      {
+        "position": 8,
+        "source": "endpoint"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "endpoint"
+      }
+    ]
+  }
+}

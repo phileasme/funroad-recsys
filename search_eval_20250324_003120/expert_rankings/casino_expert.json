@@ -1,0 +1,185 @@
+{
+  "query": "casino",
+  "timestamp": "2025-03-24T01:01:58.928447",
+  "total_products_considered": 21,
+  "ranked_product_ids": [
+    "cuWTdUPNTIYR7iDVFGe8Gw==",
+    "_KLTPyX6Ze6UCEf1Rn6ZpA==",
+    "JnT0gsJSyvEQYdqQ08Fq0g==",
+    "VRg_kkQxzivEBthIHoQm4w==",
+    "5IhD4rnlCzTBmRMP5Oae4g==",
+    "sUTpUlTnfR4UlnLTgriQWw==",
+    "i477bCaBmFVgcN12bY51Ug==",
+    "6i0D2wbURLiBMtj4nbUszQ==",
+    "X8PXxTHyh9X6o3zeepti5A==",
+    "NqWEG5qhDKmJsuc8vFzpPg=="
+  ],
+  "ranked_products": [
+    {
+      "id": "cuWTdUPNTIYR7iDVFGe8Gw==",
+      "name": "Craps Unleashed ",
+      "description": "Dive into the thrilling world of craps with \u201cCraps Unleashed\u201d! This comprehensive guide breaks do...",
+      "thumbnail_url": "https://public-files.gumroad.com/zqpsa4hyzwzdhq0nz26wwul120sl",
+      "price_cents": 2999,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Real Casino Connoisseur",
+      "_source": "endpoint"
+    },
+    {
+      "id": "_KLTPyX6Ze6UCEf1Rn6ZpA==",
+      "name": "Blackjack Unleashed: Winning Strategies for Every Player",
+      "description": "Unleash your potential at the blackjack table with \u201cBlackjack Unleashed: Winning Strategies for E...",
+      "thumbnail_url": "https://public-files.gumroad.com/paf8c81ao7e2x9xiersvakhfs1fw",
+      "price_cents": 2999,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Real Casino Connoisseur",
+      "_source": "endpoint"
+    },
+    {
+      "id": "JnT0gsJSyvEQYdqQ08Fq0g==",
+      "name": "Target Stack Satellites",
+      "description": "Target Stack/Milestone Satellites are the new format taking over live poker. Unlike traditional s...",
+      "thumbnail_url": "https://public-files.gumroad.com/esjwttr05s0go74wk0amy7t3hxwh",
+      "price_cents": 5500,
+      "ratings_count": 2,
+      "ratings_score": 5.0,
+      "seller_name": "The Poker Solved Series",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 3,
+      "id": "VRg_kkQxzivEBthIHoQm4w==",
+      "name": "Master Tournament Poker In One Class: SPECIAL EDITION!",
+      "description": "\"Hi Alex, I wanted to thank you. By studying all of your materials and putting the time in I mana...",
+      "thumbnail_url": null,
+      "price_cents": 69800,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://assassinato.gumroad.com/l/KDhN?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 8,
+      "id": "5IhD4rnlCzTBmRMP5Oae4g==",
+      "name": "Mid-Stakes Mastery 2024",
+      "description": "Only available through Bryan Paris!------------------We just added 15+ hours of content bring the...",
+      "thumbnail_url": null,
+      "price_cents": 69900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://strungoutpoker.gumroad.com/l/jXCpY?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "sUTpUlTnfR4UlnLTgriQWw==",
+      "name": "Sticker - Beer And Gambling",
+      "description": "/!\\ /!\\ /!\\ ATTENTION /!\\ /!\\ /!\\ As an independent artist all revenue from merchandise purchases...",
+      "thumbnail_url": "https://public-files.gumroad.com/9fygu5t51ddmn0uo6kmr62utoy7v",
+      "price_cents": 550,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Hawaiian29",
+      "_source": "endpoint"
+    },
+    {
+      "id": "i477bCaBmFVgcN12bY51Ug==",
+      "name": "Azuma the Maneater (UE Face/Eye Tracking) (Female/Femboy) (VRCfury) (Physbones) PC Only",
+      "description": "''Based of the Legendary Japanese Folklore tale of Shuten-d\u014dji (\u9152\u5451\u7ae5\u5b50) the demon leader, who accor...",
+      "thumbnail_url": "https://public-files.gumroad.com/f57z49foqi6jyqybabljtglqtrh5",
+      "price_cents": 3500,
+      "ratings_count": 19,
+      "ratings_score": 5.0,
+      "seller_name": "Heartmarksman",
+      "_source": "endpoint"
+    },
+    {
+      "id": "6i0D2wbURLiBMtj4nbUszQ==",
+      "name": "EL CURSO DEFINITIVO DE 3D",
+      "description": "\u00a1Bienvenidos al Curso Intensivo de Blender! Este paquete completo re\u00fane 4 cursos especializados d...",
+      "thumbnail_url": "https://public-files.gumroad.com/jf3ur8fagxwbzi3ea5npq93s0fra",
+      "price_cents": 4800,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "G-Raf (Giraffe)",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "X8PXxTHyh9X6o3zeepti5A==",
+      "name": "THE SIMS\u2122 4 Life & Death -  20 january 2025",
+      "description": "Update THE SIMS\u2122 4 Life &amp; Death - 20 january 2025\u0e2d\u0e31\u0e1e\u0e40\u0e14\u0e17 THE SIMS\u2122 4 Life &amp; Death - 20 \u0e21\u0e01\u0e23...",
+      "thumbnail_url": "https://public-files.gumroad.com/98q0rn84dgde0677srlcmt01qnf1",
+      "price_cents": 599,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://simscolony.gumroad.com/l/LifeANdDeath?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "NqWEG5qhDKmJsuc8vFzpPg==",
+      "name": "PAVIMENTANDO EL CAMINO AL \u00c9XITO",
+      "description": "Esta es la primera clase de mi programa \"Desenterrando tu Luz\". Siento que no hay explicaci\u00f3n que...",
+      "thumbnail_url": "https://public-files.gumroad.com/uqyj6kex3c42bxn8q2m0mozv386a",
+      "price_cents": 3300,
+      "ratings_count": 0,
+      "ratings_score": 0.0,
+      "seller_name": "Sofia Araya",
+      "_source": "endpoint"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 3,
+    "endpoint_count": 7,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "gumroad"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "endpoint"
+      },
+      {
+        "position": 7,
+        "source": "endpoint"
+      },
+      {
+        "position": 8,
+        "source": "endpoint"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "endpoint"
+      }
+    ]
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "query": "preset pack",
+  "timestamp": "2025-03-24T00:42:30.246889",
+  "total_products_considered": 38,
+  "ranked_product_ids": [
+    "hXiTgoAlDRoskWJisn5l5w==",
+    "sEAfrSFJiMja4rLIJS4NaQ==",
+    "2JzDttrWkPgdslb2Ly9ePA==",
+    "QhHYNA6ZWlIl8YDIcwOFHA==",
+    "bSN-WyaqWs4KhvycTjY00w==",
+    "IeCZTR2o0NAJ79pv0ZYEkQ==",
+    "AjIPfyBhz5tIBkIvZFoX8g==",
+    "bm67o6M5VVCPdsPQIVenfQ==",
+    "vyJ-Y_5Ad-YjYPVllTVzSg==",
+    "Kq1QuEQqSybJ_n7jJMg9lg=="
+  ],
+  "ranked_products": [
+    {
+      "id": "hXiTgoAlDRoskWJisn5l5w==",
+      "name": "Bria Jones Preset Pack  ",
+      "description": "YYAAAAY, a ton of you asked so here it is! My Mobile Preset Pack. This pack includes: - 4 stunnin...",
+      "thumbnail_url": "https://public-files.gumroad.com/bcm2w2i8o6j9i3qz4i7mhef6jsiq",
+      "price_cents": 1500,
+      "ratings_count": 7,
+      "ratings_score": 4.1,
+      "seller_name": "briajones",
+      "_source": "endpoint"
+    },
+    {
+      "id": "sEAfrSFJiMja4rLIJS4NaQ==",
+      "name": "Dreams - Preset Pack for the Teenage Engineering OP-1 field",
+      "description": "Welcome to DreamsDreams is a preset pack for the Teenage Engineering OP-1 field designed as a too...",
+      "thumbnail_url": "https://public-files.gumroad.com/4lbcqpxkzjwntjzm0gkxc1mroe6m",
+      "price_cents": 1000,
+      "ratings_count": 21,
+      "ratings_score": 4.9,
+      "seller_name": "Red Means Recording",
+      "_source": "endpoint"
+    },
+    {
+      "id": "2JzDttrWkPgdslb2Ly9ePA==",
+      "name": "Zasviusals Preset Pack 1.0",
+      "description": "What's included?: 6 Lightroom presets compatible with lightroom desktop to use them on mobile ple...",
+      "thumbnail_url": "https://public-files.gumroad.com/16sdogsamldugcug7s4cwqlmg6ez",
+      "price_cents": 1500,
+      "ratings_count": 2,
+      "ratings_score": 4.5,
+      "seller_name": "zasvisuals",
+      "_source": "endpoint"
+    },
+    {
+      "id": "QhHYNA6ZWlIl8YDIcwOFHA==",
+      "name": "Mobile Preset Pack",
+      "description": "The Mobile Preset Pack is a bundle of presets you will want to use daily. These mobile presets he...",
+      "thumbnail_url": "https://public-files.gumroad.com/y5zhzpeqj37utpv73jqi0vc3vx7n",
+      "price_cents": 3500,
+      "ratings_count": 10,
+      "ratings_score": 4.6,
+      "seller_name": "marina lopuga",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 9,
+      "id": "bSN-WyaqWs4KhvycTjY00w==",
+      "name": "Logo Package Express 3.0",
+      "description": "Spend your time designing logos, not exporting them. Packaging a logo is boring and complex. Firs...",
+      "thumbnail_url": "https://public-files.gumroad.com/n0l4nvwahkalpenodc3imdl7qiom",
+      "price_cents": 14900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://logopackage.gumroad.com/l/logoPackageExpress3?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 14,
+      "id": "IeCZTR2o0NAJ79pv0ZYEkQ==",
+      "name": "Cyberpunk collection",
+      "description": "BUNDLE COLLECTIONThis bundle includes 200+ items: 2 Highly Detailed HERO Buildings, 37 Modular Ki...",
+      "thumbnail_url": "https://public-files.gumroad.com/l797xqk1wgh0ujeq0rgz6h2mjifu",
+      "price_cents": 25000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://jamajurabaev.gumroad.com/l/haylsh?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 4,
+      "id": "AjIPfyBhz5tIBkIvZFoX8g==",
+      "name": "Rexouium Avatar",
+      "description": "Rexouium is a made up species and the name meaning Rex\uff1dking and ouium\uff1dCare taker\u2024 They are the ki...",
+      "thumbnail_url": "https://public-files.gumroad.com/yt7jefqf0tda9lv77vjjwr4rjuzz",
+      "price_cents": 4500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://rezilloryker.gumroad.com/l/MYutV?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 6,
+      "id": "bm67o6M5VVCPdsPQIVenfQ==",
+      "name": "\ud83c\udf84 Festivitas",
+      "description": "Festivitas brings the festive lights to your dock and menu bar \ud83c\udf84 \u2764\ufe0f TechCrunch: Holiday app Festi...",
+      "thumbnail_url": "https://public-files.gumroad.com/lllx2cmgemopzorz6lng5q0fq1zo",
+      "price_cents": 400,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://simonbs.gumroad.com/l/festivitas?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 12,
+      "id": "vyJ-Y_5Ad-YjYPVllTVzSg==",
+      "name": "SubMachine - Subscription",
+      "description": "SubMachine: The Engaging, and Customisable Subtitling Solution for Adobe Premiere ProNow includes...",
+      "thumbnail_url": "https://public-files.gumroad.com/8qd7qul57tqkixq8zvpynxkev4fk",
+      "price_cents": 800,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://cwsproducts.gumroad.com/l/axpoe?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 3,
+      "id": "Kq1QuEQqSybJ_n7jJMg9lg==",
+      "name": "GUMROAD FILE & VIDEO ACCESS",
+      "description": "Gumroad Service PackagesChoose Gunroad package that best suits your requirements:1. Gumroad Data ...",
+      "thumbnail_url": "https://public-files.gumroad.com/qknd04z5xg4p0rgycbimpxwegr0u",
+      "price_cents": 999,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://kwestate.gumroad.com/l/tjpdq?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 6,
+    "endpoint_count": 4,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

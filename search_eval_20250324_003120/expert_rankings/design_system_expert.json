@@ -1,0 +1,194 @@
+{
+  "query": "design system",
+  "timestamp": "2025-03-24T00:50:44.221875",
+  "total_products_considered": 38,
+  "ranked_product_ids": [
+    "cr9GKt88nYUVrzKWmrgz_w==",
+    "tva4B8a2hYbCSJdqRofqrA==",
+    "GiAXCrp5KcaohkfibM3jwA==",
+    "CU8aMEKpKuWptcSXAGMqtg==",
+    "GY7hisHvnvhh8b356ihZIg==",
+    "UYwOsSQGc3tvbA1Ev5VQDg==",
+    "76laqjgKbVGDGduHgQ2K4w==",
+    "dgfIesIvl0b_zrtzCWNppw==",
+    "B8ZCk6GH_1cNNlUOq5i6Pg==",
+    "6Xt6UKpFcLvXxLXzppJWiQ=="
+  ],
+  "ranked_products": [
+    {
+      "gumroad_rank": 6,
+      "id": "cr9GKt88nYUVrzKWmrgz_w==",
+      "name": "Nucleus UI PRO \u2013 Figma UI Kit and Design System (Mobile and Web)",
+      "description": "Supercharge your design workflow, kick-start your projects faster, and elevate your process\u2713 Suit...",
+      "thumbnail_url": "https://public-files.gumroad.com/of1ji5mikhva35prk21rvoknb5x1",
+      "price_cents": 9900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://nucleusui.gumroad.com/l/nucleus-ui-plus-all-in-one-figma-ui-kit-design-system?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 8,
+      "id": "tva4B8a2hYbCSJdqRofqrA==",
+      "name": "Mobile App Design System for Figma, Swift, Compose and React Native",
+      "description": "Dynamic Layers is a customizable &amp; adjustable iOS design system with 200+ variants for 20 com...",
+      "thumbnail_url": "https://public-files.gumroad.com/pzsjq7e1g7q20y1fdu7uh2vfn33n",
+      "price_cents": 0,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://dynamiclayer.gumroad.com/l/mobileuikit?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "id": "GiAXCrp5KcaohkfibM3jwA==",
+      "name": "Figma iOS UI kit \u2014 Mobile design system \u00abMost\u00bb for native apps",
+      "description": "iOS native components and app templates organized into a \u00abMost Design System\u00bb fully compatible wi...",
+      "thumbnail_url": "https://public-files.gumroad.com/ruihhziyyurg73rnevxskvp42k8o",
+      "price_cents": 9800,
+      "ratings_count": 8,
+      "ratings_score": 4.5,
+      "seller_name": "Setproduct",
+      "_source": "endpoint"
+    },
+    {
+      "id": "CU8aMEKpKuWptcSXAGMqtg==",
+      "name": "Cabana - Figma",
+      "description": "Cabana is an extensive Design System &amp; UI Kit created exclusively for Figma. With Cabana, you...",
+      "thumbnail_url": "https://public-files.gumroad.com/k3ghevpyfojvzohk0nrwi8o02eai",
+      "price_cents": 10900,
+      "ratings_count": 14,
+      "ratings_score": 4.9,
+      "seller_name": "Cabana",
+      "_source": "endpoint"
+    },
+    {
+      "id": "GY7hisHvnvhh8b356ihZIg==",
+      "name": "Design System Starter Kit",
+      "description": "Built to save you weeks (or months) of design effort. this kit will set you up on the right foot ...",
+      "thumbnail_url": "https://public-files.gumroad.com/fw90c517u7hevk8mmz8necjyq0qe",
+      "price_cents": 2500,
+      "ratings_count": 1,
+      "ratings_score": 5.0,
+      "seller_name": "Loudoun Design Co.",
+      "_source": "endpoint"
+    },
+    {
+      "id": "UYwOsSQGc3tvbA1Ev5VQDg==",
+      "name": "Eva: Design System - Figma v.1.3",
+      "description": "Unity of Design and DevelopmentUI components library, based on atomic design principles, consiste...",
+      "thumbnail_url": "https://public-files.gumroad.com/ralxqri8m8bqg6y66ykfp2r5783w",
+      "price_cents": 1900,
+      "ratings_count": 16,
+      "ratings_score": 3.6,
+      "seller_name": "Akveo.Design",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 14,
+      "id": "76laqjgKbVGDGduHgQ2K4w==",
+      "name": "After Glow",
+      "description": "After Glow is your very own top floor cyberpunk apartment! With tons of different comfy areas to ...",
+      "thumbnail_url": "https://public-files.gumroad.com/od1wunf9ztb4xfxi444vxj8gb3ok",
+      "price_cents": 4000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://wispywoo.gumroad.com/l/AfterGlow?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 7,
+      "id": "dgfIesIvl0b_zrtzCWNppw==",
+      "name": "Joey the Black Rose (UE Face/Eye Tracking) (Female/Femboy) (VRCfury) (Physbones) PC Only",
+      "description": "Checkout my Discord for more ''in depth'' pictures of Joey the Black Rose \ud83d\ude0f discord.gg/hearts-hid...",
+      "thumbnail_url": "https://public-files.gumroad.com/9lyx2imhn35l9k2npui66t5g8q0i",
+      "price_cents": 3500,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://heartmarksman.gumroad.com/l/Joey_by_Heartmarksman?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 15,
+      "id": "B8ZCk6GH_1cNNlUOq5i6Pg==",
+      "name": "The Soundbytes VRChat avatar",
+      "description": "Version 1.3 Beta now live!! Credits:https://twitter.com/forestfright(Original design creator)Beas...",
+      "thumbnail_url": "https://public-files.gumroad.com/6a78t24gthkfz6mxm2d2dupjml1b",
+      "price_cents": 4000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://zukeroo.gumroad.com/l/SoundByte?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 17,
+      "id": "6Xt6UKpFcLvXxLXzppJWiQ==",
+      "name": "Playlist Activator Morphic Field",
+      "description": "Introducing the Playlist Activator Morphic Field\u2014an innovative and advanced tool designed to ampl...",
+      "thumbnail_url": "https://public-files.gumroad.com/38uzswre7qk7l08khh6sax4v2sci",
+      "price_cents": 5000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://eternalfields.gumroad.com/l/zqouqy?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 6,
+    "endpoint_count": 4,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "gumroad"
+      },
+      {
+        "position": 2,
+        "source": "gumroad"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "endpoint"
+      },
+      {
+        "position": 6,
+        "source": "endpoint"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}

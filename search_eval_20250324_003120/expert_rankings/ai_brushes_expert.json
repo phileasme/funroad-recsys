@@ -1,0 +1,194 @@
+{
+  "query": "ai brushes",
+  "timestamp": "2025-03-24T00:48:55.239510",
+  "total_products_considered": 40,
+  "ranked_product_ids": [
+    "aagM3HFkyItKbgjxxUF_dw==",
+    "FwH9lz06_DIY3o8hn4DDmQ==",
+    "ijRDjxTnwfYnQq75_2g_NA==",
+    "SZ9wkB_bTP1jQNe-lTGeUg==",
+    "5fU4tQXP_ggZC6DZ8yppiA==",
+    "T5x_OUnpb-1nTwlHKW0i4A==",
+    "rS7gSD0HH4dRnYrlzIQHkg==",
+    "GOzTCOtESm0njmpKx1phmA==",
+    "CtrBncsm85QfIQQwCaGXOA==",
+    "PryPbfz24PNncKkolk2FKA=="
+  ],
+  "ranked_products": [
+    {
+      "id": "aagM3HFkyItKbgjxxUF_dw==",
+      "name": "The Gouache MaxPack v2 - Brushes for Procreate",
+      "description": "The Gouache MaxPack v2 is a set of brushes compatible with Procreate 5 and newer.The Gouache MaxP...",
+      "thumbnail_url": "https://public-files.gumroad.com/ois3pakzo4aywhxycysjql1xye6s",
+      "price_cents": 2000,
+      "ratings_count": 378,
+      "ratings_score": 4.9,
+      "seller_name": "MaxPacks - Brushes for Procreate",
+      "_source": "endpoint"
+    },
+    {
+      "id": "FwH9lz06_DIY3o8hn4DDmQ==",
+      "name": "Pencilmania: A Spectacular Graphite Brush Set for Procreate",
+      "description": "Welcome to the most outstanding pencil drawing experience in the digital world!The Manero Brushes...",
+      "thumbnail_url": "https://public-files.gumroad.com/vvp60z1z8klsvcxfjyknwdmpfbgy",
+      "price_cents": 2000,
+      "ratings_count": 80,
+      "ratings_score": 4.9,
+      "seller_name": "Manero Brushes",
+      "_source": "endpoint"
+    },
+    {
+      "id": "ijRDjxTnwfYnQq75_2g_NA==",
+      "name": "2500 Landscape AI Art Prompts",
+      "description": "\ud83c\udfa8 Unleash your creativity with our comprehensive collection of 2500 Landscape AI Art Prompts! Exp...",
+      "thumbnail_url": "https://public-files.gumroad.com/0u656m62zleqfhxh79gkkhxmrvdq",
+      "price_cents": 400,
+      "ratings_count": 1,
+      "ratings_score": 4.0,
+      "seller_name": "Fexyl - Innovative AI Solutions",
+      "_source": "endpoint"
+    },
+    {
+      "id": "SZ9wkB_bTP1jQNe-lTGeUg==",
+      "name": "mymeet.ai",
+      "description": "Perfect AI assistant for your meeting.Extract from your video/audio transcription, summary and ta...",
+      "thumbnail_url": "https://public-files.gumroad.com/1y81i3n21y0yrmxyyda0h8mwj73c",
+      "price_cents": 990,
+      "ratings_count": 21,
+      "ratings_score": 5.0,
+      "seller_name": "MyMeet AI",
+      "_source": "endpoint"
+    },
+    {
+      "gumroad_rank": 10,
+      "id": "5fU4tQXP_ggZC6DZ8yppiA==",
+      "name": "Kurai's Female Novabeast",
+      "description": "Wanting to feel more you with the Novabeast? I present my Female Novabeast Avatar! Been working h...",
+      "thumbnail_url": "https://public-files.gumroad.com/itqmzxnrf1xg111toocur2r2b35y",
+      "price_cents": 3000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://kuraikaiju.gumroad.com/l/KFN?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 7,
+      "id": "T5x_OUnpb-1nTwlHKW0i4A==",
+      "name": "Production-Ready Serverless (Jan 2025, single payment)",
+      "description": "Join 20+ AWS Heroes &amp; Community Builders and 1000+ happy students in levelling up your server...",
+      "thumbnail_url": "https://public-files.gumroad.com/xodjivrs0ehnzmygxuu68z53hu0l",
+      "price_cents": 110000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://theburningmonk.gumroad.com/l/prsls-jan-2025?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 15,
+      "id": "rS7gSD0HH4dRnYrlzIQHkg==",
+      "name": "Headquarters Notion Second Brain Template",
+      "description": "Simplify Your Life and Accomplish More with the Ultimate Productivity SystemHeadquarters is the P...",
+      "thumbnail_url": "https://public-files.gumroad.com/is6vgaqryrkmflop7enll9wr6chw",
+      "price_cents": 7900,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://productivesetups.gumroad.com/l/headquarters?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 16,
+      "id": "GOzTCOtESm0njmpKx1phmA==",
+      "name": "The Art of X (Twitter): Build a Business That Makes You $100/Day (UPDATED JANUARY 2025)",
+      "description": "This Art of X is updated frequently to reflect all the changes happening at X. All the informatio...",
+      "thumbnail_url": "https://public-files.gumroad.com/g51a19fvcr7njkxvh5f8tdtuj7ki",
+      "price_cents": 19999,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://lifemathmoney.gumroad.com/l/TwitterGuide?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 17,
+      "id": "CtrBncsm85QfIQQwCaGXOA==",
+      "name": "Supercharge",
+      "description": "Elevate your Mac experience with a bunch of useful additional functionality.Requires macOS 15.2 L...",
+      "thumbnail_url": "https://public-files.gumroad.com/qnutajg5ne0e2vk9gbpx602br02c",
+      "price_cents": 1400,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://sindresorhus.gumroad.com/l/supercharge?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    },
+    {
+      "gumroad_rank": 1,
+      "id": "PryPbfz24PNncKkolk2FKA==",
+      "name": "on my knees",
+      "description": "Just for you daddyy",
+      "thumbnail_url": null,
+      "price_cents": 100000,
+      "ratings_count": 0,
+      "ratings_score": 0,
+      "seller_name": "",
+      "seller_id": "",
+      "url": "https://mintyjess.gumroad.com/l/1?layout=discover&recommended_by=search",
+      "_source": "gumroad"
+    }
+  ],
+  "source_statistics": {
+    "gumroad_count": 6,
+    "endpoint_count": 4,
+    "unknown_count": 0,
+    "position_analysis": [
+      {
+        "position": 1,
+        "source": "endpoint"
+      },
+      {
+        "position": 2,
+        "source": "endpoint"
+      },
+      {
+        "position": 3,
+        "source": "endpoint"
+      },
+      {
+        "position": 4,
+        "source": "endpoint"
+      },
+      {
+        "position": 5,
+        "source": "gumroad"
+      },
+      {
+        "position": 6,
+        "source": "gumroad"
+      },
+      {
+        "position": 7,
+        "source": "gumroad"
+      },
+      {
+        "position": 8,
+        "source": "gumroad"
+      },
+      {
+        "position": 9,
+        "source": "gumroad"
+      },
+      {
+        "position": 10,
+        "source": "gumroad"
+      }
+    ]
+  }
+}
