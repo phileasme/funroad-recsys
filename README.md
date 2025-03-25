@@ -55,6 +55,7 @@ When searching for general terms like "sound," results fail to include relevant 
 
 #### User Experience Pain Points
 - Creator spam - Multiple nearly identical products by the same creator appearing in results
+  <img width="1096" alt="Screenshot 2025-03-25 at 14 54 10" src="https://github.com/user-attachments/assets/d29a3b8c-df76-4633-a0c2-ded65c498a48" />
 - Lack of grouping options for similar items
 - Overlapping products between "Best-selling" and "Hot and new" sections
 - Inconsistent ranking logic for free vs. paid items
@@ -68,6 +69,7 @@ The prototype search implementation (v0.9+) includes:
   - Phase 1: Combined-field, match phrase, and fuzzy matching to collect samples
   - Phase 2: Cosine batch with averaged uncompressed ColBERT embeddings with rating boosting
 - CLIP text-image embeddings as a fallback model
+- Simple Front-end sorting options: Relevance, Rating, Low to High, High to Low pricing.
 
 For similar items recommendation, the prototype uses an empirically weighted combination of:
 - CLIP Embedding + Ratings
