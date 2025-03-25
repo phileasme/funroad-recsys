@@ -1,5 +1,7 @@
 # Search & Discovery Case Study for Gumroad (TL&DR)
 ### Full report can be found here: [Notion Case Study](https://www.notion.so/Search-Discovery-Case-Study-Blog-40e476a45ad94596ad323289eac62c2c)
+<img width="1439" alt="Screenshot 2025-03-25 at 14 37 16" src="https://github.com/user-attachments/assets/ecfae368-bd05-400e-928a-f97277560368" />
+
 
 ## Executive Summary
 This case study analyzes Gumroad's current search functionality and provides recommendations for improvements across search relevance and product discovery. It includes both analysis of current issues and proposed solutions ranging from quick wins to more sophisticated ML-based approaches.
