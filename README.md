@@ -1,4 +1,5 @@
-# Search & Discovery Case Study for Gumroad
+# Search & Discovery Case Study for Gumroad (TL&DR)
+### Full report can be found here: [Notion Case Study](https://www.notion.so/Search-Discovery-Case-Study-Blog-40e476a45ad94596ad323289eac62c2c)
 
 ## Executive Summary
 This case study analyzes Gumroad's current search functionality and provides recommendations for improvements across search relevance and product discovery. It includes both analysis of current issues and proposed solutions ranging from quick wins to more sophisticated ML-based approaches.
@@ -40,8 +41,6 @@ To assess the current state of Gumroad's search, approximately 5,000 products we
 
 #### Title Weighting Issues
 The product title field appears to be underweighted in the current search algorithm. For example, when searching for "poker," the product "The Cloud Resume Challenge Guidebook" appears before "Poker Without Fear 2025!" despite the latter being more relevant to the query, having a higher rating, and more sales.
-
-![Title weighting issue example](https://i.imgur.com/example1.png)
 
 #### Lack of Fuzzy Matching
 The current search engine fails to match queries with minor misspellings. Missing a query by even one character (e.g., "pker" instead of "poker") results in no relevant items being returned, creating a poor user experience.
@@ -85,14 +84,7 @@ Caching is implemented at multiple levels: front-end, NGINX, and API services.
 
 ### Evaluation Metrics
 Evaluation of the prototype compared to the existing search showed significant improvements:
-- 151.8% improvement in nDCG@1
-- 171.9% improvement in nDCG@3
-- 179.6% improvement in nDCG@5
-- 136.6% improvement in nDCG@10
-
-Position metrics also showed improvements:
-- First Relevant Position: 2.13 â 2.09 (1.9% improvement)
-- Average Relevant Rank: 24.83 â 11.34 (54.3% improvement)
+![search_metrics_summary_table](https://github.com/user-attachments/assets/18237acb-31f4-402e-908f-3c2ffbc8612d)
 
 ## Proposed Improvements
 
