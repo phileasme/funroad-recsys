@@ -122,9 +122,9 @@ Evaluation of the prototype compared to the existing search showed significant i
 
 ### Advanced Solutions
 
-1. **Neural Collaborative Filtering**: Implement a neural network approach for user-item interaction modeling, particularly for registered users with history.
+1. **Neural Collaborative Filtering** *(need interaction data)*: Implement a neural network approach for user-item interaction modeling, particularly for registered users with history.
 
-2. **Graph Neural Networks**: Use GNN architecture to model complex relationships between users, products, and other entities, enabling inductive learning for new items.
+2. **Graph Neural Networks** *(need interaction data)*: Use GNN architecture to model complex relationships between users, products, and other entities, enabling inductive learning for new items.
 
 3. **Reinforcement Learning**: Implement Contextual Multi-Armed Bandit algorithms for balancing exploration (showing new content) with exploitation (showing proven performers).
 
@@ -152,19 +152,34 @@ Evaluation of the prototype compared to the existing search showed significant i
    - Creator information
    - Ratings and user interaction data
    - Visual similarities
+     
+### 2. **Collaborative Filtering** *(Currently Limited by Interaction Data)*
+   - **Challenge**: Insufficient user-item interaction data
+   - **Future Implementation Plan**: When sufficient data becomes available, implement:
+     - **Matrix Factorization** or **Implicit Alternating Least Squares** models
+     - **Interaction Weighting Schema**:
+       | Interaction Type | Weight |
+       |------------------|--------|
+       | Purchase         | 1.0    |
+       | Cart addition    | 0.8    |
+       | View             | 0.5    |
+       | Rating           | Variable (based on rating value) |
+   - **Alternative Approach**: Consider cold-start collaborative filtering techniques using available metadata until more interaction data is collected
 
-2. **Collaborative Filtering**: Implement Matrix Factorization or Implicit Alternating Least Squares models based on user-item interactions:
-   - Purchase: 1.0 point
-   - Cart addition: 0.8 point
-   - View: 0.5 point
-   - Rating: Weighted score
-
-3. **Hybrid Approaches**: Combine content-based and collaborative filtering methods with side information for comprehensive recommendations.
+### 3. **Hybrid Recommendation Approaches** *(Partially Implementable)*
+   - **Current Approach**: Implement a modified hybrid system focusing on:
+     - Content-based filtering with available item features
+     - Side information integration (user demographics, contextual data)
+     - Knowledge-based recommendations where explicit rules can supplement missing interaction patterns
+   - **Progressive Enhancement Plan**: 
+     - Begin with content-based components
+     - Gradually incorporate collaborative elements as interaction data grows
+     - Use feature weighting to balance the influence of different recommendation signals
 
 ### Personalization Approaches
-1. **Session-Based Personalization**: Track and analyze current session activity to provide contextually relevant recommendations.
+1. **Session-Based Personalization** *(need interaction data or live users)*: Track and analyze current session activity to provide contextually relevant recommendations.
 
-2. **User Embeddings**: Create vector representations of users based on their interaction history.
+2. **User Embeddings** *(need interaction data)*: Create vector representations of users based on their interaction history.
 
 3. **Contextual Multi-Armed Bandit**: Balance exploration and exploitation in recommendations with a focus on maximizing long-term engagement.
 
