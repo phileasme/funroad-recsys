@@ -3,7 +3,7 @@ import axios from 'axios';
 import { processProductImages, preloadImages } from './imageService';
 
 
-const isProduction = window.location.hostname === 'gumroad.phileas.me';
+const isProduction = window.location.hostname === 'funroad.phileas.me';
 
 // Set the API base URL based on hostname, not NODE_ENV
 const API_BASE_URL = isProduction 

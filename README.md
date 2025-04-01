@@ -51,7 +51,7 @@ The current search engine fails to match queries with minor misspellings. Missin
 The search experience doesn't account for the user's language preferences. Recommendations remain the same regardless of the browser language, query language, user history, or geographic region.
 
 #### Query Expansion Limitations
-When searching for general terms like "sound," results fail to include relevant products from the "Music & Sound Design" category, indicating a lack of adequate query expansion or category boosting.
+When searching for general terms like "sound" results fail to include relevant products from the "Music & Sound Design" category, indicating a lack of adequate query expansion or category boosting.
 
 #### User Experience Pain Points
 - Creator spam - Multiple nearly identical products by the same creator appearing in results
