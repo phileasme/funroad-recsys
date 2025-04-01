@@ -938,7 +938,7 @@ const handleSearch = async (e) => {
       <header className={`${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm py-3 sm:py-4 px-4 sm:px-6 border-b-2 border-[#FE90EA] main-header`}>
         <div className="mx-auto flex flex-wrap justify-between items-center">
           <div className="flex items-center space-x-2 mb-2 sm:mb-0">
-            <img src="/gum.png" alt="Gum" className="h-6 sm:h-8 w-auto" />
+            <img src="/fun.png" alt="Fun" className="h-6 sm:h-8 w-auto" />
             <h1 className={`text-base sm:text-xl font-bold ${darkMode ? 'text-white' : 'text-black'}`}>Search Prototype</h1>
           </div>
           
