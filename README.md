@@ -1,11 +1,14 @@
 # Search & Discovery Case Study for Gumroad (TL&DR)
 ### Full report can be found here: [Notion Case Study](https://www.notion.so/Search-Discovery-Case-Study-Blog-40e476a45ad94596ad323289eac62c2c)
+## Executive Summary
+This case study analyzes Gumroad's current search functionality and provides recommendations for improvements across search relevance and product discovery. It includes both analysis of current issues and proposed solutions ranging from quick wins to more sophisticated ML-based approaches.
+
 ## Improved Search Prototype Site: [funroad.phileas.me](funroad.phileas.me)
 <img width="1439" alt="Screenshot 2025-03-25 at 14 37 16" src="https://github.com/user-attachments/assets/ecfae368-bd05-400e-928a-f97277560368" />
 
-
-## Executive Summary
-This case study analyzes Gumroad's current search functionality and provides recommendations for improvements across search relevance and product discovery. It includes both analysis of current issues and proposed solutions ranging from quick wins to more sophisticated ML-based approaches.
+### Evaluation Metrics
+Evaluation of the prototype compared to the existing search showed significant improvements *(v0.12 before formal optimizations)*:
+![search_metrics_summary_table](https://github.com/user-attachments/assets/18237acb-31f4-402e-908f-3c2ffbc8612d)
 
 ## Table of Contents
 1. [Current State Analysis](#current-state-analysis)
@@ -86,10 +89,6 @@ The prototype system is containerized with the following services:
 - NGINX
 
 Caching is implemented at multiple levels: front-end, NGINX, and API services.
-
-### Evaluation Metrics
-Evaluation of the prototype compared to the existing search showed significant improvements:
-![search_metrics_summary_table](https://github.com/user-attachments/assets/18237acb-31f4-402e-908f-3c2ffbc8612d)
 
 ## Proposed Improvements
 
