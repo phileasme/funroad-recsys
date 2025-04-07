@@ -7,7 +7,7 @@ This case study analyzes Gumroad's current search functionality and provides rec
 <img width="1439" alt="Screenshot 2025-03-25 at 14 37 16" src="https://github.com/user-attachments/assets/ecfae368-bd05-400e-928a-f97277560368" />
 
 ### Evaluation Metrics
-Evaluation of the prototype compared to the existing search showed significant improvements *(v0.12 before formal optimizations)*:
+Evaluation of the prototype compared to the existing search showed significant improvements in regards to (re-)ranking *(v0.12 before formal optimizations)*:
 ![search_metrics_summary_table](https://github.com/user-attachments/assets/18237acb-31f4-402e-908f-3c2ffbc8612d)
 
 ## Table of Contents
